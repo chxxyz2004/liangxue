@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>第5课进阶：关键位与确认——逐天拆解 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.7rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .case { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 10px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 10px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+  .ok { color: #2ecc71; font-weight: bold; }
+  .line { color: #e74c3c; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">第5课 · 进阶</span>关键位与确认——逐天拆解</h1>
+    <div class="sub">现代量学实战体系 · 针对"右确认要等几天"的追问 · 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">全部数据来源：新浪财经官方日K行情接口，逐日核验（含逐日量比计算）</div>
+  </div>
+
+  <div class="warn">
+    <p><strong class="strong">勘误声明：</strong>本进阶篇初稿曾将通富微电8月19日误称为"放量跌停"。经官方行情数据逐日核验，<strong class="strong">8月19日量比0.82，实为缩量跌停</strong>（量14992万手 &lt; 前日18375万手）。特此更正并致歉。跌停不等于放量，<strong class="strong">缩量跌停（封死无量）比放量跌停更弱</strong>——买方彻底消失。本版所有量比均经逐日核验。</p>
+  </div>
+
+  <h2>一、先解开"悖论"：右确认不是无限循环</h2>
+  <p>你的疑问：<span class="mark">"如果每天都是左、每天又要等右，那岂不是永远在等？"</span></p>
+  <div class="core">
+    <p class="big">答案：右确认不是"每天都重新等一次"，而是"一个信号，配一条生死线，盯着它直到分出胜负"。</p>
+    <p>左信号出来后，它自带一条<strong class="strong">关键位（生死线）</strong>。之后每一天，不是"重新确认"，而是<strong class="strong">反复核对同一个问题：价格站上关键位了吗？还是跌破了？</strong></p>
+    <ul>
+      <li><span class="ok">站上关键位</span> → 右确认 → 进场；</li>
+      <li><span class="line">跌破关键位</span> → 右证伪 → 放弃；</li>
+      <li>没上没下 → 继续等（<strong class="strong">此时空仓等待本身就是正确答案，不是"没确认"）</strong>。</li>
+    </ul>
+    <p style="margin-top:0.8rem;">所以不是"每天都要新的右"，而是<strong class="strong">"一个左、一个关键位，盯着它直到站上或跌破"</strong>。逻辑闭合，不发散。</p>
+  </div>
+
+  <h2>二、工业富联逐天拆解（你问的核心）</h2>
+  <p class="data-src">数据来源：新浪财经官方日K，逐日核验。关键位 = 8/19破位前的箱体下沿 64.51。</p>
+  <table>
+    <tr><th>日期</th><th>收盘</th><th>量比</th><th>动作</th><th>左/右解读</th></tr>
+    <tr><td>7/30</td><td>53.80</td><td>—</td><td>下跌段</td><td>—</td></tr>
+    <tr><td>7/31</td><td>56.70</td><td>0.97</td><td>反弹</td><td>—</td></tr>
+    <tr><td>8/3</td><td>55.90</td><td>0.64</td><td>缩量回踩</td><td>左：缩量止跌苗头</td></tr>
+    <tr><td><span class="ok">8/4</span></td><td><span class="ok">59.93</span></td><td><span class="ok">1.77</span></td><td><span class="ok">放量大涨</span></td><td><span class="ok">右确认①：站上前高，三条件齐，标准进场点</span></td></tr>
+    <tr><td>8/5</td><td>65.92</td><td>1.72</td><td>连续放量涨停</td><td>趋势延续</td></tr>
+    <tr><td>8/6-8/10</td><td>68.27-69.18</td><td>0.65-1.02</td><td>高位滞涨</td><td>左：冲高乏力警报</td></tr>
+    <tr><td>8/11-8/18</td><td>65-68</td><td>0.73-1.51</td><td>高位箱体震荡</td><td>顶部区域盘整</td></tr>
+    <tr><td><span class="line">8/19</span></td><td><span class="line">61.83</span></td><td>1.06</td><td><span class="line">放量跌破箱体下沿64.51</span></td><td><span class="line">右证伪①：破位确立</span></td></tr>
+    <tr><td>8/20</td><td>62.13</td><td>0.56</td><td>近60日地量，未收回64.51</td><td>左：地量企稳苗头，但关键位未收复</td></tr>
+    <tr><td>8/21</td><td>62.84</td><td>1.02</td><td>微涨，仍低于64.51</td><td>仍处观察期，确认未发生</td></tr>
+    <tr><td><span class="line">8/24</span></td><td><span class="line">60.40</span></td><td>1.23</td><td><span class="line">放量再破，跌破61.5</span></td><td><span class="line">右证伪②：地量企稳失败，下跌继续</span></td></tr>
+  </table>
+
+  <h3>回答："8/21价涨量涨，为什么不是进场点？"</h3>
+  <div class="case">
+    <p>你看到：8/20地量（✓左信号）+ 8/21价涨量涨，逻辑没错，但漏了第四步——<strong class="strong">看关键位</strong>：</p>
+    <ol>
+      <li>8/20地量是"左"（抛压减轻）——<strong class="strong">✓你说对了</strong>；</li>
+      <li>8/21价涨量涨（量比1.02）看似确认——<strong class="strong">但它最高63.38、收62.84，连8/19破位前的箱体下沿64.51都没站回去</strong>；</li>
+      <li>8/20-21在61.5-63.4小平台缩着，<strong class="strong">关键位64.51在头顶压着</strong>。</li>
+    </ol>
+    <p style="margin-top:0.8rem;">正确读法：<strong class="strong">8/21不是"确认日"，而是"仍在观察期"</strong>。真正的右确认要等<strong class="strong">放量收回64.51上方</strong>；而它等来的却是8/24放量跌破61.5——右证伪。</p>
+    <p style="color:#f0c060;margin-top:0.5rem;">你漏的这一步，就是"左证明右确认"和"看到反弹就买"的区别。<strong>地量企稳只是"跌不动了"，不叫"要涨了"；跌不动→站回关键位→才叫确认。</strong></p>
+  </div>
+
+  <h2>三、通富微电逐天拆解（确认又证伪的完整链条）</h2>
+  <p class="data-src">数据来源：新浪财经官方日K，逐日核验（8/19为缩量跌停，量比0.82）</p>
+  <table>
+    <tr><th>日期</th><th>收盘</th><th>量比</th><th>动作</th><th>左/右解读</th></tr>
+    <tr><td>7/30-8/7</td><td>55.89→64.72</td><td>—</td><td>上涨段</td><td>趋势</td></tr>
+    <tr><td>8/10-8/14</td><td>63.20→62.96</td><td>0.63-1.28</td><td>高位横盘</td><td>顶部盘整</td></tr>
+    <tr><td><span class="ok">8/17</span></td><td><span class="ok">69.26</span></td><td><span class="ok">2.09</span></td><td><span class="ok">倍量涨停</span></td><td>左：启动信号</td></tr>
+    <tr><td><span class="ok">8/18</span></td><td><span class="ok">70.66</span></td><td><span class="ok">1.24</span></td><td><span class="ok">继续放量，冲高72.56</span></td><td><span class="ok">右确认①：量价齐升，三条件齐，标准进场点</span></td></tr>
+    <tr><td><span class="line">8/19</span></td><td><span class="line">63.59</span></td><td><span class="line">0.82</span></td><td><span class="line">缩量跌停（封死无量）</span></td><td><span class="line">右证伪②：一根缩量跌停吃掉两天涨幅，确认失败必须走</span></td></tr>
+    <tr><td>8/20-24</td><td>63.15→61.24</td><td>0.79-0.94</td><td>缩量阴跌</td><td>下跌段</td></tr>
+  </table>
+
+  <h3>回答："8/18明明确认了，8/19又证伪，岂不是没完没了？"</h3>
+  <div class="core">
+    <p class="big">右确认分级别，每一级都配一条止损线。</p>
+    <ul>
+      <li>8/18的确认，确认的是<strong class="strong">"8/17启动有效"</strong>——它成立了（量价齐升）；</li>
+      <li>但8/18同时给出新的"左"：它冲高72.56，<strong class="strong">突破后能否守住？</strong></li>
+      <li>8/19的缩量跌停，跌破的<strong class="strong">就是8/18确认的根基</strong>（若8/18是有效启动，就不该一天跌回原位）。</li>
+    </ul>
+    <p style="margin-top:0.8rem;">所以不是"确认被推翻"，而是<strong class="strong">每一个确认都自带一条生命线</strong>：8/18确认有效→生命线是8/17低点/8/18收盘；8/19跌破生命线→确认作废、走人。<strong class="strong">你不会"无限等待"，因为生命线给了你明确的"判死刑"标准。</strong></p>
+  </div>
+
+  <h2>四、回答"观察几天"——标准答案</h2>
+  <div class="core">
+    <p class="big">右确认不看天数，看关键位。</p>
+    <p>左信号出现后，把关键位划出来（前高、前低、箱体边沿、均线）。之后每天只核对一件事：<strong class="strong">站上=确认（进），跌破=证伪（弃），横着=继续等（不动）</strong>。</p>
+    <p>天数可以是1天、3天、10天，<strong class="strong">决定权在价格，不在日历</strong>。"观察几天"不是悖论，因为每一天看的都是<strong class="strong">同一个问题、同一条线</strong>。你不需要"确认昨天的确认"，只需要盯住那条线：<strong class="strong">价格和线的相对关系，每天只有三种可能（上/下/横），不会发散。</strong></p>
+  </div>
+
+  <h2>五、一句话总结（请记到笔记里）</h2>
+  <div class="core">
+    <p class="big">左信号 = 抛个问题；关键位 = 裁判；右确认 = 价格和裁判的关系。</p>
+    <p>站上裁判线 → 进场；跌破裁判线 → 离场；没站上也没跌破 → <strong class="strong">空仓等待本身就是正确答案。</strong></p>
+  </div>
+
+  <div class="foot">
+    现代量学实战体系 · 讲义第05课进阶篇（数据勘误版） · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎<br>
+    <div style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部数据均来自新浪财经官方日K行情接口逐日核验（含逐日量比），8/19通富微电缩量跌停（量比0.82）已勘误。</div>
+  </div>
+
+</div>
+</body>
+</html>
