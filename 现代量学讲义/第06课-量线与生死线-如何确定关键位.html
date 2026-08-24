@@ -17,12 +17,13 @@
     padding: 2rem 1rem;
   }
   .container { max-width: 940px; margin: 0 auto; }
+  .back { color: #5dade2; text-decoration: none; font-size: 0.9rem; }
   .header {
     background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
     border: 1px solid #2a3a4a;
     border-radius: 12px;
     padding: 2rem;
-    margin-bottom: 2rem;
+    margin: 1rem 0 2rem;
   }
   .header h1 { font-size: 1.7rem; color: #f0c060; margin-bottom: 0.5rem; }
   .header .sub { color: #8ba3b8; font-size: 0.95rem; }
@@ -37,7 +38,7 @@
     vertical-align: middle;
   }
   .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
-  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2.2rem 0 1rem; }
   h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
   p { margin-bottom: 1rem; }
   .core {
@@ -50,6 +51,8 @@
   .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
   .case { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
   .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  .case .fail { color: #e74c3c; font-weight: bold; font-size: 1.05rem; }
+  .case .win { color: #2ecc71; font-weight: bold; font-size: 1.05rem; }
   table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
   th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 10px; border: 1px solid #2a3a4a; }
   td { padding: 8px 10px; border: 1px solid #2a3a4a; }
@@ -62,65 +65,64 @@
   .ok { color: #2ecc71; font-weight: bold; }
   .line { color: #e74c3c; font-weight: bold; }
   .note { color: #e8b04a; font-weight: bold; }
-
-/* ===== 手机卡片化表格（响应式，窄屏自动生效，桌面不受影响） ===== */
-@media (max-width: 640px) {
-  table, tbody, tr, th, td { display: block; box-sizing: border-box; }
-  tr.card-head { display: none; }
-  tbody tr {
-    border: 1px solid #2a3a4a;
-    border-radius: 10px;
-    margin: 0 0 12px 0;
-    padding: 6px 14px 10px;
-    background: #141c26;
+  .tg { display: inline-block; font-size: 0.75rem; padding: 1px 8px; border-radius: 4px; margin-right: 6px; vertical-align: middle; font-weight: bold; white-space: nowrap; }
+  .tg-trad { background: #6b4f1d; color: #f5d78e; border: 1px solid #8a6a2a; }
+  .tg-mod { background: #0f4d4a; color: #7de3d4; border: 1px solid #1a6b66; }
+  .tg-law { background: #4a2d6b; color: #cf9fff; border: 1px solid #6a3f99; }
+  .tg-simple { background: #1d4a2d; color: #8ef0a8; border: 1px solid #2a6b3f; }
+  .tag2 { background: #2a3a4a; color: #8ba3b8; font-size: 0.75rem; padding: 1px 8px; border-radius: 4px; margin-left: 6px; }
+  details { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1rem 1.5rem; margin: 1rem 0; }
+  summary { cursor: pointer; color: #f0c060; font-weight: bold; outline: none; }
+  details .ans { margin-top: 0.8rem; color: #8ef0a8; }
+  .chart { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1rem; margin: 1.2rem 0; text-align: center; }
+  .chart svg { max-width: 100%; height: auto; }
+  .chart .cap { color: #8ba3b8; font-size: 0.82rem; margin-top: 0.5rem; }
+  .q { background: #141c26; border: 1px solid #2a3a4a; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .qn { color: #f0c060; font-weight: bold; margin-right: 6px; }
+  .q .text { margin-bottom: 0.8rem; }
+  .opt { padding: 10px 14px; border: 1px solid #2a3a4a; border-radius: 8px; margin: 8px 0; cursor: pointer; transition: all 0.15s; background: #1a2733; }
+  .opt .tag { background: #2a3a4a; color: #f0c060; border-radius: 4px; padding: 1px 7px; font-weight: bold; margin-right: 8px; }
+  .opt:hover { border-color: #f0c060; }
+  .opt.selected { border-color: #2ecc71; background: #14301f; }
+  .opt.selected .tag { background: #2ecc71; color: #fff; }
+  .submit-btn { display: block; width: 100%; background: #c0392b; color: #fff; border: none; border-radius: 8px; padding: 14px; font-size: 1.05rem; cursor: pointer; margin: 1.5rem 0; font-weight: bold; }
+  .submit-btn:active { background: #a93226; }
+  .result { background: #14301f; border: 1px solid #2ecc71; border-radius: 8px; padding: 1.2rem 1.5rem; display: none; margin: 1rem 0; }
+  .result .code { background: #0f1419; color: #8ef0a8; font-family: monospace; padding: 0.8rem 1rem; border-radius: 6px; margin: 0.8rem 0; font-size: 1.2rem; letter-spacing: 4px; word-break: break-all; }
+  .copy-btn { background: #1a6b66; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; cursor: pointer; }
+  .copy-btn:active { background: #14514d; }
+  @media (max-width: 640px) {
+    table, tbody, tr, th, td { display: block; box-sizing: border-box; }
+    tr.card-head { display: none; }
+    tbody tr { border: 1px solid #2a3a4a; border-radius: 10px; margin: 0 0 12px 0; padding: 6px 14px 10px; background: #141c26; }
+    tbody td { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border: none; border-bottom: 1px dashed #2f3f4f; padding: 7px 0; }
+    tbody td:last-child { border-bottom: none; }
+    tbody td::before { content: attr(data-label); color: #8ba3b8; font-size: 0.82em; font-weight: 600; flex-shrink: 0; }
+    tbody tr td:first-child::before { display: none; }
+    tbody tr td:first-child { color: #f0c060; font-weight: 700; font-size: 1.05em; border-bottom: 1px solid #2f3f4f; padding-bottom: 8px; margin-bottom: 4px; }
   }
-  tbody td {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
-    border: none;
-    border-bottom: 1px dashed #2f3f4f;
-    padding: 7px 0;
-  }
-  tbody td:last-child { border-bottom: none; }
-  tbody td::before {
-    content: attr(data-label);
-    color: #8ba3b8;
-    font-size: 0.82em;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-  tbody tr td:first-child::before { display: none; }
-  tbody tr td:first-child {
-    color: #f0c060;
-    font-weight: 700;
-    font-size: 1.05em;
-    border-bottom: 1px solid #2f3f4f;
-    padding-bottom: 8px;
-    margin-bottom: 4px;
-  }
-}
-/* ===== 手机卡片化表格结束 ===== */
 </style>
 </head>
 <body>
 <div class="container">
 
+  <a class="back" href="./index.html">← 返回讲义首页</a>
+
   <div class="header">
     <h1><span class="badge">第6课</span>量线与生死线——如何确定关键位</h1>
-    <div class="sub">现代量学实战体系 · 回答"右确认的锚从哪来" · 授课：黑马王子（张得一）</div>
-    <div class="sub data-src">数据来源：本地行情数据库（8股=腾讯证券前复权接口，与看盘软件一致），截至2026-08-24收盘，逐日核验；均线为前复权收盘价计算</div>
+    <div class="sub">现代量学实战体系 · 双轨制重写版（传统原理 → 当下检验 → 现代升级）· 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">数据来源：本地行情数据库（腾讯证券前复权接口，与看盘软件一致），截至2026-08-24收盘，逐日核验；均线为前复权收盘价计算</div>
   </div>
 
-  <h2>一、为什么必须先定线</h2>
-  <p>上一课说了：右确认 = 一个左信号 + 一条生死线，盯着它直到站上或跌破。<span class="mark">但你一定会追问：生死线从哪来？凭什么画在那儿？</span></p>
+  <h2>一、上节回顾</h2>
+  <p><span class="tg tg-simple">💡 通俗理解</span>第5课说了：右确认 = 一个左信号 + <strong class="strong">一条生死线</strong>，盯着它直到站上或跌破。<span class="mark">但你一定会追问：生死线从哪来？凭什么画在那儿？</span></p>
   <div class="warn">
     <p><strong class="strong">如果生死线是随手画的，右确认就是空中楼阁。</strong>你盯一条自己都不信的线，等于没盯——那不是纪律，是自欺欺人。</p>
     <p>所以这一课，把"定线"这一步彻底讲透。定线定得好，右确认才有意义。</p>
   </div>
 
-  <h2>二、生死线的本质：多空分水岭 + 集体记忆</h2>
+  <h2>二、传统原理</h2>
+  <p><span class="tg tg-trad">🏷 传统量学</span>生死线的本质：多空分水岭 + 集体记忆。</p>
   <p>想象股价是一只皮球，在房间里弹。天花板是顶部、地板是底部，中间还有一层<span class="strong">电网</span>——那是很多人买进卖出的<strong class="strong">成本区</strong>。</p>
   <p>皮球弹到电网附近时：</p>
   <ul>
@@ -137,23 +139,38 @@
     <p style="margin-top:0.8rem;">结论：<strong class="strong">多空双方都认账的位置，才叫生死线。</strong>一条线只有你自己看得见、别人都看不见，它就不会起效——因为别人的买卖根本不会参考它。</p>
   </div>
 
-  <h2>三、四把尺子，按顺序用</h2>
+  <h2>三、当下市场检验：四把尺子，按顺序用</h2>
+  <p><span class="tg tg-mod">🚀 现代升级</span>四把尺子全部用2026年8月真实盘面核验。注意：尺子三（均线）必须用前复权收盘价计算（红线④教训），尺子二（高量柱实顶）必须用量比锁定"量最大"那根K线（红线①教训）。</p>
 
   <h3>尺子一：最近的箱体边沿（前高/前低）——最常用</h3>
   <p>找出最近这一波行情里，价格<strong class="strong">反复触到、却没过去</strong>的位置。被反复确认过的位置，就是"集体记忆"最强的位置。</p>
   <div class="case">
-    <span class="stock">工业富联（601138）：箱体下沿 64.51</span><span class="tag">右证伪案例</span>
-    <p class="data-src">数据来源：本地行情数据库，前复权，逐日核验</p>
-    <p>8/19破位前，股价在<strong class="strong">64.51 ~ 70.97</strong> 的箱体里来回晃了一个多星期，箱体下沿<strong class="strong">64.51</strong>（8/12最低价）被多次触碰未破。</p>
-    <p>8/19放量跌破64.51（量比1.06、收61.83）= 箱体下沿失守 = <span class="line">右证伪</span>。之后8/20-8/21在地量（量比0.56、1.02）下挣扎，8/24放量再破61.5，一路下行。</p>
+    <span class="stock fail">工业富联（601138）：箱体下沿 64.51（右证伪案例）</span><span class="tag2">数据：前复权</span>
+    <p class="data-src">数据来源：本地行情数据库（腾讯前复权），逐日核验</p>
+    <table>
+      <tr><th>日期</th><th>最低</th><th>收盘</th><th>判定</th></tr>
+      <tr><td>8/12</td><td>64.51</td><td>65.60</td><td>触碰箱体下沿未破</td></tr>
+      <tr><td>8/13</td><td>65.20</td><td>65.23</td><td>在箱体内</td></tr>
+      <tr><td>8/14</td><td>64.80</td><td>66.19</td><td>在箱体内</td></tr>
+      <tr><td>8/18</td><td>65.65</td><td>66.20</td><td>在箱体内</td></tr>
+      <tr><td><span class="line">8/19 破位</span></td><td>61.30</td><td>61.83</td><td>放量跌破64.51 = 右证伪</td></tr>
+      <tr><td><span class="line">8/24 续破</span></td><td>59.22</td><td>60.40</td><td>再破61.5，一路下行</td></tr>
+    </table>
+    <p>8/19破位前，股价在<strong class="strong">64.51 ~ 70.97</strong> 的箱体里来回晃了一个多星期，箱体下沿<strong class="strong">64.51</strong>（8/12最低价）被多次触碰未破。8/19放量跌破64.51 = <span class="line">右证伪</span>，此后一路阴跌。</p>
   </div>
 
   <h3>尺子二：高量柱的实顶——量学最核心</h3>
   <p>找最近<strong class="strong">量最大（量比最大）</strong>的那根K线，它的<strong class="strong">实顶（收盘价）</strong>就是生死线。口诀：<span class="mark">"高量不破，后市可期"</span>。</p>
   <p>为什么？高量柱那天换手巨大、筹码大量易主——<strong class="strong">那根K线的价位，就是新主力+接盘者的平均成本区</strong>。跌破它 = 这批人全被套 = 趋势坏了。</p>
   <div class="case">
-    <span class="stock">通富微电（002156）：8/17高量柱实顶 69.26</span><span class="tag">启动→证伪案例</span>
-    <p class="data-src">数据来源：本地行情数据库，前复权，逐日核验</p>
+    <span class="stock fail">通富微电（002156）：8/17高量柱实顶 69.26（启动→证伪案例）</span><span class="tag2">数据：前复权</span>
+    <p class="data-src">数据来源：本地行情数据库（腾讯前复权），逐日核验</p>
+    <table>
+      <tr><th>日期</th><th>收盘</th><th>量(万手)</th><th>量比</th><th>判定</th></tr>
+      <tr><td><span class="mark">8/17 倍量涨停</span></td><td>69.26</td><td>148</td><td>2.09</td><td>高量柱，实顶69.26=成本线</td></tr>
+      <tr><td>8/18 放量上攻</td><td>70.66</td><td>184</td><td>1.24</td><td>右确认（冲高72.56）</td></tr>
+      <tr><td><span class="line">8/19 缩量跌停</span></td><td>63.59</td><td>150</td><td>0.82</td><td>跌破69.26 = 启动证伪，走人</td></tr>
+    </table>
     <p>8/17倍量涨停（量比2.09），当天换手巨大，收69.26。<strong class="strong">69.26就是那批"新主人"的成本线</strong>——如果启动是真，就不该跌破它。</p>
     <p>8/18放量上攻到72.56（右确认），8/19却<span class="line">缩量跌停跌破69.26</span>（收63.59，量比0.82）。跌破高量柱实顶 = 新主人也被套 = <span class="line">启动证伪</span>，必须走人。</p>
   </div>
@@ -165,14 +182,14 @@
   </ul>
   <p>均线适合当"宏观背景"验证，和尺子一、二配合使用。多把尺子指到同一个位置时，那条线特别硬。</p>
   <div class="case">
-    <span class="stock">工业富联（601138）：均线定线（截至8/24）</span><span class="tag">前复权计算</span>
+    <span class="stock fail">工业富联（601138）：均线定线（截至8/24，前复权计算）</span><span class="tag2">数据：前复权</span>
     <table>
       <tr><th>尺子</th><th>关键位</th><th>判定（当前价60.40）</th></tr>
-      <tr><td>20日线</td><td>62.79</td><td>已跌破</td></tr>
-      <tr><td>60日线</td><td>66.54</td><td>早已跌破，中长期转弱</td></tr>
-      <tr><td>箱体下沿</td><td>64.51</td><td>已跌破，右证伪</td></tr>
+      <tr><td>20日线</td><td>62.79</td><td class="line">已跌破</td></tr>
+      <tr><td>60日线</td><td>66.54</td><td class="line">早已跌破，中长期转弱</td></tr>
+      <tr><td>箱体下沿</td><td>64.51</td><td class="line">已跌破，右证伪</td></tr>
     </table>
-    <p class="data-src">数据来源：本地行情数据库，前复权，20/60日均线为截至8/24的收盘价均值</p>
+    <p class="data-src">数据来源：本地行情数据库（腾讯前复权），20/60日均线为截至8/24的收盘价均值，已核验</p>
     <p>三条尺子全指向下方——<strong class="strong">均线死叉向下、箱体破位、价格在20/60日线之下</strong>。这种"多线合一"的位置，就是最硬的生死线：下方只剩60元整数关（心理位）作为最后的观察位。</p>
   </div>
 
@@ -182,44 +199,202 @@
     <li><strong class="strong">整数关口（60、50、100）</strong>：心理价位，散户和主力都会盯，往往有挂单，是隐形支撑/压力。</li>
   </ul>
 
-  <h2>四、三条铁律（画线之前先背下来）</h2>
-  <div class="core">
-    <p><strong class="strong">铁律一：取近不取远。</strong>取最近一次碰撞的位置，别去翻几百天前的老黄历。远了筹码都换光了，"记忆"失效。</p>
-    <p><strong class="strong">铁律二：取显不取冷。</strong>取一眼能看到的——箱体边沿、大阳大阴线、整数位。别画冷门指标算出来的线，没人认。</p>
-    <p><strong class="strong">铁律三：一条就够。</strong>只画一条最关键的，最多两条（一条进攻线、一条防守线）。画了一堆线 = 等于没画——你会永远"既上又下"，自相矛盾。</p>
+  <div class="chart">
+    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="四把尺子示意图">
+      <rect x="0" y="0" width="720" height="300" fill="#141c26"/>
+      <text x="360" y="26" text-anchor="middle" fill="#f0c060" font-size="15" font-weight="bold">四把尺子 · 按顺序用 · 多线合一=最硬</text>
+
+      <rect x="40" y="55" width="150" height="85" rx="10" fill="#0f4d4a" stroke="#1a6b66"/>
+      <text x="115" y="78" text-anchor="middle" fill="#7de3d4" font-size="12" font-weight="bold">尺子一 箱体边沿</text>
+      <text x="115" y="98" text-anchor="middle" fill="#e6e6e6" font-size="11">前高/前低</text>
+      <text x="115" y="115" text-anchor="middle" fill="#e6e6e6" font-size="11">最常用</text>
+
+      <rect x="210" y="55" width="150" height="85" rx="10" fill="#c0392b" stroke="#e74c3c"/>
+      <text x="285" y="78" text-anchor="middle" fill="#f5b7b1" font-size="12" font-weight="bold">尺子二 高量柱实顶</text>
+      <text x="285" y="98" text-anchor="middle" fill="#e6e6e6" font-size="11">量比最大K线的收盘</text>
+      <text x="285" y="115" text-anchor="middle" fill="#e6e6e6" font-size="11">量学最核心</text>
+
+      <rect x="380" y="55" width="150" height="85" rx="10" fill="#4a2d6b" stroke="#6a3f99"/>
+      <text x="455" y="78" text-anchor="middle" fill="#cf9fff" font-size="12" font-weight="bold">尺子三 20/60日均线</text>
+      <text x="455" y="98" text-anchor="middle" fill="#e6e6e6" font-size="11">趋势温度计</text>
+      <text x="455" y="115" text-anchor="middle" fill="#e6e6e6" font-size="11">前复权计算</text>
+
+      <rect x="550" y="55" width="150" height="85" rx="10" fill="#1d4a2d" stroke="#2a6b3f"/>
+      <text x="625" y="78" text-anchor="middle" fill="#8ef0a8" font-size="12" font-weight="bold">尺子四 缺口+整数关</text>
+      <text x="625" y="98" text-anchor="middle" fill="#e6e6e6" font-size="11">恐慌伤口/心理位</text>
+      <text x="625" y="115" text-anchor="middle" fill="#e6e6e6" font-size="11">补充</text>
+
+      <rect x="90" y="180" width="540" height="70" rx="12" fill="#1a2230" stroke="#c0392b"/>
+      <text x="360" y="205" text-anchor="middle" fill="#f0c060" font-size="14" font-weight="bold">三条铁律：取近不取远 · 取显不取冷 · 一条就够</text>
+      <text x="360" y="228" text-anchor="middle" fill="#e6e6e6" font-size="12">富联案例：箱体64.51+20日线62.79+60日线66.54全部向下 = 多线合一的硬生死线</text>
+    </svg>
+    <div class="cap">图1：四把尺子。多把尺子指向同一位置时，那条线特别硬。</div>
   </div>
 
-  <h2>五、三步实操法（小白落地版）</h2>
-  <p>以后看任何一只股票，花一分钟定线：</p>
+  <h2>四、现代升级结论（含三查）</h2>
+  <table>
+    <tr><th>结论</th><th>三查：证据</th></tr>
+    <tr><td>✅ <strong class="ok">"生死线=多空都认账的价位"：仍有效</strong></td><td>案例：富联箱体下沿64.51（8/12-8/18四次触碰未破，8/19破位后确认跌势）；机理：集体记忆（套牢盘成本+空仓盘承接）不随时间消失，量化也无法抹平；边界：取近不取远、取显不取冷、一条就够。</td></tr>
+    <tr><td>✅ <strong class="ok">"高量柱实顶=成本线"：仍有效</strong></td><td>案例：通富8/17高量柱实顶69.26，8/19跌破后启动证伪；机理：量比最大那天筹码大量易主，实顶=新主人平均成本；边界：须用量比锁定"量最大"的K线（红线①教训），前复权口径（红线④教训）。</td></tr>
+    <tr><td>⚠️ <strong class="note">"均线定线"：部分失效，需修正</strong></td><td>案例：富联20日线62.79/60日线66.54（前复权计算有效），但除权股不复权均线会失真；机理：均线反映趋势温度，量化时代有效性仍在，但必须前复权；修正：均线只当宏观背景验证，不单独当买点；边界：多线合一才硬。</td></tr>
+    <tr><td>❌ <strong class="line">"随手画线/多线并用"：已失效，需替代</strong></td><td>案例：画一堆线=永远"既上又下"自相矛盾；机理：纪律的锚必须唯一，多线=没纪律；替代：一条进攻线+一条防守线，最多两条。</td></tr>
+  </table>
+
+  <h2>五、本课定律应用</h2>
+  <p><span class="tg tg-law">⚖ 定律</span>生死线是"左证明右确认"的锚，也是"位置决定性质"的具体化：</p>
+  <table>
+    <tr><th>关联定律</th><th>如何体现</th></tr>
+    <tr><td><strong class="strong">左证明右确认</strong></td><td>生死线就是右确认的锚：收盘站上=右确认（试探进场），收盘跌破=右证伪（放弃离场），没上没下=空仓等。</td></tr>
+    <tr><td><strong class="strong">位置决定性质</strong></td><td>生死线（箱体/高量实顶/均线/整数关）就是"位置"的精确化：把模糊的百分位变成可执行的线。</td></tr>
+    <tr><td><strong class="strong">三先规律（卖在买先）</strong></td><td>跌破高量柱实顶=套牢盘集中止损抛售，量柱记录的就是这批卖盘。</td></tr>
+  </table>
+
+  <h2>六、失败案例对照（反幸存者偏差）</h2>
+  <table>
+    <tr><th>对比项</th><th>富联8/19破箱体64.51（定线成功）</th><th>通富8/17高量柱69.26（定线后被证伪）</th></tr>
+    <tr><td>生死线</td><td>箱体下沿64.51（多次触碰未破）</td><td>高量柱实顶69.26（量比2.09）</td></tr>
+    <tr><td>走势</td><td>8/19放量跌破→确认跌势</td><td>8/18确认→8/19跌破→启动证伪</td></tr>
+    <tr><td>纪律结果</td><td>破位即离场，躲过下跌</td><td>跌破69.26即走人，避开套牢</td></tr>
+    <tr><td>共同教训</td><td colspan="2">生死线本身不会"保证方向"（通富8/17也跌破），但它是纪律的锚：破线就走，绝不死扛。定线定得好，止损才有依据。</td></tr>
+  </table>
+
+  <h2>七、看盘/复盘实操</h2>
+  <p>三步实操法（小白落地版）：</p>
   <ol>
     <li><strong class="strong">画箱体</strong>：日K图上，找到最近这一波的高点和低点，画出箱体边沿（前高/前低）；</li>
-    <li><strong class="strong">找高量柱</strong>：找出最近量最大那根K线，记下它的收盘价（实顶）；</li>
+    <li><strong class="strong">找高量柱</strong>：找出最近量最大那根K线（算量比），记下它的收盘价（实顶）；</li>
     <li><strong class="strong">对照验证</strong>：看这个价位是不是恰好靠近60日线或整数关口——<span class="mark">多线合一 = 铜墙铁壁</span>，取它；不重合，就取箱体边沿或高量柱实顶，哪个更近、更显眼用哪个。</li>
   </ol>
-
-  <h2>六、用收盘价判定（和右确认连起来）</h2>
-  <p>生死线定好了，纪律就一句话——<strong class="strong">用收盘价判定，别管盘中毛刺</strong>：</p>
-  <ul>
-    <li><span class="ok">收盘站上生死线</span> → 右确认 → 试探性进场；</li>
-    <li><span class="line">收盘跌破生死线</span> → 右证伪 → 放弃/离场；</li>
-    <li>没上没下 → <strong class="strong">空仓等，等本身就是答案</strong>。</li>
-  </ul>
-  <div class="core">
-    <p class="big">一句话记住：生死线不是算出来的，是"最近、最显眼、量最大"的那个价位——多空双方都认账的位置，才是真线。</p>
+  <div class="warn">
+    <p><strong class="strong">今日盘面速递（2026-08-24，数据：前复权）</strong></p>
+    <p>用四把尺子读今天的富联：<strong class="strong">20日线62.79已跌破、60日线66.54早已跌破、箱体下沿64.51已破位，三条尺子全向下，下方只剩60元整数关观察位</strong>。多线合一=最硬的生死线，今天收盘60.40站在所有生死线下方——<strong class="strong">不进场，等收盘重新站上任意一条线再说。</strong></p>
   </div>
 
-  <h2>下一课预告</h2>
-  <p>第7课：<strong class="strong">黄金柱与高量柱——量线体系的进阶定线工具</strong>。这四把尺子是"入门版"，量学还有更精细的量线工具（黄金柱实顶实底、凹口平衡线、精准峰顶线），能让你的生死线更"精准"。先把四把尺子用熟，再升级。</p>
+  <h2>八、小测验（答对进下一课）</h2>
+  <details>
+    <summary>测验1：生死线的本质是什么？</summary>
+    <div class="ans">多空分水岭+集体记忆。多空双方都认账的位置（套牢盘成本、空仓盘承接点）才是生死线。只有你自己看得见的线不会起效。</div>
+  </details>
+  <details>
+    <summary>测验2：四把尺子按什么顺序用？</summary>
+    <div class="ans">尺子一箱体边沿（最常用）→尺子二高量柱实顶（量学最核心）→尺子三20/60日均线（趋势温度计）→尺子四缺口+整数关（补充）。多把尺子指到同一位置时那条线特别硬。</div>
+  </details>
+  <details>
+    <summary>测验3：为什么"高量柱实顶"是生死线？</summary>
+    <div class="ans">高量柱那天换手巨大、筹码大量易主，实顶=新主力+接盘者的平均成本区。跌破它=这批人全被套=趋势坏了。通富8/17实顶69.26，8/19跌破后启动证伪。</div>
+  </details>
+
+  <h2>九、作业（第6课 · 选择题）</h2>
+  <div class="q">
+    <div class="text"><span class="qn">第1题</span>生死线的本质是什么？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>自己画着舒服的任意一条线</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>多空分水岭+集体记忆：多空双方都认账的价位</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>软件自动算的指标线</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>黄金分割线</div>
+    </div>
+    <div class="src">本课「二、传统原理」</div>
+  </div>
+  <div class="q">
+    <div class="text"><span class="qn">第2题</span>四把尺子中，"量学最核心"的是哪一把？</div>
+    <div class="opts" data-answer="C">
+      <div class="opt" data-val="A"><span class="tag">A</span>箱体边沿（前高前低）</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>20/60日均线</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>高量柱的实顶（量比最大的K线收盘价）</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>缺口+整数关口</div>
+    </div>
+    <div class="src">本课「三、尺子二」</div>
+  </div>
+  <div class="q">
+    <div class="text"><span class="qn">第3题</span>富联箱体下沿64.51在8/19被放量跌破，正确的处理是？</div>
+    <div class="opts" data-answer="A">
+      <div class="opt" data-val="A"><span class="tag">A</span>右证伪，破线即离场，绝不死扛</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>越跌越买，摊低成本</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>等反弹再跑</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>改画一条更低的线</div>
+    </div>
+    <div class="src">本课「三、尺子一」</div>
+  </div>
+  <div class="q">
+    <div class="text"><span class="qn">第4题</span>通富8/17高量柱实顶69.26，8/19缩量跌停收63.59跌破69.26，说明？</div>
+    <div class="opts" data-answer="D">
+      <div class="opt" data-val="A"><span class="tag">A</span>跌破了没关系，还会涨回来</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>69.26画错了，重画</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>高量柱实顶没有用</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>跌破高量柱实顶=新主人全被套=启动证伪，必须走人</div>
+    </div>
+    <div class="src">本课「三、尺子二」</div>
+  </div>
+  <div class="q">
+    <div class="text"><span class="qn">第5题</span>三条铁律"取近不取远、取显不取冷、一条就够"的核心思想是？</div>
+    <div class="opts" data-answer="C">
+      <div class="opt" data-val="A"><span class="tag">A</span>画得越多越精准</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>越冷门的指标越准</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>取最近最显眼、多空都认的价位，最多两条线，避免自相矛盾</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>一定要看几百天前的数据</div>
+    </div>
+    <div class="src">本课「四、三条铁律」</div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn">提交答案</button>
+  <div class="result" id="result">
+    <div>你的答案代码：</div>
+    <div class="code" id="code"></div>
+    <button class="copy-btn" id="copyBtn">复制答案</button>
+    <div class="warn" id="warn"></div>
+    <div style="color:#8ba3b8; font-size:0.85rem; margin-top:0.6rem;">复制后回聊天框粘贴发给我批改，不用打字。</div>
+  </div>
+
+  <h2>十、术语表（累积）</h2>
+  <table>
+    <tr><th>术语</th><th>通俗解释</th></tr>
+    <tr><td>三先规律</td><td>量学的根：卖在买先、价在量先、庄在散先（第1课）。</td></tr>
+    <tr><td>量柱七形态</td><td>高/低/平/梯/缩/倍/黄金柱，一律按量比判定（第2课）。</td></tr>
+    <tr><td>量价四维度</td><td>量与价、量与位置、量与时间、量与性质（第3课）。</td></tr>
+    <tr><td>位置百分位</td><td>=(当前价−250日最低)÷(250日最高−250日最低)×100%（第4课）。</td></tr>
+    <tr><td>左证明右确认</td><td>左=猜想，右=确认，三条件齐备才行动（第5课）。</td></tr>
+    <tr><td>生死线</td><td>多空都认账的关键位：箱体边沿、高量柱实顶、均线、缺口/整数关。</td></tr>
+    <tr><td>高量柱实顶</td><td>量比最大的K线收盘价，=新主人+接盘者平均成本区。</td></tr>
+    <tr><td>多线合一</td><td>多把尺子指向同一价位，那条线特别硬。</td></tr>
+    <tr><td>三条铁律</td><td>取近不取远、取显不取冷、一条就够。</td></tr>
+    <tr><td>右证伪</td><td>收盘跌破生死线，左信号被推翻（第5课+本课）。</td></tr>
+  </table>
+
+  <h2>十一、升级对照总表（滚动累积 · 你的《现代量学实战手册》）</h2>
+  <table>
+    <tr><th>概念</th><th>传统用法</th><th>检验结论</th><th>证据摘要</th><th>现代用法与边界</th><th>关联定律</th></tr>
+    <tr><td>卖在买先</td><td>放量要警惕，别当利好</td><td>✅ 仍有效</td><td>通富8/17→8/19；富联8/20→8/24</td><td>结合位置+量比识别"谁在卖"</td><td>三先规律</td></tr>
+    <tr><td>价在量先</td><td>先看价再看量</td><td>✅ 仍有效</td><td>2026结构性行情</td><td>价格结构比单日量能可靠</td><td>三先规律</td></tr>
+    <tr><td>庄在散先</td><td>追踪庄家痕迹</td><td>⚠️ 部分失效需修正</td><td>量化对倒伪装</td><td>升级为"聪明钱"四阶段</td><td>三先规律</td></tr>
+    <tr><td>情绪博弈</td><td>抓涨停/数连板</td><td>❌ 已失效需替代</td><td>量化炸板频繁</td><td>转向结构化打法</td><td>三先规律+十二字令</td></tr>
+    <tr><td>量柱七形态</td><td>凭K线高度看量柱</td><td>✅ 基本仍有效</td><td>本课7个真实案例</td><td>一律算量比（前复权）</td><td>三先规律+位置+左右确认</td></tr>
+    <tr><td>凭感觉看量柱</td><td>看柱子高低判断</td><td>❌ 已失效需替代</td><td>长电8/21误标倍量（红线①）</td><td>全部用量比数字判定</td><td>数据铁律</td></tr>
+    <tr><td>位置决定放量性质</td><td>"放量上涨=好"口诀</td><td>✅ 仍有效</td><td>通富8/17启动 vs 8/19失败</td><td>同一放量，位置定性质</td><td>位置决定性质</td></tr>
+    <tr><td>持续性=主力试金石</td><td>单日放量就追</td><td>✅ 仍有效</td><td>富联缩量企稳被证伪；赛腾待右确认</td><td>单日量=左，持续量=右</td><td>左证明右确认</td></tr>
+    <tr><td>缩量上涨=惜售健康</td><td>见缩量上涨就放心</td><td>⚠️ 部分失效需修正</td><td>天孚8/14缩量上涨后8/24暴跌</td><td>仅低位偏健康，高位警惕无量虚涨</td><td>位置决定性质</td></tr>
+    <tr><td>只看量+价两点</td><td>"放量涨好/缩量跌坏"</td><td>❌ 已失效需替代</td><td>通富两天反转</td><td>四维框架对齐再行动</td><td>四维综合</td></tr>
+    <tr><td>位置决定性质</td><td>凭感觉看高低位</td><td>✅ 仍有效（需量化）</td><td>富联腰部中继、淳中底部试探、天孚腰部反弹</td><td>位置百分位数字定位（前复权250日）</td><td>位置决定性质</td></tr>
+    <tr><td>凭感觉判断高低位</td><td>看波段猜顶底</td><td>⚠️ 部分失效需修正</td><td>天孚8月波段看着像见顶，实为腰部58%</td><td>一律用百分位数字+60日阶段</td><td>位置决定性质</td></tr>
+    <tr><td>"高位放量必跌/低位放量必涨"</td><td>机械化套用</td><td>❌ 已失效需替代</td><td>通富低位倍量也失败；淳中底部放量后仍大跌</td><td>位置定性质+左右确认+生死线联动</td><td>位置+左右确认</td></tr>
+    <tr><td>左证明右确认</td><td>看到信号就行动</td><td>✅ 仍有效（需数字化）</td><td>通富8/17左→8/18右→8/19证伪；富联8/20-8/24证伪</td><td>三条件量化：量比≥1.3+突破关键位+方向一致</td><td>左证明右确认</td></tr>
+    <tr><td>左侧信号=买点</td><td>放量当天就买</td><td>⚠️ 部分失效需修正</td><td>通富8/17买入被8/19套</td><td>左侧只观察/试错，重仓等右侧</td><td>左证明右确认</td></tr>
+    <tr><td>看到信号就冲</td><td>无纪律追涨杀跌</td><td>❌ 已失效需替代</td><td>所有左侧骗局</td><td>四步纪律：看位→读量→四维→等确认</td><td>五大定律综合</td></tr>
+    <tr><td>生死线=多空认账的价位</td><td>随手画线</td><td>✅ 仍有效</td><td>富联箱体64.51破位确认跌势</td><td>取近取显取唯一，多线合一才硬</td><td>左证明右确认</td></tr>
+    <tr><td>高量柱实顶=成本线</td><td>凭感觉找关键K线</td><td>✅ 仍有效（需量比锁定）</td><td>通富8/17实顶69.26跌破后证伪</td><td>用最大量比K线锁定，前复权口径</td><td>左证明右确认+三先规律</td></tr>
+    <tr><td>均线定线</td><td>看均线金叉死叉买卖</td><td>⚠️ 部分失效需修正</td><td>富联20日62.79/60日66.54（前复权有效）</td><td>均线当前复权计算，只当宏观背景验证，多线合一才硬</td><td>位置决定性质</td></tr>
+    <tr><td>随手画线/多线并用</td><td>画一堆线"既上又下"</td><td>❌ 已失效需替代</td><td>多线=自相矛盾=没纪律</td><td>一条进攻线+一条防守线，最多两条</td><td>纪律铁律</td></tr>
+  </table>
+  <p class="data-src">本表逐课累积，学完全部课程即成为你的《现代量学实战手册》。</p>
 
   <div class="foot">
-    现代量学实战体系 · 讲义第06课 · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    现代量学实战体系 · 讲义第06课（双轨制重写版）· 本讲义仅供个人学习使用，不构成任何投资建议<br>
     股市有风险，入市需谨慎<br>
-    <div style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部数据来自本地行情数据库（8股=腾讯证券前复权接口，与看盘软件一致；指数=新浪官方接口），逐日核验，不包含任何未经验证的数据。</div>
+    <div style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部数据来自本地行情数据库（8股=腾讯证券前复权接口，与看盘软件一致），逐日核验，所有案例均标注"（数据：前复权）"，不包含任何未经验证的数据。</div>
   </div>
 
 </div>
+
 <script>
-/* 手机卡片化表格：自动从表头读标签，给数据单元格加 data-label */
 (function(){
   function initCards(){
     document.querySelectorAll('table').forEach(function(t){
@@ -243,6 +418,70 @@
   } else {
     initCards();
   }
+})();
+(function () {
+  var groups = document.querySelectorAll(".opts");
+  var selection = {};
+  groups.forEach(function (g, i) {
+    g.querySelectorAll(".opt").forEach(function (o) {
+      o.addEventListener("click", function () {
+        g.querySelectorAll(".opt").forEach(function (x) { x.classList.remove("selected"); });
+        o.classList.add("selected");
+        selection[i] = o.getAttribute("data-val");
+      });
+    });
+  });
+  function codeOf() {
+    var codes = [];
+    for (var i = 0; i < groups.length; i++) {
+      var v = selection[i];
+      codes.push(v ? v : "?");
+    }
+    return codes.join("");
+  }
+  document.getElementById("submitBtn").addEventListener("click", function () {
+    var missing = false;
+    for (var i = 0; i < groups.length; i++) { if (!selection[i]) missing = true; }
+    var warn = document.getElementById("warn");
+    if (missing) {
+      warn.textContent = "还有题目没选，请把所有题做完再提交。";
+      warn.style.color = "#e74c3c";
+      return;
+    }
+    warn.textContent = "";
+    document.getElementById("result").style.display = "block";
+    document.getElementById("code").textContent = "6-" + codeOf();
+  });
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var btn = document.getElementById("copyBtn");
+    var text = document.getElementById("code").textContent;
+    var ok = false;
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch (e) { ok = false; }
+    if (ok) {
+      btn.textContent = "已复制 ✓";
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = "已复制 ✓";
+      }, function () {
+        btn.textContent = "复制失败，请长按答案代码手动复制";
+      });
+    } else {
+      btn.textContent = "复制失败，请长按答案代码手动复制";
+    }
+    setTimeout(function () { btn.textContent = "复制答案"; }, 1800);
+  });
 })();
 </script>
 </body>
