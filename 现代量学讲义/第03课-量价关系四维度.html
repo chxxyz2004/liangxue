@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3课：量价关系四维度 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.8rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .case {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  .case .tag {
+    display: inline-block;
+    background: #2a3a4a;
+    color: #5dade2;
+    font-size: 0.78rem;
+    padding: 1px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+  }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 12px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 12px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .homework { background: #0d1a24; border: 1px solid #2e86ab; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .homework h3 { color: #5dade2; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">第3课</span>量价关系四维度</h1>
+    <div class="sub">现代量学实战体系 · 第一阶段 · 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">案例数据来源：新浪财经官方日K行情，逐日核验</div>
+  </div>
+
+  <h2>一、先破一个迷思：量价没有"唯一答案"</h2>
+  <p>新手喜欢背口诀：<span class="mark">放量上涨=好，缩量下跌=坏</span>。量学告诉你：这是最害人的简化。</p>
+  <div class="core">
+    <p class="big">量价关系是"四维"的，只看"量+价"两个点，等于只看了冰山一角。</p>
+    <p>要判断性质，必须同时看四个维度：</p>
+    <ol>
+      <li><strong class="strong">维度一：量与价</strong>（放还是缩？涨还是跌？）</li>
+      <li><strong class="strong">维度二：量与位置</strong>（在高位还是低位？）</li>
+      <li><strong class="strong">维度三：量与时间</strong>（持续几天？还是一天？）</li>
+      <li><strong class="strong">维度四：量与性质</strong>（谁在买谁在卖？主力还是散户？）</li>
+    </ol>
+    <p style="margin-top:0.8rem;">四个维度全部对齐，才能下结论。<strong class="strong">任何一个维度缺失，结论都是猜测。</strong></p>
+  </div>
+
+  <h2>二、维度一：量与价——基础的四种组合</h2>
+  <table>
+    <tr><th>组合</th><th>字面意思</th><th>性质取决于其他三维</th></tr>
+    <tr><td>放量上涨</td><td>分歧大+多方赢</td><td>低位=启动，高位=出货</td></tr>
+    <tr><td>缩量上涨</td><td>分歧小+多方赢</td><td>惜售无抛压=健康，无量虚涨=危险</td></tr>
+    <tr><td>放量下跌</td><td>分歧大+空方赢</td><td>高位=派发，低位=恐慌杀跌</td></tr>
+    <tr><td>缩量下跌</td><td>分歧小+空方赢</td><td>无人接盘=阴跌，惜售=洗盘</td></tr>
+  </table>
+  <p>同样"放量上涨"，低位是宝贝，高位是陷阱。<strong class="strong">这就是为什么必须进入维度二。</strong></p>
+
+  <h2>三、维度二：量与位置——最关键的一维</h2>
+  <div class="case">
+    <span class="stock">案例A：通富微电的"放量上涨"——低位是启动</span><span class="tag">8月17日</span>
+    <p class="data-src">数据来源：新浪财经官方日K，量比2.09</p>
+    <p>8月17日放量上涨（量比2.09，+10.01%涨停）收69.26元，位置是<strong class="strong">从55元平台刚启动的中低位</strong>。8月18日继续放量上涨（量比1.24）收70.66元，量价齐升。</p>
+    <p>四维判断：<strong class="strong">低位+放量+持续两天+主力抢筹 = 启动信号</strong>，教科书级的健康放量上涨。</p>
+  </div>
+  <div class="case">
+    <span class="stock">案例B：通富微电的"放量"——高位是出货（同一只股票！）</span><span class="tag">8月18-19日</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月18日冲高72.56元后，8月19日放量跌停。前一天还在"放量上涨"，第二天翻脸。原因：<strong class="strong">8月18日的位置已接近前高密集区，高位放量，就是主力把筹码递给追高者。</strong></p>
+    <p>同一个股票、同样的"放量"，一个位置是启动、一个位置是出货。<strong class="strong">这就是"位置决定性质"最直接的证明。</strong></p>
+  </div>
+  <div class="case">
+    <span class="stock">案例C：天孚通信的"高量见顶"——位置+时间双确认</span><span class="tag">8月13-24日</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月13日放量上涨（量比1.21）→ 8月14日缩量上涨（量比0.81）<strong class="strong">价涨量缩，量价背离（第一声警报）</strong> → 8月17日再放量冲高 → 8月18日高位放量滞涨（冲295元不封）<strong class="strong">（第二声警报）</strong> → 8月19日下跌 → 8月24日放量暴跌-8.63%。</p>
+    <p>完整链条：<strong class="strong">放量上涨→缩量背离→高位滞涨→放量下跌</strong>。四个维度都在说同一个故事：主力在出货。</p>
+  </div>
+
+  <h2>四、维度三：量与时间——持续性是试金石</h2>
+  <p>单日放量可能是噪音，<strong class="strong">持续的量能才是主力行为</strong>。用"左证明右确认"来说：</p>
+  <ul>
+    <li><strong class="strong">一天的量 = 左（猜想）</strong>：今天放量只证明今天有资金，不证明明天还来；</li>
+    <li><strong class="strong">持续的量 = 右（确认）</strong>：连涨三天且量能每天配合，才确认主力真的在运作。</li>
+  </ul>
+  <div class="case">
+    <span class="stock">案例D：工业富联的"缩量磨底"被证伪</span><span class="tag">8月20-24日</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月20日缩量（量比0.56）企稳、8月21日温和小涨——这是"左"，只能说抛压减轻。但8月24日<strong class="strong">放量下跌（量比1.23）破位</strong>——"右"没来，反而来了放量下跌，前两天的缩量企稳被证伪。</p>
+    <p>教训：<strong class="strong">缩量企稳只是猜想，必须等放量上涨来确认。没确认前，一切都是猜测。</strong></p>
+  </div>
+  <div class="case">
+    <span class="stock">案例E：赛腾股份的超跌反抽——时间检验中</span><span class="tag">8月19-24日</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月19日跌停→8月20-21日缩量→8月24日放量翻红（量比1.38）。今天是"左"（第一天放量反弹），<strong class="strong">明天能否放量续涨是"右"</strong>。能不能成，明天看。</p>
+  </div>
+
+  <h2>五、维度四：量与性质——谁在买谁在卖</h2>
+  <p>盘面数据只告诉你"有多少量"，不直接告诉你"谁在买卖"。量学给你两个推断工具：</p>
+  <ul>
+    <li><strong class="strong">工具1：量价背离看主力</strong>——价涨量缩=卖的人少（主力锁仓惜售），也可能是买盘衰竭（虚涨）；价跌量缩=没人愿卖，也可能没人愿买。低位是洗盘，高位是阴跌。</li>
+    <li><strong class="strong">工具2：融资余额看杠杆资金</strong>——今天复盘里胜宏科技融资余额从172亿回落到163.79亿、8月19日单日净偿还6.45亿，杠杆资金（最敏感的主力之一）在撤。<strong class="strong">融资撤退+高位放量=双确认出货。</strong></li>
+  </ul>
+
+  <h2>六、四维综合：拼成一个判断</h2>
+  <div class="core">
+    <p>看任何一根K线，脑中同时跑四问：</p>
+    <ol>
+      <li><strong class="strong">量价</strong>：今天放量还是缩量？涨还是跌？</li>
+      <li><strong class="strong">位置</strong>：这是高位还是低位？（前面是高量还是低量？）</li>
+      <li><strong class="strong">时间</strong>：这现象持续几天了？第一天还是第N天？</li>
+      <li><strong class="strong">性质</strong>：结合融资、板块、消息面，主力还是散户在主导？</li>
+    </ol>
+    <p style="margin-top:0.8rem;">四问答案对齐，才敢行动；对不齐，就观望。</p>
+  </div>
+
+  <div class="homework">
+    <h3>今日作业（实战训练）</h3>
+    <p>用"四维框架"各写一段分析（100字以内，4个维度都点名）：</p>
+    <ol>
+      <li><strong class="strong">工业富联</strong>：8月24日放量下跌，四维判断这是见顶下跌还是下跌中继？</li>
+      <li><strong class="strong">赛腾股份</strong>：8月24日放量翻红，四维判断这是启动信号还是超跌反抽？</li>
+      <li><strong class="strong">任选一只</strong>：天孚/长电/通富/胜宏/环旭里选一个，四维说说它处于启动/洗盘/出货/阴跌哪个阶段。</li>
+    </ol>
+  </div>
+
+  <h2>下一课预告</h2>
+  <p>第4课：<strong class="strong">位置决定性质</strong>——把"位置"彻底讲透：如何给一只股票"定位"（顶部/底部/腰部），以及为什么同一根高量柱在不同位置意义截然相反。这是你第一直觉就在用的课，我们把它变成系统方法。</p>
+
+  <div class="foot">
+    现代量学实战体系 · 讲义第03课 · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎
+  </div>
+
+</div>
+</body>
+</html>
