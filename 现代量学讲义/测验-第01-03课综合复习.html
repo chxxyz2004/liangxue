@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>第1-3课综合复习测验 · 选择题 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 1.2rem 1rem 3rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .header h1 { font-size: 1.5rem; color: #f0c060; }
+  .header .sub { color: #8ba3b8; font-size: 0.9rem; margin-top: 0.3rem; }
+  .tips {
+    background: #1a2230;
+    border: 1px dashed #c0392b;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.88rem;
+    color: #c8d6e0;
+    margin-bottom: 1.5rem;
+  }
+  .tips .strong { color: #f0c060; font-weight: bold; }
+  .q {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 10px;
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+  .q .qn { color: #c0392b; font-weight: bold; margin-right: 6px; }
+  .q .text { font-size: 1.02rem; margin-bottom: 0.8rem; }
+  .q .src { color: #5dade2; font-size: 0.78rem; font-style: italic; }
+  .opts { display: flex; flex-direction: column; gap: 0.6rem; }
+  .opt {
+    background: #1a2230;
+    border: 2px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-size: 0.97rem;
+  }
+  .opt:active { transform: scale(0.99); }
+  .opt.selected { border-color: #f0c060; background: #2a2418; color: #f0c060; }
+  .opt .tag {
+    display: inline-block;
+    width: 26px; height: 26px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid #4a5a6a;
+    margin-right: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #8ba3b8;
+  }
+  .opt.selected .tag { background: #f0c060; color: #141c26; border-color: #f0c060; }
+  .submit-btn {
+    display: block;
+    width: 100%;
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 1.1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 1.5rem 0 0.6rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .submit-btn:active { background: #a93226; }
+  .result {
+    display: none;
+    background: #1a2733;
+    border: 1px solid #f0c060;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  .result .code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f0c060;
+    letter-spacing: 3px;
+    background: #0f1419;
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin: 0.8rem 0;
+    word-break: break-all;
+  }
+  .copy-btn {
+    background: #2e86ab;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .warn { color: #e74c3c; font-size: 0.9rem; margin-top: 0.6rem; }
+  .foot { margin-top: 2.5rem; color: #7a8a9a; font-size: 0.82rem; text-align: center; }
+  .back { display: inline-block; margin-bottom: 1rem; color: #5dade2; text-decoration: none; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back" href="./index.html">← 返回讲义首页</a>
+
+  <div class="header">
+    <h1>第1-3课 综合复习测验</h1>
+    <div class="sub">三先规律 + 量柱七形态 + 四维分析 + 复盘三窗口 · 点选即可，不用打字</div>
+  </div>
+
+  <div class="tips">
+    <span class="strong">怎么交：</span>点选每题的答案（高亮）→ 全部做完点底部红色【提交答案】→ 生成答案代码 → 点【复制答案】→ 回聊天框粘贴发给我批改。共 10 题，目标全对。
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第1题</span>为什么说"成交量是卖出来的，不是买出来的"？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>成交量大的股票一定涨</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>有人愿意抛售，买的人才能成交，量记录的是抛售的完成</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>每笔成交只有买方没有卖方</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>只有主力能制造成交量</div>
+    </div>
+    <div class="src">对应：第1课「卖在买先」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第2题</span>三先规律是哪三条？</div>
+    <div class="opts" data-answer="D">
+      <div class="opt" data-val="A"><span class="tag">A</span>买在卖先 / 量在价先 / 散在庄先</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>卖在买先 / 价在量先 / 涨在跌先</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>价在量先 / 庄在散先 / 涨在跌先</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>卖在买先 / 价在量先 / 庄在散先</div>
+    </div>
+    <div class="src">对应：第1课「三先规律」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第3题</span>某股今天成交量是昨天的 2.3 倍，这根量柱属于七形态里的哪种？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>高量柱（因为它量很大）</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>倍量柱（量约达前一日2倍）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>梯量柱（量能递增）</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>平量柱（量能持平）</div>
+    </div>
+    <div class="src">对应：第2课「量柱判定以量比为准」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第4题</span>一只股票在上涨途中出现"缩量回踩"，这根低量柱最可能代表什么？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>没人要了，赶紧卖</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>惜售，抛压轻（健康信号）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>主力出货了</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>缩量就一定跌</div>
+    </div>
+    <div class="src">对应：第2课「缩量柱的两种读法」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第5题</span>通富微电 8/17 放量涨停（量比2.09）→ 8/18 续量 → 8/19 跌停。这个"倍量启动后夭折"的结构，正确读法是？</div>
+    <div class="opts" data-answer="A">
+      <div class="opt" data-val="A"><span class="tag">A</span>倍量启动遭遇大抛压而失败，是最需警惕的结构</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>放量了就一定继续涨，8/19只是洗盘</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>倍量柱在高位也是启动信号</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>缩量反抽就等于反转</div>
+    </div>
+    <div class="src">数据：新浪财经官方日K，逐日核验 · 第2课「倍量柱」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第6题</span>要判断"现在这个价格是一年里的高位还是低位"，应该看多少根K线？</div>
+    <div class="opts" data-answer="C">
+      <div class="opt" data-val="A"><span class="tag">A</span>3~10根（最近几天）</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>30~60根（一两个月）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>约250根（一整年）</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>不用看历史，只看今天</div>
+    </div>
+    <div class="src">对应：方法课《复盘三窗口》</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第7题</span>要判断"当前处于上升趋势、下降趋势还是箱体震荡的哪一段"，最合适的窗口是？</div>
+    <div class="opts" data-answer="A">
+      <div class="opt" data-val="A"><span class="tag">A</span>30~60根（一~三个月）</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>250根（一年）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>3~10根（最近几天）</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>只看当天分时图</div>
+    </div>
+    <div class="src">对应：方法课《复盘三窗口》</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第8题</span>同样一根"放量上涨"，出现在低位叫启动，出现在高位叫？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>还是启动</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>出货/派发</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>跟位置无关</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>一定横盘整理</div>
+    </div>
+    <div class="src">对应：第3课「维度二：量与位置」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第9题</span>工业富联 8/20-21 缩量企稳，结果 8/24 放量下跌破位。这说明什么？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>企稳确认了，可以买</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>缩量企稳只是"左"猜想，被放量下跌证伪，跌势延续</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>底部到了，放量是主力建仓</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>缩量一定代表反转</div>
+    </div>
+    <div class="src">数据：新浪财经官方日K · 第3课「维度三：量与时间」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第10题</span>赛腾股份 8/24 放量翻红（量比1.38），但板块当天普跌、只有一天信号、尚未确认。最可能的判断是？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>启动信号，赶紧追</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>超跌反抽，需明天确认，不急于抄底</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>主力出货，放量就是卖</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>无量假涨，无法判断</div>
+    </div>
+    <div class="src">数据：新浪财经官方日K · 第3课「维度三/四」</div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn">提交答案</button>
+
+  <div class="result" id="result">
+    <div>你的答案代码：</div>
+    <div class="code" id="code"></div>
+    <button class="copy-btn" id="copyBtn">复制答案</button>
+    <div class="warn" id="warn"></div>
+    <div style="color:#8ba3b8; font-size:0.85rem; margin-top:0.6rem;">复制后回聊天框粘贴发给我批改。</div>
+  </div>
+
+  <div class="foot">现代量学实战体系 · 仅供个人学习使用，不构成投资建议</div>
+
+</div>
+
+<script>
+(function () {
+  var groups = document.querySelectorAll(".opts");
+  var selection = {};
+
+  groups.forEach(function (g, i) {
+    g.querySelectorAll(".opt").forEach(function (o) {
+      o.addEventListener("click", function () {
+        g.querySelectorAll(".opt").forEach(function (x) { x.classList.remove("selected"); });
+        o.classList.add("selected");
+        selection[i] = o.getAttribute("data-val");
+      });
+    });
+  });
+
+  function codeOf() {
+    var codes = [];
+    for (var i = 0; i < groups.length; i++) {
+      var v = selection[i];
+      codes.push(v ? v : "?");
+    }
+    return codes.join("");
+  }
+
+  document.getElementById("submitBtn").addEventListener("click", function () {
+    var missing = [];
+    for (var i = 0; i < groups.length; i++) {
+      if (!selection[i]) missing.push("第" + (i + 1) + "题");
+    }
+    var result = document.getElementById("result");
+    result.style.display = "block";
+    document.getElementById("code").textContent = codeOf();
+    var warn = document.getElementById("warn");
+    if (missing.length) {
+      warn.textContent = "还有未选的题：" + missing.join("、") + "（没选的显示?）";
+    } else {
+      warn.textContent = "";
+    }
+    result.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var text = document.getElementById("code").textContent;
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        document.getElementById("copyBtn").textContent = "已复制 ✓";
+        setTimeout(function () { document.getElementById("copyBtn").textContent = "复制答案"; }, 1500);
+      }, fallback);
+    } else {
+      fallback();
+      document.getElementById("copyBtn").textContent = "已复制 ✓";
+      setTimeout(function () { document.getElementById("copyBtn").textContent = "复制答案"; }, 1500);
+    }
+  });
+})();
+</script>
+</body>
+</html>
