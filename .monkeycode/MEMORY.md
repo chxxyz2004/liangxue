@@ -43,6 +43,15 @@ Entries discovered by the Agent during task execution should follow this format:
 
 [User Instruction Summary]
 - Date: 2026-08-24
+- Context: 用户确认复盘日报需全量历史保留，不允许旧复盘被覆盖或删除
+- Instructions:
+  - 复盘日报永久保留：每一份复盘日报必须存为独立文件，命名格式 `复盘-YYYY-MM-DD.html`，只增不改，严禁覆盖或删除任何历史复盘文件。
+  - 导航首页（index.html）按日期倒序展示复盘列表，新增日期排最上面，历史复盘入口始终保留、始终可点击打开。
+  - 每次复盘完成后，同时提交git并推送到GitHub（`chxxyz2004/liangxue`），形成三重备份：工作区文件 + git历史 + GitHub远程仓库。
+  - 用户明确要求"保留全部复盘日报"，这是硬性约定。
+
+[User Instruction Summary]
+- Date: 2026-08-24
 - Context: 用户在学习量学课程时发现我举例"长电科技8月21日为倍量柱"与实际官方行情数据不符（实为缩量，量比0.79），严厉批评后要求固化承诺
 - Instructions:
   - 严谨承诺1（数据必须核实）：在量学教学、复盘、举例中引用任何个股行情数据（价格、成交量、成交额、量比、融资余额等），必须先通过官方权威渠道（如新浪财经/东方财富等交易所行情接口）逐日拉取原始数据并核实，严禁凭记忆、凭搜索结果摘要或"先有结论后找数据"式的推断下结论。未核实的数据一律不得写入讲义或教学输出。
