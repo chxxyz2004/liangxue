@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>第5课：左证明右确认 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.8rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .case {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  .case .tag {
+    display: inline-block;
+    background: #2a3a4a;
+    color: #5dade2;
+    font-size: 0.78rem;
+    padding: 1px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+  }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 12px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 12px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .homework { background: #0d1a24; border: 1px solid #2e86ab; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .homework h3 { color: #5dade2; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+  .left { color: #5dade2; font-weight: bold; }
+  .right { color: #2ecc71; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">第5课</span>左证明右确认</h1>
+    <div class="sub">现代量学实战体系 · 第一阶段 · 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">案例数据来源：新浪财经官方日K行情接口，逐日核验（截至2026-08-24收盘）</div>
+  </div>
+
+  <h2>一、这一课回答的问题：什么时候才能动手？</h2>
+  <p>学到现在，你会看量柱了、会定位了，但心里一定有个大问题：<span class="mark">"我看到了信号，可到底什么时候买？明天就买，还是再等等？"</span></p>
+  <div class="core">
+    <p class="big">左证明，右确认：左侧是猜想，右侧是确认。右侧确认信号出现前，一切按兵不动。</p>
+    <p>所谓<span class="left">左</span>，是你第一眼看到的那个"苗头"——比如一根放量阳线、一次缩量企稳。<br>
+    所谓<span class="right">右</span>，是之后几天价格结构给出的"证实"——比如放量之后连续放量上涨、缩量企稳后真的放量拉升。</p>
+    <p style="margin-top:0.8rem;">左是"可能"，右是"确定"。<strong class="strong">用左侧信号就动手，是赌博；等右侧确认再动手，是交易。</strong></p>
+  </div>
+
+  <h2>二、为什么要等右侧？因为左侧会骗人</h2>
+  <p>量学第三课讲过"一天的量是左（猜想），持续的量才是右（确认）"。这一课把它上升到操作纪律。用你的股票池，看两个最典型的"左侧骗局"：</p>
+
+  <div class="case">
+    <span class="stock">骗局一：缩量企稳（左）→ 放量破位（右证伪）</span><span class="tag">工业富联 601138</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月20日缩量企稳（量比0.56）、8月21日温和小涨（量比1.02）——这是教科书级的<span class="left">左侧信号"缩量企稳"</span>。如果只看这里就买，你会以为"跌不动了，要反弹了"。</p>
+    <p>但8月24日：<strong class="strong">放量下跌（量比1.23），收60.40元</strong>——右侧来的是<span class="right">反向确认"放量破位"</span>，前面两天的缩量企稳彻底被证伪。</p>
+    <p>教训：<strong class="strong">缩量企稳只是"左"，它骗人了。等右侧确认（放量上涨）再动手，你就躲过了这次下跌。</strong></p>
+  </div>
+
+  <div class="case">
+    <span class="stock">骗局二：放量翻红（左）→ 次日见分晓（右待确认）</span><span class="tag">赛腾股份 603283</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月19日跌停后，8月24日放量翻红（量比1.38，涨1.82%）——这是<span class="left">左侧信号"超跌反抽"</span>。</p>
+    <p>它能变成反转吗？<strong class="strong">不知道。需要"右"来确认——次日（8月25日）能否继续放量上涨，站上前一天的高点。</strong>在那之前，它只是"反弹"，随时可能夭折（参考通富微电8/17倍量启动→8/19跌停的先例）。</p>
+    <p>纪律：<strong class="strong">左侧信号出现，可以先观察、可以小仓位试错，但重仓必须等右侧确认。</strong></p>
+  </div>
+
+  <h2>三、什么是"右侧确认"？——可操作的三条标准</h2>
+  <p>"等右侧"不是傻等，是要盯住三个可验证的标准。我们以"缩量企稳后的买点"为例：</p>
+  <table>
+    <tr><th>确认条件</th><th>含义</th><th>用工业富联8/24检验</th></tr>
+    <tr><td><strong class="strong">条件1：量能放大</strong></td><td>确认那天成交量明显放大（量比通常≥1.3）</td><td>8/24量比1.23，<span style="color:#e74c3c;">未达</span>，且方向向下</td></tr>
+    <tr><td><strong class="strong">条件2：价格突破</strong></td><td>确认那天价格突破左侧的关键位（如企稳平台高点、5日均线）</td><td>8/24收60.40，<span style="color:#e74c3c;">跌破</span>企稳平台，反向</td></tr>
+    <tr><td><strong class="strong">条件3：方向一致</strong></td><td>放量必须配合上涨方向（放量上涨才叫确认）</td><td>8/24放量却下跌，<span style="color:#e74c3c;">方向反了</span></td></tr>
+  </table>
+  <div class="core">
+    <p class="big">右侧确认 = 放量 + 突破 + 方向对，三者齐备才动手。</p>
+    <p>如果放量了但没突破，不算确认；突破了但没放量，也不算确认；放量突破却是阴线方向向下，更是反向信号。<strong class="strong">三条件缺一，宁可再等一天。</strong></p>
+  </div>
+
+  <h2>四、正反两例：右侧确认 vs 右侧证伪</h2>
+  <div class="case">
+    <span class="stock">正面案例：通富微电 8月17-18日</span><span class="tag">左侧启动 → 右侧确认</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月17日：倍量涨停（量比2.09）收69.26——<span class="left">左侧信号"倍量启动"</span>。</p>
+    <p>8月18日：<strong class="strong">继续放量上涨（量比1.24，收70.66）</strong>——条件1量能放大✓、条件2突破新高✓、条件3方向向上✓。<span class="right">这是标准的右侧确认</span>，符合"放量+突破+方向对"。</p>
+    <p>看懂这一天的意义：8/17只是告诉你"有资金进来了"，8/18才告诉你"资金连续两天在买"。<strong class="strong">左侧让你关注，右侧让你行动。</strong></p>
+  </div>
+  <div class="case">
+    <span class="stock">反面案例：通富微电 8月19日</span><span class="tag">右侧证伪，启动失败</span>
+    <p class="data-src">数据来源：新浪财经官方日K，逐日核验</p>
+    <p>8月19日：<strong class="strong">放量跌停（量比0.82但为跌停量），收63.59</strong>——右侧不仅没来确认，反而来了反向信号。<span class="right">确认失败 = 8/17的启动猜想被推翻</span>。</p>
+    <p>这就是为什么"左证明右确认"救命的道理：<strong class="strong">如果你在8/17倍量当天就冲进去，8/19一个跌停直接套住；如果等8/18确认再进，至少能看清方向；如果连8/19的证伪都看到了，就根本不会碰。</strong></p>
+  </div>
+
+  <h2>五、左证明右确认 × 量学的四步纪律</h2>
+  <div class="core">
+    <p>把前四课串起来，就是一套完整的"看-定-读-等-动"流程：</p>
+    <ol>
+      <li><strong class="strong">看位置</strong>（第4课）：250日身位在哪个区？60日处于哪一段？——先定位。</li>
+      <li><strong class="strong">读量柱</strong>（第2课）：这根量柱是什么形态？量比多少？——读量。</li>
+      <li><strong class="strong">四维分析</strong>（第3课）：量价、位置、时间、性质四问——判断性质。</li>
+      <li><strong class="strong">等右侧确认</strong>（第5课）：放量+突破+方向对，三条件齐备——才动手。</li>
+    </ol>
+    <p style="margin-top:0.8rem;">前四步都可能看错，但第五步"等确认"能帮你把错误的代价降到最低。<strong class="strong">右侧确认不是万无一失，但它是亏损最小化的纪律。</strong></p>
+  </div>
+
+  <h2>六、给新手的三句话</h2>
+  <div class="core">
+    <p>1. <strong class="strong">看到信号先高兴一秒钟，然后问：这是左还是右？</strong></p>
+    <p>2. <strong class="strong">左侧信号只用来"关注"，右侧确认才用来"行动"。</strong></p>
+    <p>3. <strong class="strong">宁可错过，不可做错。错过只是没赚，做错是真亏。</strong></p>
+  </div>
+
+  <div class="homework">
+    <h3>今日作业（第5课 · 选择题版稍后上线）</h3>
+    <p>先动手想一想（不用打字）：</p>
+    <ol>
+      <li>工业富联8/20的"缩量企稳"是左还是右？它最后被证实了吗？</li>
+      <li>赛腾股份8/24的"放量翻红"，要等到什么才算右侧确认？</li>
+      <li>通富微电8/18满足右侧确认三条件吗？8/19呢？</li>
+    </ol>
+  </div>
+
+  <h2>下一课预告</h2>
+  <p>第6课：<strong class="strong">量线与黄金线</strong>——把"位置"从模糊的感觉变成具体的"线"：关键量柱的顶底画出的线，就是主力攻防的生命线。你会学会用量线看清支撑与压力。</p>
+
+  <div class="foot">
+    现代量学实战体系 · 讲义第05课 · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎<br>
+    <div class="disclaimer" style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部案例数据均来自新浪财经官方日K行情接口，含逐日量比计算，不包含任何未经验证的数据。</div>
+  </div>
+
+</div>
+</body>
+</html>
