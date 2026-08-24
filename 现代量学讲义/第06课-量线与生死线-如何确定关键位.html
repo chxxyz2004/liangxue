@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>第6课：量线与生死线——如何确定关键位 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 940px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.7rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .case { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 10px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 10px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+  .ok { color: #2ecc71; font-weight: bold; }
+  .line { color: #e74c3c; font-weight: bold; }
+  .note { color: #e8b04a; font-weight: bold; }
+
+/* ===== 手机卡片化表格（响应式，窄屏自动生效，桌面不受影响） ===== */
+@media (max-width: 640px) {
+  table, tbody, tr, th, td { display: block; box-sizing: border-box; }
+  tr.card-head { display: none; }
+  tbody tr {
+    border: 1px solid #2a3a4a;
+    border-radius: 10px;
+    margin: 0 0 12px 0;
+    padding: 6px 14px 10px;
+    background: #141c26;
+  }
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    border: none;
+    border-bottom: 1px dashed #2f3f4f;
+    padding: 7px 0;
+  }
+  tbody td:last-child { border-bottom: none; }
+  tbody td::before {
+    content: attr(data-label);
+    color: #8ba3b8;
+    font-size: 0.82em;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  tbody tr td:first-child::before { display: none; }
+  tbody tr td:first-child {
+    color: #f0c060;
+    font-weight: 700;
+    font-size: 1.05em;
+    border-bottom: 1px solid #2f3f4f;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+}
+/* ===== 手机卡片化表格结束 ===== */
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">第6课</span>量线与生死线——如何确定关键位</h1>
+    <div class="sub">现代量学实战体系 · 回答"右确认的锚从哪来" · 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">数据来源：本地行情数据库（8股=腾讯证券前复权接口，与看盘软件一致），截至2026-08-24收盘，逐日核验；均线为前复权收盘价计算</div>
+  </div>
+
+  <h2>一、为什么必须先定线</h2>
+  <p>上一课说了：右确认 = 一个左信号 + 一条生死线，盯着它直到站上或跌破。<span class="mark">但你一定会追问：生死线从哪来？凭什么画在那儿？</span></p>
+  <div class="warn">
+    <p><strong class="strong">如果生死线是随手画的，右确认就是空中楼阁。</strong>你盯一条自己都不信的线，等于没盯——那不是纪律，是自欺欺人。</p>
+    <p>所以这一课，把"定线"这一步彻底讲透。定线定得好，右确认才有意义。</p>
+  </div>
+
+  <h2>二、生死线的本质：多空分水岭 + 集体记忆</h2>
+  <p>想象股价是一只皮球，在房间里弹。天花板是顶部、地板是底部，中间还有一层<span class="strong">电网</span>——那是很多人买进卖出的<strong class="strong">成本区</strong>。</p>
+  <p>皮球弹到电网附近时：</p>
+  <ul>
+    <li><span class="line">下面套牢的人</span>：终于要回本了，赶紧跑 → 抛压；</li>
+    <li><span class="ok">上面空仓的人</span>：跌到这儿了，够便宜 → 承接。</li>
+  </ul>
+  <p>两边一碰，皮球就在这里反复撞，撞完了决定方向。<strong class="strong">这条"电网"，就是生死线。</strong></p>
+  <div class="core">
+    <p class="big">为什么生死线反复起效？因为人是有记忆的。</p>
+    <ul>
+      <li>套牢的人记得自己多少钱买的——<span class="mark">回本就跑</span>；</li>
+      <li>空仓的人记得上次这里没跌下去——<span class="mark">这次敢接</span>。</li>
+    </ul>
+    <p style="margin-top:0.8rem;">结论：<strong class="strong">多空双方都认账的位置，才叫生死线。</strong>一条线只有你自己看得见、别人都看不见，它就不会起效——因为别人的买卖根本不会参考它。</p>
+  </div>
+
+  <h2>三、四把尺子，按顺序用</h2>
+
+  <h3>尺子一：最近的箱体边沿（前高/前低）——最常用</h3>
+  <p>找出最近这一波行情里，价格<strong class="strong">反复触到、却没过去</strong>的位置。被反复确认过的位置，就是"集体记忆"最强的位置。</p>
+  <div class="case">
+    <span class="stock">工业富联（601138）：箱体下沿 64.51</span><span class="tag">右证伪案例</span>
+    <p class="data-src">数据来源：本地行情数据库，前复权，逐日核验</p>
+    <p>8/19破位前，股价在<strong class="strong">64.51 ~ 70.97</strong> 的箱体里来回晃了一个多星期，箱体下沿<strong class="strong">64.51</strong>（8/12最低价）被多次触碰未破。</p>
+    <p>8/19放量跌破64.51（量比1.06、收61.83）= 箱体下沿失守 = <span class="line">右证伪</span>。之后8/20-8/21在地量（量比0.56、1.02）下挣扎，8/24放量再破61.5，一路下行。</p>
+  </div>
+
+  <h3>尺子二：高量柱的实顶——量学最核心</h3>
+  <p>找最近<strong class="strong">量最大（量比最大）</strong>的那根K线，它的<strong class="strong">实顶（收盘价）</strong>就是生死线。口诀：<span class="mark">"高量不破，后市可期"</span>。</p>
+  <p>为什么？高量柱那天换手巨大、筹码大量易主——<strong class="strong">那根K线的价位，就是新主力+接盘者的平均成本区</strong>。跌破它 = 这批人全被套 = 趋势坏了。</p>
+  <div class="case">
+    <span class="stock">通富微电（002156）：8/17高量柱实顶 69.26</span><span class="tag">启动→证伪案例</span>
+    <p class="data-src">数据来源：本地行情数据库，前复权，逐日核验</p>
+    <p>8/17倍量涨停（量比2.09），当天换手巨大，收69.26。<strong class="strong">69.26就是那批"新主人"的成本线</strong>——如果启动是真，就不该跌破它。</p>
+    <p>8/18放量上攻到72.56（右确认），8/19却<span class="line">缩量跌停跌破69.26</span>（收63.59，量比0.82）。跌破高量柱实顶 = 新主人也被套 = <span class="line">启动证伪</span>，必须走人。</p>
+  </div>
+
+  <h3>尺子三：均线（20日/60日）——趋势温度计</h3>
+  <ul>
+    <li><strong class="strong">60日线 = 大生命线</strong>：收盘站稳之上 = 中长期强势；跌破 = 中长期转弱。</li>
+    <li><strong class="strong">20日线 = 短期生死线</strong>：短线进出的分水岭。</li>
+  </ul>
+  <p>均线适合当"宏观背景"验证，和尺子一、二配合使用。多把尺子指到同一个位置时，那条线特别硬。</p>
+  <div class="case">
+    <span class="stock">工业富联（601138）：均线定线（截至8/24）</span><span class="tag">前复权计算</span>
+    <table>
+      <tr><th>尺子</th><th>关键位</th><th>判定（当前价60.40）</th></tr>
+      <tr><td>20日线</td><td>62.79</td><td>已跌破</td></tr>
+      <tr><td>60日线</td><td>66.54</td><td>早已跌破，中长期转弱</td></tr>
+      <tr><td>箱体下沿</td><td>64.51</td><td>已跌破，右证伪</td></tr>
+    </table>
+    <p class="data-src">数据来源：本地行情数据库，前复权，20/60日均线为截至8/24的收盘价均值</p>
+    <p>三条尺子全指向下方——<strong class="strong">均线死叉向下、箱体破位、价格在20/60日线之下</strong>。这种"多线合一"的位置，就是最硬的生死线：下方只剩60元整数关（心理位）作为最后的观察位。</p>
+  </div>
+
+  <h3>尺子四：缺口 + 整数关口——补充</h3>
+  <ul>
+    <li><strong class="strong">向下跳空缺口的下沿</strong>：缺口是恐慌留下的"伤口"，价格反弹回来，上方套牢盘会砸，是压力位；</li>
+    <li><strong class="strong">整数关口（60、50、100）</strong>：心理价位，散户和主力都会盯，往往有挂单，是隐形支撑/压力。</li>
+  </ul>
+
+  <h2>四、三条铁律（画线之前先背下来）</h2>
+  <div class="core">
+    <p><strong class="strong">铁律一：取近不取远。</strong>取最近一次碰撞的位置，别去翻几百天前的老黄历。远了筹码都换光了，"记忆"失效。</p>
+    <p><strong class="strong">铁律二：取显不取冷。</strong>取一眼能看到的——箱体边沿、大阳大阴线、整数位。别画冷门指标算出来的线，没人认。</p>
+    <p><strong class="strong">铁律三：一条就够。</strong>只画一条最关键的，最多两条（一条进攻线、一条防守线）。画了一堆线 = 等于没画——你会永远"既上又下"，自相矛盾。</p>
+  </div>
+
+  <h2>五、三步实操法（小白落地版）</h2>
+  <p>以后看任何一只股票，花一分钟定线：</p>
+  <ol>
+    <li><strong class="strong">画箱体</strong>：日K图上，找到最近这一波的高点和低点，画出箱体边沿（前高/前低）；</li>
+    <li><strong class="strong">找高量柱</strong>：找出最近量最大那根K线，记下它的收盘价（实顶）；</li>
+    <li><strong class="strong">对照验证</strong>：看这个价位是不是恰好靠近60日线或整数关口——<span class="mark">多线合一 = 铜墙铁壁</span>，取它；不重合，就取箱体边沿或高量柱实顶，哪个更近、更显眼用哪个。</li>
+  </ol>
+
+  <h2>六、用收盘价判定（和右确认连起来）</h2>
+  <p>生死线定好了，纪律就一句话——<strong class="strong">用收盘价判定，别管盘中毛刺</strong>：</p>
+  <ul>
+    <li><span class="ok">收盘站上生死线</span> → 右确认 → 试探性进场；</li>
+    <li><span class="line">收盘跌破生死线</span> → 右证伪 → 放弃/离场；</li>
+    <li>没上没下 → <strong class="strong">空仓等，等本身就是答案</strong>。</li>
+  </ul>
+  <div class="core">
+    <p class="big">一句话记住：生死线不是算出来的，是"最近、最显眼、量最大"的那个价位——多空双方都认账的位置，才是真线。</p>
+  </div>
+
+  <h2>下一课预告</h2>
+  <p>第7课：<strong class="strong">黄金柱与高量柱——量线体系的进阶定线工具</strong>。这四把尺子是"入门版"，量学还有更精细的量线工具（黄金柱实顶实底、凹口平衡线、精准峰顶线），能让你的生死线更"精准"。先把四把尺子用熟，再升级。</p>
+
+  <div class="foot">
+    现代量学实战体系 · 讲义第06课 · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎<br>
+    <div style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部数据来自本地行情数据库（8股=腾讯证券前复权接口，与看盘软件一致；指数=新浪官方接口），逐日核验，不包含任何未经验证的数据。</div>
+  </div>
+
+</div>
+<script>
+/* 手机卡片化表格：自动从表头读标签，给数据单元格加 data-label */
+(function(){
+  function initCards(){
+    document.querySelectorAll('table').forEach(function(t){
+      var rows = t.querySelectorAll('tr');
+      if (!rows.length) return;
+      var ths = [];
+      if (rows[0].querySelectorAll('th').length) {
+        rows[0].querySelectorAll('th').forEach(function(th){
+          ths.push(th.textContent.replace(/\s+/g,' ').trim());
+        });
+        rows[0].classList.add('card-head');
+      }
+      rows.forEach(function(tr){
+        var tds = tr.querySelectorAll('td');
+        tds.forEach(function(td,i){ if (ths[i]) td.setAttribute('data-label', ths[i]); });
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCards);
+  } else {
+    initCards();
+  }
+})();
+</script>
+</body>
+</html>
