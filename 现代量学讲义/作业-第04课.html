@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>第4课作业 · 选择题 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 1.2rem 1rem 3rem;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .header h1 { font-size: 1.5rem; color: #f0c060; }
+  .header .sub { color: #8ba3b8; font-size: 0.9rem; margin-top: 0.3rem; }
+  .tips {
+    background: #1a2230;
+    border: 1px dashed #c0392b;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.88rem;
+    color: #c8d6e0;
+    margin-bottom: 1.5rem;
+  }
+  .tips .strong { color: #f0c060; font-weight: bold; }
+  .q {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 10px;
+    padding: 1.3rem 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+  .q .qn { color: #c0392b; font-weight: bold; margin-right: 6px; }
+  .q .text { font-size: 1.02rem; margin-bottom: 0.8rem; }
+  .q .src { color: #5dade2; font-size: 0.78rem; font-style: italic; }
+  .opts { display: flex; flex-direction: column; gap: 0.6rem; }
+  .opt {
+    background: #1a2230;
+    border: 2px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-size: 0.97rem;
+  }
+  .opt:active { transform: scale(0.99); }
+  .opt.selected { border-color: #f0c060; background: #2a2418; color: #f0c060; }
+  .opt .tag {
+    display: inline-block;
+    width: 26px; height: 26px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid #4a5a6a;
+    margin-right: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #8ba3b8;
+  }
+  .opt.selected .tag { background: #f0c060; color: #141c26; border-color: #f0c060; }
+  .submit-btn {
+    display: block;
+    width: 100%;
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 1.1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 1.5rem 0 0.6rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .submit-btn:active { background: #a93226; }
+  .result {
+    display: none;
+    background: #1a2733;
+    border: 1px solid #f0c060;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  .result .code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f0c060;
+    letter-spacing: 3px;
+    background: #0f1419;
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin: 0.8rem 0;
+    word-break: break-all;
+  }
+  .copy-btn {
+    background: #2e86ab;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .warn { color: #e74c3c; font-size: 0.9rem; margin-top: 0.6rem; }
+  .foot { margin-top: 2.5rem; color: #7a8a9a; font-size: 0.82rem; text-align: center; }
+  .back { display: inline-block; margin-bottom: 1rem; color: #5dade2; text-decoration: none; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back" href="./index.html">← 返回讲义首页</a>
+
+  <div class="header">
+    <h1>第4课作业 · 选择题</h1>
+    <div class="sub">位置决定性质 · 250日位置百分位 · 三区定位 · 点选即可，不用打字</div>
+  </div>
+
+  <div class="tips">
+    <span class="strong">怎么交作业：</span>每道题点一下你选的答案（会自动高亮）→ 全部做完点底部红色【提交答案】→ 生成答案代码 → 点【复制答案】→ 回聊天框粘贴发给我批改。共 6 题，全部基于250日官方行情核验数据。
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第1题</span>一只股票当前价30元，250日最高价100元、最低价20元。它的位置百分位是多少？属于哪个区？</div>
+    <div class="opts" data-answer="C">
+      <div class="opt" data-val="A"><span class="tag">A</span>30%，低位区</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>25%，低位区</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>12.5%，低位区</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>33.3%，低位区</div>
+    </div>
+    <div class="src">公式：(30−20)÷(100−20)×100% = 12.5% · 第4课「位置百分位」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第2题</span>位置百分位计算中，"250日身位"的作用是什么？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>判断今天成交量大小</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>判断当前价在一整年里的高低位置，给"位置"一个数字坐标</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>预测明天涨跌</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>判断主力是谁</div>
+    </div>
+    <div class="src">第4课「怎么定位」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第3题</span>你的8只股票里，哪只的位置百分位最高（最接近一年高位）？</div>
+    <div class="opts" data-answer="A">
+      <div class="opt" data-val="A"><span class="tag">A</span>通富微电（59%，腰部）</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>天孚通信（34%，中下部）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>淳中科技（8%，底部区）</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>赛腾股份（21%，低位区）</div>
+    </div>
+    <div class="src">第4课「8股全家桶定位表」· 新浪财经250日官方数据</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第4题</span>天孚通信一年最高525元、最低105.84元，当前249.50元（百分位34%）。之前有人把它8/13的上涨误判为"高位见顶"，正确读法是？</div>
+    <div class="opts" data-answer="D">
+      <div class="opt" data-val="A"><span class="tag">A</span>确实是高位见顶，主力在天量出货</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>它从525腰斩到249，8/13只是普通反弹，没意义</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>8/13的上涨是"高位见顶"，8/24放量下跌是顶部崩盘开始</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>34%身位属于中下部，8/13上涨是"超跌后的大级别反弹"，8/24放量下跌定性为"反弹结束、回落继续"</div>
+    </div>
+    <div class="src">第4课「案例二：天孚通信」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第5题</span>工业富联（250日百分位47%，腰部）8月24日放量下跌（量比1.23），四维+位置综合定性为？</div>
+    <div class="opts" data-answer="C">
+      <div class="opt" data-val="A"><span class="tag">A</span>底部启动，放量就是机会</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>高位见顶出货，赶紧清仓</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>腰部+下降段 = 下跌中继，前两日缩量企稳被证伪，跌势延续</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>缩量企稳确认，可以抄底</div>
+    </div>
+    <div class="src">第4课「案例一：工业富联」+ 第3课四维分析</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第6题</span>通富微电8月17日倍量涨停（量比2.09）是"启动"，8月19日放量跌停定性为"出货"。同样是放量，为什么性质相反？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>因为8/19那天大盘跌了，跟位置无关</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>因为8/17在启动位（量价齐升），8/19在冲高后的高位（放量=把筹码递给追高者），位置变了性质就变</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>因为8/17的量比更大，量比大就是启动</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>因为8/19跌停了，跌停就是出货</div>
+    </div>
+    <div class="src">第4课「案例三：通富微电」</div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn">提交答案</button>
+
+  <div class="result" id="result">
+    <div>你的答案代码：</div>
+    <div class="code" id="code"></div>
+    <button class="copy-btn" id="copyBtn">复制答案</button>
+    <div class="warn" id="warn"></div>
+    <div style="color:#8ba3b8; font-size:0.85rem; margin-top:0.6rem;">复制后回聊天框粘贴发给我批改，不用打字。</div>
+  </div>
+
+  <div class="foot">现代量学实战体系 · 仅供个人学习使用，不构成投资建议</div>
+
+</div>
+
+<script>
+(function () {
+  var groups = document.querySelectorAll(".opts");
+  var selection = {};
+
+  groups.forEach(function (g, i) {
+    g.querySelectorAll(".opt").forEach(function (o) {
+      o.addEventListener("click", function () {
+        g.querySelectorAll(".opt").forEach(function (x) { x.classList.remove("selected"); });
+        o.classList.add("selected");
+        selection[i] = o.getAttribute("data-val");
+      });
+    });
+  });
+
+  function codeOf() {
+    var codes = [];
+    for (var i = 0; i < groups.length; i++) {
+      var v = selection[i];
+      codes.push(v ? v : "?");
+    }
+    return codes.join("");
+  }
+
+  document.getElementById("submitBtn").addEventListener("click", function () {
+    var missing = [];
+    for (var i = 0; i < groups.length; i++) {
+      if (!selection[i]) missing.push("第" + (i + 1) + "题");
+    }
+    var result = document.getElementById("result");
+    result.style.display = "block";
+    document.getElementById("code").textContent = codeOf();
+    var warn = document.getElementById("warn");
+    if (missing.length) {
+      warn.textContent = "还有未选的题：" + missing.join("、") + "（没选的显示?）";
+    } else {
+      warn.textContent = "";
+    }
+    result.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var text = document.getElementById("code").textContent;
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        document.getElementById("copyBtn").textContent = "已复制 ✓";
+        setTimeout(function () { document.getElementById("copyBtn").textContent = "复制答案"; }, 1500);
+      }, fallback);
+    } else {
+      fallback();
+      document.getElementById("copyBtn").textContent = "已复制 ✓";
+      setTimeout(function () { document.getElementById("copyBtn").textContent = "复制答案"; }, 1500);
+    }
+  });
+})();
+</script>
+</body>
+</html>
