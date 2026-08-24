@@ -69,3 +69,12 @@ Entries discovered by the Agent during task execution should follow this format:
   - 严谨承诺4（量学第一品格）：量学的第一品格是严谨，"宁缺毋滥"——当无法获取或核实到数据时，宁可明确标注"未核实/数据待补"，也不可编造或套用貌似合理的数值。
   - 用户对"信口开河胡扯数据"零容忍，这是用户最重视的教学底线。
 
+[User Instruction Summary]
+- Date: 2026-08-24
+- Context: 用户因多次数据出错，要求建立本地行情数据库，不再每次临时拉数据
+- Instructions:
+  - 行情数据一律先本地化：`/workspace/行情数据库/kline/` 下已存8只关注股票+3大盘指数的300个交易日日K数据（新浪财经官方接口，覆盖一年有余，截至2026-08-24）。
+  - 更新方式：每天收盘后（约15:30）运行 `python3 /workspace/行情数据库/update_data.py` 全量更新当日数据；讲课/复盘需要数据时直接 `python3 /workspace/行情数据库/query.py` 读本地库，禁止临时凭记忆或临时搜索拼数据。
+  - 读库工具用法：`query.py`（8股总览）、`query.py 601138 30`（最近30日含量比/涨跌幅）、`query.py --pos`（250日位置百分位）。
+  - 数据已提交git并推送GitHub，形成三重备份；更新后应重新提交推送。
+
