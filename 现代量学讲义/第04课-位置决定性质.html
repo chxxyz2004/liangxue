@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>第4课：位置决定性质 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.8rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .case {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  .case .tag {
+    display: inline-block;
+    background: #2a3a4a;
+    color: #5dade2;
+    font-size: 0.78rem;
+    padding: 1px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+  }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 12px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 12px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .homework { background: #0d1a24; border: 1px solid #2e86ab; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .homework h3 { color: #5dade2; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+  .pct-high { color: #e74c3c; font-weight: bold; }
+  .pct-mid { color: #f0c060; font-weight: bold; }
+  .pct-low { color: #2ecc71; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">第4课</span>位置决定性质</h1>
+    <div class="sub">现代量学实战体系 · 第一阶段 · 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">案例数据来源：新浪财经官方日K行情接口，拉取250个交易日数据逐日核验（截至2026-08-24收盘）</div>
+  </div>
+
+  <h2>一、为什么说"位置决定性质"是量学的命门？</h2>
+  <p>前三课你已经掌握：量是卖出来的、量柱分七形态、看量要四维。但你可能还有个困惑——<span class="mark">同样一根"倍量上涨"，为什么有时是启动、有时是出货？</span></p>
+  <div class="core">
+    <p class="big">答案就四个字：位置决定性质。</p>
+    <p>一根量柱本身是中性的，它的"好坏"完全由它<strong class="strong">站的位置</strong>决定。同一根高量柱：<br>
+    站在<strong class="strong">底部</strong>——是主力吸筹的痕迹；<br>
+    站在<strong class="strong">顶部</strong>——是主力出货的痕迹；<br>
+    站在<strong class="strong">腰部</strong>——可能是洗盘，也可能是下跌中继。</p>
+    <p style="margin-top:0.8rem;">看不懂位置，就看不懂量。这是量学从"看量"升维到"看位"的关键一课。</p>
+  </div>
+
+  <h2>二、怎么"定位"？——三窗口给你的位置坐标系</h2>
+  <p>方法课《复盘三窗口》我们已经学过：250看身位、60看趋势、10看量柱。定位，就是把三个窗口串起来：</p>
+  <ol>
+    <li><strong class="strong">先看250日身位（一年）</strong>——确定它在一年里是"高、中、低"哪个区间；</li>
+    <li><strong class="strong">再看60日趋势（两三月）</strong>——确定它处于"上升、下降、箱体"的哪一段；</li>
+    <li><strong class="strong">最后看10日量柱（几天）</strong>——在确定的位置上读量柱的性质。</li>
+  </ol>
+  <p>三句口诀：<strong class="strong">250定身位，60定阶段，10定量柱。位置定好了，量柱才有意义。</strong></p>
+
+  <h2>三、250日"位置百分位"：给身位一个数字</h2>
+  <p>身位不能靠感觉，要算。方法很简单：<span class="mark">当前位置百分位 = (当前价 − 250日最低) ÷ (250日最高 − 250日最低) × 100%</span></p>
+  <ul>
+    <li>百分位 <span class="pct-high">≥70%</span>：高位区（顶部区域）——放量要当心出货</li>
+    <li>百分位 <span class="pct-mid">40%~70%</span>：腰部区（半山腰）——放量可能是洗盘也可能是中继</li>
+    <li>百分位 <span class="pct-low">&lt;40%</span>：低位区（底部区域）——放量更可能是吸筹/启动</li>
+  </ul>
+
+  <h2>四、用你的8只股票实战"定位"（数据全部核验）</h2>
+  <p>下面是截至8月24日收盘，8只股票按250日位置百分位排序的"全家桶定位表"：</p>
+  <table>
+    <tr><th>股票</th><th>当前价</th><th>250日高</th><th>250日低</th><th>位置百分位</th><th>身位定性</th></tr>
+    <tr><td>通富微电 002156</td><td>61.24</td><td>84.70</td><td>28.00</td><td class="pct-mid">59%</td><td>腰部</td></tr>
+    <tr><td>长电科技 600584</td><td>73.80</td><td>113.87</td><td>34.58</td><td class="pct-mid">49%</td><td>腰部</td></tr>
+    <tr><td>工业富联 601138</td><td>60.40</td><td>84.95</td><td>38.95</td><td class="pct-mid">47%</td><td>腰部</td></tr>
+    <tr><td>天孚通信 300394</td><td>249.50</td><td>525.00</td><td>105.84</td><td class="pct-low">34%</td><td>中下部</td></tr>
+    <tr><td>胜宏科技 300476</td><td>245.00</td><td>402.60</td><td>177.88</td><td class="pct-low">30%</td><td>中下部</td></tr>
+    <tr><td>环旭电子 601231</td><td>25.90</td><td>49.38</td><td>16.69</td><td class="pct-low">28%</td><td>低位区</td></tr>
+    <tr><td>赛腾股份 603283</td><td>47.60</td><td>88.88</td><td>36.44</td><td class="pct-low">21%</td><td>低位区</td></tr>
+    <tr><td>淳中科技 603516</td><td>95.88</td><td>267.60</td><td>80.00</td><td class="pct-low">8%</td><td>底部区</td></tr>
+  </table>
+  <p class="data-src">数据来源：新浪财经官方日K行情接口，250日数据，截至2026-08-24收盘，逐日核验</p>
+
+  <h2>五、位置决定性质：三组真实案例</h2>
+
+  <h3>案例一：同样"放量下跌"，不同位置，两种性质</h3>
+  <div class="case">
+    <span class="stock">工业富联（601138）8月24日</span><span class="tag">腰部放量下跌</span>
+    <p class="data-src">数据来源：新浪财经官方日K，250日数据核验</p>
+    <p>8月24日收60.40元，量比1.23放量下跌。它的位置：<strong class="strong">250日百分位47%，腰部</strong>；60日看处于"从84.95高点一路阴跌"的下降段中后期。</p>
+    <p>位置定性：<strong class="strong">腰部 + 下降段 = 放量下跌大概率是"下跌中继"</strong>。前两日缩量企稳（8/20量比0.56）只是"跌不动"，8/24放量下破就是确认跌势延续。</p>
+  </div>
+  <div class="case">
+    <span class="stock">淳中科技（603516）8月18日</span><span class="tag">底部放量冲高</span>
+    <p class="data-src">数据来源：新浪财经官方日K，250日数据核验</p>
+    <p>8月18日收102.00元，量比1.95放量冲高。它的位置：<strong class="strong">250日百分位8%，底部区</strong>（一年最低80.00，现价距最低仅20%）。</p>
+    <p>位置定性：<strong class="strong">底部区 + 放量冲高 = 有资金尝试进场</strong>，性质与工业富联完全不同——一个是跌途中的放量，一个是跌到底部的放量。<strong class="strong">同样的"放量"，位置决定它是"逃命信号"还是"试探信号"。</strong></p>
+  </div>
+
+  <h3>案例二：天孚通信——8/13那波上涨，到底是"高位见顶"还是"底部反弹"？</h3>
+  <div class="case">
+    <span class="stock">天孚通信（300394）</span><span class="tag">用250日身位纠正直觉</span>
+    <p class="data-src">数据来源：新浪财经官方日K，250日数据核验</p>
+    <p>只看8月的波段：8/13放量上涨（量比1.21）收257.16 → 8/17冲高291.8 → 8/18滞涨295 → 8/24放量下跌（量比1.28）收249.50。很多人会脱口而出：<span class="mark">"高位见顶，主力出货"</span>。</p>
+    <p>但把镜头拉到250日身位：<strong class="strong">天孚通信一年最低105.84、最高525.00，当前249.50，位置百分位仅34%（中下部）。它已经从525元几乎腰斩。</strong></p>
+    <p>位置定性：<strong class="strong">8/13那波上涨，是"超跌后的大级别反弹"，不是"高位见顶"</strong>。真正的顶部在更早的高点区域。8/24的放量下跌，定性是<strong class="strong">"反弹结束、回落继续"</strong>，而不是"从顶部开始崩盘"。</p>
+    <p style="color:#e74c3c;">这就是"位置决定性质"最有价值的地方：<strong>不拉250日身位，你会把一次反弹误判成顶部，从而在错误的位置做错误的决策。</strong></p>
+  </div>
+
+  <h3>案例三：通富微电——同一个"倍量"，不同位置两次定性</h3>
+  <div class="case">
+    <span class="stock">通富微电（002156）8月17日与8月19日</span><span class="tag">量柱相同、位置不同、性质相反</span>
+    <p class="data-src">数据来源：新浪财经官方日K，250日数据核验</p>
+    <p>8月17日：<strong class="strong">倍量柱（量比2.09）涨停收69.26</strong>。位置：从55元平台启动的中低位（250日百分位约59%腰部，但60日看刚启动）。定性：<strong class="strong">腰部启动信号</strong>，量价齐升，健康。</p>
+    <p>8月19日：<strong class="strong">放量跌停收63.59</strong>。位置：已冲高到72.56后回落。定性：<strong class="strong">高位放量 = 主力把筹码递给追高者</strong>。</p>
+    <p>同一个股票、同一个"放量"动作，8/17是启动、8/19是出货。<strong class="strong">位置变了，性质就变了。</strong></p>
+  </div>
+
+  <h2>六、位置决定性质：一张表看懂</h2>
+  <table>
+    <tr><th>量柱动作</th><th>低位区（&lt;40%）</th><th>腰部区（40-70%）</th><th>高位区（≥70%）</th></tr>
+    <tr><td>放量上涨</td><td>吸筹/启动</td><td>看趋势，可能洗盘</td><td>警惕出货</td></tr>
+    <tr><td>放量下跌</td><td>恐慌杀跌（可能是底）</td><td>下跌中继</td><td>确认派发</td></tr>
+    <tr><td>缩量回踩</td><td>惜售，健康</td><td>待确认</td><td>滞涨危险</td></tr>
+    <tr><td>倍量柱</td><td>最可能是启动</td><td>中性，看方向</td><td>最可能是出货</td></tr>
+  </table>
+
+  <h2>七、给新手的定位三步法</h2>
+  <div class="core">
+    <p>以后看任何一只股票，先花30秒做这三步，再谈量柱：</p>
+    <ol>
+      <li><strong class="strong">算身位</strong>：当前价在250日高低区间的百分位——高、中、低？</li>
+      <li><strong class="strong">看阶段</strong>：60日处于上升、下降还是箱体？从哪来到哪去？</li>
+      <li><strong class="strong">再读量</strong>：在已知的位置上，这根量柱是什么、意味着什么？</li>
+    </ol>
+    <p style="margin-top:0.8rem;">定位永远先于读量。<strong class="strong">位置没定，一切量柱分析都是空中楼阁。</strong></p>
+  </div>
+
+  <div class="homework">
+    <h3>今日作业（第4课 · 选择题版稍后上线）</h3>
+    <p>先动手想一想（不用打字）：</p>
+    <ol>
+      <li>工业富联当前在250日身位的<strong class="strong">哪个区</strong>？它的放量下跌该怎么定性？</li>
+      <li>赛腾股份在哪个区？8/24的放量翻红（量比1.38）该如何定性？</li>
+      <li>为什么"同样放量上涨"，天孚通信在250日百分位34%、淳中科技在8%，两者的性质不同？</li>
+    </ol>
+  </div>
+
+  <h2>下一课预告</h2>
+  <p>第5课：<strong class="strong">左证明右确认</strong>——位置定了，量柱读了，但什么时候才能动手？一句话：<strong class="strong">左是猜想、右是确认，右侧确认信号出现前，一切按兵不动。</strong></p>
+
+  <div class="foot">
+    现代量学实战体系 · 讲义第04课 · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎<br>
+    <div class="disclaimer" style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部案例数据均来自新浪财经官方日K行情接口（250日数据，截至2026-08-24收盘），含逐日量比计算，不包含任何未经验证的数据。</div>
+  </div>
+
+</div>
+</body>
+</html>
