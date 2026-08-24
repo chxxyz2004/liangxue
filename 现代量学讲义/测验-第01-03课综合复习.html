@@ -304,27 +304,34 @@
   });
 
   document.getElementById("copyBtn").addEventListener("click", function () {
+    var btn = document.getElementById("copyBtn");
     var text = document.getElementById("code").textContent;
-    function fallback() {
+    var ok = false;
+    try {
       var ta = document.createElement("textarea");
       ta.value = text;
       ta.style.position = "fixed";
       ta.style.left = "-9999px";
+      ta.style.top = "0";
       document.body.appendChild(ta);
+      ta.focus();
       ta.select();
-      try { document.execCommand("copy"); } catch (e) {}
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand("copy");
       document.body.removeChild(ta);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
+    } catch (e) { ok = false; }
+    if (ok) {
+      btn.textContent = "已复制 ✓";
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () {
-        document.getElementById("copyBtn").textContent = "已复制 ✓";
-        setTimeout(function () { document.getElementById("copyBtn").textContent = "复制答案"; }, 1500);
-      }, fallback);
+        btn.textContent = "已复制 ✓";
+      }, function () {
+        btn.textContent = "复制失败，请长按答案代码手动复制";
+      });
     } else {
-      fallback();
-      document.getElementById("copyBtn").textContent = "已复制 ✓";
-      setTimeout(function () { document.getElementById("copyBtn").textContent = "复制答案"; }, 1500);
+      btn.textContent = "复制失败，请长按答案代码手动复制";
     }
+    setTimeout(function () { btn.textContent = "复制答案"; }, 1800);
   });
 })();
 </script>
