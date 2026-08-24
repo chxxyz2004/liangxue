@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方法课：复盘三窗口——看盘到底看多少根K线 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.7rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #2e86ab;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .case {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 12px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 12px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">方法课</span>复盘三窗口——看盘到底看多少根K线</h1>
+    <div class="sub">现代量学实战体系 · 第一阶段的看盘基本功 · 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">案例数据来源：新浪财经官方日K行情，逐日核验</div>
+  </div>
+
+  <div class="core">
+    <p class="big">一句话口诀：250看身位、60看趋势、10看量柱。三个都看，才是完整复盘。</p>
+    <p>看盘不是"看多少根"的问题，而是"看多少根取决于你想回答什么问题"。三个目的对应三个窗口，谁也不替代谁。</p>
+  </div>
+
+  <h2>一、三窗口对照表</h2>
+  <table>
+    <tr><th>窗口</th><th>看多少根</th><th>回答的问题</th><th>对应维度</th></tr>
+    <tr><td>定位置</td><td>约250根（一年）</td><td>现在算高还是算低？</td><td>位置</td></tr>
+    <tr><td>定阶段</td><td>30~60根（1~3个月）</td><td>上升/下降/箱体哪一段？</td><td>时间</td></tr>
+    <tr><td>定量柱</td><td>3~10根（前后几天）</td><td>这根量柱什么性质？</td><td>量价</td></tr>
+  </table>
+
+  <h2>二、窗口1：定位置 → 250根（一年）</h2>
+  <p>先缩到"能看见一年"的视野，回答：<strong class="strong">现在这个价格，是一年里的高位还是低位？</strong></p>
+  <div class="case">
+    <span class="stock">天孚通信（300394）：8月24日收249.50元</span>
+    <p>只看最近10根（两周）："从290跌到249，跌多了。"<br>
+    把视野拉到一年：如果一年前才100元，现在249元是<strong class="strong">一年涨了1.5倍的高位</strong>。</p>
+    <p>同一根K线，看10根是"跌多了"，看250根是"还在高位"。<strong class="strong">这就是"位置决定性质"的操作前提：不定位置，就无法定性。</strong></p>
+  </div>
+
+  <h2>三、窗口2：定阶段 → 30~60根</h2>
+  <p>缩到"能看见两三个月"的视野，回答：<strong class="strong">当前是上升、下降还是箱体震荡？</strong></p>
+  <div class="case">
+    <span class="stock">通富微电（002156）：近期30根</span>
+    <p>看30根能清晰看到完整结构：8月初从55元一路上涨到70.66元（上升段）→ 8月19日跌停 → 现在61元。</p>
+    <p>判断：<strong class="strong">它处于"冲高回落后的下降修复段"</strong>。这个判断只看10根看不出来——10根以内只能看到"最近跌了几天"。</p>
+  </div>
+
+  <h2>四、窗口3：定量柱 → 3~10根</h2>
+  <p>这是做作业时的主战场，也是"量柱七形态"的操作窗口：</p>
+  <ul>
+    <li><strong class="strong">算量比</strong>：这根量 ÷ 前一根量（只比较1根）；</li>
+    <li><strong class="strong">看局部高峰</strong>：跟前后3根比，是不是局部最高/最低；</li>
+    <li><strong class="strong">看确认</strong>：放量之后2~3天是缩量还是继续放量。</li>
+  </ul>
+  <div class="case">
+    <span class="stock">工业富联（601138）：8月24日</span>
+    <p>量比1.23是"放量"。但它是高量柱吗？看前后3根：8月20日78万手、21日79万手、24日98万手——98万手是这3天高峰，但相比8月5日的288万手只是"小放量"。</p>
+    <p>所以判断是<strong class="strong">"温和放量下跌"，而不是"天量见顶"</strong>。这就是窗口3该干的事。</p>
+  </div>
+
+  <h2>五、底层逻辑：为什么不能死记固定天数？</h2>
+  <p>因为市场的"节奏"会变。成交量本质是<strong class="strong">筹码交换的痕迹</strong>，观察窗口应覆盖"一轮完整的筹码交换周期"。</p>
+  <ul>
+    <li>游资时代：建仓→拉升→出货，一轮可能1~3个月（30~60根）；</li>
+    <li><strong class="strong">量化时代：程序化交易可以把一轮博弈压缩到几天甚至一天内完成。</strong></li>
+  </ul>
+  <div class="core">
+    <p class="big">量学强调"看结构、不数天数"。</p>
+    <p>你要找的是"这个波段从哪里开始、到哪里结束"这个结构。结构的长短由市场决定，不由你的尺子决定。</p>
+  </div>
+
+  <h2>六、作业规范（升级版）</h2>
+  <p>每只股票复盘，强制三步走：</p>
+  <ol>
+    <li><strong class="strong">缩到一年视野</strong>（250根）：写下"现在处于一年里的高位/中位/低位"；</li>
+    <li><strong class="strong">缩到两三月视野</strong>（30~60根）：写下"当前处于上升/下降/箱体的哪一段"；</li>
+    <li><strong class="strong">回到最近10根</strong>：逐根标量柱形态（量比=今量÷昨量），看每根前后3根判断高量/低量。</li>
+  </ol>
+
+  <div class="foot">
+    现代量学实战体系 · 方法课讲义 · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎
+  </div>
+
+</div>
+</body>
+</html>
