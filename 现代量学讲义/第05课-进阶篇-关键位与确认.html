@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>第5课进阶：关键位与确认——逐天拆解 | 现代量学实战体系</title>
+<title>第5课进阶：关键位与确认——工业富联/通富微电逐天拆解 | 现代量学实战体系</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -16,7 +16,7 @@
     line-height: 1.8;
     padding: 2rem 1rem;
   }
-  .container { max-width: 900px; margin: 0 auto; }
+  .container { max-width: 940px; margin: 0 auto; }
   .header {
     background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
     border: 1px solid #2a3a4a;
@@ -50,7 +50,7 @@
   .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
   .case { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
   .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
-  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
   th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 10px; border: 1px solid #2a3a4a; }
   td { padding: 8px 10px; border: 1px solid #2a3a4a; }
   ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
@@ -61,6 +61,7 @@
   .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
   .ok { color: #2ecc71; font-weight: bold; }
   .line { color: #e74c3c; font-weight: bold; }
+  .note { color: #e8b04a; font-weight: bold; }
 </style>
 </head>
 <body>
@@ -69,11 +70,11 @@
   <div class="header">
     <h1><span class="badge">第5课 · 进阶</span>关键位与确认——逐天拆解</h1>
     <div class="sub">现代量学实战体系 · 针对"右确认要等几天"的追问 · 授课：黑马王子（张得一）</div>
-    <div class="sub data-src">全部数据来源：新浪财经官方日K行情接口，逐日核验（含逐日量比计算）</div>
+    <div class="sub data-src">全部数据来源：本地行情数据库（新浪财经官方日K接口），逐日核验含量比/涨跌幅计算</div>
   </div>
 
   <div class="warn">
-    <p><strong class="strong">勘误声明：</strong>本进阶篇初稿曾将通富微电8月19日误称为"放量跌停"。经官方行情数据逐日核验，<strong class="strong">8月19日量比0.82，实为缩量跌停</strong>（量14992万手 &lt; 前日18375万手）。特此更正并致歉。跌停不等于放量，<strong class="strong">缩量跌停（封死无量）比放量跌停更弱</strong>——买方彻底消失。本版所有量比均经逐日核验。</p>
+    <p><strong class="strong">勘误记录：</strong>本进阶篇曾出现两处数据表述问题，均已核验更正并记录在案——① 通富微电8月19日为<strong class="strong">缩量跌停</strong>（量比0.82），非"放量跌停"；② 工业富联7月30日为<strong class="strong">放量大跌</strong>（量比1.32、跌6.84%），非"无量无涨跌"。本版全部数据均逐日核验，数据来源为本地行情数据库。</p>
   </div>
 
   <h2>一、先解开"悖论"：右确认不是无限循环</h2>
@@ -89,45 +90,54 @@
     <p style="margin-top:0.8rem;">所以不是"每天都要新的右"，而是<strong class="strong">"一个左、一个关键位，盯着它直到站上或跌破"</strong>。逻辑闭合，不发散。</p>
   </div>
 
-  <h2>二、工业富联逐天拆解（你问的核心）</h2>
-  <p class="data-src">数据来源：新浪财经官方日K，逐日核验。关键位 = 8/19破位前的箱体下沿 64.51。</p>
+  <h2>二、工业富联（601138）逐天拆解——你问的核心</h2>
+  <p class="data-src">数据来源：本地行情数据库，逐日核验（量比=当日量/前日量，涨跌=当日收/前日收−1）</p>
+  <p>我们从中期下跌的开始（7/17）一路看到8/24，完整还原"左-右-证伪"的演变。重点关注8/20-8/24。</p>
   <table>
-    <tr><th>日期</th><th>收盘</th><th>量比</th><th>动作</th><th>左/右解读</th></tr>
-    <tr><td>7/30</td><td>53.80</td><td>—</td><td>下跌段</td><td>—</td></tr>
-    <tr><td>7/31</td><td>56.70</td><td>0.97</td><td>反弹</td><td>—</td></tr>
-    <tr><td>8/3</td><td>55.90</td><td>0.64</td><td>缩量回踩</td><td>左：缩量止跌苗头</td></tr>
-    <tr><td><span class="ok">8/4</span></td><td><span class="ok">59.93</span></td><td><span class="ok">1.77</span></td><td><span class="ok">放量大涨</span></td><td><span class="ok">右确认①：站上前高，三条件齐，标准进场点</span></td></tr>
-    <tr><td>8/5</td><td>65.92</td><td>1.72</td><td>连续放量涨停</td><td>趋势延续</td></tr>
-    <tr><td>8/6-8/10</td><td>68.27-69.18</td><td>0.65-1.02</td><td>高位滞涨</td><td>左：冲高乏力警报</td></tr>
-    <tr><td>8/11-8/18</td><td>65-68</td><td>0.73-1.51</td><td>高位箱体震荡</td><td>顶部区域盘整</td></tr>
-    <tr><td><span class="line">8/19</span></td><td><span class="line">61.83</span></td><td>1.06</td><td><span class="line">放量跌破箱体下沿64.51</span></td><td><span class="line">右证伪①：破位确立</span></td></tr>
-    <tr><td>8/20</td><td>62.13</td><td>0.56</td><td>近60日地量，未收回64.51</td><td>左：地量企稳苗头，但关键位未收复</td></tr>
-    <tr><td>8/21</td><td>62.84</td><td>1.02</td><td>微涨，仍低于64.51</td><td>仍处观察期，确认未发生</td></tr>
-    <tr><td><span class="line">8/24</span></td><td><span class="line">60.40</span></td><td>1.23</td><td><span class="line">放量再破，跌破61.5</span></td><td><span class="line">右证伪②：地量企稳失败，下跌继续</span></td></tr>
+    <tr><th>日期</th><th>收盘</th><th>量比</th><th>涨跌</th><th>动作</th><th>左/右解读</th></tr>
+    <tr><td>7/17</td><td>57.59</td><td>1.58</td><td>-8.62%</td><td>放量大跌</td><td>下跌段开启</td></tr>
+    <tr><td>7/21</td><td>60.98</td><td>1.26</td><td>+7.93%</td><td>放量反弹</td><td>反弹</td></tr>
+    <tr><td>7/23-7/24</td><td>62.88→60.25</td><td>1.01→0.69</td><td>+3.57%→-4.18%</td><td>冲高回落</td><td>反弹受阻</td></tr>
+    <tr><td>7/28</td><td>58.08</td><td>1.53</td><td>-5.64%</td><td>放量下跌</td><td>反弹结束，二次下跌</td></tr>
+    <tr><td><span class="line">7/30</span></td><td><span class="line">53.80</span></td><td><span class="line">1.32</span></td><td><span class="line">-6.84%</span></td><td><span class="line">放量大跌，创阶段新低</span></td><td><span class="line">下跌主跌段</span></td></tr>
+    <tr><td>8/3</td><td>55.90</td><td>0.64</td><td>-1.41%</td><td>缩量回踩</td><td>左：缩量止跌苗头</td></tr>
+    <tr><td><span class="ok">8/4</span></td><td><span class="ok">59.93</span></td><td><span class="ok">1.77</span></td><td><span class="ok">+7.21%</span></td><td><span class="ok">放量大涨</span></td><td><span class="ok">右确认①：站上前高（60一带），三条件齐，标准进场点</span></td></tr>
+    <tr><td>8/5</td><td>65.92</td><td>1.72</td><td>+9.99%</td><td>连续放量涨停</td><td>趋势延续</td></tr>
+    <tr><td>8/6-8/10</td><td>68.27→69.18</td><td>0.65-1.02</td><td>—</td><td>高位滞涨</td><td>左：冲高乏力警报</td></tr>
+    <tr><td>8/11-8/18</td><td>65-68</td><td>0.73-1.51</td><td>—</td><td>高位箱体震荡</td><td>顶部区域盘整</td></tr>
+    <tr><td><span class="line">8/19</span></td><td><span class="line">61.83</span></td><td>1.06</td><td><span class="line">-6.60%</span></td><td><span class="line">放量跌破箱体下沿64.51</span></td><td><span class="line">右证伪①：破位确立</span></td></tr>
+    <tr><td>8/20</td><td>62.13</td><td>0.56</td><td>+0.49%</td><td>近60日地量，未收回64.51</td><td>左：地量企稳苗头，关键位未收复</td></tr>
+    <tr><td>8/21</td><td>62.84</td><td>1.02</td><td>+1.14%</td><td>微涨，仍低于64.51</td><td>仍处观察期，确认未发生</td></tr>
+    <tr><td><span class="line">8/24</span></td><td><span class="line">60.40</span></td><td>1.23</td><td><span class="line">-3.88%</span></td><td><span class="line">放量再破，跌破61.5</span></td><td><span class="line">右证伪②：地量企稳失败，下跌继续</span></td></tr>
   </table>
 
   <h3>回答："8/21价涨量涨，为什么不是进场点？"</h3>
   <div class="case">
-    <p>你看到：8/20地量（✓左信号）+ 8/21价涨量涨，逻辑没错，但漏了第四步——<strong class="strong">看关键位</strong>：</p>
+    <p>你看到：8/20地量（<span class="ok">✓左信号</span>）+ 8/21价涨量涨，逻辑没错，但漏了第四步——<strong class="strong">看关键位</strong>：</p>
     <ol>
       <li>8/20地量是"左"（抛压减轻）——<strong class="strong">✓你说对了</strong>；</li>
       <li>8/21价涨量涨（量比1.02）看似确认——<strong class="strong">但它最高63.38、收62.84，连8/19破位前的箱体下沿64.51都没站回去</strong>；</li>
       <li>8/20-21在61.5-63.4小平台缩着，<strong class="strong">关键位64.51在头顶压着</strong>。</li>
     </ol>
     <p style="margin-top:0.8rem;">正确读法：<strong class="strong">8/21不是"确认日"，而是"仍在观察期"</strong>。真正的右确认要等<strong class="strong">放量收回64.51上方</strong>；而它等来的却是8/24放量跌破61.5——右证伪。</p>
-    <p style="color:#f0c060;margin-top:0.5rem;">你漏的这一步，就是"左证明右确认"和"看到反弹就买"的区别。<strong>地量企稳只是"跌不动了"，不叫"要涨了"；跌不动→站回关键位→才叫确认。</strong></p>
+    <p class="note" style="margin-top:0.5rem;">你漏的这一步，就是"左证明右确认"和"看到反弹就买"的区别。地量企稳只是"跌不动了"，不叫"要涨了"；跌不动→站回关键位→才叫确认。</p>
   </div>
 
-  <h2>三、通富微电逐天拆解（确认又证伪的完整链条）</h2>
-  <p class="data-src">数据来源：新浪财经官方日K，逐日核验（8/19为缩量跌停，量比0.82）</p>
+  <h2>三、通富微电（002156）逐天拆解——确认又证伪的完整链条</h2>
+  <p class="data-src">数据来源：本地行情数据库，逐日核验</p>
+  <p>这只股票在7月中旬经历了更惨烈的下跌，8月的一次"启动-确认-证伪"是完整教学案例。</p>
   <table>
-    <tr><th>日期</th><th>收盘</th><th>量比</th><th>动作</th><th>左/右解读</th></tr>
-    <tr><td>7/30-8/7</td><td>55.89→64.72</td><td>—</td><td>上涨段</td><td>趋势</td></tr>
-    <tr><td>8/10-8/14</td><td>63.20→62.96</td><td>0.63-1.28</td><td>高位横盘</td><td>顶部盘整</td></tr>
-    <tr><td><span class="ok">8/17</span></td><td><span class="ok">69.26</span></td><td><span class="ok">2.09</span></td><td><span class="ok">倍量涨停</span></td><td>左：启动信号</td></tr>
-    <tr><td><span class="ok">8/18</span></td><td><span class="ok">70.66</span></td><td><span class="ok">1.24</span></td><td><span class="ok">继续放量，冲高72.56</span></td><td><span class="ok">右确认①：量价齐升，三条件齐，标准进场点</span></td></tr>
-    <tr><td><span class="line">8/19</span></td><td><span class="line">63.59</span></td><td><span class="line">0.82</span></td><td><span class="line">缩量跌停（封死无量）</span></td><td><span class="line">右证伪②：一根缩量跌停吃掉两天涨幅，确认失败必须走</span></td></tr>
-    <tr><td>8/20-24</td><td>63.15→61.24</td><td>0.79-0.94</td><td>缩量阴跌</td><td>下跌段</td></tr>
+    <tr><th>日期</th><th>收盘</th><th>量比</th><th>涨跌</th><th>动作</th><th>左/右解读</th></tr>
+    <tr><td>7/14-7/17</td><td>77.87→68.36</td><td>—</td><td>—</td><td>冲高后连跌</td><td>高位转弱</td></tr>
+    <tr><td>7/21-7/24</td><td>69.30→76.64</td><td>—</td><td>—</td><td>大反弹</td><td>反弹段</td></tr>
+    <tr><td>7/28-7/30</td><td>69.00→55.89</td><td>—</td><td>-10%×3</td><td>连续跌停</td><td>主跌段，股价腰斩</td></tr>
+    <tr><td>8/3</td><td>51.34</td><td>0.88</td><td>-9.50%</td><td>再跌</td><td>情绪冰点</td></tr>
+    <tr><td>8/4-8/7</td><td>55.60→64.72</td><td>—</td><td>—</td><td>连续反弹</td><td>超跌反弹修复</td></tr>
+    <tr><td>8/10-8/14</td><td>63.20→62.96</td><td>0.63-1.28</td><td>—</td><td>高位横盘</td><td>反弹后盘整</td></tr>
+    <tr><td><span class="ok">8/17</span></td><td><span class="ok">69.26</span></td><td><span class="ok">2.09</span></td><td><span class="ok">+10.01%</span></td><td><span class="ok">倍量涨停</span></td><td>左：启动信号</td></tr>
+    <tr><td><span class="ok">8/18</span></td><td><span class="ok">70.66</span></td><td><span class="ok">1.24</span></td><td><span class="ok">+2.02%</span></td><td><span class="ok">继续放量，冲高72.56</span></td><td><span class="ok">右确认①：量价齐升，三条件齐，标准进场点</span></td></tr>
+    <tr><td><span class="line">8/19</span></td><td><span class="line">63.59</span></td><td><span class="line">0.82</span></td><td><span class="line">-10.01%</span></td><td><span class="line">缩量跌停（封死无量）</span></td><td><span class="line">右证伪②：一根缩量跌停吃掉两天涨幅，确认失败必须走</span></td></tr>
+    <tr><td>8/20-24</td><td>63.15→61.24</td><td>0.79-0.94</td><td>—</td><td>缩量阴跌</td><td>下跌段延续</td></tr>
   </table>
 
   <h3>回答："8/18明明确认了，8/19又证伪，岂不是没完没了？"</h3>
@@ -155,9 +165,9 @@
   </div>
 
   <div class="foot">
-    现代量学实战体系 · 讲义第05课进阶篇（数据勘误版） · 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    现代量学实战体系 · 讲义第05课进阶篇 · 本讲义仅供个人学习使用，不构成任何投资建议<br>
     股市有风险，入市需谨慎<br>
-    <div style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部数据均来自新浪财经官方日K行情接口逐日核验（含逐日量比），8/19通富微电缩量跌停（量比0.82）已勘误。</div>
+    <div style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部数据来自本地行情数据库（新浪财经官方日K接口，300交易日），逐日核验含量比/涨跌幅计算。</div>
   </div>
 
 </div>
