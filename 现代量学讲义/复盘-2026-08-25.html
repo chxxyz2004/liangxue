@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-25 持仓操作建议复盘 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.6rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .badge.blue { background: #2e86ab; }
+  .badge.green { background: #1f8a4c; }
+  .badge.orange { background: #b9770e; }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .stock {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .stock.hold { border-left: 4px solid #c0392b; }
+  .stock.watch { border-left: 4px solid #2e86ab; }
+  .stock .name { color: #f0c060; font-weight: bold; font-size: 1.1rem; }
+  .stock .tag {
+    display: inline-block;
+    background: #2a3a4a;
+    color: #5dade2;
+    font-size: 0.78rem;
+    padding: 1px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+  }
+  .act {
+    background: #2b1a1a;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .act .lbl { color: #f0c060; font-weight: bold; }
+  .sline {
+    background: #0d1a24;
+    border: 1px solid #2e86ab;
+    border-left: 4px solid #2e86ab;
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .sline .lbl { color: #5dade2; font-weight: bold; }
+  .up { color: #e74c3c; font-weight: bold; }
+  .down { color: #2ecc71; font-weight: bold; }
+  .flat { color: #f0c060; }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .good { background: #0d1a24; border: 1px solid #2e86ab; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 12px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 12px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+  .steps { background: #121a22; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1rem 1.4rem; margin: 1rem 0; }
+  .steps .step { margin: 0.7rem 0; padding-left: 0.4rem; }
+  .steps .n { display: inline-block; background: #c0392b; color: #fff; border-radius: 50%; width: 22px; height: 22px; text-align: center; line-height: 22px; font-size: 0.8rem; font-weight: bold; margin-right: 8px; }
+
+/* ===== 手机卡片化表格 ===== */
+@media (max-width: 640px) {
+  table, tbody, tr, th, td { display: block; box-sizing: border-box; }
+  tr.card-head { display: none; }
+  tbody tr {
+    border: 1px solid #2a3a4a;
+    border-radius: 10px;
+    margin: 0 0 12px 0;
+    padding: 6px 14px 10px;
+    background: #141c26;
+  }
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    border: none;
+    border-bottom: 1px dashed #2f3f4f;
+    padding: 7px 0;
+  }
+  tbody td:last-child { border-bottom: none; }
+  tbody td::before {
+    content: attr(data-label);
+    color: #8ba3b8;
+    font-size: 0.82em;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  tbody tr td:first-child::before { display: none; }
+  tbody tr td:first-child {
+    color: #f0c060;
+    font-weight: 700;
+    font-size: 1.05em;
+    border-bottom: 1px solid #2f3f4f;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">复盘日报</span>2026-08-25 <span class="badge green">持仓操作建议</span></h1>
+    <div class="sub">现代量学实战体系 · 聚焦你的5只持仓 · 逐股给出具体的买/卖/持仓/观望价位与动作</div>
+    <div class="sub data-src">8股8/25价格来自你的通达信截图（逐日与8/24本地库核验：全部吻合）。8/25量能与大盘指数公开接口尚未更新，文中以"待收盘核验"标注——判断以收盘价为准，盘中价仅作参考。</div>
+  </div>
+
+  <div class="core">
+    <p class="big">今天先说结论：8股中4只收盘跌破自己的左侧生死线（富联、胜宏、环旭、通富破61.2），只有天孚、淳中守住。你5只持仓里，3只要减/清（富联、赛腾、通富），1只深套要反弹调仓（环旭），1只巨大浮盈要分批止盈（淳中）。</p>
+    <p>昨天8/24我写过：5只盘中插破生死线又收回=虚破试探，判决在次日。今天判决下来了——<span class="mark">虚破试探变成真破的，就是这4只</span>。这就是生死线的用处：它提前一天告诉你会发生什么，你只需要按纪律执行。</p>
+  </div>
+
+  <h2>一、今日行情速览（8股生死线对照）</h2>
+  <table>
+    <tr><th>股票</th><th>8/25收盘</th><th>涨跌</th><th>左侧生死线</th><th>生死线状态</th><th>均线位置(8/24基准)</th></tr>
+    <tr><td>淳中科技</td><td>96.55</td><td class="up">+0.70%</td><td>92.6</td><td class="up">站上，安全</td><td>压20日线96.68</td></tr>
+    <tr><td>天孚通信</td><td>250.97</td><td class="up">+0.59%</td><td>248.50</td><td class="up">收回线上</td><td>20日线上方</td></tr>
+    <tr><td>长电科技</td><td>73.20</td><td class="down">-0.81%</td><td>75.87已破</td><td class="flat">险守防守线73.0</td><td>20日下方</td></tr>
+    <tr><td>环旭电子</td><td>25.63</td><td class="down">-1.04%</td><td>25.80</td><td class="down">跌破（地基挖）</td><td>20/60/120全下方</td></tr>
+    <tr><td>胜宏科技</td><td>241.84</td><td class="down">-1.29%</td><td>242.00</td><td class="down">跌破</td><td>20/60/120全下方</td></tr>
+    <tr><td>通富微电</td><td>60.40</td><td class="down">-1.37%</td><td>61.2</td><td class="down">跌破61.2，险守60</td><td>20日下方，120上方</td></tr>
+    <tr><td>工业富联</td><td>59.49</td><td class="down">-1.51%</td><td>60.00</td><td class="down">跌破</td><td>20/60/120全下方</td></tr>
+    <tr><td>赛腾股份</td><td>46.07</td><td class="down">-3.21%</td><td>46.1</td><td class="down">跌破+下穿120均线</td><td>120日线46.48下方</td></tr>
+  </table>
+  <p class="data-src">生死线、均线均来自本地库（腾讯前复权）8/24基准计算，赛腾下穿120日均线（46.07&lt;46.48）与你通达信标注一致。8/25均线变化极小，以收盘后通达信为准。</p>
+
+  <h2>二、你的持仓全景</h2>
+  <table>
+    <tr><th>股票</th><th>手数</th><th>成本</th><th>8/25价</th><th>盈亏</th><th>生死线状态</th><th>初步结论</th></tr>
+    <tr><td>淳中科技</td><td>3手</td><td>41.02</td><td>96.55</td><td class="up">+135%</td><td>站上92.6</td><td>分批止盈</td></tr>
+    <tr><td>工业富联</td><td>5手</td><td>57.34</td><td>59.49</td><td class="up">+3.7%</td><td class="down">破60</td><td class="down">减/清</td></tr>
+    <tr><td>通富微电</td><td>1手</td><td>64.26</td><td>60.40</td><td class="down">-6%</td><td class="down">破61.2</td><td class="down">破60止损</td></tr>
+    <tr><td>赛腾股份</td><td>2手</td><td>46.18</td><td>46.07</td><td class="flat">-0.2%</td><td class="down">破46.1+下穿120</td><td class="down">反弹清仓</td></tr>
+    <tr><td>环旭电子</td><td>2手</td><td>45.06</td><td>25.63</td><td class="down">-43%</td><td class="down">破25.8</td><td>反弹减仓调仓</td></tr>
+  </table>
+  <p>持仓市值约7.9万（按8/25价），你总仓位7成、总资产曾超20万——<span class="strong">现在的问题是仓位重+破位股多，需要本周内把仓位降下来，把资金救回来</span>。</p>
+
+  <h2>三、逐股操作建议（重点看这里）</h2>
+
+  <div class="stock hold">
+    <span class="name">1. 工业富联（5手，成本57.34，现价59.49）</span><span class="tag">+3.7% 破位</span>
+    <div class="sline"><span class="lbl">左侧生死线60.00已破</span>：7月下旬60元平台 + 8/5高量柱实底58.90 + 整数关，三线合一的线被收盘击穿（59.49&lt;60.00）。</div>
+    <div class="act">
+      <span class="lbl">操作：反弹减/清，最多留1手观察</span><br>
+      ① 明日反弹到60.0-60.5（原生死线变压力位）：至少卖出3手；<br>
+      ② 若再上冲61-62（8/19破位缺口）：5手全部离场；<br>
+      ③ 若明日直接跌破58（今日最低未触及区域，前低59.22下方）：5手全部离场，不纠结价位；<br>
+      ④ 止损铁律：收盘价跌破58.00，无条件清仓。
+    </div>
+    <p><strong class="strong">理由：</strong>你还有+3.7%浮盈，这是"止盈式离场"，不是割肉。60是三把尺子重合的最强线，收盘破掉=7月那批建仓盘全部套牢，反弹就是解套盘出逃，上方压力极大。20/60/120三条均线全部在上方压制（62.79/66.54/62.70），空头排列。</p>
+    <p><strong class="strong">市场机理：</strong>卖在买先——60下方是7月下旬主力吸筹成本区，价格跌回成本区下方，意味着这批筹码从"支撑"翻成"抛压"；跌破后下方直到52-56（7/20-7/30平台）没有强承接，下跌中继概率大。你"不会逃顶"的病，就从执行这一笔开始治：破线就走，不回头看。</p>
+  </div>
+
+  <div class="stock hold">
+    <span class="name">2. 淳中科技（3手，成本41.02，现价96.55）</span><span class="tag">+135% 唯一大赢家</span>
+    <div class="sline"><span class="lbl">左侧生死线92.6站上</span>：8月下旬箱体下沿（92.2-94.1反复4次），趋势完好；但箱体上沿102是压力（8/18倍量1.95冲102失败）。</div>
+    <div class="act">
+      <span class="lbl">操作：分批止盈 + 箱体高抛低吸</span><br>
+      ① 第一笔（现在就做）：现价96.55附近或反弹到100-102，卖出1手，锁利落袋约0.97万；<br>
+      ② 剩余2手：移动止盈=收盘破92.6全部卖出，保护浮盈；<br>
+      ③ 放量突破102（量比≥1.3且收盘站稳102）：剩余2手继续持有看新高，止损上移到95；<br>
+      ④ 低吸机会：若回踩92.6不破、缩量企稳，把你卖出那1手再接回来做波段。
+    </div>
+    <p><strong class="strong">理由：</strong>这是你"利润回吐"教训的源头仓位——+135%的浮盈必须先锁一部分进兜里。淳中在93-102箱体里，上沿两次冲击失败（8/18倍量冲102后大跌），说明上方有货要出。高抛低吸就按箱体做：<span class="mark">102附近卖、92.6附近买</span>，正好用一条箱体治你"不会高抛低吸"的病。</p>
+    <p><strong class="strong">市场机理：</strong>高量不破后市可期（8/18量比1.95那根高量柱=多头最强一击，它的实底101.02就是上方压力）；250日位置百分位8%底部区，是8股里趋势最健康的，值得留底仓，但必须分批锁利。卖在买先——92.6上方全是获利盘，一旦收盘破92.6，获利盘会踩踏式出逃，所以移动止盈必须设。</p>
+  </div>
+
+  <div class="stock hold">
+    <span class="name">3. 赛腾股份（2手，成本46.18，现价46.07）</span><span class="tag">-0.2% 右确认失败</span>
+    <div class="sline"><span class="lbl">左侧生死线46.1已破 + 下穿120日均线</span>：8/24你是8股唯一放量翻红站上46.1（左证明），8/25却大跌-3.21%收盘46.07跌破46.1、还下穿120日均线（46.48）——教科书级"右确认失败"。</div>
+    <div class="act">
+      <span class="lbl">操作：反弹即清仓，2手都走</span><br>
+      ① 明日反弹到46.6-47.6（8/12实顶46.61+8/19跌停46.37+昨日收盘47.6压力带）：2手全部卖出；<br>
+      ② 若直接跌破44.06（8/12高量实底）：无条件止损，不等反弹；<br>
+      ③ 止损铁律：收盘价跌破44.00，无条件清仓。
+    </div>
+    <p><strong class="strong">理由：</strong>你成本46.18几乎贴着现价46.07，这是<span class="mark">"不赚不亏"的黄金离场点</span>——这位置走最划算，再拖就是套牢。昨天放量站上46.1是左证明，今天放量下穿120均线=右确认失败，说明8/24的翻红是诱多/假突破，主力借反弹出货。</p>
+    <p><strong class="strong">市场机理：</strong>下穿120日均线=中期趋势转坏的分界线（你在通达信已经自己看到了这个信号，这是对的）。46.1是8月三根关键K线密集区（8/12实顶46.61、8/13实底46.11、8/19跌停46.37），放量上攻后马上放量回落=多头动能衰竭。卖在买先——46上方既有套牢盘又有刚套进去的浮亏盘，双重抛压。</p>
+  </div>
+
+  <div class="stock hold">
+    <span class="name">4. 通富微电（1手，成本64.26，现价60.40）</span><span class="tag">-6% 平台破位</span>
+    <div class="sline"><span class="lbl">左侧生死线61.2已破，60.00整数关险守</span>：8月中旬启动前平台下沿61.2（三次触及）被收盘击穿（60.40&lt;61.2），现价勉强站在60整数关上方。</div>
+    <div class="act">
+      <span class="lbl">操作：破60止损，反弹61.2-62减仓</span><br>
+      ① 若明日收盘跌破60.00：1手全部止损离场（认亏约-6%，单笔亏损可控）；<br>
+      ② 若60守住且缩量收阳（量比&lt;1）：可等反弹到61.2-62.0（破位反抽压力）卖出离场；<br>
+      ③ 止损铁律：收盘价跌破60.00，无条件执行。
+    </div>
+    <p><strong class="strong">理由：</strong>8/17倍量2.09涨停→8/19缩量跌停→平台破位，主力启动资金已离场（连续多日缩量阴跌确认，量比0.82/0.82/0.79/0.94）。破61.2=发动行情的起跳区失守，60是最后心理防线。1手仓量虽小，但纪律要统一——破位就走，不留幻想。</p>
+    <p><strong class="strong">市场机理：</strong>倍量启动夭折=多头最猛一击失败，市场机理是"启动资金止损、无人接力"。破60后下方直到56/51（60日箱体低51.23）几乎没有强支撑。亏损6%在可承受范围，现在止损比深套好处理一百倍——这正是"不会逃顶"反面的教训：该走不走，-6%拖成-40%。</p>
+  </div>
+
+  <div class="stock hold">
+    <span class="name">5. 环旭电子（2手，成本45.06，现价25.63）</span><span class="tag">-43% 深套</span>
+    <div class="sline"><span class="lbl">左侧生死线25.80已破</span>：8/6倍量柱实底25.80（量比2.79全段最强=左侧地基）被收盘击穿（25.63&lt;25.80），地基被挖。</div>
+    <div class="act">
+      <span class="lbl">操作：反弹减仓，调仓换股，不在地板上割</span><br>
+      ① 深套-43%，不要在破位首日割在地板价（恐慌割肉）；<br>
+      ② 若反弹到25.8-26.5（破位反抽压力带）：卖出1手，回收资金；<br>
+      ③ 剩余1手止损=收盘破23.20：无条件卖出；<br>
+      ④ 若23-24缩量企稳：等一次放量反弹（如放量站回25.8）再处理剩余1手。
+    </div>
+    <p><strong class="strong">理由：</strong>环旭是你持仓里最弱的（250日位29%、破倍量地基、20/60/120三线全下方）。深套股的解套逻辑是<span class="mark">利用每次反弹减仓，而不是死扛等回本</span>——成本45.06、现价25.63，要回本需涨+76%，概率极低。调仓方向：把环旭、赛腾、通富这些走弱股的资金，逐步集中到淳中这类最强股，或空仓等大盘企稳。</p>
+    <p><strong class="strong">市场机理：</strong>8/6倍量2.79是全段最强进攻柱，实底25.80一破=左侧建构从底部坍塌，下方23.2/21.4（7月下旬平台/7/30低点）才是下一个支撑。卖在买先——破位后每次反弹，25.8上方的套牢盘都会出逃，反弹就是调仓窗口。</p>
+  </div>
+
+  <div class="stock watch">
+    <span class="name">观望区（无仓位，暂不进场）</span><span class="tag">长电73.2 / 胜宏241.84 / 天孚250.97</span>
+    <p><strong class="strong">长电科技（73.20）：</strong>上方生死线75.87已破（8/6发动机柱实顶），现价险守防守线73.0。观望——收破73看67；若站回75.87上方再看反弹。无仓位就不参与，管住手。</p>
+    <p><strong class="strong">胜宏科技（241.84）：</strong>跌破242.00生死线（8/5高量柱实顶）。观望——放量收回242上方之前不碰，下方看204。</p>
+    <p><strong class="strong">天孚通信（250.97）：</strong>唯一收回生死线的破位股（8/12右确认柱实顶248.50），今日+0.59%站回。观望——只有放量收过274（8/21反弹高点）才算走强，否则只是超跌反抽，不追。</p>
+  </div>
+
+  <h2>四、总仓位管理：7成 → 本周降到3-4成</h2>
+  <p>你总仓位7成太重。今天8股里4只收盘破生死线、你5只持仓3只要走——这已经不是"会不会选股"的问题，是<span class="strong">仓位纪律</span>的问题。第10课规则：环境弱（创业板-3.21%+今日8股7跌1涨）仓位应≤2成。降到3-4成是保护本金、保留子弹，等真正的右确认机会。</p>
+  <table>
+    <tr><th>执行顺序</th><th>股票</th><th>动作</th><th>回收资金(约)</th><th>执行触发</th></tr>
+    <tr><td>第1步</td><td>工业富联</td><td>减/清（有盈利，最好走）</td><td>约3.0万</td><td>反弹60-61或破58</td></tr>
+    <tr><td>第2步</td><td>赛腾股份</td><td>反弹清仓</td><td>约0.9万</td><td>反弹46.6-47.6或破44</td></tr>
+    <tr><td>第3步</td><td>通富微电</td><td>破60止损</td><td>约0.6万</td><td>收盘破60</td></tr>
+    <tr><td>第4步</td><td>环旭电子</td><td>反弹减1手</td><td>约0.5万</td><td>反弹25.8-26.5</td></tr>
+    <tr><td>第5步</td><td>淳中科技</td><td>止盈1手</td><td>约0.97万</td><td>现在/反弹100-102</td></tr>
+  </table>
+  <p>以上全部执行后，合计回收约6万，仓位从7成降到约2.5-3成，手里留足现金。若只想分两步：<span class="mark">第一步先处理富联+赛腾+通富（回收约4.5万，降到约3.1成）</span>，淳中+环旭按反弹条件第二步执行。</p>
+  <div class="warn">
+    <p><strong class="strong">不要做的事（今天最想提醒你的3句）：</strong></p>
+    <ol>
+      <li>破位股反弹 = 离场机会，不是补仓机会。富联、通富、赛腾反弹上去是让你走的，不是让你摊成本的。</li>
+      <li>不要在环旭这种-43%的票上"等回本"等反弹解套。资金被困在弱股里，等于错过所有机会。</li>
+      <li>总仓位必须降。7成仓在弱环境里，一个板块跌停就能吃掉你几个月利润——你利润回吐的根源就在这。</li>
+    </ol>
+  </div>
+
+  <h2>五、何时入场（重新动手的硬条件）</h2>
+  <p>现在不是入场时机。以下三条件<span class="strong">至少满足一个</span>才考虑进场：</p>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><strong class="strong">大盘企稳</strong>：上证守住3800 + 创业板收回3400上方（用你通达信看当日指数收盘）。大盘不稳，个股生死线必破，今天已经验证。</div>
+    <div class="step"><span class="n">2</span><strong class="strong">个股右确认</strong>：放量（量比≥1.3）+ 收盘站上关键位。候选：赛腾放量收过49.86（8/13高量实顶）、天孚放量收过274、胜宏放量收回242。</div>
+    <div class="step"><span class="n">3</span><strong class="strong">淳中低吸</strong>：淳中回踩92.6缩量不破 → 把你止盈的那1手接回，做箱体内波段。</div>
+  </div>
+  <div class="good">
+    <p><strong class="strong">明确不做的：</strong>不接飞刀（破位股反弹是减仓机会）、不逆势抄底（大盘弱时个股生死线必破）、不在没确认前补仓（你缺的从来不是买点，是卖点纪律）。</p>
+  </div>
+
+  <h2>六、治"不会逃顶 / 不会高抛低吸"的机械规则</h2>
+  <p>你说利润回吐、不会逃顶、不会高抛低吸——这三个病本质是一个病：<span class="strong">用"感觉"代替"线"</span>。把下面三条写进你的复盘，每天收盘对着打勾：</p>
+  <table>
+    <tr><th>规则</th><th>触发信号</th><th>动作</th></tr>
+    <tr><td>逃顶规则</td><td>①持仓股出现高量柱（量比≥1.5）+ 次日不创新高 ②收盘跌破左侧生死线</td><td>①减半 ②清仓。永远用线，不用感觉。</td></tr>
+    <tr><td>高抛低吸规则</td><td>只在箱体股做（如淳中93-102）：上沿≥100放量滞涨 / 下沿≤94缩量企稳</td><td>上沿卖、下沿买；收破92.6或放量过102才停手。</td></tr>
+    <tr><td>仓位规则</td><td>看大盘环境（第10课四把体温计）</td><td>强6-8成 / 震荡2-4成 / 弱≤2成。7成只在强环境用。</td></tr>
+  </table>
+
+  <h2>七、8/26盘前核对清单（明早看一遍就做）</h2>
+  <ol>
+    <li>开盘前先看大盘：上证3800、创业板3400破没破——破了，一切反弹都是减仓机会。</li>
+    <li>富联：若冲60-61，按计划减/清（别贪，破位反抽就是让你走的）。</li>
+    <li>赛腾：反弹到46.6-47.6清仓；破44无条件走。</li>
+    <li>通富：收盘破60止损；守60缩量则反弹61.2-62走。</li>
+    <li>淳中：先在96-102区间卖1手锁利；剩余守92.6移动止盈。</li>
+    <li>环旭：反弹25.8-26.5减1手；破23.2走人。</li>
+    <li>长电/胜宏/天孚：只看不动，条件满足前一律观望。</li>
+  </ol>
+
+  <div class="foot">
+    现代量学实战体系 · 复盘日报 2026-08-25 · 仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎，操作请结合自身风险承受能力自行决策
+    <div class="data-src">数据核验：8股8/25价格=用户通达信截图，与本地库8/24收盘逐日核验全部吻合；生死线/均线=本地库（腾讯前复权）计算，8/25为基准日，8/25量能及大盘指数待公开接口更新后复核。量比口径=今日成交量÷昨日成交量（日线相对量比），通达信分时量比算法不同属正常。若截图时为盘中价，请一律以收盘价为准再执行。</div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  function initCards(){
+    document.querySelectorAll('table').forEach(function(t){
+      var rows = t.querySelectorAll('tr');
+      if (!rows.length) return;
+      var ths = [];
+      if (rows[0].querySelectorAll('th').length) {
+        rows[0].querySelectorAll('th').forEach(function(th){
+          ths.push(th.textContent.replace(/\s+/g,' ').trim());
+        });
+        rows[0].classList.add('card-head');
+      }
+      rows.forEach(function(tr){
+        var tds = tr.querySelectorAll('td');
+        tds.forEach(function(td,i){ if (ths[i]) td.setAttribute('data-label', ths[i]); });
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCards);
+  } else {
+    initCards();
+  }
+})();
+</script>
+</body>
+</html>
