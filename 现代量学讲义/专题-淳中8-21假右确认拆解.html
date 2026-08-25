@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专题：淳中8/21"假右确认"拆解 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.6rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .badge.blue { background: #2e86ab; }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .point {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-left: 4px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.1rem 1.4rem;
+    margin: 1.1rem 0;
+  }
+  .point .t { color: #f0c060; font-weight: bold; font-size: 1.02rem; }
+  .good { background: #0d1a24; border: 1px solid #2e86ab; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 12px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 12px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .up { color: #e74c3c; font-weight: bold; }
+  .down { color: #2ecc71; font-weight: bold; }
+  .flat { color: #f0c060; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+
+@media (max-width: 640px) {
+  table, tbody, tr, th, td { display: block; box-sizing: border-box; }
+  tr.card-head { display: none; }
+  tbody tr {
+    border: 1px solid #2a3a4a;
+    border-radius: 10px;
+    margin: 0 0 12px 0;
+    padding: 6px 14px 10px;
+    background: #141c26;
+  }
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    border: none;
+    border-bottom: 1px dashed #2f3f4f;
+    padding: 7px 0;
+  }
+  tbody td:last-child { border-bottom: none; }
+  tbody td::before {
+    content: attr(data-label);
+    color: #8ba3b8;
+    font-size: 0.82em;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  tbody tr td:first-child::before { display: none; }
+  tbody tr td:first-child {
+    color: #f0c060;
+    font-weight: 700;
+    font-size: 1.05em;
+    border-bottom: 1px solid #2f3f4f;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1><span class="badge">专题拆解</span>淳中科技 8/21"假右确认"——三条件全中为什么不能买</h1>
+    <div class="sub">由学员实战提问触发 · 右确认三条件的"隐含前提"实战讲解</div>
+    <div class="sub data-src">数据来源：本地行情库（腾讯证券前复权），淳中8/21收98.26、量比1.43、+4.9%，与你通达信截图核验一致</div>
+  </div>
+
+  <div class="core">
+    <p class="big">直接结论：8/21收盘前十分钟，淳中不是入场机会，是"假右确认"。当天追进去的人，8/24就被套（98.26→95.88），8/25收96.55还没解套。</p>
+    <p>你的判断逻辑没有错——量比1.43≥1.3、收盘98.26在92.6生死线上方、放量收阳，三条件表面全中。但右确认三条件只是"必要条件"，不是"充分条件"。这次缺的是三个更重要的前提：<span class="mark">确认对象错了、量能是假的、位置在箱体中部</span>。</p>
+  </div>
+
+  <h2>一、先还原8/21这根K线的完整背景</h2>
+  <table>
+    <tr><th>日期</th><th>开</th><th>收</th><th>高</th><th>低</th><th>量(万手)</th><th>量比</th><th>涨跌</th><th>发生了什么</th></tr>
+    <tr><td>8/17</td><td>99.40</td><td>102.22</td><td>102.24</td><td>98.52</td><td>4.4</td><td>1.35</td><td class="up">+2.88%</td><td>放量收上箱体上沿102</td></tr>
+    <tr><td>8/18</td><td>103.00</td><td>102.00</td><td>109.69</td><td>101.02</td><td>8.6</td><td>1.95</td><td class="down">-0.22%</td><td><span class="mark">倍量长上影！冲109.69被砸回102</span></td></tr>
+    <tr><td>8/19</td><td>101.00</td><td>94.45</td><td>101.00</td><td>94.05</td><td>6.7</td><td>0.78</td><td class="down">-7.40%</td><td>放量暴跌，突破失败</td></tr>
+    <tr><td>8/20</td><td>96.00</td><td>93.67</td><td>96.31</td><td>92.64</td><td>4.6</td><td>0.68</td><td class="down">-0.83%</td><td>地量，92.6生死线附近企稳</td></tr>
+    <tr><td class="strong">8/21</td><td>93.94</td><td>98.26</td><td>99.98</td><td>92.18</td><td>6.5</td><td>1.43</td><td class="up">+4.90%</td><td>长下影阳线，深V反抽</td></tr>
+    <tr><td>8/24</td><td>98.09</td><td>95.88</td><td>102.09</td><td>93.26</td><td>5.7</td><td>0.87</td><td class="down">-2.42%</td><td>盘中冲102.09又砸回，<span class="mark">验证上方压力</span></td></tr>
+    <tr><td>8/25</td><td>—</td><td>96.55</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="up">+0.70%</td><td>你的通达信数据</td></tr>
+  </table>
+  <p>8月箱体：<span class="strong">92.6（下沿）— 102.8（上沿）</span>。8/18倍量冲109.69失败、8/19暴跌，说明箱体上沿上方压着8.6万手的套牢盘。</p>
+
+  <h2>二、六大拆解：为什么三条件全中却是假右确认</h2>
+
+  <div class="point">
+    <div class="t">拆解1：右确认"确认的对象"错了——这是最根本的一条</div>
+    <p>右确认不是"涨了就确认"，是"<span class="mark">涨了且过了该过的关键线</span>"才算确认。它确认的对象是"左证明建构的有效性"。</p>
+    <p>淳中8月的左证明是什么？是8/17-8/18向上<b>突破箱体上沿102-103</b>。但这个左证明在8/18已经失败了（倍量冲高被砸回+8/19暴跌）。</p>
+    <p>8/21的上涨确认的是什么呢？它只确认了"92.6生死线守住了、跌势止住了"——这是<b>止跌信号</b>，不是<b>突破信号</b>。8/21收盘98.26连8/17的102.22都没摸到，离真正的突破位102-103还差5元。<span class="strong">该确认的线（103）没过，确认了一条不该确认的线（92.6），方向就错了。</span></p>
+  </div>
+
+  <div class="point">
+    <div class="t">拆解2：位置在箱体中部=全箱体最差的入场点</div>
+    <p>淳中箱体92.6-102.8。箱体交易只有两个合格点位：</p>
+    <ul>
+      <li><span class="strong">下沿低吸点</span>：92.6-93缩量企稳（8/20量比0.68地量就是信号）——低风险、赔率高</li>
+      <li><span class="strong">上沿突破点</span>：放量收盘站上102-103——趋势确认、空间打开</li>
+    </ul>
+    <p>8/21收盘98.26 = 箱体中部偏上。<span class="mark">既没到低吸位，也没到突破位，是典型的"半山腰追涨"</span>——上方到102-103有压力（赚不到多少），下方到92.6有回踩空间（一跌就套），赔率最差的位置。</p>
+  </div>
+
+  <div class="point">
+    <div class="t">拆解3：量比1.43是"假放量"——绝对量能不够</div>
+    <p>量比1.43看着达标，但量比=今日量÷昨日量。8/20是<b>地量</b>（4.6万手，量比0.68），所以8/21的1.43只是"地量后的恢复性放大"，绝对量6.5万手。</p>
+    <p>关键对比：<span class="strong">上方压着8/18的倍量柱（8.6万手）</span>。量学里突破的硬道理是：<span class="mark">要解放上方套牢盘，必须放出比套牢时更大的量</span>。8/21的6.5万手连8/18的8.6万手都不到，凭什么突破102-103？<b>量比达标 ≠ 量能达标。</b></p>
+  </div>
+
+  <div class="point">
+    <div class="t">拆解4：8/21是长下影"深V反抽"，不是主力进攻</div>
+    <p>8/21开93.94、最低92.18（<span class="mark">盘中一度插破92.6生死线！</span>）、尾盘拉回收98.26。这是一根深V下影阳线：早盘杀破生死线，午后拉回。</p>
+    <p>用生死线纪律读：盘中插破（92.18&lt;92.6）但收盘收回（98.26&gt;92.6）=<b>虚破后收回</b>。这是"止跌信号"，意思是"92.6下方有人接"，它可以让你把淳中列入观察名单，<span class="strong">但"有人接"不等于"要进攻"</span>。深V反抽=日内分歧极大，不是主力一气呵成的上攻形态。</p>
+  </div>
+
+  <div class="point">
+    <div class="t">拆解5：收盘前10分钟入场=没有"次日确认"，T+1陷阱</div>
+    <p>尾盘追入有三个实操问题：①当天买入次日才能卖（T+1），尾盘价没法当日纠错；②"全天走势基本确定"不等于"次日走势确定"，隔夜消息/大盘变脸都不可控；③右确认的正确用法是<span class="mark">"当天确认→次日验证"，用一根K线确认，用下一根K线验证持续性</span>。</p>
+    <p>8/21追进去的人，8/24就得到验证：8/24盘中最高冲到102.09（差一步摸到103压力）又被砸回，收盘95.88（-2.42%），追入者当日被套，8/25还在96.55徘徊。<span class="strong">8/21之后没有走出上涨持续，反证它不是右确认。</span></p>
+  </div>
+
+  <div class="point">
+    <div class="t">拆解6：真正的低吸点在8/20，8/21的高点是它的利润</div>
+    <p>同样一只票，不同入场点，盈亏完全相反：</p>
+    <ul>
+      <li>8/20下沿低吸（量比0.68地量+收93.67+生死线上方企稳）→ 8/21冲高99.98，账面+6%</li>
+      <li>8/21中部追高（收98.26）→ 8/24收95.88，账面-2.4%；8/25还亏着</li>
+    </ul>
+    <p><span class="mark">8/21的+4.9%阳线，是8/20低吸者的利润，不是8/21追高者的机会。</span>这就是"高抛低吸"和"追涨杀跌"的本质区别——差两天，结果相反。</p>
+  </div>
+
+  <h2>三、那么淳中真正的入场信号是什么？</h2>
+  <div class="good">
+    <p><span class="strong">方案A（突破右确认，首选）：</span>放量（绝对量≥8.6万手，量比≥1.3）收盘站上<span class="strong">103</span>（箱体上沿+8/18高量柱上方）。这才是确认"突破有效"的真右确认，站上后上看112/前高。</p>
+    <p><span class="strong">方案B（下沿低吸）：</span>回踩92.6-93缩量企稳（量比&lt;0.8，最好出地量+长下影或十字星）低吸，止损92.0下方。</p>
+    <p><span class="strong">方案C（你已有持仓的对应法）：</span>你成本41.02的3手淳中按8/25日报执行——先在96-102分批止盈1手，剩余2手用92.6移动止盈守着，放量过103再加。</p>
+  </div>
+
+  <h2>四、给你的启发（这次提问最大的收获）</h2>
+  <div class="warn">
+    <ol>
+      <li><span class="strong">右确认的完整公式 = 前提（左证明成立）+ 三条件（量比≥1.3、收盘站上关键位、放量收阳）+ 关键位选对（要过箱体上沿/前高，不是只过生死线）+ 绝对量能≥套牢量 + 次日验证。</span>任何一条缺位，都是"假右确认"。</li>
+      <li><span class="strong">关键位选错了，条件全中也白搭。</span>8/21过的是92.6（该守的线），没过102-103（该攻的线）。要分清"守"和"攻"——止跌守线是观察信号，放量攻线才是入场信号。</li>
+      <li><span class="strong">量比看相对，突破看绝对。</span>地量后的1.4不算放量，突破必须超过套牢区的量（8.6万手）。</li>
+      <li><span class="strong">箱体内只在两端动手：</span>下沿缩量买、上沿放量卖，中部一律不追。淳中8月就是活教材。</li>
+      <li><span class="strong">盘中的"假动作"和"真信号"的区别：</span>深V反抽/长下影=止跌假动作；放量站稳关键位+次日延续=真信号。用"次日验证"过滤假动作。</li>
+    </ol>
+  </div>
+
+  <h2>五、把这个案例存档成你的"识别假信号"模板</h2>
+  <p>以后任何股票出现"疑似右确认"，拿这个检查清单过一遍，缺一项就降级为观察：</p>
+  <table>
+    <tr><th>检查项</th><th>8/21淳中</th><th>通过？</th></tr>
+    <tr><td>① 左证明建构此前是否成立（有没有站上过关键位）</td><td>8/17-18攻102-103失败</td><td class="down">未过</td></tr>
+    <tr><td>② 确认的是"突破线"还是"守住线"</td><td>只确认守住92.6</td><td class="down">方向错</td></tr>
+    <tr><td>③ 绝对量能≥上方套牢量</td><td>6.5万手 &lt; 8/18的8.6万手</td><td class="down">不够</td></tr>
+    <tr><td>④ 位置在箱体两端而非中部</td><td>98.26中部偏上</td><td class="down">差</td></tr>
+    <tr><td>⑤ K线形态是进攻还是反抽</td><td>深V长下影=反抽</td><td class="down">差</td></tr>
+    <tr><td>⑥ 次日有无延续</td><td>8/24冲102失败回落</td><td class="down">证伪</td></tr>
+  </table>
+  <p class="data-src">六项全过=真右确认可入场；过4-5项=观察；≤3项=假信号，放弃。8/21淳中仅第③项勉强沾边，属"假信号"。这不是事后诸葛亮——上面6条在8/21收盘时全部可以从数据里算出来，不需要等8/24。</p>
+
+  <div class="foot">
+    现代量学实战体系 · 专题拆解 2026-08-25 · 仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎
+    <div class="data-src">本专题数据全部来自本地行情库（腾讯证券前复权）逐日核验，量比=今日成交量÷昨日成交量。</div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  function initCards(){
+    document.querySelectorAll('table').forEach(function(t){
+      var rows = t.querySelectorAll('tr');
+      if (!rows.length) return;
+      var ths = [];
+      if (rows[0].querySelectorAll('th').length) {
+        rows[0].querySelectorAll('th').forEach(function(th){
+          ths.push(th.textContent.replace(/\s+/g,' ').trim());
+        });
+        rows[0].classList.add('card-head');
+      }
+      rows.forEach(function(tr){
+        var tds = tr.querySelectorAll('td');
+        tds.forEach(function(td,i){ if (ths[i]) td.setAttribute('data-label', ths[i]); });
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCards);
+  } else {
+    initCards();
+  }
+})();
+</script>
+</body>
+</html>
