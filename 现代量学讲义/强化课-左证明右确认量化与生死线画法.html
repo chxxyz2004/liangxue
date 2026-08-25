@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>强化课：左证明右确认量化标准 + 生死线画法 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 940px; margin: 0 auto; }
+  .back { color: #5dade2; text-decoration: none; font-size: 0.9rem; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1rem 0 2rem;
+  }
+  .header h1 { font-size: 1.7rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #7d3c98;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2.2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .case { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .case .stock { color: #f0c060; font-weight: bold; font-size: 1.05rem; }
+  .case .fail { color: #e74c3c; font-weight: bold; font-size: 1.05rem; }
+  .case .win { color: #2ecc71; font-weight: bold; font-size: 1.05rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 10px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 10px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+  .ok { color: #2ecc71; font-weight: bold; }
+  .line { color: #e74c3c; font-weight: bold; }
+  .score { font-size: 1.4rem; font-weight: bold; color: #f0c060; }
+
+  /* ===== 四色标签体系 ===== */
+  .tg { display: inline-block; font-size: 0.75rem; padding: 1px 8px; border-radius: 4px; margin-right: 6px; vertical-align: middle; font-weight: bold; white-space: nowrap; }
+  .tg-trad { background: #6b4f1d; color: #f5d78e; border: 1px solid #8a6a2a; }
+  .tg-mod { background: #0f4d4a; color: #7de3d4; border: 1px solid #1a6b66; }
+  .tg-law { background: #4a2d6b; color: #cf9fff; border: 1px solid #6a3f99; }
+  .tg-simple { background: #1d4a2d; color: #8ef0a8; border: 1px solid #2a6b3f; }
+  .tag2 { background: #2a3a4a; color: #8ba3b8; font-size: 0.75rem; padding: 1px 8px; border-radius: 4px; margin-left: 6px; }
+
+  /* ===== 折叠面板（小测验答案） ===== */
+  details { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1rem 1.5rem; margin: 1rem 0; }
+  summary { cursor: pointer; color: #f0c060; font-weight: bold; outline: none; }
+  details .ans { margin-top: 0.8rem; color: #8ef0a8; }
+
+  /* ===== SVG容器 ===== */
+  .chart { background: #141c26; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1rem; margin: 1.2rem 0; text-align: center; }
+  .chart svg { max-width: 100%; height: auto; }
+  .chart .cap { color: #8ba3b8; font-size: 0.82rem; margin-top: 0.5rem; }
+
+  /* ===== 作业样式 ===== */
+  .q { background: #141c26; border: 1px solid #2a3a4a; border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .qn { color: #f0c060; font-weight: bold; margin-right: 6px; }
+  .q .text { margin-bottom: 0.8rem; }
+  .opt { padding: 10px 14px; border: 1px solid #2a3a4a; border-radius: 8px; margin: 8px 0; cursor: pointer; transition: all 0.15s; background: #1a2733; }
+  .opt .tag { background: #2a3a4a; color: #f0c060; border-radius: 4px; padding: 1px 7px; font-weight: bold; margin-right: 8px; }
+  .opt:hover { border-color: #f0c060; }
+  .opt.selected { border-color: #2ecc71; background: #14301f; }
+  .opt.selected .tag { background: #2ecc71; color: #fff; }
+  .submit-btn { display: block; width: 100%; background: #c0392b; color: #fff; border: none; border-radius: 8px; padding: 14px; font-size: 1.05rem; cursor: pointer; margin: 1.5rem 0; font-weight: bold; }
+  .submit-btn:active { background: #a93226; }
+  .result { background: #14301f; border: 1px solid #2ecc71; border-radius: 8px; padding: 1.2rem 1.5rem; display: none; margin: 1rem 0; }
+  .result .code { background: #0f1419; color: #8ef0a8; font-family: monospace; padding: 0.8rem 1rem; border-radius: 6px; margin: 0.8rem 0; font-size: 1.2rem; letter-spacing: 4px; word-break: break-all; }
+  .copy-btn { background: #1a6b66; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; cursor: pointer; }
+  .copy-btn:active { background: #14514d; }
+
+  /* ===== 手机卡片化表格 ===== */
+  @media (max-width: 640px) {
+    table, tbody, tr, th, td { display: block; box-sizing: border-box; }
+    tr.card-head { display: none; }
+    tbody tr {
+      border: 1px solid #2a3a4a;
+      border-radius: 10px;
+      margin: 0 0 12px 0;
+      padding: 6px 14px 10px;
+      background: #141c26;
+    }
+    tbody td {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      border: none;
+      border-bottom: 1px dashed #2f3f4f;
+      padding: 7px 0;
+    }
+    tbody td:last-child { border-bottom: none; }
+    tbody td::before {
+      content: attr(data-label);
+      color: #8ba3b8;
+      font-size: 0.82em;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    tbody tr td:first-child::before { display: none; }
+    tbody tr td:first-child {
+      color: #f0c060;
+      font-weight: 700;
+      font-size: 1.05em;
+      border-bottom: 1px solid #2f3f4f;
+      padding-bottom: 8px;
+      margin-bottom: 4px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back" href="./index.html">← 返回讲义首页</a>
+
+  <div class="header">
+    <h1><span class="badge">强化课</span>左证明右确认 · 量化标准 + 生死线画法</h1>
+    <div class="sub">第5课 + 第6课 深入强化 · 把"感觉"变成"分数和数字" · 授课：黑马王子（张得一）</div>
+    <div class="sub data-src">数据来源：本地行情数据库（腾讯证券前复权接口，与看盘软件一致），截至2026-08-24收盘，逐日核验；本文所有案例均标注"（数据：前复权）"</div>
+  </div>
+
+  <div class="warn">
+    <p><strong class="strong">这一课的目的：让你手里有"尺子"和"计分卡"，而不是"感觉"。</strong></p>
+    <p>你已经学过：右确认=放量+突破+方向对；生死线=四把尺子。但"放量"到底多大？"突破"要站上多少？"量最大"怎么锁定？左侧历史要有什么才算"证明"？——今天全部数字化。</p>
+  </div>
+
+  <h2>零、先重新定义（比第5课更精确）</h2>
+  <div class="core">
+    <div class="big">左证明 = 历史证据库；右确认 = 证据闭环。</div>
+    <p style="margin-top:0.8rem;">警察办案：左证明=锁定嫌疑人（案发现场有他的脚印、指纹、动机）；右确认=抓现行+证据链闭合（人赃并获）。<strong class="strong">没有左证明，右确认是孤证；没有右确认，左证明只是猜测。</strong></p>
+    <ul style="margin-top:0.8rem;">
+      <li><strong class="strong">左证明回答</strong>："这票凭什么值得关注？"——靠历史量价建构（脚印/指纹/动机）。</li>
+      <li><strong class="strong">右确认回答</strong>："现在能动手吗？"——靠当日+次日的量价行为（抓现行）。</li>
+    </ul>
+  </div>
+  <p><span class="tg tg-simple">💡 通俗理解</span>左证明管"选股池"，右确认管"扣扳机"。选股池可以有一堆嫌疑人，但扣扳机必须人赃并获。</p>
+
+  <h2>一、左证明 · 量化标准（左侧历史到底要有啥）</h2>
+  <p><span class="tg tg-trad">🏷 传统量学</span>原著说左侧要有"王牌柱/黄金柱/低量柱"等建构。我们把它变成<strong class="strong">五要素计分卡</strong>，每个要素可打分，凑满分数才算"证据足够"。</p>
+
+  <h3>1.1 左证明五要素计分卡</h3>
+  <table>
+    <tr><th>要素</th><th>量化标准（超标准）</th><th>打分</th></tr>
+    <tr>
+      <td><strong class="strong">① 位置合格</strong></td>
+      <td>250日位置百分位 &lt;70%（&lt;40%低位更强）；且60日趋势为"上升初段/底部转升"</td>
+      <td>+1</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">② 有将军柱</strong></td>
+      <td>近20日内存在量比≥1.3 且收阳的放量大阳线（实体≥3%更佳）</td>
+      <td>+1</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">③ 有黄金柱</strong></td>
+      <td>将军柱之后3日量比逐日递减且&lt;0.8，回调不破将军柱实底（缩量不破）</td>
+      <td>+1</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">④ 有地量回踩</strong></td>
+      <td>回调末端出现量比&lt;0.7 的地量（抛压枯竭），且未破关键位</td>
+      <td>+1</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">⑤ 站稳关键位</strong></td>
+      <td>收盘站在四把尺子定出的生死线之上（线上方≥1%）</td>
+      <td>+1</td>
+    </tr>
+  </table>
+  <div class="core">
+    <div class="big">左证明强度分级：满分5分</div>
+    <ul style="margin-top:0.8rem;">
+      <li><span class="score">4-5分</span> = <strong class="strong">强左证明</strong> → 可进入自选，等右确认就动手；</li>
+      <li><span class="score">3分</span> = <strong class="strong">合格左证明</strong> → 值得跟踪，小仓位试错；</li>
+      <li><span class="score">1-2分</span> = <strong class="strong">证据不足</strong> → 只观察，不买（不管它今天涨得多漂亮）。</li>
+    </ul>
+  </div>
+
+  <h3>1.2 左证明实证①：天孚通信 8/4 强左证明（5分）</h3>
+  <div class="case">
+    <div class="stock win">✅ 天孚通信（300394）· 2026-08-04 · 数据：前复权</div>
+    <p>左侧建构（7/15-8/4）：</p>
+    <table>
+      <tr><th>日期</th><th>收盘</th><th>涨跌</th><th>量比</th><th>左侧事件</th></tr>
+      <tr><td>7/15</td><td>259.40</td><td>—</td><td>—</td><td>下跌起点</td></tr>
+      <tr><td>7/28</td><td>181.56</td><td class="line">-13.21%</td><td>1.73</td><td>放量杀跌（最后一跌）</td></tr>
+      <tr><td>7/30</td><td>160.10</td><td class="line">-12.08%</td><td>1.34</td><td>再度放量下探，出低点</td></tr>
+      <tr><td>7/31-8/3</td><td>171.01→180.50</td><td>+6.81%/+5.55%</td><td>0.95/1.02</td><td>缩量止跌回升</td></tr>
+      <tr><td><span class="mark">8/4</span></td><td>212.00</td><td class="ok">+17.45%</td><td><strong class="strong">1.40</strong></td><td><span class="mark">将军柱：放量大阳线</span></td></tr>
+      <tr><td>8/5</td><td>216.85</td><td>+2.29%</td><td>1.10</td><td>缩量</td></tr>
+      <tr><td>8/6</td><td>225.28</td><td>+3.89%</td><td>0.79</td><td><span class="mark">缩量</span></td></tr>
+      <tr><td>8/7</td><td>230.68</td><td>+2.40%</td><td>0.90</td><td><span class="mark">缩量</span></td></tr>
+    </table>
+    <p>打分：<span class="ok">①位置46%腰部+底部转升 +1</span> <span class="ok">②8/4将军柱（量比1.40、+17.45%）+1</span> <span class="ok">③8/5-8/7量比1.10→0.79→0.9递减、不破8/4实底 +1</span> <span class="ok">④7/30量比1.34后缩量，但更关键的是8/11量比0.68地量（后验） +1</span> <span class="ok">⑤8/4一举收复7/24-7/28套牢区，站上关键位 +1</span></p>
+    <p class="data-src">总分<strong class="strong">5/5 = 强左证明</strong>。这就是"黄金柱"完整的左侧建构：放量将军柱→缩量不破→位置低位。之后8/12量比1.68放量突破=右确认（见下文）。</p>
+  </div>
+
+  <h3>1.3 左证明实证②：工业富联 8/20 证据不足（1-2分）</h3>
+  <div class="case">
+    <div class="stock fail">❌ 工业富联（601138）· 2026-08-20 · 数据：前复权</div>
+    <p>左侧建构（8/12-8/20）：</p>
+    <table>
+      <tr><th>日期</th><th>收盘</th><th>涨跌</th><th>量比</th><th>左侧事件</th></tr>
+      <tr><td>8/12</td><td>65.60</td><td>-0.62%</td><td>0.96</td><td>箱体内</td></tr>
+      <tr><td>8/19</td><td>61.83</td><td class="line">-6.60%</td><td>1.06</td><td><span class="line">放量跌破箱体下沿64.51</span></td></tr>
+      <tr><td>8/20</td><td>62.13</td><td>+0.49%</td><td>0.56</td><td>缩量企稳（"看似左证明"）</td></tr>
+      <tr><td>8/21</td><td>62.84</td><td>+1.14%</td><td>1.02</td><td>温和小涨</td></tr>
+      <tr><td><span class="line">8/24</span></td><td>60.40</td><td class="line">-3.88%</td><td>1.23</td><td><span class="line">右证伪：放量破位</span></td></tr>
+    </table>
+    <p>打分：<span class="line">①位置48%腰部，但60日趋势=下跌中继，不是底部转升 ✗</span> <span class="line">②无将军柱（8/19还在放量破位）✗</span> <span class="line">③无黄金柱 ✗</span> <span class="line">④量比0.56算缩量，但不是"地量回踩关键位"（关键位64.51已经破了）✗</span> <span class="line">⑤收盘62.13在64.51之下，站不上关键位 ✗</span></p>
+    <p class="data-src">总分<strong class="strong">0-2/5 = 证据不足</strong>。8/20-8/21的"缩量企稳"只是<strong class="strong">下跌中继的喘息</strong>，不是主力吸筹证据。8/24放量破位彻底证伪。</p>
+    <p><span class="tg tg-simple">💡 通俗理解</span>同样"缩量"，天孚的缩量发生在"将军柱之后、关键位之上"（主力吸筹后惜售）；富联的缩量发生在"破位之后、关键位之下"（散户躺平不卖）。<strong class="strong">缩量本身不值钱，缩量的位置才值钱。</strong></p>
+  </div>
+
+  <h2>二、右确认 · 量化标准（动手的数字标准）</h2>
+  <p><span class="tg tg-mod">🚀 现代升级</span>第5课的三条件（放量+突破+方向对），现在把每个条件钉死成数字。</p>
+
+  <h3>2.1 右确认三条件 · 量化卡</h3>
+  <table>
+    <tr><th>条件</th><th>第5课版本</th><th>强化量化标准</th></tr>
+    <tr>
+      <td><strong class="strong">① 量能放大</strong></td>
+      <td>量比≥1.3</td>
+      <td><span class="mark">量比≥1.3</span>（合格）；<span class="ok">1.5-2.0 最佳（小倍阳）</span>；&gt;3 警惕对倒</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">② 价格突破</strong></td>
+      <td>突破左侧关键位</td>
+      <td><span class="mark">收盘站上生死线，且幅度≥1%</span>（盘中插破不算，尾盘收回才叫站上）</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">③ 方向一致</strong></td>
+      <td>放量配合上涨</td>
+      <td>收阳 + 量价同向（量比≥1.3 且收涨）；若放量收阴=反向信号，不是确认</td>
+    </tr>
+  </table>
+
+  <h3>2.2 右确认强度分级（给"是否重仓"用的）</h3>
+  <table>
+    <tr><th>级别</th><th>量化条件</th><th>可做动作</th></tr>
+    <tr>
+      <td><span class="ok">弱确认</span></td>
+      <td>量比1.3-1.5 + 收盘站上关键位幅度≥1% + 收阳</td>
+      <td>观察仓/试错仓（1-2成）</td>
+    </tr>
+    <tr>
+      <td><span class="ok">中确认</span></td>
+      <td>量比1.5-2.0 + 站上关键位 + 收阳（小倍阳+突破）</td>
+      <td>标准仓（3-5成）</td>
+    </tr>
+    <tr>
+      <td><span class="ok">强确认</span></td>
+      <td>中确认 + <strong class="strong">次日继续放量收阳、不跌回关键位</strong>（两日确认）</td>
+      <td>可加仓（配合环境强档）</td>
+    </tr>
+    <tr>
+      <td><span class="line">证伪/伪确认</span></td>
+      <td>跌破关键位（收盘在线下）或 放量收阴 或 量比&gt;3且滞涨</td>
+      <td>放弃/离场，绝不进场</td>
+    </tr>
+  </table>
+  <div class="core">
+    <div class="big">右确认的铁律：三条件缺一，宁可再等一天。</div>
+    <p>量比1.29=不合格；站上关键位但只有0.8%=不算数；放量了却收阴=反向信号。<strong class="strong">右确认不是"大概齐"，是"精确达标"。</strong></p>
+  </div>
+
+  <h3>2.3 右确认实证①：天孚 8/12 中确认（三条件全过）</h3>
+  <div class="case">
+    <div class="stock win">✅ 天孚通信（300394）· 2026-08-12 · 数据：前复权</div>
+    <table>
+      <tr><th>检查项</th><th>8/12实况</th><th>达标</th></tr>
+      <tr><td>①量能：量比≥1.3</td><td><strong class="strong">量比1.68</strong></td><td class="ok">✓ 合格（1.5-2.0小倍阳）</td></tr>
+      <tr><td>②突破：收盘站上关键位≥1%</td><td>收240.05，突破8/11最高228.58，幅度(240.05-228.58)/228.58=<strong class="strong">+5.0%</strong></td><td class="ok">✓ 大幅站上</td></tr>
+      <tr><td>③方向：放量配合上涨</td><td>收阳 +7.89%</td><td class="ok">✓ 量价同向</td></tr>
+    </table>
+    <p class="data-src">判定：<strong class="strong">中确认</strong>。8/12之后到8/18一路涨到291.44（+21.4%）。左证明（8/4黄金柱5分）+ 右确认（8/12三条件齐备）= 完整的"先证明、后确认"。</p>
+  </div>
+
+  <h3>2.4 右确认实证②：通富 8/18 伪确认 + 8/19 证伪</h3>
+  <div class="case">
+    <div class="stock fail">❌ 通富微电（002156）· 2026-08-18/8/19 · 数据：前复权</div>
+    <table>
+      <tr><th>日期</th><th>收盘</th><th>涨跌</th><th>量比</th><th>右确认检查</th></tr>
+      <tr><td>8/17</td><td>69.26</td><td class="ok">+10.01%</td><td>2.09</td><td>涨停=左侧信号（非右确认）</td></tr>
+      <tr><td>8/18</td><td>70.66</td><td>+2.02%</td><td>1.24</td><td>①量比1.24<span class="line">&lt;1.3不合格</span> ②站上新高✓ ③收阳✓ → 伪确认</td></tr>
+      <tr><td>8/19</td><td>63.59</td><td class="line">-10.01%</td><td>0.82</td><td><span class="line">放量跌停跌破8/17高量柱实顶69.26 = 右证伪</span></td></tr>
+    </table>
+    <p>教训①：8/18量比1.24<strong class="strong">没到1.3</strong>，按量化标准<strong class="strong">不合格</strong>，这天的"确认"是假的（次日起不来就是证据）。<br>教训②：真信号要看8/19——结果直接<strong class="strong">跌破高量柱实顶69.26=证伪</strong>。所以：<strong class="strong">不合格的右确认=不做；等到合格那天如果变成证伪，更不做。</strong></p>
+  </div>
+
+  <div class="chart">
+    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" font-family="PingFang SC, Microsoft YaHei, sans-serif">
+      <rect x="0" y="0" width="720" height="300" fill="#141c26"/>
+      <text x="360" y="30" text-anchor="middle" fill="#f0c060" font-size="17" font-weight="bold">左证明 + 右确认 = 完整决策链</text>
+      <rect x="30" y="60" width="300" height="180" rx="12" fill="#0f4d4a" stroke="#1a6b66"/>
+      <text x="180" y="88" text-anchor="middle" fill="#7de3d4" font-size="15" font-weight="bold">左证明（选股池）</text>
+      <text x="180" y="115" text-anchor="middle" fill="#e6e6e6" font-size="12">五要素计分卡，满分5分</text>
+      <text x="180" y="140" text-anchor="middle" fill="#e6e6e6" font-size="12">①位置&lt;70% ②将军柱 ③黄金柱</text>
+      <text x="180" y="160" text-anchor="middle" fill="#e6e6e6" font-size="12">④地量回踩 ⑤站稳关键位</text>
+      <text x="180" y="195" text-anchor="middle" fill="#8ef0a8" font-size="13">≥4分=强 · 3分=合格</text>
+      <text x="180" y="218" text-anchor="middle" fill="#e74c3c" font-size="13">≤2分=证据不足，不碰</text>
+      <rect x="390" y="60" width="300" height="180" rx="12" fill="#1d4a2d" stroke="#2a6b3f"/>
+      <text x="540" y="88" text-anchor="middle" fill="#8ef0a8" font-size="15" font-weight="bold">右确认（扣扳机）</text>
+      <text x="540" y="115" text-anchor="middle" fill="#e6e6e6" font-size="12">三条件数字化，缺一不可</text>
+      <text x="540" y="140" text-anchor="middle" fill="#e6e6e6" font-size="12">①量比≥1.3（1.5-2.0最佳）</text>
+      <text x="540" y="160" text-anchor="middle" fill="#e6e6e6" font-size="12">②收盘站上关键位≥1%</text>
+      <text x="540" y="180" text-anchor="middle" fill="#e6e6e6" font-size="12">③放量配合收阳</text>
+      <text x="540" y="218" text-anchor="middle" fill="#f0c060" font-size="13">缺一条件 → 宁可再等一天</text>
+      <line x1="330" y1="150" x2="390" y2="150" stroke="#f0c060" stroke-width="3" marker-end="url(#arr)"/>
+      <defs><marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#f0c060"/></marker></defs>
+      <text x="360" y="142" text-anchor="middle" fill="#f0c060" font-size="12">达标后</text>
+      <text x="360" y="270" text-anchor="middle" fill="#8ba3b8" font-size="13">案例：天孚8/4左证明(5分) → 8/12右确认(三条件全过) → +21.4%</text>
+    </svg>
+    <div class="cap">图：左证明管选股池（五要素计分），右确认管扣扳机（三条件数字达标）。</div>
+  </div>
+
+  <h2>三、生死线 · 画法量化流程（一步一步）</h2>
+  <p><span class="tg tg-trad">🏷 传统量学</span>第6课的四把尺子是"定什么"，这一节把"<strong class="strong">具体怎么画、画完怎么选</strong>"做成可执行流程。</p>
+
+  <h3>3.1 四把尺子的量化判定法</h3>
+  <table>
+    <tr><th>尺子</th><th>怎么找</th><th>量化"够格"标准</th><th>案例</th></tr>
+    <tr>
+      <td><strong class="strong">尺子一：箱体边沿</strong></td>
+      <td>最近一波行情反复触到却没过的高/低点</td>
+      <td><span class="mark">被触碰≥2次</span>才算"集体记忆"；只碰1次的线=冷门线，不要</td>
+      <td>富联箱体下沿64.51（8/12-8/18触碰4次未破）</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">尺子二：高量柱实顶</strong></td>
+      <td>找量比最大那根K线，取其实顶（收盘价）</td>
+      <td><span class="mark">量比≥1.5</span>才配叫"高量柱"；量比&lt;1.3的都不是</td>
+      <td>通富8/17高量柱实顶69.26（量比2.09）</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">尺子三：均线</strong></td>
+      <td>20日=短期生死线，60日=大生命线</td>
+      <td>必须<strong class="strong">前复权</strong>计算；只当宏观背景验证，不单独当买点</td>
+      <td>富联20日62.79 / 60日66.54</td>
+    </tr>
+    <tr>
+      <td><strong class="strong">尺子四：缺口+整数关</strong></td>
+      <td>向下跳空缺口下沿=压力；整数关=心理位</td>
+      <td>只当补充；两条以上尺子同时指向才算数</td>
+      <td>富联下方60元整数关</td>
+    </tr>
+  </table>
+
+  <h3>3.2 画线五步法（操作流程）</h3>
+  <ol>
+    <li><strong class="strong">缩到250日定身位</strong>：先看一年，确认位置区（&lt;70%还是&gt;70%），位置错了下面全白画；</li>
+    <li><strong class="strong">缩到60日找箱体</strong>：找最近反复触到的高/低点，标记被触碰次数（≥2次才要）；</li>
+    <li><strong class="strong">缩到30日锁高量柱</strong>：找量比≥1.5的那根，画出实顶（收盘价）水平线；</li>
+    <li><strong class="strong">叠加均线+缺口+整数关</strong>：算出20/60日均线值，找缺口和整数位；</li>
+    <li><strong class="strong">多线合一+选主次</strong>：两条以上尺子指向同一价位=最硬的主线（进攻线）；其余为次线。<span class="mark">最多保留1条进攻线+1条防守线</span>。</li>
+  </ol>
+
+  <h3>3.3 多线合一案例：工业富联（截至8/24）</h3>
+  <div class="case">
+    <div class="stock fail">工业富联（601138）· 四把尺子汇总 · 数据：前复权</div>
+    <table>
+      <tr><th>尺子</th><th>关键位</th><th>当前价60.40 vs 该线</th><th>判定</th></tr>
+      <tr><td>箱体下沿（触碰≥2次）</td><td>64.51</td><td class="line">下方（已破）</td><td class="line">破位=右证伪</td></tr>
+      <tr><td>高量柱实顶（8/5量比1.72）</td><td>65.92</td><td class="line">下方</td><td class="line">转弱</td></tr>
+      <tr><td>20日均线</td><td>62.79</td><td class="line">下方</td><td class="line">短线生死线已破</td></tr>
+      <tr><td>60日均线</td><td>66.54</td><td class="line">下方</td><td class="line">中长期转弱</td></tr>
+      <tr><td>整数关口</td><td>60.00</td><td>上方（尚未破）</td><td>最后观察位</td></tr>
+    </table>
+    <p><strong class="strong">多线合一结论</strong>：64.51（箱体）+65.92（高量实顶）+66.54（60日线）都压在头顶=上方压力极重；唯一支撑在整数关60。<strong class="strong">进攻线=60.00（破则走），防守线=64.51上方反抽不过=不加仓。</strong></p>
+    <p><span class="tg tg-simple">💡 通俗理解</span>画线不是画满屏。画完四把尺子，先找"多线合一"的那条（最硬），再留一条防守线。<strong class="strong">线越少，纪律越清晰；线越多，等于没纪律。</strong></p>
+  </div>
+
+  <div class="chart">
+    <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" font-family="PingFang SC, Microsoft YaHei, sans-serif">
+      <rect x="0" y="0" width="720" height="320" fill="#141c26"/>
+      <text x="360" y="28" text-anchor="middle" fill="#f0c060" font-size="16" font-weight="bold">生死线画法五步流程</text>
+      <rect x="30" y="50" width="120" height="110" rx="10" fill="#0f4d4a" stroke="#1a6b66"/>
+      <text x="90" y="78" text-anchor="middle" fill="#7de3d4" font-size="13" font-weight="bold">1 定身位</text>
+      <text x="90" y="102" text-anchor="middle" fill="#e6e6e6" font-size="11">250日</text>
+      <text x="90" y="120" text-anchor="middle" fill="#e6e6e6" font-size="11">&lt;70%才画</text>
+      <rect x="170" y="50" width="120" height="110" rx="10" fill="#c0392b" stroke="#e74c3c"/>
+      <text x="230" y="78" text-anchor="middle" fill="#f5b7b1" font-size="13" font-weight="bold">2 找箱体</text>
+      <text x="230" y="102" text-anchor="middle" fill="#e6e6e6" font-size="11">60日</text>
+      <text x="230" y="120" text-anchor="middle" fill="#e6e6e6" font-size="11">触碰≥2次</text>
+      <rect x="310" y="50" width="120" height="110" rx="10" fill="#4a2d6b" stroke="#6a3f99"/>
+      <text x="370" y="78" text-anchor="middle" fill="#cf9fff" font-size="13" font-weight="bold">3 锁高量</text>
+      <text x="370" y="102" text-anchor="middle" fill="#e6e6e6" font-size="11">30日</text>
+      <text x="370" y="120" text-anchor="middle" fill="#e6e6e6" font-size="11">量比≥1.5</text>
+      <rect x="450" y="50" width="120" height="110" rx="10" fill="#1d4a2d" stroke="#2a6b3f"/>
+      <text x="510" y="78" text-anchor="middle" fill="#8ef0a8" font-size="13" font-weight="bold">4 叠均线</text>
+      <text x="510" y="102" text-anchor="middle" fill="#e6e6e6" font-size="11">20/60日</text>
+      <text x="510" y="120" text-anchor="middle" fill="#e6e6e6" font-size="11">+缺口整数</text>
+      <rect x="590" y="50" width="120" height="110" rx="10" fill="#f0c060" stroke="#f5d78e"/>
+      <text x="650" y="78" text-anchor="middle" fill="#141c26" font-size="13" font-weight="bold">5 选主线</text>
+      <text x="650" y="102" text-anchor="middle" fill="#141c26" font-size="11">多线合一</text>
+      <text x="650" y="120" text-anchor="middle" fill="#141c26" font-size="11">最多2条</text>
+      <line x1="150" y1="105" x2="170" y2="105" stroke="#7a8a9a" stroke-width="2"/>
+      <line x1="290" y1="105" x2="310" y2="105" stroke="#7a8a9a" stroke-width="2"/>
+      <line x1="430" y1="105" x2="450" y2="105" stroke="#7a8a9a" stroke-width="2"/>
+      <line x1="570" y1="105" x2="590" y2="105" stroke="#7a8a9a" stroke-width="2"/>
+      <rect x="90" y="190" width="540" height="90" rx="12" fill="#1a2230" stroke="#c0392b"/>
+      <text x="360" y="215" text-anchor="middle" fill="#f0c060" font-size="13" font-weight="bold">三条铁律（量化版）</text>
+      <text x="360" y="240" text-anchor="middle" fill="#e6e6e6" font-size="12">取近不取远（30日内优先）· 取显不取冷（触碰≥2次）· 一条就够（最多1攻+1守）</text>
+      <text x="360" y="262" text-anchor="middle" fill="#8ba3b8" font-size="12">富联：进攻线=60整数关，防守线=64.51（多线合一：箱体+高量实顶+60日线）</text>
+    </svg>
+    <div class="cap">图：生死线画法五步 + 三条铁律量化版。</div>
+  </div>
+
+  <h2>四、左证明 + 右确认 + 生死线 · 一张决策表</h2>
+  <table>
+    <tr><th>环节</th><th>工具</th><th>量化标准</th><th>该做什么</th></tr>
+    <tr><td>选股池</td><td>左证明计分卡</td><td>≥4分强 / 3分合格 / ≤2分不碰</td><td>筛出值得跟踪的票</td></tr>
+    <tr><td>定锚点</td><td>生死线五步法</td><td>多线合一=进攻线，≤2条</td><td>画好"破则走"的线</td></tr>
+    <tr><td>扣扳机</td><td>右确认三条件</td><td>量比≥1.3 + 站上关键位≥1% + 收阳</td><td>三条件齐备才买</td></tr>
+    <tr><td>止损</td><td>阴胜出/破生死线</td><td>收盘跌破进攻线 或 量比≥1.3收阴</td><td>无条件先走</td></tr>
+  </table>
+
+  <h2>五、小测验（测真懂）</h2>
+
+  <details>
+    <summary>① 左证明和右确认的区别，一句话怎么说？</summary>
+    <div class="ans">左证明=历史证据（选股池，管"值不值得关注"）；右确认=证据闭环（扣扳机，管"现在能不能动手"）。没有左证明右确认是孤证，没有右确认左证明是猜测。</div>
+  </details>
+  <details>
+    <summary>② 左证明五要素计分卡，哪两个最核心？满分几分算"强"？</summary>
+    <div class="ans">最核心=②将军柱（量比≥1.3收阳）和③黄金柱（将军柱后3日缩量不破实底），再加上①位置&lt;70%。满分5分，≥4分=强左证明，≤2分=证据不足不碰。</div>
+  </details>
+  <details>
+    <summary>③ 右确认三条件的数字标准是什么？为什么量比1.29不合格？</summary>
+    <div class="ans">①量比≥1.3（1.5-2.0最佳）②收盘站上关键位且幅度≥1%③放量配合收阳。量比1.29差0.01也是不合格——数字标准就是要"精确达标"，否则就是给自己找借口（通富8/18量比1.24的下场）。</div>
+  </details>
+  <details>
+    <summary>④ 生死线怎么判断"够格"？为什么画满屏的线没用？</summary>
+    <div class="ans">够格=被触碰≥2次（取显不取冷）+ 多线合一最硬。画满屏=永远"既上又下"自相矛盾，等于没纪律。最多保留1条进攻线+1条防守线。</div>
+  </details>
+
+  <h2>六、作业（强化课 · 选择题）</h2>
+
+  <div class="q">
+    <div class="text"><span class="qn">第1题</span>左证明五要素计分卡满分5分，达到多少分才算"强左证明"、可进入自选等右确认？</div>
+    <div class="opts" data-answer="C">
+      <div class="opt" data-val="A"><span class="tag">A</span>1分</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>2分</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>4分（4-5分=强）</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>5分满分才行</div>
+    </div>
+    <div class="src">本课「1.1 左证明计分卡」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第2题</span>天孚通信8/4那波左侧建构中，最说明"主力进场且没走"的证据是哪项？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>7/30大跌-12%（恐慌）</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>8/4将军柱（量比1.40收+17.45%）之后8/5-8/7量比递减不破实底（黄金柱）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>8/12放量突破（这是右确认不是左证明）</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>8/19放量下跌</div>
+    </div>
+    <div class="src">本课「1.2 天孚实证」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第3题</span>右确认"价格突破"的量化标准是？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>盘中摸到关键位就算</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>收盘站上生死线，且幅度≥1%（盘中插破不算，尾盘收回才叫站上）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>只要涨就行，不看位置</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>突破后次日随便怎么走都行</div>
+    </div>
+    <div class="src">本课「2.1 右确认量化卡」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第4题</span>通富微电8/18量比1.24、收+2.02%，按右确认量化标准它属于？</div>
+    <div class="opts" data-answer="C">
+      <div class="opt" data-val="A"><span class="tag">A</span>合格的右确认，可以重仓</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>强右确认，加仓</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>伪确认（量比1.24&lt;1.3不合格），且8/19跌破高量柱实顶69.26=右证伪，应该完全放弃</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>无法判断</div>
+    </div>
+    <div class="src">本课「2.4 通富实证」</div>
+  </div>
+
+  <div class="q">
+    <div class="text"><span class="qn">第5题</span>工业富联8/20缩量企稳（量比0.56）为什么"证据不足"不能买？</div>
+    <div class="opts" data-answer="B">
+      <div class="opt" data-val="A"><span class="tag">A</span>因为缩量就是坏的</div>
+      <div class="opt" data-val="B"><span class="tag">B</span>因为它发生在破位之后、关键位64.51之下，是下跌中继的喘息，不是主力吸筹证据（左证明0-2分）</div>
+      <div class="opt" data-val="C"><span class="tag">C</span>因为量比0.56不够小</div>
+      <div class="opt" data-val="D"><span class="tag">D</span>因为工业富联是大盘股不好做</div>
+    </div>
+    <div class="src">本课「1.3 富联实证」</div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn">提交答案</button>
+
+  <div class="result" id="result">
+    <div>你的答案代码：</div>
+    <div class="code" id="code"></div>
+    <button class="copy-btn" id="copyBtn">复制答案</button>
+    <div class="warn" id="warn"></div>
+    <div style="color:#8ba3b8; font-size:0.85rem; margin-top:0.6rem;">复制后回聊天框粘贴发给我批改，不用打字。</div>
+  </div>
+
+  <h2>七、术语表（强化课新增）</h2>
+  <table>
+    <tr><th>术语</th><th>通俗解释</th></tr>
+    <tr><td><strong class="strong">左证明</strong></td><td>历史量价建构的证据库，五要素计分卡量化（位置/将军柱/黄金柱/地量回踩/站稳关键位），≥4分=强、≤2分=证据不足不碰。</td></tr>
+    <tr><td><strong class="strong">右确认</strong></td><td>证据闭环，三条件数字化（量比≥1.3、站上关键位≥1%、放量收阳），缺一不可，宁可再等一天。</td></tr>
+    <tr><td><strong class="strong">伪确认</strong></td><td>看起来像确认但量化不达标（如通富8/18量比1.24&lt;1.3），次日常现原形，绝不进场。</td></tr>
+    <tr><td><strong class="strong">多线合一</strong></td><td>两条以上尺子指向同一价位=最硬的生死线。富联案例：64.51箱体+65.92高量实顶+66.54均线=上方压力极重。</td></tr>
+    <tr><td><strong class="strong">进攻线/防守线</strong></td><td>画线最多留两条：进攻线（破则走的主力线）+防守线（反抽不过不加仓的次线）。线越少纪律越清晰。</td></tr>
+  </table>
+
+  <div class="foot">
+    现代量学实战体系 · 强化课（第5+6课深化）· 本讲义仅供个人学习使用，不构成任何投资建议<br>
+    股市有风险，入市需谨慎。量化标准是为了让你"精确执行"而非"精确预测"——数字帮你管住手，不帮你保证赢。<br>
+    <div style="color:#5a6a7a; font-size:0.8rem; margin-top:1rem;">本课全部数据来自本地行情数据库（腾讯证券前复权接口，与看盘软件一致），逐日核验，所有案例均标注"（数据：前复权）"，不包含任何未经验证的数据。</div>
+  </div>
+
+</div>
+
+<script>
+/* 手机卡片化表格 */
+(function(){
+  function initCards(){
+    document.querySelectorAll('table').forEach(function(t){
+      var rows = t.querySelectorAll('tr');
+      if (!rows.length) return;
+      var ths = [];
+      if (rows[0].querySelectorAll('th').length) {
+        rows[0].querySelectorAll('th').forEach(function(th){
+          ths.push(th.textContent.replace(/\s+/g,' ').trim());
+        });
+        rows[0].classList.add('card-head');
+      }
+      rows.forEach(function(tr){
+        var tds = tr.querySelectorAll('td');
+        tds.forEach(function(td,i){ if (ths[i]) td.setAttribute('data-label', ths[i]); });
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCards);
+  } else {
+    initCards();
+  }
+})();
+
+/* 作业交互 */
+(function () {
+  var groups = document.querySelectorAll(".opts");
+  var selection = {};
+  groups.forEach(function (g, i) {
+    g.querySelectorAll(".opt").forEach(function (o) {
+      o.addEventListener("click", function () {
+        g.querySelectorAll(".opt").forEach(function (x) { x.classList.remove("selected"); });
+        o.classList.add("selected");
+        selection[i] = o.getAttribute("data-val");
+      });
+    });
+  });
+  function codeOf() {
+    var codes = [];
+    for (var i = 0; i < groups.length; i++) {
+      var v = selection[i];
+      codes.push(v ? v : "?");
+    }
+    return codes.join("");
+  }
+  document.getElementById("submitBtn").addEventListener("click", function () {
+    var missing = false;
+    for (var i = 0; i < groups.length; i++) { if (!selection[i]) missing = true; }
+    var warn = document.getElementById("warn");
+    if (missing) {
+      warn.textContent = "还有题目没选，请把所有题做完再提交。";
+      warn.style.color = "#e74c3c";
+      return;
+    }
+    warn.textContent = "";
+    document.getElementById("result").style.display = "block";
+    document.getElementById("code").textContent = "Q-" + codeOf();
+  });
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    var btn = document.getElementById("copyBtn");
+    var text = document.getElementById("code").textContent;
+    var ok = false;
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+    } catch (e) { ok = false; }
+    if (ok) {
+      btn.textContent = "已复制 ✓";
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = "已复制 ✓";
+      }, function () {
+        btn.textContent = "复制失败，请长按答案代码手动复制";
+      });
+    } else {
+      btn.textContent = "复制失败，请长按答案代码手动复制";
+    }
+    setTimeout(function () { btn.textContent = "复制答案"; }, 1800);
+  });
+})();
+</script>
+</body>
+</html>
