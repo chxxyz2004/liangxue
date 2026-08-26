@@ -125,6 +125,16 @@ Entries discovered by the Agent during task execution should follow this format:
   - 若腾讯再次失效，回退方案=用新浪 CN_MarketDataService 当日数据"增量追加"本地库（只补缺失交易日、不覆盖前复权历史）。
   - 8/25数据已由腾讯前复权与新浪双源核验一致。
 
+[Project Knowledge Summary]
+- Date: 2026-08-27
+- Context: Discovered by Agent while performing self-iteration check
+- Category: Operations & Deployment
+- Instructions:
+  - 量化监管重大变化（2026年8月）：交易所关闭局域网行情线路，统一为广域网接入（上交所7/31执行，深交所8/7执行），量化私募服务器必须搬出交易所机房，高频速度优势被物理性抹平。
+  - 高频交易认定标准从"每秒300笔"收紧至"每秒≥15笔"，大量程序化交易需报备。
+  - 风险点：小微盘股流动性枯竭风险增大（量化撤出），盘中毛刺波动减少但结构可能生变。量学实战需观察新规后市场结构是否回归正常。
+  - 人设已升级至v2.4.1，在开盘预案和盯盘清单中均有标注此变化提示。
+
 [User Instruction Summary]
 - Date: 2026-08-26
 - Context: 用户上传《人设-现代量学教练.md》（v2.3.1，另一大模型产物）供参考，授权自行决定吸收其补强规则；决定只吸收与现有双轨制体系兼容且对实盘阶段有用的部分，不推翻量学四大底层定律
