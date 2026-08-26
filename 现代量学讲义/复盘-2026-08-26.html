@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026-08-26 收盘后复盘 | 现代量学实战体系</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #0f1419;
+    color: #e6e6e6;
+    line-height: 1.8;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
+    border: 1px solid #2a3a4a;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .header h1 { font-size: 1.6rem; color: #f0c060; margin-bottom: 0.5rem; }
+  .header .sub { color: #8ba3b8; font-size: 0.95rem; }
+  .badge {
+    display: inline-block;
+    background: #c0392b;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .badge.blue { background: #2e86ab; }
+  .badge.green { background: #1f8a4c; }
+  .badge.orange { background: #b9770e; }
+  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
+  h3 { color: #e8b04a; font-size: 1.1rem; margin: 1.5rem 0 0.8rem; }
+  p { margin-bottom: 1rem; }
+  .core {
+    background: #1a2230;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .core .big { color: #f0c060; font-weight: bold; font-size: 1.15rem; }
+  .stock {
+    background: #141c26;
+    border: 1px solid #2a3a4a;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+  }
+  .stock.hold { border-left: 4px solid #c0392b; }
+  .stock.watch { border-left: 4px solid #2e86ab; }
+  .stock .name { color: #f0c060; font-weight: bold; font-size: 1.1rem; }
+  .stock .tag {
+    display: inline-block;
+    background: #2a3a4a;
+    color: #5dade2;
+    font-size: 0.78rem;
+    padding: 1px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+  }
+  .act {
+    background: #2b1a1a;
+    border: 1px solid #c0392b;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .act .lbl { color: #f0c060; font-weight: bold; }
+  .sline {
+    background: #0d1a24;
+    border: 1px solid #2e86ab;
+    border-left: 4px solid #2e86ab;
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .sline .lbl { color: #5dade2; font-weight: bold; }
+  .up { color: #e74c3c; font-weight: bold; }
+  .down { color: #2ecc71; font-weight: bold; }
+  .flat { color: #f0c060; }
+  .warn { background: #2b1a1a; border: 1px solid #c0392b; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  .good { background: #0d1a24; border: 1px solid #2e86ab; border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: #1a2733; color: #f0c060; text-align: left; padding: 8px 12px; border: 1px solid #2a3a4a; }
+  td { padding: 8px 12px; border: 1px solid #2a3a4a; }
+  ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+  li { margin: 0.5rem 0; }
+  .strong { color: #f0c060; font-weight: bold; }
+  .mark { background: #3a2a1a; color: #f0c060; padding: 0 4px; border-radius: 3px; }
+  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+  .data-src { color: #5dade2; font-size: 0.8rem; font-style: italic; }
+  .steps { background: #121a22; border: 1px solid #2a3a4a; border-radius: 8px; padding: 1rem 1.4rem; margin: 1rem 0; }
+  .steps .step { margin: 0.7rem 0; padding-left: 0.4rem; }
+  .steps .n { display: inline-block; background: #c0392b; color: #fff; border-radius: 50%; width: 22px; height: 22px; text-align: center; line-height: 22px; font-size: 0.8rem; font-weight: bold; margin-right: 8px; }
+  .six { border: 1px solid #2a3a4a; border-radius: 8px; margin: 0.8rem 0; overflow: hidden; }
+  .six .sixh { background: #1a2733; color: #f0c060; font-weight: bold; padding: 8px 14px; border-bottom: 1px solid #2a3a4a; }
+  .six .sixb { padding: 10px 14px; }
+
+/* ===== 手机卡片化表格 ===== */
+@media (max-width: 640px) {
+  table, tbody, tr, th, td { display: block; box-sizing: border-box; }
+  tr.card-head { display: none; }
+  tbody tr {
+    border: 1px solid #2a3a4a;
+    border-radius: 10px;
+    margin: 0 0 12px 0;
+    padding: 6px 14px 10px;
+    background: #141c26;
+  }
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    border: none;
+    border-bottom: 1px dashed #2f3f4f;
+    padding: 7px 0;
+  }
+  tbody td:last-child { border-bottom: none; }
+  tbody td::before {
+    content: attr(data-label);
+    color: #8ba3b8;
+    font-size: 0.82em;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  tbody tr td:first-child::before { display: none; }
+  tbody tr td:first-child {
+    color: #f0c060;
+    font-weight: 700;
+    font-size: 1.05em;
+    border-bottom: 1px solid #2f3f4f;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+  <p style="margin:0.5rem 0 0.8rem;"><a href="./index.html" style="color:#5dade2;text-decoration:none;">← 返回讲义首页</a></p>
+    <h1><span class="badge">复盘日报</span>2026-08-26 收盘后 <span class="badge blue">放量破位日 · 大盘回暖创业板收回3400，淳中量比2.03砸穿箱底</span></h1>
+    <div class="sub">现代量学实战体系 · 持仓逐股六步拆解 + 关注股要点：左证明建构 → 左侧生死线 → 右确认 → 市场机理 → 结论 → 操作</div>
+    <div class="sub data-src">复盘生成时间：2026-08-26 收盘后 · 数据截止：8/26收盘。全部数据=本地行情库（腾讯前复权日K，8/26已全量更新，11标的核验通过），与通达信前复权口径一致。</div>
+  </div>
+
+  <div class="warn">
+    <p class="big" style="color:#f0c060; font-weight:bold;">今天最重要的三个字：淳中破位。</p>
+    <p>昨天（8/25）我把它标成"8股里唯一建构健康"的票，今天它用<span class="mark">放量（量比2.03）跌9.35%、收盘89.88</span>，直接砸穿了92.6箱底生死线。这不是昨天的"缩量虚破"，是<span class="strong">放量破位=建构真正破坏</span>。</p>
+    <p>同时大盘却是红的：上证+0.59%、创业板收回3400。这说明淳中的下跌<span class="strong">不是市场带崩的，是它自己的问题</span>——8/18冲109.69失败后主力逐步撤离，今天放量确认。个股风险永远比大盘风险更早暴露。</p>
+  </div>
+
+  <div class="core">
+    <p class="big">今日定性：分化日。大盘三指数全红、创业板收回3400；但持仓淳中放量跌破92.6箱底（建构破坏），是你5只持仓里唯一"真破位"的票。</p>
+    <p>先处理淳中，再看其余持仓——大多数都站在生死线上方，按原计划操作即可。</p>
+  </div>
+
+  <h2>一、大盘环境（8/26收盘，环境先行）</h2>
+  <table>
+    <tr class="card-head"><th>指数</th><th>8/26收盘</th><th>涨跌</th><th>量比</th><th>大盘生死线</th><th>判定</th></tr>
+    <tr><td>上证指数</td><td>3912.524</td><td class="up">+0.59%</td><td>1.05</td><td>3800</td><td class="up">守住，收3900上方</td></tr>
+    <tr><td>深证成指</td><td>13841.327</td><td class="up">+0.69%</td><td>1.00</td><td>14000（仍破）</td><td class="down">14000下方，但回升</td></tr>
+    <tr><td>创业板指</td><td>3414.883</td><td class="up">+0.51%</td><td>0.97</td><td>3400</td><td class="up">收回3400生死线</td></tr>
+  </table>
+  <ul>
+    <li><span class="strong">上证</span>：收3912.5（+0.59%），站回3900整数上方，量比1.05温和放量，权重延续护盘。</li>
+    <li><span class="strong">创业板</span>：收3414.9（+0.51%），<span class="mark">收回3400生死线</span>——昨天复盘观察清单第1条达成。但量比0.97是缩量收回（昨天-1.00%跌破，今天缩量反抽），<span class="mark">收回=止跌，还不算确认反转</span>。</li>
+    <li><span class="strong">量能</span>：三指数量比均≈1.0，整体温和。大盘是"缩量反抽"，健康与否要看明天能否放量续攻。</li>
+  </ul>
+  <div class="good">
+    <p><span class="strong">环境定性：上证强、创业板收复3400的反弹日。</span>大盘给的是正面信号，你持仓里除淳中外都跟大盘同步企稳。但创业板缩量收回=根基不牢，<span class="mark">弱市/分化市仓位上限2-4成仍然成立</span>，降仓总纲不变。</p>
+  </div>
+
+  <h2>二、8/26 持仓全景（一图看懂谁在线上、谁破位）</h2>
+  <table>
+    <tr class="card-head"><th>股票</th><th>8/26收盘</th><th>涨跌</th><th>量比</th><th>生死线</th><th>收盘判定</th></tr>
+    <tr><td>工业富联</td><td>60.57</td><td class="up">+0.70%</td><td>0.97</td><td>60.00</td><td class="up">站回，缩量</td></tr>
+    <tr><td>胜宏科技</td><td>249.44</td><td class="up">+1.82%</td><td>1.18</td><td>242.00</td><td class="up">站回，温和放量</td></tr>
+    <tr><td>天孚通信</td><td>253.58</td><td class="down">-1.37%</td><td>0.82</td><td>248.50</td><td class="up">线上缩量回调</td></tr>
+    <tr><td>淳中科技</td><td>89.88</td><td class="down">-9.35%</td><td>2.03</td><td>92.6箱底</td><td class="down"><b>放量跌破！建构破坏</b></td></tr>
+    <tr><td>通富微电</td><td>61.25</td><td class="up">+0.57%</td><td>0.98</td><td>61.2</td><td class="up">站回61.2（缩量，弱）</td></tr>
+    <tr><td>长电科技</td><td>73.62</td><td class="down">-0.58%</td><td>0.78</td><td>73防守</td><td class="up">73上方，缩量</td></tr>
+    <tr><td>赛腾股份</td><td>46.18</td><td class="down">-1.95%</td><td>0.90</td><td>46.1</td><td class="up">收盘站回46.1（跌破120线）</td></tr>
+    <tr><td>环旭电子</td><td>26.70</td><td class="up">+0.95%</td><td>0.83</td><td>25.80</td><td class="up">站回，缩量</td></tr>
+  </table>
+  <p class="data-src">8/26收盘=本地行情库（腾讯前复权）当日数据。量比=今量/昨量。</p>
+  <p><span class="strong">一句话总结：</span>8只里7只站在各自生死线上方，唯独<span class="mark">淳中放量跌破92.6箱底</span>——它是今天的风险焦点，其余按昨天的减仓计划继续。</p>
+
+  <h2>三、持仓逐股六步拆解（左证明 → 生死线 → 右确认 → 机理 → 结论 → 操作）</h2>
+
+  <div class="stock hold">
+    <div class="name">① 淳中科技（603516）持仓3手@41.02 +119% <span class="tag">今日核心：放量破位，建构破坏</span></div>
+    <div class="six"><div class="sixh">第①步 · 左证明建构</div><div class="sixb">
+      <ul>
+        <li><b>柱</b>：8/18冲109.69失败（量9万手，量比1.95）后，8/19-8/25在92.6-102箱体反复。</li>
+        <li><b>线</b>：8/25收99.15还在箱顶附近，今天（8/26）直接<span class="mark">低开98.74、冲98.88就一路下杀，最低89.24、收89.88</span>——一天从箱顶砸穿箱底。</li>
+        <li><b>位</b>：250日位置5%（全8股最低，但这救不了"放量破位"）。</li>
+      </ul>
+      <p><span class="strong">状态机：</span>8/18前"成立未突破"→8/18冲高失败→8/19-8/25箱体内消耗→<span class="mark">8/26放量跌破92.6箱底=建构破坏</span>。昨天它还是健康票，今天性质变了。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第②步 · 左侧生死线——92.6箱底（已破），下方看86→80</div><div class="sixb">
+      <ul>
+        <li>92.6：8/20低92.64、8/21低92.18、8/24低93.26、8/25低93.28，4天守住的箱底，<span class="mark">今天放量跌破，收盘89.88远在线下</span>。</li>
+        <li>下方支撑：86（8月中旬整理区）→ 80（250日最低，8股最低位）。位置5%意味着下方空间有限，但"位置低"≠"马上止跌"。</li>
+      </ul>
+    </div></div>
+    <div class="six"><div class="sixh">第③步 · 右确认</div><div class="sixb">
+      <p>8/26量12万手（量比2.03，8月以来最大量）收阴破位。<span class="mark">放量下跌=资金在跑，不是无量虚破</span>。这和昨天7只"缩量虚破收回"性质完全不同——缩量破可能是洗盘，<span class="strong">放量破是出货</span>。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第④步 · 市场机理</div><div class="sixb">
+      <p>8/18冲109.69失败后，主力的进攻逻辑已经兑现不了（突破103一直没等到量）。今天放量下杀，是<span class="mark">把8/19-8/25箱体内承接的浮筹一次性吓出来</span>。要么是主力不计成本出货，要么是恐慌盘踩踏——无论哪种，短期趋势已坏。技术上必须等它重新在低位放量企稳、重新建构，才谈得上下一步。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑤步 · 结论理由链</div><div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/26判定</th></tr>
+        <tr><td>收盘站在生死线上？</td><td class="down">否（89.88&lt;92.6，放量破位）</td></tr>
+        <tr><td>破位量能性质</td><td class="down">放量（量比2.03=出货）</td></tr>
+        <tr><td>建构状态</td><td class="down">破坏（箱体下沿失守）</td></tr>
+        <tr><td>操作定性</td><td class="down">止损/止盈离场，不抢反弹</td></tr>
+      </table>
+      <p>结论：<span class="mark">放量破位=建构破坏，浮盈+119%必须锁住。按纪律执行，不因"位置低"心软。</span></p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑥步 · 操作建议</div><div class="sixb">
+      <div class="act"><span class="lbl">止盈止损</span>：你3手@41.02，浮盈+119%。明天开盘若反抽到92.6-95（破位反抽带）<span class="mark">至少卖出1手</span>；若直接低开跌破89，全部止盈离场，保住约+117%利润。</div>
+      <div class="act"><span class="lbl">反弹卖点</span>：92.6-95是原箱底区域，跌穿后变成反抽压力带，是理想的离场价位，不指望回到99。</div>
+      <div class="act"><span class="lbl">禁止</span>：<span class="strong">绝不补仓摊低</span>。放量破位趋势已坏，接飞刀=把+119%的胜利果实亏回去。</div>
+      <div class="act"><span class="lbl">重新入场条件（以后）</span>：除非它再次在低位（80-86一带）缩量企稳→放量收阳站回92.6上方，才谈重新关注。</div>
+    </div></div>
+  </div>
+
+  <div class="stock hold">
+    <div class="name">② 工业富联（601138）持仓5手@57.34 +5.6% <span class="tag">站回60，缩量，反弹减仓计划不变</span></div>
+    <div class="six"><div class="sixh">第①步 · 左证明建构</div><div class="sixb">
+      <ul>
+        <li><b>线</b>：8/5高量柱V288万手收65.92；8/19破平台；8/24盘中破60；8/25盘中低58.75；8/26开60.20高60.80低59.38收60.57。</li>
+        <li><b>位</b>：250日位置46%（腰部）。</li>
+      </ul>
+      <p><span class="strong">状态机：</span>8/19起破坏试探，8/24-8/26在60上方三次站稳（60.40→60.15→60.57）。建构未重新成立，但60关守住了——<span class="mark">从"破位下行"转为"60一带筑底尝试"</span>。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第②步 · 左侧生死线——60.00</div><div class="sixb">
+      <p>8/24低59.22、8/25低58.75、8/26低59.38，三连测60下方、三连收盘站回。<span class="mark">60整数关多空反复但收盘始终守住</span>，构成"线是带"下沿的有效防守。下方58.75→56-58（7月密集区）。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第③步 · 右确认</div><div class="sixb">
+      <p>8/26量73万手（量比0.97，缩量）收60.57。<span class="mark">缩量站回=止跌，不是进攻</span>。真右确认=放量（≥8/24的98万手）收阳站回62-64平台上沿、次日不跌回。60一带目前只算"跌不动的整理"。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第④步 · 市场机理</div><div class="sixb">
+      <p>8/5高量柱成本在65附近，60下方无低位吸筹垫。连续三天60守住=这个价位有承接，但上方62-64全是破位出逃者的套牢盘，<span class="mark">反抽上去就是解套抛压</span>。止跌≠上涨，反抽≠反转。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑤步 · 结论理由链</div><div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/26判定</th></tr>
+        <tr><td>收盘站在生死线上？</td><td class="up">是（60.57&gt;60）</td></tr>
+        <tr><td>收回量能性质</td><td class="flat">缩量（止跌，非进攻）</td></tr>
+        <tr><td>建构是否重新成立</td><td class="flat">否（仍远离64平台）</td></tr>
+        <tr><td>操作定性</td><td class="flat">暂持，反弹减仓</td></tr>
+      </table>
+      <p>结论：<span class="mark">60三连守=暂时安全，反弹62-64仍是减仓窗口。</span></p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑥步 · 操作建议</div><div class="sixb">
+      <div class="act"><span class="lbl">减仓</span>：反弹到62-64（破位反抽+套牢带），卖出（至少减半）。成本57.34，62-64卖出盈利8-11%。</div>
+      <div class="act"><span class="lbl">止损线</span>：收盘跌破58.75（连续两日低点），清仓——破位收盘=60筑底失败。</div>
+      <div class="act"><span class="lbl">禁止</span>：不因"60守住了"加仓。建构未恢复的票，反抽是减仓用的。</div>
+    </div></div>
+  </div>
+
+  <div class="stock hold">
+    <div class="name">③ 赛腾股份（603283）持仓2手@46.18 +0.0% <span class="tag">又破44.80又收回46.1，但收盘跌破120线，最弱之一</span></div>
+    <div class="six"><div class="sixh">第①步 · 左证明建构</div><div class="sixb">
+      <ul>
+        <li><b>位</b>：250日位置28%（低位）。<b>柱</b>：7/21放量下探38、8/12放量突破。<b>线</b>：46.1突破位+120均线46.48。</li>
+      </ul>
+      <p><span class="strong">状态机：</span>8/19大跌-10%后反复考验46.1。8/26盘中又插破到44.80（第3次），收盘46.18勉强站回46.1，<span class="mark">但收盘46.18&lt;120均线46.48，跌破120线</span>——突破结构在恶化。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第②步 · 左侧生死线——46.1（已贴线）+ 120均线46.48（已跌破）</div><div class="sixb">
+      <ul>
+        <li>46.1：8/12突破启动位，8/20低46.21、8/21低45.77、8/25低44.80、8/26低44.80——<span class="mark">连续四次盘中回踩、收盘勉强站回，但44.80已三次被触及</span>。</li>
+        <li>120均线46.48：8/25收盘站回（47.10），8/26收盘46.18<span class="mark">再度跌破</span>——两天来回穿越120线，弱势反复。</li>
+      </ul>
+    </div></div>
+    <div class="six"><div class="sixh">第③步 · 右确认</div><div class="sixb">
+      <p>8/26量22万手（量比0.90，缩量）收46.18。<span class="mark">缩量跌破120线=弱，但没放量</span>，说明不是恐慌出逃，是买盘不足的自然回落。真右确认=放量站回48.5上方、次日不回。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第④步 · 市场机理</div><div class="sixb">
+      <p>44.80被三次触及（8/25、8/26连续两天），每次都拉回46上方，说明46-44.8有承接；但每次反弹都冲不上48.5，说明上方套牢压制强。<span class="mark">横盘区间越收越窄（44.8-47.5），即将选择方向</span>。缩量=方向未定，放量破44.8=向下选择。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑤步 · 结论理由链</div><div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/26判定</th></tr>
+        <tr><td>收盘站在46.1上？</td><td class="up">是（46.18&gt;46.1，贴线）</td></tr>
+        <tr><td>收盘站在120线上？</td><td class="down">否（46.18&lt;46.48）</td></tr>
+        <tr><td>缩量横盘/放量破位</td><td class="flat">缩量横盘（未破44.8）</td></tr>
+        <tr><td>操作定性</td><td class="down">弱，止损线收紧到44.8</td></tr>
+      </table>
+      <p>结论：<span class="mark">跌破120线、44.8三触即破，随时可能向下。止损线从44.80收到44.8收盘确认。</span></p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑥步 · 操作建议</div><div class="sixb">
+      <div class="act"><span class="lbl">减仓</span>：反弹到47.5-48.5（收窄区间上沿+120线压力），卖出（至少1手）。成本46.18，能小赚或保本出。</div>
+      <div class="act"><span class="lbl">止损线</span>：<span class="mark">收盘跌破44.80，无条件止损</span>——三次触及后的放量下破=方向选择向下，不再等。</div>
+      <div class="act"><span class="lbl">禁止</span>：不得在44.8-46区间"抄底加仓"。它已经跌破120线，是弱势股，不是机会。</div>
+    </div></div>
+  </div>
+
+  <div class="stock hold">
+    <div class="name">④ 通富微电（002156）持仓1手@64.26 -4.7% <span class="tag">站回61.2，但缩量，弱反弹</span></div>
+    <div class="six"><div class="sixh">第①步 · 左证明建构</div><div class="sixb">
+      <ul>
+        <li><b>位</b>：250日位置59%（腰部）。<b>柱</b>：8/17倍量（量比2.09）收69.26、8/18收70.66——专题里的"腰部无蓄势追涨"反面教材。<b>线</b>：8/17前62-64平台，无低位吸筹台阶。</li>
+      </ul>
+      <p><span class="strong">状态机：</span>8/19跌停后一路走弱。8/25盘中59.33破60、收60.90；8/26开61.97高62.70低60.39<span class="mark">收61.25，站回61.2</span>——昨日复盘观察清单第2条"放量站回61.2"只兑现了一半：站回了，但量比0.98没放量。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第②步 · 左侧生死线——61.2（刚站回）+ 60防守</div><div class="sixb">
+      <p>61.2：8/20低61.45、8/24收61.24、8/25收60.90（线下3日）→8/26收61.25站回线上。<span class="mark">贴线，幅度仅+0.04元</span>。60：整数防守，8/26低60.39未破60。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第③步 · 右确认</div><div class="sixb">
+      <p>8/26量62万手（量比0.98）收61.25。<span class="mark">量比0.98&lt;1.3，不是放量站回=不是真右确认</span>，只是缩量弱反弹回线。真确认=放量（量比≥1.3）收阳站回61.2上方、次日不回。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第④步 · 市场机理</div><div class="sixb">
+      <p>8/17-8/18追板筹码成本65-70全部套牢，60-61是割肉盘集中区。<span class="mark">缩量站回61.2=空方暂歇，但多方也没放量表态</span>。每次反弹61-62都有套牢盘等着跑，弱反弹随时可能再跌破。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑤步 · 结论理由链</div><div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/26判定</th></tr>
+        <tr><td>收盘站在61.2上？</td><td class="up">是（61.25&gt;61.2，贴线）</td></tr>
+        <tr><td>放量站回？</td><td class="down">否（量比0.98缩量）</td></tr>
+        <tr><td>建构是否成立</td><td class="down">无蓄势建构</td></tr>
+        <tr><td>操作定性</td><td class="down">弱反弹，借反弹减</td></tr>
+      </table>
+      <p>结论：<span class="mark">缩量站回61.2=给了一次反抽卖点，不是转强信号。</span></p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑥步 · 操作建议</div><div class="sixb">
+      <div class="act"><span class="lbl">减仓</span>：借这波站回61.2，在61.5-62.5（破位反抽压力带）卖出。成本64.26，仍亏约4%，但少亏为赢。</div>
+      <div class="act"><span class="lbl">止损线</span>：收盘跌破60，无条件止损（8/26低60.39未破，给了空间）。</div>
+      <div class="act"><span class="lbl">禁止</span>：绝对不补仓。它是"无建构追涨"反例，站回61.2是缩量的，不算确认。</div>
+    </div></div>
+  </div>
+
+  <div class="stock hold">
+    <div class="name">⑤ 环旭电子（601231）持仓2手@45.06 -40.8% <span class="tag">站回25.8，缩量，深套股反弹减仓不变</span></div>
+    <div class="six"><div class="sixh">第①步 · 左证明建构</div><div class="sixb">
+      <ul>
+        <li><b>位</b>：250日位置32%（低位）。<b>柱</b>：8/6倍量V73.8万手收27.52。<b>线</b>：25.8=8/6倍量柱启动低点、27-28平台。</li>
+      </ul>
+      <p><span class="strong">状态机：</span>8/17-18冲29.95失败后回落。8/24盘中低25.33、8/25低25.01、8/26低26.24（没破25.8了）收26.70站回——<span class="mark">盘中不再插破25.8，比前两天企稳</span>。建构仍未修复（没回27-28平台），但止跌迹象改善。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第②步 · 左侧生死线——25.8（8/6倍量柱启动低点）</div><div class="sixb">
+      <p>25.8：8/6倍量柱当日低点。8/24盘中25.33、8/25盘中25.01两度插破收回；<span class="mark">8/26最低26.24，未再插破</span>——多空连续三天肉搏后，空方暂时败退。上方27-28平台是第一压力。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第③步 · 右确认</div><div class="sixb">
+      <p>8/26量20万手（量比0.83，缩量）收26.70。<span class="mark">缩量站回=止跌，没有进攻量</span>。真确认=放量站回27.5-28平台上方、次日不回。26.87（今日高）/27.5是压力。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第④步 · 市场机理</div><div class="sixb">
+      <p>深套-41%的票，回本需+70%。今天不破25.8且缩量站回=抛压暂竭，<span class="mark">但上方27-28套牢盘密布，反弹一步一个坎</span>。它是你用时间换空间最不划算的持仓——资金压在-41%的坑里。</p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑤步 · 结论理由链</div><div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/26判定</th></tr>
+        <tr><td>收盘站在生死线上？</td><td class="up">是（26.70&gt;25.8）</td></tr>
+        <tr><td>盘中是否再插破</td><td class="up">否（低26.24，首次不破）</td></tr>
+        <tr><td>收回量能性质</td><td class="flat">缩量（止跌，非进攻）</td></tr>
+        <tr><td>操作定性</td><td class="down">反弹减仓调仓（深套股）</td></tr>
+      </table>
+      <p>结论：<span class="mark">止跌改善但不改深套本质，反弹27-28减仓，别指望回本。</span></p>
+    </div></div>
+    <div class="six"><div class="sixh">第⑥步 · 操作建议</div><div class="sixb">
+      <div class="act"><span class="lbl">减仓</span>：反弹到27-28（平台压力带），卖出（至少1手）。今天收26.70已接近区间。</div>
+      <div class="act"><span class="lbl">清仓线</span>：收盘跌破25.01（8/25低点），清仓——连续插破的最后防线。</div>
+      <div class="act"><span class="lbl">调仓</span>：卖出的钱先降总仓位，不急着换股。换股只换"建构成立未破"的票。</div>
+    </div></div>
+  </div>
+
+  <div class="stock watch">
+    <div class="name">⑥ 胜宏科技（300476）非持仓 <span class="tag">收249.44，温和放量站回242，8股较强</span></div>
+    <div class="six"><div class="sixh">拆解要点</div><div class="sixb">
+      <ul>
+        <li><b>建构</b>：8/5倍量柱V74万手收236.35高242.00（全月最强进攻柱）。位置32%（低位）。</li>
+        <li><b>生死线242</b>：8/25盘中237.10插破收回244.99；<span class="mark">8/26收249.44（+1.82%），量比1.18温和放量站上</span>——倍量柱实顶第三次守住，且首次放量。</li>
+        <li><b>右确认</b>：量比1.18接近1.3，收249.44。若放量（量比≥1.3）站回255（8/20高点）上方=右确认；再收破237=破位。目前偏强。</li>
+        <li><b>结论</b>：8股里技术面转好的票，但255确认线没到，观望不追。</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="stock watch">
+    <div class="name">⑦ 天孚通信（300394）非持仓 <span class="tag">线上缩量回调，253.58收在248.5上方</span></div>
+    <div class="six"><div class="sixh">拆解要点</div><div class="sixb">
+      <ul>
+        <li><b>建构</b>：8/4-8/5倍量、8/12放量突破248.5、8/13-8/18冲295回落、8/24-8/25回踩。位置60%（腰部）。</li>
+        <li><b>生死线248.5</b>：8/25收257.10；<span class="mark">8/26收253.58（-1.37%），量比0.82缩量回调</span>——回踩不破248.5，缩量=抛压轻，健康。</li>
+        <li><b>结论</b>：技术面仍强，回踩248.5-253不破可低吸。它没有你的持仓，观望。</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="stock watch">
+    <div class="name">⑧ 长电科技（600584）非持仓 <span class="tag">73防守线守住，缩量</span></div>
+    <div class="six"><div class="sixh">拆解要点</div><div class="sixb">
+      <ul>
+        <li><b>建构</b>：8/5-8/6高量柱（8/6涨停75.87）、8/17冲86.48失败、8/19破位阴跌。位置49%（腰部）。</li>
+        <li><b>生死线</b>：75.87（8/6涨停）已破，防守线73。8/24盘中72.27、8/25盘中71.06、<span class="mark">8/26收73.62（-0.58%）量比0.78缩量，73守住</span>——三天防守。</li>
+        <li><b>结论</b>：73守住=暂时止跌，但75.87没站回前不算转强。跌破71.06（8/25低点）则防线失守。观望。</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <h2>四、持仓操作建议汇总（8/27执行清单）</h2>
+  <table>
+    <tr class="card-head"><th>股票</th><th>成本/8/26收</th><th>盈亏</th><th>动作</th><th>触发价位</th><th>一句话逻辑</th></tr>
+    <tr><td>淳中科技</td><td>41.02 / 89.88</td><td class="up">+119%</td><td><b>止盈止损离场</b></td><td>反抽92.6-95卖1手；跌破89全卖</td><td>放量破位=建构破坏，锁利润</td></tr>
+    <tr><td>工业富联</td><td>57.34 / 60.57</td><td class="up">+5.6%</td><td>反弹减仓</td><td>62-64减，破58.75清</td><td>60三连守，反抽减仓窗口</td></tr>
+    <tr><td>赛腾股份</td><td>46.18 / 46.18</td><td class="flat">+0.0%</td><td>弱，收紧止损</td><td>47.5-48.5减，破44.8止损</td><td>跌破120线，44.8三触即破</td></tr>
+    <tr><td>通富微电</td><td>64.26 / 61.25</td><td class="down">-4.7%</td><td>借反弹减仓</td><td>61.5-62.5减，破60走</td><td>缩量站回61.2，弱反弹卖点</td></tr>
+    <tr><td>环旭电子</td><td>45.06 / 26.70</td><td class="down">-40.8%</td><td>反弹减仓调仓</td><td>27-28减，破25.01清</td><td>深套+首次不破25.8，逃命窗口</td></tr>
+  </table>
+  <div class="core">
+    <p class="big">仓位总纲：总仓位7成 → 降至3-4成（不变，淳中破位加速了它）。</p>
+    <p>大盘虽回暖，但<span class="mark">淳中的放量破位给你上了一课：个股风险不看大盘脸色</span>。今天淳中卖出的资金=直接降仓；富联/赛腾/通富/环旭利用各自反弹带继续减。卖出的钱<span class="strong">先空着，不急着换股</span>。</p>
+  </div>
+
+  <h2>五、今日实战课：放量破 vs 缩量破，为什么性质完全不同</h2>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><b>昨天</b>：7只盘中插破、收盘全部缩量收回（量比0.70-1.07）。这是"虚破"——主力守线，吓出浮筹，收盘收回，是止跌信号。</div>
+    <div class="step"><span class="n">2</span><b>今天淳中</b>：量比2.03放量跌破92.6，收89.88远离箱底。<span class="mark">放量破=真破</span>——2倍以上的量说明有资金在主动出货或恐慌盘踩踏，不是"洗盘"能解释的。</div>
+    <div class="step"><span class="n">3</span><b>判断口诀</b>：<span class="mark">缩量破位可能是洗盘、放量破位一定是出货</span>。看到放量跌破关键位，第一反应是减仓/离场，而不是"跌多了会反弹"。</div>
+    <div class="step"><span class="n">4</span><b>对操作的意义</b>：淳中你浮盈+119%，放量破位当天不跑、等反弹92.6-95再跑，是在"给出货资金抬轿"。严格执行——反抽卖1手、破89全卖，落袋的才是利润。</div>
+  </div>
+
+  <h2>六、明日（8/27）观察清单</h2>
+  <ul>
+    <li><span class="strong">淳中</span>：核心。反抽92.6-95卖1手；低开跌破89全部止盈。绝不补仓。</li>
+    <li><span class="strong">大盘</span>：创业板3400收回后能否放量续攻（量比≥1.3）站稳；上证能否守住3900。</li>
+    <li><span class="strong">富联/通富/环旭</span>：反弹带（62-64 / 61.5-62.5 / 27-28）是否到价，到了就按计划减仓。</li>
+    <li><span class="strong">赛腾</span>：44.80收盘是否守住——守住=继续横盘等待，收盘跌破=无条件止损。</li>
+    <li><span class="strong">胜宏</span>：能否放量站回255（右确认线），站回=8股最强补涨候选（非持仓，观察）。</li>
+  </ul>
+  <p class="data-src">数据来源：本地行情库（腾讯前复权日K，8/26收盘后 update_data.py 全量更新，11标的核验通过），与通达信前复权口径一致。本复盘生成于2026-08-26收盘后，v1。</p>
+
+  <div class="foot">现代量学实战体系 · 复盘日报2026-08-26收盘后版v1 · 数据时点：2026-08-26收盘 · 生成时间：收盘后</div>
+</div>
+</body>
+</html>
