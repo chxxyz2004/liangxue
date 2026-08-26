@@ -2,285 +2,581 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>现代量学实战体系 · 在线讲义</title>
+<title>现代量学实战体系 · 讲义首页</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-    background: #0f1419;
-    color: #e6e6e6;
-    line-height: 1.8;
-    padding: 2rem 1rem;
-  }
-  .container { max-width: 860px; margin: 0 auto; }
-  .header {
-    background: linear-gradient(135deg, #1a2733 0%, #0f1419 100%);
-    border: 1px solid #2a3a4a;
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-  .header h1 { font-size: 1.8rem; color: #f0c060; }
-  .header .sub { color: #8ba3b8; margin-top: 0.5rem; }
-  h2 { color: #f0c060; font-size: 1.3rem; border-left: 4px solid #c0392b; padding-left: 12px; margin: 2rem 0 1rem; }
-  .lesson {
-    background: #141c26;
-    border: 1px solid #2a3a4a;
-    border-radius: 10px;
-    padding: 1.3rem 1.5rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    transition: border-color 0.2s;
-    text-decoration: none;
-    color: inherit;
-  }
-  .lesson:hover { border-color: #f0c060; }
-  .lesson .no {
-    background: #c0392b;
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: bold;
-    padding: 4px 10px;
-    border-radius: 6px;
-    white-space: nowrap;
-  }
-  .lesson .title { font-size: 1.05rem; color: #f0c060; }
-  .lesson .desc { font-size: 0.88rem; color: #8ba3b8; }
-  .lock {
-    background: #141c26;
-    border: 1px dashed #2a3a4a;
-    border-radius: 10px;
-    padding: 1.3rem 1.5rem;
-    margin-bottom: 1rem;
-    color: #5a6a7a;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a3a4a; color: #7a8a9a; font-size: 0.85rem; text-align: center; }
+:root {
+  --bg: #0d1117;
+  --card: #161b22;
+  --card-border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --accent: #f0c060;
+  --accent-warn: #e0853a;
+  --accent-red: #f85149;
+  --accent-green: #3fb950;
+  --accent-blue: #58a6ff;
+  --tag-trad: #6e4f1a;
+  --tag-mod: #0f4d4a;
+  --tag-law: #4a2d6b;
+  --tag-ok: #1a5c30;
+  --tag-fail: #5c1a1a;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.75;
+  padding: 0;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { text-decoration: none; color: inherit; }
+
+/* 顶部导航 */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,17,23,0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 12px 16px;
+  padding-top: calc(12px + var(--safe-top));
+}
+.topbar h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.topbar .sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* 主容器 */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* 区块标题 */
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 20px 0 12px;
+  border-bottom: 1px solid var(--card-border);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 18px;
+  background: var(--accent-red);
+  border-radius: 2px;
+}
+
+/* 讲义卡片 */
+.lesson-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 14px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.lesson-card:active {
+  transform: scale(0.98);
+  border-color: var(--accent);
+}
+.lesson-card .tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.tag-completed { background: var(--tag-ok); color: var(--accent-green); }
+.tag-lesson { background: var(--tag-trad); color: #f5d78e; }
+.tag-review { background: var(--tag-fail); color: var(--accent-red); }
+.tag-plan { background: #7c5c1a; color: #f5d78e; }
+.tag-extra { background: var(--tag-mod); color: #7de3d4; }
+.tag-task { background: #2d1f4e; color: #cf9fff; }
+.tag-method { background: var(--tag-law); color: #8ef0a8; }
+.tag-homework { background: #4a1a4a; color: #e0a0f0; }
+.tag-topic { background: #5c3a1a; color: #e0a060; }
+
+.lesson-card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.lesson-card p {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.lesson-card .status {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 12px;
+  color: var(--accent-green);
+  font-weight: 600;
+}
+.lesson-card .status.locked {
+  color: var(--text-dim);
+}
+
+/* 关键数据高亮 */
+.highlight {
+  color: var(--accent);
+  font-weight: 700;
+}
+.highlight-red {
+  color: var(--accent-red);
+  font-weight: 700;
+}
+.highlight-green {
+  color: var(--accent-green);
+  font-weight: 700;
+}
+.highlight-blue {
+  color: var(--accent-blue);
+  font-weight: 700;
+}
+
+/* 数据表格卡片化 */
+.data-table {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.data-table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--card-border);
+}
+.data-table-row:last-child {
+  border-bottom: none;
+}
+.data-table-row .label {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+.data-table-row .value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+.data-table-row .value.red { color: var(--accent-red); }
+.data-table-row .value.green { color: var(--accent-green); }
+.data-table-row .value.yellow { color: var(--accent); }
+
+/* 警告框 */
+.alert-box {
+  background: rgba(248,81,73,0.1);
+  border: 1px solid var(--accent-red);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+.alert-box.warn {
+  background: rgba(224,133,58,0.1);
+  border-color: var(--accent-warn);
+}
+.alert-box.success {
+  background: rgba(63,185,80,0.1);
+  border-color: var(--accent-green);
+}
+.alert-box h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.alert-box.red h3 { color: var(--accent-red); }
+.alert-box.warn h3 { color: var(--accent-warn); }
+.alert-box.success h3 { color: var(--accent-green); }
+.alert-box p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* 操作卡片 */
+.action-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+}
+.action-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.action-card .stock-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.action-card .price {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  margin-bottom: 6px;
+}
+.action-card .price.red { color: var(--accent-red); }
+.action-card .price.green { color: var(--accent-green); }
+.action-card .action {
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 8px 0;
+  border-top: 1px dashed var(--card-border);
+  margin-top: 8px;
+}
+.action-card .action .buy { color: var(--accent-green); font-weight: 600; }
+.action-card .action .sell { color: var(--accent-red); font-weight: 600; }
+.action-card .action .warn { color: var(--accent-warn); font-weight: 600; }
+
+/* 底部 */
+.footer {
+  margin-top: 30px;
+  padding: 20px;
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.footer .version {
+  background: var(--card);
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* 返回按钮 */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-blue);
+  font-size: 15px;
+  padding: 12px 0;
+  margin-bottom: 8px;
+}
+.back-link:active { opacity: 0.7; }
+
+/* 标题区 */
+.page-header {
+  background: linear-gradient(135deg, var(--card) 0%, var(--bg) 100%);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.page-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.page-header .subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.page-header .meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* 章节标题 */
+.chapter-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 24px 0 12px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent-red);
+}
+
+/* 列表样式 */
+.styled-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+.styled-list li {
+  padding: 12px 14px;
+  background: var(--card);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  border-left: 3px solid var(--card-border);
+}
+.styled-list li strong {
+  color: var(--accent);
+}
+.styled-list li.prioritized {
+  border-left-color: var(--accent-red);
+  background: rgba(248,81,73,0.05);
+}
+
+/* 小字注释 */
+.caption {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* 分隔线 */
+.divider {
+  height: 1px;
+  background: var(--card-border);
+  margin: 20px 0;
+}
+
+/* 隐藏手机不友好元素 */
+@media print {
+  .topbar { position: static; }
+}
 </style>
 </head>
 <body>
+
+<div class="topbar">
+  <h1>现代量学实战体系</h1>
+  <div class="sub">黑马王子（张得一） · 第一阶段 · 供学员在线阅读与离线复习</div>
+</div>
+
 <div class="container">
 
-  <div class="header">
-    <h1>现代量学实战体系 · 在线讲义</h1>
-    <div class="sub">黑马王子（张得一） · 第一阶段 · 供学员在线阅读与离线复习</div>
-  </div>
+  <h2 class="section-title">方法课 · 看盘基本功</h2>
 
-  <h2>方法课 · 看盘基本功</h2>
-
-  <a class="lesson" href="./第05课-进阶篇-关键位与确认.html">
-    <span class="no" style="background:#2e86ab;">进阶</span>
-    <div>
-      <div class="title">关键位与确认——逐天拆解工业富联/通富微电</div>
-      <div class="desc">右确认不看天数、看关键位 · 站上=确认，跌破=证伪，横盘=等待</div>
-    </div>
+  <a class="lesson-card" href="./第05课-进阶篇-关键位与确认.html">
+    <span class="tag tag-extra">进阶</span>
+    <span class="status">已解锁</span>
+    <h2>关键位与确认——逐天拆解工业富联/通富微电</h2>
+    <p>右确认不看天数、看关键位 · 站上=确认，跌破=证伪，横盘=等待</p>
   </a>
 
-  <a class="lesson" href="./方法课-复盘三窗口.html">
-    <span class="no" style="background:#2e86ab;">方法</span>
-    <div>
-      <div class="title">复盘三窗口——看盘到底看多少根K线</div>
-      <div class="desc">250看身位 · 60看趋势 · 10看量柱 · 以后复盘不再纠结天数</div>
-    </div>
+  <a class="lesson-card" href="./方法课-复盘三窗口.html">
+    <span class="tag tag-method">方法</span>
+    <span class="status">已解锁</span>
+    <h2>复盘三窗口——看盘到底看多少根K线</h2>
+    <p>250看身位 · 60看趋势 · 10看量柱 · 以后复盘不再纠结天数</p>
   </a>
 
-  <h2>参考资料 · 出处与理论对照</h2>
+  <h2 class="section-title">参考资料</h2>
 
-  <a class="lesson" href="./资料-量学出处与当代权威理论对照表.html">
-    <span class="no" style="background:#117a65;">资料</span>
-    <div>
-      <div class="title">量学出处与当代权威理论对照表</div>
-      <div class="desc">10条已讲核心理论逐条标注原著出处+当下适配性+对应现代权威理论（威科夫/道氏/OBV/RSI等）· 全部出处2026-08-25联网核实</div>
-    </div>
+  <a class="lesson-card" href="./资料-量学出处与当代权威理论对照表.html">
+    <span class="tag tag-extra">资料</span>
+    <span class="status">已解锁</span>
+    <h2>量学出处与当代权威理论对照表</h2>
+    <p>10条已讲核心理论逐条标注原著出处+当下适配性+对应现代权威理论（威科夫/道氏/OBV/RSI等）· 全部出处2026-08-25联网核实</p>
   </a>
 
-  <h2>专题拆解</h2>
+  <h2 class="section-title">专题拆解</h2>
 
-  <a class="lesson" href="./专题-淳中8-21假右确认拆解.html">
-    <span class="no" style="background:#b9770e;">专题</span>
-    <div>
-      <div class="title">淳中8/21"假右确认"拆解——三条件全中为什么不能买</div>
-      <div class="desc">学员实战提问 · 右确认三条件的隐含前提：确认对象/绝对量能/箱体位置/次日验证 · 附"识别假信号"六项检查清单</div>
-    </div>
+  <a class="lesson-card" href="./专题-淳中8-21假右确认拆解.html">
+    <span class="tag tag-topic">专题</span>
+    <span class="status">已解锁</span>
+    <h2>淳中8/21"假右确认"拆解</h2>
+    <p>学员实战提问 · 右确认三条件的隐含前提：确认对象/绝对量能/箱体位置/次日验证 · 附"识别假信号"六项检查清单</p>
   </a>
 
-  <h2>开盘预案</h2>
+  <h2 class="section-title">开盘预案</h2>
 
-  <a class="lesson" href="./开盘预案-2026-08-27.html">
-    <span class="no" style="background:#d97706;">预案</span>
-    <div>
-      <div class="title">2026-08-27 开盘预案</div>
-      <div class="desc">淳中放量破92.6生死线（量比2.03），八股逐条给出涨/跌双向预案 · 纪律卡红线提醒</div>
-    </div>
+  <a class="lesson-card" href="./开盘预案-2026-08-27.html">
+    <span class="tag tag-plan">预案</span>
+    <span class="status">最新</span>
+    <h2>2026-08-27 开盘预案</h2>
+    <p>淳中放量破92.6生死线（量比2.03），八股逐条给出涨/跌双向预案 · 纪律卡红线提醒</p>
   </a>
 
-  <h2>复盘日报</h2>
+  <h2 class="section-title">复盘日报</h2>
 
-  <a class="lesson" href="./复盘-2026-08-26.html">
-    <span class="no" style="background:#c0392b;">复盘</span>
-    <div>
-      <div class="title">2026-08-26 持仓操作建议（重点）</div>
-      <div class="desc">放量破位日：大盘回暖创业板收回3400，但淳中量比2.03放量跌破92.6箱底（建构破坏） · 淳中止盈止损离场 · 富联/通富/环旭反弹带减仓 · 赛腾破44.8止损</div>
-    </div>
+  <a class="lesson-card" href="./复盘-2026-08-26.html">
+    <span class="tag tag-review">复盘</span>
+    <span class="status">已出</span>
+    <h2>2026-08-26 持仓操作建议</h2>
+    <p>放量破位日：大盘回暖创业板收回3400，但淳中量比2.03放量跌破92.6箱底（建构破坏） · 淳中止盈止损离场 · 富联/通富/环旭反弹带减仓 · 赛腾破44.8止损</p>
   </a>
 
-  <a class="lesson" href="./复盘-2026-08-25.html">
-    <span class="no" style="background:#c0392b;">复盘</span>
-    <div>
-      <div class="title">2026-08-25 持仓操作建议（重点）</div>
-      <div class="desc">探底回升日：盘中7股插破、收盘7只收回，仅通富仍破61.2 · 5只持仓逐股给出买卖价位 · 7成仓降至3-4成 · 逃顶/高抛低吸机械规则</div>
-    </div>
+  <a class="lesson-card" href="./复盘-2026-08-25.html">
+    <span class="tag tag-review">复盘</span>
+    <span class="status">已出</span>
+    <h2>2026-08-25 持仓操作建议</h2>
+    <p>探底回升日：盘中7股插破、收盘7只收回，仅通富仍破61.2 · 5只持仓逐股给出买卖价位 · 7成仓降至3-4成 · 逃顶/高抛低吸机械规则</p>
   </a>
 
-  <a class="lesson" href="./复盘-2026-08-24.html">
-    <span class="no" style="background:#2e86ab;">复盘</span>
-    <div>
-      <div class="title">2026-08-24 算力产业链量学拆解 <span style="color:#2ecc71;font-size:0.75rem;">(v3·含左侧生死线专题+使用纪律)</span></div>
-      <div class="desc">8股普跌 · 左侧生死线全标出（计算逻辑+市场机理+全景表）+ 使用纪律6条 + 大盘生死线 + 次日双向预案表</div>
-    </div>
+  <a class="lesson-card" href="./复盘-2026-08-24.html">
+    <span class="tag tag-review">复盘</span>
+    <span class="status">已出</span>
+    <h2>2026-08-24 算力产业链量学拆解</h2>
+    <p>8股普跌 · 左侧生死线全标出（计算逻辑+市场机理+全景表）+ 使用纪律6条 + 大盘生死线 + 次日双向预案表</p>
   </a>
 
-  <h2>作业 · 选择题点选版</h2>
+  <h2 class="section-title">作业 · 选择题点选版</h2>
 
-  <a class="lesson" href="./作业-第04课.html">
-    <span class="no" style="background:#7d3c98;">作业</span>
-    <div>
-      <div class="title">第4课作业 · 选择题</div>
-      <div class="desc">6道题 · 位置百分位/三区定位/定性判断 · 全部基于250日核验数据</div>
-    </div>
+  <a class="lesson-card" href="./作业-第04课.html">
+    <span class="tag tag-homework">作业</span>
+    <span class="status">已批改</span>
+    <h2>第4课作业 · 选择题</h2>
+    <p>6道题 · 位置百分位/三区定位/定性判断 · 全部基于250日核验数据</p>
   </a>
 
-  <a class="lesson" href="./测验-第01-03课综合复习.html">
-    <span class="no" style="background:#7d3c98;">测验</span>
-    <div>
-      <div class="title">第1-3课 综合复习测验</div>
-      <div class="desc">10道题 · 覆盖三先规律/量柱七形态/四维分析/三窗口 · 巩固用</div>
-    </div>
+  <a class="lesson-card" href="./测验-第01-03课综合复习.html">
+    <span class="tag tag-homework">测验</span>
+    <span class="status">已批改</span>
+    <h2>第1-3课 综合复习测验</h2>
+    <p>10道题 · 覆盖三先规律/量柱七形态/四维分析/三窗口 · 巩固用</p>
   </a>
 
-  <a class="lesson" href="./作业-第03课.html">
-    <span class="no" style="background:#7d3c98;">作业</span>
-    <div>
-      <div class="title">第3课作业 · 选择题</div>
-      <div class="desc">6道题 · 点选提交即可，不用打字 · 覆盖量柱/四维/三窗口</div>
-    </div>
+  <a class="lesson-card" href="./作业-第03课.html">
+    <span class="tag tag-homework">作业</span>
+    <span class="status">已批改</span>
+    <h2>第3课作业 · 选择题</h2>
+    <p>6道题 · 点选提交即可，不用打字 · 覆盖量柱/四维/三窗口</p>
   </a>
 
-  <h2>强化课 · 第5+6课量化深化</h2>
+  <h2 class="section-title">强化课 · 第5+6课量化深化</h2>
 
-  <a class="lesson" href="./强化课-左证明右确认量化与生死线画法.html">
-    <span class="no" style="background:#c0392b;">强化</span>
-    <div>
-      <div class="title">左证明右确认量化与生死线画法 <span style="color:#2ecc71;font-size:0.75rem;">(已完成·作业待批改)</span></div>
-      <div class="desc">左证明五要素计分卡 / 右确认量化三条件 / 画线五步法 · 全部给出超标准数字 · 天孚左侧建构+富联四尺子实战拆解 · 含SVG+小测验+选择题作业（答案代码前缀 Q-）</div>
-    </div>
+  <a class="lesson-card" href="./强化课-左证明右确认量化与生死线画法.html">
+    <span class="tag tag-lesson">强化</span>
+    <span class="status">已完成</span>
+    <h2>左证明右确认量化与生死线画法</h2>
+    <p>左证明五要素计分卡 / 右确认量化三条件 / 画线五步法 · 全部给出超标准数字 · 天孚左侧建构+富联四尺子实战拆解 · 含SVG+小测验+选择题作业（答案代码前缀 Q-）</p>
   </a>
 
-  <h2>第一阶段 · 地基课</h2>
+  <h2 class="section-title">第一阶段 · 地基课</h2>
 
-  <a class="lesson" href="./第01课-三先规律.html">
-    <span class="no">第01课</span>
-    <div>
-      <div class="title">三先规律——量学的第一性原理 <span style="color:#2ecc71;font-size:0.75rem;">(双轨制重写)</span></div>
-      <div class="desc">卖在买先 / 价在量先 / 庄在散先 · 传统原理→当下检验→现代升级 · 内含SVG图解+小测验+选择题作业</div>
-    </div>
+  <a class="lesson-card" href="./第10课-大盘环境判断与仓位联动.html">
+    <span class="tag tag-lesson">第10课</span>
+    <span class="status">已完结</span>
+    <h2>大盘环境判断与仓位联动</h2>
+    <p>量学三线定方向 · 四把体温计判环境 · 强6-8成/震荡2-4成/弱空仓 · 开盘45分钟定势 · 含SVG+小测验+选择题作业（页面底部）</p>
   </a>
 
-  <a class="lesson" href="./第02课-量柱七形态.html">
-    <span class="no">第02课</span>
-    <div>
-      <div class="title">量柱七形态——读懂主力资金的语言 <span style="color:#2ecc71;font-size:0.75rem;">(双轨制重写)</span></div>
-      <div class="desc">高量 / 低量 / 平量 / 梯量 / 缩量 / 倍量 / 黄金柱 · 用算力股实战解读 · 内含SVG+小测验+选择题作业</div>
-    </div>
+  <a class="lesson-card" href="./第09课-新手常见错误与交易心理.html">
+    <span class="tag tag-lesson">第09课</span>
+    <span class="status">已完结</span>
+    <h2>新手常见错误与交易心理</h2>
+    <p>散户三大病根=太急/太贪/太迷信图形 · 量学心法=摆正心态 · 现代升级=把心态变纪律清单</p>
   </a>
 
-  <a class="lesson" href="./第03课-量价关系四维度.html">
-    <span class="no">第03课</span>
-    <div>
-      <div class="title">量价关系四维度 <span style="color:#2ecc71;font-size:0.75rem;">(双轨制重写)</span></div>
-      <div class="desc">量与价 / 量与位置 / 量与时间 / 量与性质 · 四维拼出主力意图 · 内含SVG+小测验+选择题作业</div>
-    </div>
+  <a class="lesson-card" href="./第08课-十二字令与量波入门.html">
+    <span class="tag tag-lesson">第08课</span>
+    <span class="status">已完结</span>
+    <h2>十二字令与量波入门</h2>
+    <p>传统=阳胜进阴胜出小倍阳大胆入 · 现代升级四条件 · 量波=股市心电图</p>
   </a>
 
-  <a class="lesson" href="./第04课-位置决定性质.html">
-    <span class="no">第04课</span>
-    <div>
-      <div class="title">位置决定性质 <span style="color:#2ecc71;font-size:0.75rem;">(双轨制重写)</span></div>
-      <div class="desc">250定身位 / 60定阶段 / 10定量柱 · 同样的量柱，位置不同性质相反 · 内含SVG位置图+小测验+选择题作业</div>
-    </div>
+  <a class="lesson-card" href="./第07课-黄金柱与高量柱.html">
+    <span class="tag tag-lesson">第07课</span>
+    <span class="status">已完结</span>
+    <h2>黄金柱与高量柱——量线进阶定线工具</h2>
+    <p>传统定义=将军柱+3日缩量不破实底 · 现代三步判定法 · 天孚/通富/富联实战案例</p>
   </a>
 
-  <a class="lesson" href="./第05课-左证明右确认.html">
-    <span class="no">第05课</span>
-    <div>
-      <div class="title">左证明右确认 <span style="color:#2ecc71;font-size:0.75rem;">(双轨制重写)</span></div>
-      <div class="desc">左侧是猜想，右侧是确认 · 放量+突破+方向对，三条件齐备才动手 · 内含SVG+小测验+选择题作业</div>
-    </div>
+  <a class="lesson-card" href="./第06课-量线与生死线-如何确定关键位.html">
+    <span class="tag tag-lesson">第06课</span>
+    <span class="status">已完结</span>
+    <h2>量线与生死线——如何确定关键位</h2>
+    <p>四把尺子定线（箱体/高量柱/均线/缺口整数） · 三条铁律 · 三步实操法</p>
   </a>
 
-  <a class="lesson" href="./第06课-量线与生死线-如何确定关键位.html">
-    <span class="no">第06课</span>
-    <div>
-      <div class="title">量线与生死线——如何确定关键位 <span style="color:#2ecc71;font-size:0.75rem;">(双轨制重写)</span></div>
-      <div class="desc">右确认的锚从哪来 · 四把尺子定线：箱体边沿/高量柱实顶/均线/缺口整数位 · 三条铁律 · 内含SVG+小测验+选择题作业</div>
-    </div>
+  <a class="lesson-card" href="./第05课-左证明右确认.html">
+    <span class="tag tag-lesson">第05课</span>
+    <span class="status">已完结</span>
+    <h2>左证明右确认</h2>
+    <p>左是猜想、右是确认 · 右侧确认三条件=放量+突破+方向对 · 工业富联/赛腾/通富案例拆解</p>
   </a>
 
-  <a class="lesson" href="./第07课-黄金柱与高量柱.html">
-    <span class="no">第07课</span>
-    <div>
-      <div class="title">黄金柱与高量柱——量线进阶定线工具</div>
-      <div class="desc">双轨制开篇 · 将军柱/缩量不破/假黄金柱 · 现代三步判定法 · 天孚成功vs失败对照 · 含小测验与选择题作业（页面底部）</div>
-    </div>
+  <a class="lesson-card" href="./第04课-位置决定性质.html">
+    <span class="tag tag-lesson">第04课</span>
+    <span class="status">已完结</span>
+    <h2>位置决定性质</h2>
+    <p>250日身位三分区定位法（高位≥70%/腰部40-70%/低位<40%）· 位置是动态值非固定</p>
   </a>
 
-  <a class="lesson" href="./第08课-十二字令与量波入门.html">
-    <span class="no">第08课</span>
-    <div>
-      <div class="title">十二字令与量波入门 <span style="color:#2ecc71;font-size:0.75rem;">(已开讲·作业待批改)</span></div>
-      <div class="desc">阳胜进，阴胜出；小倍阳，大胆入 · 量柱选股/量线选价/量波选时 · 含SVG流程图+小测验+选择题作业（页面底部）</div>
-    </div>
+  <a class="lesson-card" href="./第03课-量价关系四维度.html">
+    <span class="tag tag-lesson">第03课</span>
+    <span class="status">已完结</span>
+    <h2>量价关系四维度</h2>
+    <p>量、价、位、时四维交叉验证 · 用8股实战教学 · 避免单一信号误导</p>
   </a>
 
-  <a class="lesson" href="./第09课-新手常见错误与交易心理.html">
-    <span class="no">第09课</span>
-    <div>
-      <div class="title">新手常见错误与交易心理 <span style="color:#2ecc71;font-size:0.75rem;">(已开讲·作业待批改)</span></div>
-      <div class="desc">散户三大病根：太急/太贪/太迷信图形 · 用纪律清单锁死手 · 每日5分钟心理体检 · 含SVG+小测验+选择题作业（页面底部）</div>
-    </div>
+  <a class="lesson-card" href="./第02课-量柱七形态.html">
+    <span class="tag tag-lesson">第02课</span>
+    <span class="status">已完结</span>
+    <h2>量柱七形态——读懂主力资金的语言</h2>
+    <p>高低平倍梯缩+黄金柱 · 六大形态详解 · 案例：8股逐日量柱判定</p>
   </a>
 
-  <a class="lesson" href="./第10课-大盘环境判断与仓位联动.html">
-    <span class="no">第10课</span>
-    <div>
-      <div class="title">大盘环境判断与仓位联动 <span style="color:#2ecc71;font-size:0.75rem;">(已完结·作业已批改)</span></div>
-      <div class="desc">量学三线定方向 · 四把体温计判环境 · 强6-8成/震荡2-4成/弱空仓 · 开盘45分钟定势 · 含SVG+小测验+选择题作业（页面底部）</div>
-    </div>
+  <a class="lesson-card" href="./第01课-三先规律.html">
+    <span class="tag tag-lesson">第01课</span>
+    <span class="status">已完结</span>
+    <h2>三先规律——量学的第一性原理</h2>
+    <p>卖在买先+价在量先+庄在散先 · 量学五大定律之首 · 全书根基</p>
   </a>
 
-  <div class="lock">
-    <span>第二阶段</span>
-    <div>
-      <div>进阶战法与体系整合（规划中）</div>
-      <div>第一阶段 10课 + 强化课已全部完结 · 待规划第二阶段内容</div>
-    </div>
-  </div>
+  <div class="divider"></div>
 
-  <div class="foot">
-    现代量学实战体系 · 讲义仅供个人学习使用，不构成任何投资建议<br>
-    股市有风险，入市需谨慎<br>
-    <span style="color:#5a6a7a; font-size:0.78rem;">内容版本 v2026-08-27-18 · 新增开盘预案（8/27）：淳中放量破92.6生死线，八股逐条双向预案 · 复盘日报按六步模板逐股拆解 · 手机端表格已优化为卡片式 · 看不到新内容请刷新</span>
+  <div class="footer">
+    <div>现代量学实战体系 · 讲义仅供个人学习使用，不构成任何投资建议</div>
+    <div style="margin-top:6px;">股市有风险，入市需谨慎</div>
+    <div class="version">内容版本 v2026-08-27-18 · Mate 30 Pro 适配版</div>
   </div>
 
 </div>
+
 </body>
 </html>
