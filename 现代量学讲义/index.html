@@ -36,7 +36,7 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; }
+html, body { height: 100%; scroll-behavior: smooth; }
 body {
   font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   background: var(--bg);
@@ -54,51 +54,102 @@ a { text-decoration: none; color: inherit; }
 .status-bar {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: rgba(10,14,20,0.95);
+  z-index: 200;
+  background: rgba(10,14,20,0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
-  padding: 14px 20px;
-  padding-top: calc(14px + var(--safe-top));
+  padding: 12px 16px;
+  padding-top: calc(12px + var(--safe-top));
 }
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 .logo {
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   background: linear-gradient(135deg, var(--accent) 0%, #e67e22 100%);
-  border-radius: 12px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   color: #000;
   flex-shrink: 0;
   box-shadow: 0 4px 12px rgba(245,166,35,0.3);
 }
 .brand-text h1 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
   color: var(--text);
   letter-spacing: 0.5px;
   line-height: 1.2;
 }
 .brand-text .subtitle {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-dim);
-  margin-top: 3px;
+  margin-top: 2px;
+}
+
+/* ===== 总导航栏（大类） ===== */
+.nav-bar {
+  position: sticky;
+  top: 66px;
+  z-index: 150;
+  background: rgba(21,27,35,0.98);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav-bar::-webkit-scrollbar { display: none; }
+.nav-list {
+  display: flex;
+  gap: 4px;
+  padding: 10px 0;
+  min-width: max-content;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  min-height: 44px;
+  justify-content: center;
+}
+.nav-item .icon {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.nav-item.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: rgba(245,166,35,0.3);
+}
+.nav-item:active {
+  transform: scale(0.95);
+}
+.nav-item:hover {
+  color: var(--text);
+  background: var(--surface2);
 }
 
 /* ===== Hero区域 ===== */
 .hero {
   background: linear-gradient(160deg, #1a2332 0%, #0f1720 50%, #0a0e14 100%);
-  padding: 32px 20px;
-  margin-bottom: 8px;
+  padding: 24px 16px;
 }
 .hero-badge {
   display: inline-flex;
@@ -107,87 +158,132 @@ a { text-decoration: none; color: inherit; }
   background: var(--accent-dim);
   border: 1px solid rgba(245,166,35,0.3);
   color: var(--accent);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 20px;
-  margin-bottom: 18px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  margin-bottom: 14px;
 }
 .hero-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 .hero-stat {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px 12px;
+  border-radius: 12px;
+  padding: 12px 8px;
   text-align: center;
 }
 .hero-stat .num {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--accent);
   line-height: 1;
 }
 .hero-stat .label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-dim);
-  margin-top: 8px;
+  margin-top: 6px;
   white-space: nowrap;
 }
 .hero-stat.green .num { color: var(--green); }
 .hero-stat.blue .num { color: var(--blue); }
 .hero-stat.red .num { color: var(--red); }
 
-/* ===== 筛选栏 ===== */
-.filter-bar {
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-}
-.tabs {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.tabs::-webkit-scrollbar { display: none; }
-.tab {
-  flex-shrink: 0;
-  padding: 10px 18px;
-  border-radius: 22px;
-  font-size: 14px;
-  font-weight: 600;
-  background: var(--surface2);
-  color: var(--text-dim);
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-}
-.tab.active {
-  background: var(--accent);
-  color: #000;
-  border-color: var(--accent);
-}
-
 /* ===== 主容器 ===== */
 .container {
   max-width: 100%;
   margin: 0 auto;
-  padding: 16px;
+  padding: 12px;
 }
 
-/* ===== 区块标题 ===== */
+/* ===== 持仓概览 ===== */
+.portfolio-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.portfolio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.portfolio-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.portfolio-badge {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-weight: 600;
+}
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.portfolio-item {
+  text-align: center;
+  padding: 10px 4px;
+  background: var(--surface2);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.portfolio-item .name {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+.portfolio-item .price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.portfolio-item .price.red { color: var(--red); }
+.portfolio-item .price.green { color: var(--green); }
+
+/* ===== 重点提醒 ===== */
+.alert-card {
+  background: linear-gradient(135deg, var(--red-dim) 0%, rgba(255,71,87,0.05) 100%);
+  border: 1px solid rgba(255,71,87,0.25);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.alert-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 6px;
+}
+.alert-card p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ===== 区块 ===== */
+.section {
+  margin-bottom: 24px;
+  scroll-margin-top: 140px;
+}
 .section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 4px 14px;
+  padding: 16px 12px 10px;
 }
 .section-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
   display: flex;
@@ -197,32 +293,70 @@ a { text-decoration: none; color: inherit; }
 .section-title::before {
   content: '';
   width: 4px;
-  height: 18px;
+  height: 16px;
   background: linear-gradient(180deg, var(--accent) 0%, #e67e22 100%);
   border-radius: 2px;
 }
 .section-count {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
   background: var(--surface2);
-  padding: 4px 10px;
-  border-radius: 12px;
+  padding: 3px 8px;
+  border-radius: 10px;
   border: 1px solid var(--border);
 }
+
+/* ===== 小导航栏（课程列表） ===== */
+.sub-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.sub-nav-item {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+.sub-nav-item:active {
+  transform: scale(0.95);
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: rgba(245,166,35,0.3);
+}
+.sub-nav-item .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-right: 6px;
+}
+.sub-nav-item .dot.locked { background: var(--text-muted); }
 
 /* ===== 卡片列表 ===== */
 .card-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: 10px;
 }
 
 .lesson-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
+  border-radius: 14px;
+  padding: 14px;
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -245,21 +379,20 @@ a { text-decoration: none; color: inherit; }
   background: var(--accent);
 }
 
-/* 卡片头部 */
 .card-head {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 12px;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 .card-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 20px;
   flex-shrink: 0;
 }
 .card-icon.lesson { background: linear-gradient(135deg, rgba(245,166,35,0.2) 0%, rgba(245,166,35,0.1) 100%); }
@@ -277,13 +410,12 @@ a { text-decoration: none; color: inherit; }
 }
 .card-tag {
   display: inline-block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  margin-bottom: 8px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  margin-bottom: 6px;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
 }
 .card-tag.lesson { background: var(--accent-dim); color: var(--accent); }
 .card-tag.method { background: var(--cyan-dim); color: var(--cyan); }
@@ -295,147 +427,66 @@ a { text-decoration: none; color: inherit; }
 .card-tag.topic { background: rgba(255,165,0,0.12); color: #ffa500; }
 
 .card-title {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
   line-height: 1.4;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .card-subtitle {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
 .card-desc {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-dim);
-  line-height: 1.6;
-  padding-left: 62px;
+  line-height: 1.5;
+  padding-left: 56px;
 }
 
-/* 状态徽章 */
 .card-status {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  font-size: 11px;
+  top: 12px;
+  right: 12px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 20px;
+  padding: 3px 8px;
+  border-radius: 12px;
   white-space: nowrap;
 }
 .card-status.done { background: var(--green-dim); color: var(--green); }
 .card-status.new { background: var(--accent-dim); color: var(--accent); }
 .card-status.locked { background: var(--surface2); color: var(--text-muted); }
 
-/* ===== 重点提醒卡片 ===== */
-.alert-card {
-  background: linear-gradient(135deg, var(--red-dim) 0%, rgba(255,71,87,0.05) 100%);
-  border: 1px solid rgba(255,71,87,0.25);
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 24px;
+/* ===== 分隔 ===== */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%);
+  margin: 8px 0;
 }
-.alert-card.warn {
-  background: linear-gradient(135deg, var(--orange-dim) 0%, rgba(230,126,34,0.05) 100%);
-  border-color: rgba(230,126,34,0.25);
-}
-.alert-card h3 {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--red);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.alert-card.warn h3 { color: var(--orange); }
-.alert-card p {
-  font-size: 14px;
-  color: var(--text-dim);
-  line-height: 1.7;
-}
-
-/* ===== 持仓概览 ===== */
-.portfolio-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 24px;
-}
-.portfolio-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.portfolio-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-}
-.portfolio-badge {
-  font-size: 12px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  background: var(--accent-dim);
-  color: var(--accent);
-  font-weight: 600;
-}
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-.portfolio-item {
-  text-align: center;
-  padding: 14px 8px;
-  background: var(--surface2);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-}
-.portfolio-item .name {
-  font-size: 12px;
-  color: var(--text-dim);
-  margin-bottom: 6px;
-}
-.portfolio-item .price {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-}
-.portfolio-item .price.red { color: var(--red); }
-.portfolio-item .price.green { color: var(--green); }
 
 /* ===== 底部 ===== */
 .footer {
-  margin-top: 36px;
-  padding: 28px 20px;
+  margin-top: 24px;
+  padding: 20px 16px;
   border-top: 1px solid var(--border);
   text-align: center;
 }
 .footer-text {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
   line-height: 1.8;
 }
 .footer-version {
   display: inline-block;
-  margin-top: 14px;
-  padding: 6px 16px;
+  margin-top: 10px;
+  padding: 5px 12px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  font-size: 12px;
+  border-radius: 16px;
+  font-size: 11px;
   color: var(--text-muted);
-}
-
-/* ===== 分隔 ===== */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%);
-  margin: 10px 0 28px;
 }
 
 /* ===== 响应式 ===== */
@@ -448,7 +499,7 @@ a { text-decoration: none; color: inherit; }
   }
   .card-desc {
     padding-left: 0;
-    margin-top: 8px;
+    margin-top: 6px;
   }
 }
 </style>
@@ -460,46 +511,36 @@ a { text-decoration: none; color: inherit; }
     <div class="logo">量</div>
     <div class="brand-text">
       <h1>现代量学实战体系</h1>
-      <div class="subtitle">黑马王子（张得一） · 第一阶段课程</div>
+      <div class="subtitle">黑马王子 · 第一阶段课程</div>
     </div>
   </div>
 </div>
 
-<div class="hero">
-  <div class="hero-badge">📚 双轨制重写版 · 传统原理 → 当下检验 → 现代升级</div>
-  <div class="hero-grid">
-    <div class="hero-stat">
-      <div class="num">10</div>
-      <div class="label">基础课程</div>
-    </div>
-    <div class="hero-stat green">
-      <div class="num">10</div>
-      <div class="label">已完成</div>
-    </div>
-    <div class="hero-stat blue">
-      <div class="num">8</div>
-      <div class="label">关注股票</div>
-    </div>
-    <div class="hero-stat red">
-      <div class="num">5</div>
-      <div class="label">持仓标的</div>
-    </div>
-  </div>
-</div>
-
-<div class="filter-bar">
-  <div class="tabs">
-    <span class="tab active">全部</span>
-    <span class="tab">基础课</span>
-    <span class="tab">强化课</span>
-    <span class="tab">方法课</span>
-    <span class="tab">复盘</span>
-    <span class="tab">预案</span>
-    <span class="tab">作业</span>
+<div class="nav-bar">
+  <div class="nav-list">
+    <a class="nav-item active" href="#nav-lesson"><span class="icon">📚</span>基础课</a>
+    <a class="nav-item" href="#nav-extra"><span class="icon">🔬</span>强化课</a>
+    <a class="nav-item" href="#nav-method"><span class="icon">📊</span>方法课</a>
+    <a class="nav-item" href="#nav-topic"><span class="icon">🔍</span>专题</a>
+    <a class="nav-item" href="#nav-data"><span class="icon">📖</span>资料</a>
+    <a class="nav-item" href="#nav-plan"><span class="icon">📋</span>预案</a>
+    <a class="nav-item" href="#nav-review"><span class="icon">📝</span>复盘</a>
+    <a class="nav-item" href="#nav-homework"><span class="icon">✅</span>作业</a>
   </div>
 </div>
 
 <div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">双轨制重写版</div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="num">10</div><div class="label">基础课程</div></div>
+      <div class="hero-stat green"><div class="num">10</div><div class="label">已完成</div></div>
+      <div class="hero-stat blue"><div class="num">8</div><div class="label">关注股票</div></div>
+      <div class="hero-stat red"><div class="num">5</div><div class="label">持仓标的</div></div>
+    </div>
+  </div>
 
   <!-- 持仓概览 -->
   <div class="portfolio-card">
@@ -508,396 +549,405 @@ a { text-decoration: none; color: inherit; }
       <span class="portfolio-badge">3成仓</span>
     </div>
     <div class="portfolio-grid">
-      <div class="portfolio-item">
-        <div class="name">淳中</div>
-        <div class="price red">89.88</div>
-      </div>
-      <div class="portfolio-item">
-        <div class="name">富联</div>
-        <div class="price red">59.92</div>
-      </div>
-      <div class="portfolio-item">
-        <div class="name">赛腾</div>
-        <div class="price green">46.58</div>
-      </div>
-      <div class="portfolio-item">
-        <div class="name">通富</div>
-        <div class="price green">64.26</div>
-      </div>
-      <div class="portfolio-item">
-        <div class="name">环旭</div>
-        <div class="price red">43.03</div>
-      </div>
-      <div class="portfolio-item">
-        <div class="name">天孚</div>
-        <div class="price" style="color:var(--text-muted)">未持仓</div>
-      </div>
-      <div class="portfolio-item">
-        <div class="name">胜宏</div>
-        <div class="price" style="color:var(--text-muted)">未持仓</div>
-      </div>
-      <div class="portfolio-item">
-        <div class="name">长电</div>
-        <div class="price" style="color:var(--text-muted)">未持仓</div>
-      </div>
+      <div class="portfolio-item"><div class="name">淳中</div><div class="price red">89.88</div></div>
+      <div class="portfolio-item"><div class="name">富联</div><div class="price red">59.92</div></div>
+      <div class="portfolio-item"><div class="name">赛腾</div><div class="price green">46.58</div></div>
+      <div class="portfolio-item"><div class="name">通富</div><div class="price green">64.26</div></div>
+      <div class="portfolio-item"><div class="name">环旭</div><div class="price red">43.03</div></div>
+      <div class="portfolio-item"><div class="name">天孚</div><div class="price" style="color:var(--text-muted)">未持仓</div></div>
+      <div class="portfolio-item"><div class="name">胜宏</div><div class="price" style="color:var(--text-muted)">未持仓</div></div>
+      <div class="portfolio-item"><div class="name">长电</div><div class="price" style="color:var(--text-muted)">未持仓</div></div>
     </div>
   </div>
 
   <!-- 重点提醒 -->
   <div class="alert-card">
     <h3>⚠️ 淳中放量破位预警</h3>
-    <p>8/26 量比2.03 放量跌破92.6生死线（箱底），收盘89.88 -9.35%。建构破坏，建议止损离场。纪律卡红线：破位反抽即减。</p>
+    <p>8/26 量比2.03 跌破92.6生死线，收盘89.88 -9.35%。建议止损离场，纪律卡红线：破位反抽即减。</p>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- 基础课程 -->
-  <div class="section-header">
-    <span class="section-title">第一阶段 · 地基课程</span>
-    <span class="section-count">10课</span>
-  </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./第10课-大盘环境判断与仓位联动.html">
-      <div class="card-head">
-        <div class="card-icon lesson">10</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第10课</span>
-          <div class="card-title">大盘环境判断与仓位联动</div>
-          <div class="card-subtitle">量学三线 · 四把体温计 · 环境三档</div>
+  <!-- ========== 总导航：基础课程 ========== -->
+  <div id="nav-lesson" class="section">
+    <div class="section-header">
+      <span class="section-title">第一阶段 · 地基课程</span>
+      <span class="section-count">10课</span>
+    </div>
+    <!-- 小导航 -->
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./第10课-大盘环境判断与仓位联动.html"><span class="dot"></span>第10课</a>
+      <a class="sub-nav-item" href="./第09课-新手常见错误与交易心理.html"><span class="dot"></span>第09课</a>
+      <a class="sub-nav-item" href="./第08课-十二字令与量波入门.html"><span class="dot"></span>第08课</a>
+      <a class="sub-nav-item" href="./第07课-黄金柱与高量柱.html"><span class="dot"></span>第07课</a>
+      <a class="sub-nav-item" href="./第06课-量线与生死线-如何确定关键位.html"><span class="dot"></span>第06课</a>
+      <a class="sub-nav-item" href="./第05课-左证明右确认.html"><span class="dot"></span>第05课</a>
+      <a class="sub-nav-item" href="./第04课-位置决定性质.html"><span class="dot"></span>第04课</a>
+      <a class="sub-nav-item" href="./第03课-量价关系四维度.html"><span class="dot"></span>第03课</a>
+      <a class="sub-nav-item" href="./第02课-量柱七形态.html"><span class="dot"></span>第02课</a>
+      <a class="sub-nav-item" href="./第01课-三先规律.html"><span class="dot"></span>第01课</a>
+    </div>
+    <!-- 卡片列表 -->
+    <div class="card-list">
+      <a class="lesson-card" href="./第10课-大盘环境判断与仓位联动.html">
+        <div class="card-head">
+          <div class="card-icon lesson">10</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第10课</span>
+            <div class="card-title">大盘环境判断与仓位联动</div>
+            <div class="card-subtitle">量学三线 · 四把体温计 · 环境三档</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">强市6-8成/震荡2-4成/弱市空仓 · 开盘45分钟定势 · 已结课</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第09课-新手常见错误与交易心理.html">
-      <div class="card-head">
-        <div class="card-icon lesson">09</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第09课</span>
-          <div class="card-title">新手常见错误与交易心理</div>
-          <div class="card-subtitle">散户三大病根 · 量学心法</div>
+        <div class="card-desc">强市6-8成/震荡2-4成/弱市空仓 · 开盘45分钟定势 · 已结课</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第09课-新手常见错误与交易心理.html">
+        <div class="card-head">
+          <div class="card-icon lesson">09</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第09课</span>
+            <div class="card-title">新手常见错误与交易心理</div>
+            <div class="card-subtitle">散户三大病根 · 量学心法</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">太急/太贪/太迷信图形 · 现代升级=把心态变纪律清单</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第08课-十二字令与量波入门.html">
-      <div class="card-head">
-        <div class="card-icon lesson">08</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第08课</span>
-          <div class="card-title">十二字令与量波入门</div>
-          <div class="card-subtitle">阳胜进阴胜出 · 量波心电图</div>
+        <div class="card-desc">太急/太贪/太迷信图形 · 现代升级=把心态变纪律清单</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第08课-十二字令与量波入门.html">
+        <div class="card-head">
+          <div class="card-icon lesson">08</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第08课</span>
+            <div class="card-title">十二字令与量波入门</div>
+            <div class="card-subtitle">阳胜进阴胜出 · 量波心电图</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">传统=阳胜进阴胜出小倍阳大胆入 · 现代升级四条件</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第07课-黄金柱与高量柱.html">
-      <div class="card-head">
-        <div class="card-icon lesson">07</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第07课</span>
-          <div class="card-title">黄金柱与高量柱</div>
-          <div class="card-subtitle">量线进阶定线工具</div>
+        <div class="card-desc">传统=阳胜进阴胜出小倍阳大胆入 · 现代升级四条件</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第07课-黄金柱与高量柱.html">
+        <div class="card-head">
+          <div class="card-icon lesson">07</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第07课</span>
+            <div class="card-title">黄金柱与高量柱</div>
+            <div class="card-subtitle">量线进阶定线工具</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">传统定义=将军柱+3日缩量不破实底 · 现代三步判定法</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第06课-量线与生死线-如何确定关键位.html">
-      <div class="card-head">
-        <div class="card-icon lesson">06</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第06课</span>
-          <div class="card-title">量线与生死线</div>
-          <div class="card-subtitle">如何确定关键位</div>
+        <div class="card-desc">传统定义=将军柱+3日缩量不破实底 · 现代三步判定法</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第06课-量线与生死线-如何确定关键位.html">
+        <div class="card-head">
+          <div class="card-icon lesson">06</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第06课</span>
+            <div class="card-title">量线与生死线</div>
+            <div class="card-subtitle">如何确定关键位</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">四把尺子定线（箱体/高量柱/均线/缺口整数）· 三条铁律</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第05课-左证明右确认.html">
-      <div class="card-head">
-        <div class="card-icon lesson">05</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第05课</span>
-          <div class="card-title">左证明右确认</div>
-          <div class="card-subtitle">右侧确认三条件</div>
+        <div class="card-desc">四把尺子定线（箱体/高量柱/均线/缺口整数）· 三条铁律</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第05课-左证明右确认.html">
+        <div class="card-head">
+          <div class="card-icon lesson">05</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第05课</span>
+            <div class="card-title">左证明右确认</div>
+            <div class="card-subtitle">右侧确认三条件</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">左是猜想、右是确认 · 放量+突破+方向对 · 工业富联案例</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第04课-位置决定性质.html">
-      <div class="card-head">
-        <div class="card-icon lesson">04</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第04课</span>
-          <div class="card-title">位置决定性质</div>
-          <div class="card-subtitle">250日身位三分区</div>
+        <div class="card-desc">左是猜想、右是确认 · 放量+突破+方向对 · 工业富联案例</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第04课-位置决定性质.html">
+        <div class="card-head">
+          <div class="card-icon lesson">04</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第04课</span>
+            <div class="card-title">位置决定性质</div>
+            <div class="card-subtitle">250日身位三分区</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">高位≥70%/腰部40-70%/低位<40% · 位置是动态值非固定</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第03课-量价关系四维度.html">
-      <div class="card-head">
-        <div class="card-icon lesson">03</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第03课</span>
-          <div class="card-title">量价关系四维度</div>
-          <div class="card-subtitle">量·价·位·时</div>
+        <div class="card-desc">高位≥70%/腰部40-70%/低位<40% · 位置是动态值非固定</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第03课-量价关系四维度.html">
+        <div class="card-head">
+          <div class="card-icon lesson">03</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第03课</span>
+            <div class="card-title">量价关系四维度</div>
+            <div class="card-subtitle">量·价·位·时</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">四维交叉验证 · 用8股实战教学 · 避免单一信号误导</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第02课-量柱七形态.html">
-      <div class="card-head">
-        <div class="card-icon lesson">02</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第02课</span>
-          <div class="card-title">量柱七形态</div>
-          <div class="card-subtitle">读懂主力资金的语言</div>
+        <div class="card-desc">四维交叉验证 · 用8股实战教学 · 避免单一信号误导</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第02课-量柱七形态.html">
+        <div class="card-head">
+          <div class="card-icon lesson">02</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第02课</span>
+            <div class="card-title">量柱七形态</div>
+            <div class="card-subtitle">读懂主力资金的语言</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">高低平倍梯缩+黄金柱 · 六大形态详解 · 8股逐日案例</div>
-      <span class="card-status done">已完结</span>
-    </a>
-
-    <a class="lesson-card" href="./第01课-三先规律.html">
-      <div class="card-head">
-        <div class="card-icon lesson">01</div>
-        <div class="card-meta">
-          <span class="card-tag lesson">第01课</span>
-          <div class="card-title">三先规律</div>
-          <div class="card-subtitle">量学的第一性原理</div>
+        <div class="card-desc">高低平倍梯缩+黄金柱 · 六大形态详解 · 8股逐日案例</div>
+        <span class="card-status done">已完结</span>
+      </a>
+      <a class="lesson-card" href="./第01课-三先规律.html">
+        <div class="card-head">
+          <div class="card-icon lesson">01</div>
+          <div class="card-meta">
+            <span class="card-tag lesson">第01课</span>
+            <div class="card-title">三先规律</div>
+            <div class="card-subtitle">量学的第一性原理</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">卖在买先+价在量先+庄在散先 · 全书根基</div>
-      <span class="card-status done">已完结</span>
-    </a>
-  </div>
-
-  <!-- 强化课 -->
-  <div class="divider"></div>
-  <div class="section-header">
-    <span class="section-title">强化课 · 量化深化</span>
-    <span class="section-count">1课</span>
-  </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./强化课-左证明右确认量化与生死线画法.html">
-      <div class="card-head">
-        <div class="card-icon extra">🔬</div>
-        <div class="card-meta">
-          <span class="card-tag extra">强化课</span>
-          <div class="card-title">左证明右确认量化标准 + 生死线画法</div>
-          <div class="card-subtitle">五要素计分卡 · 画线五步法 · 天孚实战拆解</div>
-        </div>
-      </div>
-      <div class="card-desc">左证明五要素计分卡 / 右确认量化三条件 / 画线五步法 · 含SVG+小测验</div>
-      <span class="card-status done">已完成</span>
-    </a>
+        <div class="card-desc">卖在买先+价在量先+庄在散先 · 全书根基</div>
+        <span class="card-status done">已完结</span>
+      </a>
+    </div>
   </div>
 
-  <!-- 方法课 -->
-  <div class="divider"></div>
-  <div class="section-header">
-    <span class="section-title">方法课 · 看盘基本功</span>
-    <span class="section-count">2课</span>
-  </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./方法课-复盘三窗口.html">
-      <div class="card-head">
-        <div class="card-icon method">📊</div>
-        <div class="card-meta">
-          <span class="card-tag method">方法课</span>
-          <div class="card-title">复盘三窗口</div>
-          <div class="card-subtitle">看盘到底看多少根K线</div>
+  <!-- ========== 总导航：强化课 ========== -->
+  <div id="nav-extra" class="section">
+    <div class="section-header">
+      <span class="section-title">强化课 · 量化深化</span>
+      <span class="section-count">1课</span>
+    </div>
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./强化课-左证明右确认量化与生死线画法.html"><span class="dot"></span>强化课</a>
+    </div>
+    <div class="card-list">
+      <a class="lesson-card" href="./强化课-左证明右确认量化与生死线画法.html">
+        <div class="card-head">
+          <div class="card-icon extra">🔬</div>
+          <div class="card-meta">
+            <span class="card-tag extra">强化课</span>
+            <div class="card-title">左证明右确认量化标准 + 生死线画法</div>
+            <div class="card-subtitle">五要素计分卡 · 画线五步法 · 天孚实战拆解</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">250看身位 · 60看趋势 · 10看量柱 · 以后复盘不再纠结天数</div>
-      <span class="card-status done">已解锁</span>
-    </a>
-
-    <a class="lesson-card" href="./第05课-进阶篇-关键位与确认.html">
-      <div class="card-head">
-        <div class="card-icon method">🎯</div>
-        <div class="card-meta">
-          <span class="card-tag method">进阶</span>
-          <div class="card-title">关键位与确认</div>
-          <div class="card-subtitle">逐天拆解工业富联/通富微电</div>
-        </div>
-      </div>
-      <div class="card-desc">右确认不看天数、看关键位 · 站上=确认，跌破=证伪，横盘=等待</div>
-      <span class="card-status done">已解锁</span>
-    </a>
+        <div class="card-desc">左证明五要素计分卡 / 右确认量化三条件 / 画线五步法 · 含SVG+小测验</div>
+        <span class="card-status done">已完成</span>
+      </a>
+    </div>
   </div>
 
-  <!-- 专题拆解 -->
-  <div class="divider"></div>
-  <div class="section-header">
-    <span class="section-title">专题拆解</span>
-    <span class="section-count">1篇</span>
-  </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./专题-淳中8-21假右确认拆解.html">
-      <div class="card-head">
-        <div class="card-icon topic">🔍</div>
-        <div class="card-meta">
-          <span class="card-tag topic">专题</span>
-          <div class="card-title">淳中8/21"假右确认"拆解</div>
-          <div class="card-subtitle">学员实战提问 · 识别假信号</div>
+  <!-- ========== 总导航：方法课 ========== -->
+  <div id="nav-method" class="section">
+    <div class="section-header">
+      <span class="section-title">方法课 · 看盘基本功</span>
+      <span class="section-count">2课</span>
+    </div>
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./方法课-复盘三窗口.html"><span class="dot"></span>复盘三窗口</a>
+      <a class="sub-nav-item" href="./第05课-进阶篇-关键位与确认.html"><span class="dot"></span>关键位与确认</a>
+    </div>
+    <div class="card-list">
+      <a class="lesson-card" href="./方法课-复盘三窗口.html">
+        <div class="card-head">
+          <div class="card-icon method">📊</div>
+          <div class="card-meta">
+            <span class="card-tag method">方法课</span>
+            <div class="card-title">复盘三窗口</div>
+            <div class="card-subtitle">看盘到底看多少根K线</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">右确认三条件隐含前提：确认对象/绝对量能/箱体位置/次日验证 · 附六项检查清单</div>
-      <span class="card-status done">已解锁</span>
-    </a>
-  </div>
-
-  <!-- 参考资料 -->
-  <div class="divider"></div>
-  <div class="section-header">
-    <span class="section-title">参考资料</span>
-    <span class="section-count">1份</span>
-  </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./资料-量学出处与当代权威理论对照表.html">
-      <div class="card-head">
-        <div class="card-icon task">📖</div>
-        <div class="card-meta">
-          <span class="card-tag task">资料</span>
-          <div class="card-title">量学出处与当代权威理论对照表</div>
-          <div class="card-subtitle">原著出处 + 当下适配性 + 现代权威理论</div>
+        <div class="card-desc">250看身位 · 60看趋势 · 10看量柱 · 以后复盘不再纠结天数</div>
+        <span class="card-status done">已解锁</span>
+      </a>
+      <a class="lesson-card" href="./第05课-进阶篇-关键位与确认.html">
+        <div class="card-head">
+          <div class="card-icon method">🎯</div>
+          <div class="card-meta">
+            <span class="card-tag method">进阶</span>
+            <div class="card-title">关键位与确认</div>
+            <div class="card-subtitle">逐天拆解工业富联/通富微电</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">10条核心理论逐条标注 · 威科夫/道氏/OBV/RSI对照 · 2026-08-25联网核实</div>
-      <span class="card-status done">已解锁</span>
-    </a>
+        <div class="card-desc">右确认不看天数、看关键位 · 站上=确认，跌破=证伪，横盘=等待</div>
+        <span class="card-status done">已解锁</span>
+      </a>
+    </div>
   </div>
 
-  <!-- 开盘预案 -->
-  <div class="divider"></div>
-  <div class="section-header">
-    <span class="section-title">开盘预案</span>
-    <span class="section-count">最新</span>
-  </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./开盘预案-2026-08-27.html">
-      <div class="card-head">
-        <div class="card-icon plan">📋</div>
-        <div class="card-meta">
-          <span class="card-tag plan">预案</span>
-          <div class="card-title">2026-08-27 开盘预案</div>
-          <div class="card-subtitle">淳中放量破92.6生死线 · 八股双向预案</div>
+  <!-- ========== 总导航：专题 ========== -->
+  <div id="nav-topic" class="section">
+    <div class="section-header">
+      <span class="section-title">专题拆解</span>
+      <span class="section-count">1篇</span>
+    </div>
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./专题-淳中8-21假右确认拆解.html"><span class="dot"></span>淳中8/21假右确认</a>
+    </div>
+    <div class="card-list">
+      <a class="lesson-card" href="./专题-淳中8-21假右确认拆解.html">
+        <div class="card-head">
+          <div class="card-icon topic">🔍</div>
+          <div class="card-meta">
+            <span class="card-tag topic">专题</span>
+            <div class="card-title">淳中8/21"假右确认"拆解</div>
+            <div class="card-subtitle">学员实战提问 · 识别假信号</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">纪律卡红线提醒 · 涨/跌双向预案 · 五档纪律卡红线速查</div>
-      <span class="card-status new">最新</span>
-    </a>
-  </div>
-
-  <!-- 复盘日报 -->
-  <div class="divider"></div>
-  <div class="section-header">
-    <span class="section-title">复盘日报</span>
-    <span class="section-count">3篇</span>
-  </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./复盘-2026-08-26.html">
-      <div class="card-head">
-        <div class="card-icon review">📝</div>
-        <div class="card-meta">
-          <span class="card-tag review">复盘</span>
-          <div class="card-title">2026-08-26 持仓操作建议</div>
-          <div class="card-subtitle">放量破位日 · 淳中止盈止损</div>
-        </div>
-      </div>
-      <div class="card-desc">大盘回暖创业板收回3400，但淳中量比2.03放量跌破92.6箱底 · 淳中止盈止损离场</div>
-      <span class="card-status done">已出</span>
-    </a>
-
-    <a class="lesson-card" href="./复盘-2026-08-25.html">
-      <div class="card-head">
-        <div class="card-icon review">📝</div>
-        <div class="card-meta">
-          <span class="card-tag review">复盘</span>
-          <div class="card-title">2026-08-25 持仓操作建议</div>
-          <div class="card-subtitle">探底回升日</div>
-        </div>
-      </div>
-      <div class="card-desc">盘中7股插破、收盘7只收回，仅通富仍破61.2 · 5只持仓逐股给出买卖价位</div>
-      <span class="card-status done">已出</span>
-    </a>
-
-    <a class="lesson-card" href="./复盘-2026-08-24.html">
-      <div class="card-head">
-        <div class="card-icon review">📝</div>
-        <div class="card-meta">
-          <span class="card-tag review">复盘</span>
-          <div class="card-title">2026-08-24 算力产业链量学拆解</div>
-          <div class="card-subtitle">8股普跌 · 左侧生死线全景</div>
-        </div>
-      </div>
-      <div class="card-desc">8股普跌 · 左侧生死线全标出 + 使用纪律6条 + 大盘生死线 + 次日双向预案</div>
-      <span class="card-status done">已出</span>
-    </a>
+        <div class="card-desc">右确认三条件隐含前提：确认对象/绝对量能/箱体位置/次日验证 · 附六项检查清单</div>
+        <span class="card-status done">已解锁</span>
+      </a>
+    </div>
   </div>
 
-  <!-- 作业 -->
-  <div class="divider"></div>
-  <div class="section-header">
-    <span class="section-title">作业 · 选择题点选版</span>
-    <span class="section-count">3份</span>
+  <!-- ========== 总导航：参考资料 ========== -->
+  <div id="nav-data" class="section">
+    <div class="section-header">
+      <span class="section-title">参考资料</span>
+      <span class="section-count">1份</span>
+    </div>
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./资料-量学出处与当代权威理论对照表.html"><span class="dot"></span>理论对照表</a>
+    </div>
+    <div class="card-list">
+      <a class="lesson-card" href="./资料-量学出处与当代权威理论对照表.html">
+        <div class="card-head">
+          <div class="card-icon task">📖</div>
+          <div class="card-meta">
+            <span class="card-tag task">资料</span>
+            <div class="card-title">量学出处与当代权威理论对照表</div>
+            <div class="card-subtitle">原著出处 + 当下适配性 + 现代权威理论</div>
+          </div>
+        </div>
+        <div class="card-desc">10条核心理论逐条标注 · 威科夫/道氏/OBV/RSI对照 · 2026-08-25联网核实</div>
+        <span class="card-status done">已解锁</span>
+      </a>
+    </div>
   </div>
-  <div class="card-list">
-    <a class="lesson-card" href="./作业-第04课.html">
-      <div class="card-head">
-        <div class="card-icon homework">📝</div>
-        <div class="card-meta">
-          <span class="card-tag homework">作业</span>
-          <div class="card-title">第4课作业</div>
-          <div class="card-subtitle">位置百分位/三区定位/定性判断</div>
-        </div>
-      </div>
-      <div class="card-desc">6道题 · 全部基于250日核验数据 · 已批改</div>
-      <span class="card-status done">已批改</span>
-    </a>
 
-    <a class="lesson-card" href="./测验-第01-03课综合复习.html">
-      <div class="card-head">
-        <div class="card-icon homework">📝</div>
-        <div class="card-meta">
-          <span class="card-tag homework">测验</span>
-          <div class="card-title">第1-3课综合复习</div>
-          <div class="card-subtitle">三先规律/量柱/四维/三窗口</div>
+  <!-- ========== 总导航：开盘预案 ========== -->
+  <div id="nav-plan" class="section">
+    <div class="section-header">
+      <span class="section-title">开盘预案</span>
+      <span class="section-count">最新</span>
+    </div>
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./开盘预案-2026-08-27.html"><span class="dot"></span>8/27预案</a>
+    </div>
+    <div class="card-list">
+      <a class="lesson-card" href="./开盘预案-2026-08-27.html">
+        <div class="card-head">
+          <div class="card-icon plan">📋</div>
+          <div class="card-meta">
+            <span class="card-tag plan">预案</span>
+            <div class="card-title">2026-08-27 开盘预案</div>
+            <div class="card-subtitle">淳中放量破92.6生死线 · 八股双向预案</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">10道题 · 巩固用 · 已批改</div>
-      <span class="card-status done">已批改</span>
-    </a>
+        <div class="card-desc">纪律卡红线提醒 · 涨/跌双向预案 · 五档纪律卡红线速查</div>
+        <span class="card-status new">最新</span>
+      </a>
+    </div>
+  </div>
 
-    <a class="lesson-card" href="./作业-第03课.html">
-      <div class="card-head">
-        <div class="card-icon homework">📝</div>
-        <div class="card-meta">
-          <span class="card-tag homework">作业</span>
-          <div class="card-title">第3课作业</div>
-          <div class="card-subtitle">量柱/四维/三窗口</div>
+  <!-- ========== 总导航：复盘日报 ========== -->
+  <div id="nav-review" class="section">
+    <div class="section-header">
+      <span class="section-title">复盘日报</span>
+      <span class="section-count">3篇</span>
+    </div>
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./复盘-2026-08-26.html"><span class="dot"></span>8/26</a>
+      <a class="sub-nav-item" href="./复盘-2026-08-25.html"><span class="dot"></span>8/25</a>
+      <a class="sub-nav-item" href="./复盘-2026-08-24.html"><span class="dot"></span>8/24</a>
+    </div>
+    <div class="card-list">
+      <a class="lesson-card" href="./复盘-2026-08-26.html">
+        <div class="card-head">
+          <div class="card-icon review">📝</div>
+          <div class="card-meta">
+            <span class="card-tag review">复盘</span>
+            <div class="card-title">2026-08-26 持仓操作建议</div>
+            <div class="card-subtitle">放量破位日 · 淳中止盈止损</div>
+          </div>
         </div>
-      </div>
-      <div class="card-desc">6道题 · 点选提交 · 已批改</div>
-      <span class="card-status done">已批改</span>
-    </a>
+        <div class="card-desc">大盘回暖创业板收回3400，但淳中量比2.03放量跌破92.6箱底 · 淳中止盈止损离场</div>
+        <span class="card-status done">已出</span>
+      </a>
+      <a class="lesson-card" href="./复盘-2026-08-25.html">
+        <div class="card-head">
+          <div class="card-icon review">📝</div>
+          <div class="card-meta">
+            <span class="card-tag review">复盘</span>
+            <div class="card-title">2026-08-25 持仓操作建议</div>
+            <div class="card-subtitle">探底回升日</div>
+          </div>
+        </div>
+        <div class="card-desc">盘中7股插破、收盘7只收回，仅通富仍破61.2 · 5只持仓逐股给出买卖价位</div>
+        <span class="card-status done">已出</span>
+      </a>
+      <a class="lesson-card" href="./复盘-2026-08-24.html">
+        <div class="card-head">
+          <div class="card-icon review">📝</div>
+          <div class="card-meta">
+            <span class="card-tag review">复盘</span>
+            <div class="card-title">2026-08-24 算力产业链量学拆解</div>
+            <div class="card-subtitle">8股普跌 · 左侧生死线全景</div>
+          </div>
+        </div>
+        <div class="card-desc">8股普跌 · 左侧生死线全标出 + 使用纪律6条 + 大盘生死线 + 次日双向预案</div>
+        <span class="card-status done">已出</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ========== 总导航：作业测验 ========== -->
+  <div id="nav-homework" class="section">
+    <div class="section-header">
+      <span class="section-title">作业 · 选择题点选版</span>
+      <span class="section-count">3份</span>
+    </div>
+    <div class="sub-nav">
+      <a class="sub-nav-item" href="./作业-第04课.html"><span class="dot"></span>第4课</a>
+      <a class="sub-nav-item" href="./测验-第01-03课综合复习.html"><span class="dot"></span>综合测验</a>
+      <a class="sub-nav-item" href="./作业-第03课.html"><span class="dot"></span>第3课</a>
+    </div>
+    <div class="card-list">
+      <a class="lesson-card" href="./作业-第04课.html">
+        <div class="card-head">
+          <div class="card-icon homework">✅</div>
+          <div class="card-meta">
+            <span class="card-tag homework">作业</span>
+            <div class="card-title">第4课作业</div>
+            <div class="card-subtitle">位置百分位/三区定位/定性判断</div>
+          </div>
+        </div>
+        <div class="card-desc">6道题 · 全部基于250日核验数据 · 已批改</div>
+        <span class="card-status done">已批改</span>
+      </a>
+      <a class="lesson-card" href="./测验-第01-03课综合复习.html">
+        <div class="card-head">
+          <div class="card-icon homework">✅</div>
+          <div class="card-meta">
+            <span class="card-tag homework">测验</span>
+            <div class="card-title">第1-3课综合复习</div>
+            <div class="card-subtitle">三先规律/量柱/四维/三窗口</div>
+          </div>
+        </div>
+        <div class="card-desc">10道题 · 巩固用 · 已批改</div>
+        <span class="card-status done">已批改</span>
+      </a>
+      <a class="lesson-card" href="./作业-第03课.html">
+        <div class="card-head">
+          <div class="card-icon homework">✅</div>
+          <div class="card-meta">
+            <span class="card-tag homework">作业</span>
+            <div class="card-title">第3课作业</div>
+            <div class="card-subtitle">量柱/四维/三窗口</div>
+          </div>
+        </div>
+        <div class="card-desc">6道题 · 点选提交 · 已批改</div>
+        <span class="card-status done">已批改</span>
+      </a>
+    </div>
   </div>
 
   <div class="footer">
@@ -905,10 +955,37 @@ a { text-decoration: none; color: inherit; }
       现代量学实战体系 · 讲义仅供个人学习使用<br>
       不构成任何投资建议 · 股市有风险，入市需谨慎
     </div>
-    <div class="footer-version">v2026-08-27-20 · Mate 30 Pro 适配版</div>
+    <div class="footer-version">v2026-08-27-21 · 总导航+小导航版</div>
   </div>
 
 </div>
+
+<script>
+// 导航高亮逻辑
+(function() {
+  const navItems = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('.section');
+  
+  function updateActive() {
+    let current = '';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 200) {
+        current = section.id;
+      }
+    });
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('href') === '#' + current) {
+        item.classList.add('active');
+      }
+    });
+  }
+  
+  window.addEventListener('scroll', updateActive);
+  updateActive();
+})();
+</script>
 
 </body>
 </html>
