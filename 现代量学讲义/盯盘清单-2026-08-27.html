@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今日盯盘清单 2026-08-27</title>
+<style>
+:root{
+  --bg:#0a0e1a;--card:#131a2e;--border:#1e2a45;
+  --red:#ff4d6d;--green:#00e676;--blue:#4dabf7;--orange:#ff922b;
+  --text:#e0e6f0;--muted:#6b7a99;--accent:#ffd43b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.5;padding-bottom:40px}
+.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:16px;text-align:center;border-bottom:2px solid var(--accent)}
+.header h1{font-size:20px;color:var(--accent)}
+.header .date{font-size:13px;color:var(--muted);margin-top:4px}
+.chapters{padding:12px}
+.chapter-title{font-size:16px;color:var(--accent);padding:8px 12px;border-left:3px solid var(--accent);margin:16px 0 8px;background:var(--card)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.card-title{font-size:15px;font-weight:bold}
+.card-sub{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:bold}
+.tag-red{background:rgba(255,77,109,.2);color:var(--red)}
+.tag-green{background:rgba(0,230,118,.2);color:var(--green)}
+.tag-orange{background:rgba(255,146,43,.2);color:var(--orange)}
+.tag-blue{background:rgba(77,171,247,.2);color:var(--blue)}
+.price-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.price-item{background:rgba(255,255,255,.04);border-radius:6px;padding:8px;text-align:center}
+.price-label{font-size:11px;color:var(--muted);margin-bottom:2px}
+.price-val{font-size:16px;font-weight:bold}
+.price-up{color:var(--red)}.price-down{color:var(--green)}.price-flat{color:var(--blue)}
+.action-card{border-color:var(--orange)}
+.action-list{list-style:none;padding:0}
+.action-list li{padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:8px;font-size:13px}
+.action-list li:last-child{border-bottom:none}
+.action-list .bullet{color:var(--accent);font-weight:bold;flex-shrink:0}
+.env-card{border-color:var(--blue)}
+.warn{background:rgba(255,146,43,.1);border:1px solid var(--orange);border-radius:8px;padding:10px;margin:8px 0}
+.warn-title{color:var(--orange);font-weight:bold;font-size:13px;margin-bottom:4px}
+.warn-body{font-size:12px;color:var(--text);line-height:1.6}
+.checklist{list-style:none;padding:0}
+.checklist li{padding:6px 0;font-size:13px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.checklist li:last-child{border-bottom:none}
+.checklist .cb{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--green)}
+.checklist .cb.done{background:var(--green);color:#000;border-color:var(--green)}
+.footer{text-align:center;padding:16px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);margin-top:16px}
+.section-label{font-size:11px;color:var(--muted);margin:8px 0 4px;text-transform:uppercase;letter-spacing:1px}
+.highlight-row{display:flex;gap:8px;margin-top:8px}
+.highlight-item{flex:1;background:rgba(255,255,255,.04);border-radius:6px;padding:10px 8px;text-align:center}
+.highlight-val{font-size:18px;font-weight:bold;margin-bottom:2px}
+.highlight-label{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>今日盯盘清单</h1>
+  <div class="date">2026年8月27日（周四）| 生成时间 07:48</div>
+</div>
+
+<div class="chapters">
+
+  <!-- 大盘环境 -->
+  <div class="chapter-title">大盘环境速览</div>
+  <div class="card env-card">
+    <div class="card-header">
+      <span class="card-title">三大指数（8/26收盘）</span>
+      <span class="tag tag-blue">分化偏弱</span>
+    </div>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">上证指数</div>
+        <div class="price-val price-up">3912.52</div>
+        <div style="font-size:11px;color:var(--muted)">+0.59%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">深证成指</div>
+        <div class="price-val price-down">13841.33</div>
+        <div style="font-size:11px;color:var(--muted)">+0.69%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">创业板指</div>
+        <div class="price-val price-up">3414.88</div>
+        <div style="font-size:11px;color:var(--muted)">+0.51%</div>
+      </div>
+    </div>
+    <div class="highlight-row" style="margin-top:10px">
+      <div class="highlight-item">
+        <div class="highlight-val" style="color:var(--orange)">2-4成</div>
+        <div class="highlight-label">总仓位上限</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-val" style="color:var(--red)">≤1.5亿</div>
+        <div class="highlight-label">指数成交额警戒</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-val" style="color:var(--accent)">强于</div>
+        <div class="highlight-label">上证 vs 深成对比</div>
+      </div>
+    </div>
+    <div class="warn" style="margin-top:10px">
+      <div class="warn-title">监管重大变化</div>
+      <div class="warn-body">交易所已关闭局域网行情线路，统一广域网接入。量化高频优势抹平。关注小微盘股流动性风险。</div>
+    </div>
+  </div>
+
+  <!-- 持仓监控 -->
+  <div class="chapter-title">持仓监控（5只，总3系7手）</div>
+
+  <!-- 淳中科技 -->
+  <div class="card action-card">
+    <div class="card-header">
+      <span class="card-title">淳中科技 603516</span>
+      <span class="tag tag-red">破位 · 今日核心</span>
+    </div>
+    <div class="section-label">昨日数据</div>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">收盘</div>
+        <div class="price-val price-down">89.88</div>
+        <div style="font-size:11px;color:var(--muted)">-9.35%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">最低</div>
+        <div class="price-val price-down">89.24</div>
+        <div style="font-size:11px;color:var(--muted)">量比2.03</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">昨日最高</div>
+        <div class="price-val price-up">98.88</div>
+        <div style="font-size:11px;color:var(--muted)">假突破</div>
+      </div>
+    </div>
+    <div class="section-label" style="margin-top:10px">今日操作指令</div>
+    <ul class="action-list">
+      <li><span class="bullet">A.</span><span>若反弹至<strong style="color:var(--accent)">93-95元</strong>：减1手，落袋约300-500元</span></li>
+      <li><span class="bullet">B.</span><span>若再次跌破<strong style="color:var(--red)">89.24元</strong>：清仓出局</span></li>
+      <li><span class="bullet">C.</span><span>若开盘直接低开跌破89元：<strong style="color:var(--red)">直接清仓，不等反弹</strong></span></li>
+      <li><span class="bullet">D.</span><span>不补仓、不摊薄、不看盘猜底</span></li>
+    </ul>
+    <div class="warn">
+      <div class="warn-title">关键防线</div>
+      <div class="warn-body">生死线88.52已破，昨日收盘89.88仍高于此。但趋势已破坏，今日首要任务是减仓，不是等待反转。</div>
+    </div>
+  </div>
+
+  <!-- 工业富联 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">工业富联 601138</span>
+      <span class="tag tag-green">持有</span>
+    </div>
+    <div class="section-label">昨日数据</div>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">收盘</div>
+        <div class="price-val price-up">60.57</div>
+        <div style="font-size:11px;color:var(--muted)">+0.7%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">买入成本</div>
+        <div class="price-val" style="color:var(--accent)">57.34</div>
+        <div style="font-size:11px;color:var(--muted)">浮盈+5.6%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">今日关注</div>
+        <div class="price-val price-up">62-64</div>
+        <div style="font-size:11px;color:var(--muted)">减仓触发位</div>
+      </div>
+    </div>
+    <div class="section-label">今日操作指令</div>
+    <ul class="action-list">
+      <li><span class="bullet">A.</span><span>反弹至<strong style="color:var(--accent)">62-64元</strong>减1手，锁定利润</span></li>
+      <li><span class="bullet">B.</span><span>若跌破<strong style="color:var(--red)">60元</strong>：清仓出局</span></li>
+    </ul>
+  </div>
+
+  <!-- 赛腾股份 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">赛腾股份 603283</span>
+      <span class="tag tag-orange">观望</span>
+    </div>
+    <div class="section-label">昨日数据</div>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">收盘</div>
+        <div class="price-val price-down">46.18</div>
+        <div style="font-size:11px;color:var(--muted)">-1.95%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">买入成本</div>
+        <div class="price-val" style="color:var(--accent)">46.18</div>
+        <div style="font-size:11px;color:var(--muted)">保本</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">今日关注</div>
+        <div class="price-val price-down">44.80</div>
+        <div style="font-size:11px;color:var(--muted)">止损触发位</div>
+      </div>
+    </div>
+    <div class="section-label">今日操作指令</div>
+    <ul class="action-list">
+      <li><span class="bullet">A.</span><span>反弹至<strong style="color:var(--accent)">48-49元</strong>减1手，锁定利润</span></li>
+      <li><span class="bullet">B.</span><span>若跌破<strong style="color:var(--red)">44.80元</strong>：清仓止损</span></li>
+      <li><span class="bullet">C.</span><span>跌破昨日最低44.80：直接清仓</span></li>
+    </ul>
+  </div>
+
+  <!-- 通富微电 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">通富微电 002156</span>
+      <span class="tag tag-green">少量观察</span>
+    </div>
+    <div class="section-label">昨日数据</div>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">收盘</div>
+        <div class="price-val price-up">61.25</div>
+        <div style="font-size:11px;color:var(--muted)">+0.57%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">买入成本</div>
+        <div class="price-val" style="color:var(--accent)">64.26</div>
+        <div style="font-size:11px;color:var(--muted)">浮亏-4.7%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">今日关注</div>
+        <div class="price-val price-down">60元</div>
+        <div style="font-size:11px;color:var(--muted)">清仓触发位</div>
+      </div>
+    </div>
+    <div class="section-label">今日操作指令</div>
+    <ul class="action-list">
+      <li><span class="bullet">A.</span><span>反弹至<strong style="color:var(--accent)">61.5-62.5元</strong>减1手，落袋约50元</span></li>
+      <li><span class="bullet">B.</span><span>若跌破<strong style="color:var(--red)">60元</strong>：清仓出局，认赔离场</span></li>
+    </ul>
+  </div>
+
+  <!-- 环旭电子 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">环旭电子 601231</span>
+      <span class="tag tag-blue">持有观察</span>
+    </div>
+    <div class="section-label">昨日数据</div>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">收盘</div>
+        <div class="price-val price-up">26.70</div>
+        <div style="font-size:11px;color:var(--muted)">+0.95%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">买入成本</div>
+        <div class="price-val" style="color:var(--accent)">45.06</div>
+        <div style="font-size:11px;color:var(--muted)">浮亏-40.7%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">今日关注</div>
+        <div class="price-val price-down">25.01</div>
+        <div style="font-size:11px;color:var(--muted)">止损触发位</div>
+      </div>
+    </div>
+    <div class="section-label">今日操作指令</div>
+    <ul class="action-list">
+      <li><span class="bullet">A.</span><span>反弹至<strong style="color:var(--accent)">27-28元</strong>减1手，落袋约100元</span></li>
+      <li><span class="bullet">B.</span><span>若跌破<strong style="color:var(--red)">25.01元</strong>：清仓出局</span></li>
+    </ul>
+  </div>
+
+  <!-- 未持有重点关注 -->
+  <div class="chapter-title">未持有 · 今日关注池</div>
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">算力产业链观察</span>
+      <span class="tag tag-blue">观望</span>
+    </div>
+    <div class="section-label">昨日数据</div>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">胜宏科技 300476</div>
+        <div class="price-val price-up">249.44</div>
+        <div style="font-size:11px;color:var(--muted)">+1.82%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">天孚通信 300394</div>
+        <div class="price-val price-down">253.58</div>
+        <div style="font-size:11px;color:var(--muted)">-1.37%</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">长电科技 600584</div>
+        <div class="price-val price-down">73.62</div>
+        <div style="font-size:11px;color:var(--muted)">-0.58%</div>
+      </div>
+    </div>
+    <div class="section-label">今日关注</div>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><span>胜宏科技：量比1.18，站上245平台，可关注是否有效突破</span></li>
+      <li><span class="bullet">·</span><span>天孚通信：跌破251.80，量能萎缩，暂观望</span></li>
+      <li><span class="bullet">·</span><span>长电科技：缩量回调，站稳73.60可关注</span></li>
+    </ul>
+  </div>
+
+  <!-- 量化监管新规提示 -->
+  <div class="chapter-title">量化监管新规 · 影响提示</div>
+  <div class="card" style="border-color:var(--orange)">
+    <div class="card-header">
+      <span class="card-title">今日市场结构性变化</span>
+      <span class="tag tag-orange">新风险</span>
+    </div>
+    <ul class="action-list">
+      <li><span class="bullet">1.</span><span><strong>交易所关闭局域网</strong>：8月7日深交所已全面执行，量化高频优势被物理性抹平</span></li>
+      <li><span class="bullet">2.</span><span><strong>高频认定标准收紧</strong>：从每秒300笔降至15笔，大量程序化交易需报备</span></li>
+      <li><span class="bullet">3.</span><span><strong>中小市值流动性风险</strong>：量化撤出可能导致小微盘股成交枯竭，盘面波动加大</span></li>
+      <li><span class="bullet">4.</span><span><strong>量学实战影响</strong>：传统量价关系可能发生变化，需观察新规后市场结构是否回归正常</span></li>
+    </ul>
+  </div>
+
+  <!-- 9:30前必做检查 -->
+  <div class="chapter-title">开盘前必做检查</div>
+  <div class="card">
+    <ul class="checklist">
+      <li><span class="cb" id="cb1"></span><span>查看隔夜美股行情（道指/纳指/费半）</span></li>
+      <li><span class="cb" id="cb2"></span><span>确认A50期指开盘方向</span></li>
+      <li><span class="cb" id="cb3"></span><span>淳中科技集合竞价是否低开破90</span></li>
+      <li><span class="cb" id="cb4"></span><span>富联/赛腾集合竞价方向</span></li>
+      <li><span class="cb" id="cb5"></span><span>指数开盘方向判断（上证 vs 深成）</span></li>
+    </ul>
+  </div>
+
+  <!-- 纪律卡 -->
+  <div class="chapter-title">今日纪律卡</div>
+  <div class="card" style="border-color:var(--red)">
+    <div class="section-label">红线 · 不可触碰</div>
+    <ul class="action-list">
+      <li><span class="bullet" style="color:var(--red)">✗</span><span>不补仓（任何持仓均不补）</span></li>
+      <li><span class="bullet" style="color:var(--red)">✗</span><span>不在分时低位追入</span></li>
+      <li><span class="bullet" style="color:var(--red)">✗</span><span>不扛亏损扛成投资</span></li>
+      <li><span class="bullet" style="color:var(--red)">✗</span><span>不看盘猜底，只看收盘价决策</span></li>
+    </ul>
+    <div class="section-label" style="margin-top:10px">目标 · 今日完成</div>
+    <ul class="action-list">
+      <li><span class="bullet" style="color:var(--green)">✓</span><span>淳中减1手或清仓</span></li>
+      <li><span class="bullet" style="color:var(--green)">✓</span><span>富联/赛腾/通富/环旭各执行1条指令</span></li>
+      <li><span class="bullet" style="color:var(--green)">✓</span><span>总仓位降至4成以下</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div>生成时间：2026-08-27 07:48（北京时间）</div>
+  <div>数据截止：2026-08-26收盘 | 来源：腾讯证券前复权</div>
+  <div style="margin-top:8px;">淳中破位 · 今日核心任务是减仓，而非等待反转</div>
+</div>
+
+<script>
+// 交互式检查清单
+document.querySelectorAll('.checklist li').forEach((li, i) => {
+  li.style.cursor = 'pointer';
+  li.onclick = () => {
+    const cb = li.querySelector('.cb');
+    if (cb.classList.contains('done')) {
+      cb.classList.remove('done');
+      cb.textContent = '';
+    } else {
+      cb.classList.add('done');
+      cb.textContent = '✓';
+    }
+  };
+});
+</script>
+</body>
+</html>
