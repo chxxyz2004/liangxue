@@ -97,12 +97,78 @@ a { text-decoration: none; color: inherit; }
   margin-top: 1px;
 }
 
+/* ===== 讲义阅读栏 ===== */
+.reader-bar {
+  position: fixed;
+  top: 58px;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  background: rgba(21,27,35,0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: none;
+  align-items: center;
+  gap: 12px;
+}
+.reader-bar.active { display: flex; }
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(245,166,35,0.3);
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 40px;
+}
+.back-btn:active { opacity: 0.7; }
+.reader-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* ===== 主内容区 ===== */
 .main-content {
   height: calc(100vh - 58px - 64px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 20px;
+}
+.main-content.reader-mode {
+  height: calc(100vh - 58px - 44px);
+  top: 44px;
+}
+
+/* ===== iframe阅读器 ===== */
+.reader-iframe {
+  position: fixed;
+  top: 102px;
+  left: 0;
+  right: 0;
+  bottom: 64px;
+  z-index: 100;
+  display: none;
+  background: var(--bg);
+}
+.reader-iframe.active {
+  display: block;
+}
+.reader-iframe iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
 }
 
 /* ===== 底部Tab导航 ===== */
@@ -493,24 +559,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--text-muted);
 }
 
-/* ===== 空状态 ===== */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  color: var(--text-muted);
-}
-.empty-state .icon {
-  font-size: 48px;
-  margin-bottom: 12px;
-  opacity: 0.5;
-}
-.empty-state .text {
-  font-size: 14px;
-}
-
 /* ===== 响应式 ===== */
 @media (max-width: 360px) {
   .hero-grid {
@@ -539,8 +587,22 @@ a { text-decoration: none; color: inherit; }
   </div>
 </div>
 
+<!-- 讲义阅读栏 -->
+<div class="reader-bar" id="readerBar">
+  <a class="back-btn" href="#" onclick="closeReader();return false;">
+    <span>←</span>
+    <span>返回</span>
+  </a>
+  <span class="reader-title" id="readerTitle">讲义标题</span>
+</div>
+
+<!-- 讲义iframe -->
+<div class="reader-iframe" id="readerIframe">
+  <iframe id="contentFrame" src="" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
+</div>
+
 <!-- 主内容区 -->
-<div class="main-content">
+<div class="main-content" id="mainContent">
 
   <!-- 首页 -->
   <div id="page-home" class="page active">
@@ -593,7 +655,7 @@ a { text-decoration: none; color: inherit; }
         </div>
         <div class="card-desc">点击切换到课程页面</div>
       </a>
-      <a class="lesson-card" href="./开盘预案-2026-08-27.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./开盘预案-2026-08-27.html', '8/27 开盘预案');return false;">
         <div class="card-head">
           <div class="card-icon plan">📋</div>
           <div class="card-meta">
@@ -605,7 +667,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">点击查看今日操作预案</div>
         <span class="card-status new">今日</span>
       </a>
-      <a class="lesson-card" href="./复盘-2026-08-26.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./复盘-2026-08-26.html', '8/26 收盘复盘');return false;">
         <div class="card-head">
           <div class="card-icon review">📝</div>
           <div class="card-meta">
@@ -626,19 +688,19 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">10课</span>
     </div>
     <div class="sub-nav">
-      <a class="sub-nav-item" href="./第10课-大盘环境判断与仓位联动.html" target="_blank"><span class="dot"></span>第10课</a>
-      <a class="sub-nav-item" href="./第09课-新手常见错误与交易心理.html" target="_blank"><span class="dot"></span>第09课</a>
-      <a class="sub-nav-item" href="./第08课-十二字令与量波入门.html" target="_blank"><span class="dot"></span>第08课</a>
-      <a class="sub-nav-item" href="./第07课-黄金柱与高量柱.html" target="_blank"><span class="dot"></span>第07课</a>
-      <a class="sub-nav-item" href="./第06课-量线与生死线-如何确定关键位.html" target="_blank"><span class="dot"></span>第06课</a>
-      <a class="sub-nav-item" href="./第05课-左证明右确认.html" target="_blank"><span class="dot"></span>第05课</a>
-      <a class="sub-nav-item" href="./第04课-位置决定性质.html" target="_blank"><span class="dot"></span>第04课</a>
-      <a class="sub-nav-item" href="./第03课-量价关系四维度.html" target="_blank"><span class="dot"></span>第03课</a>
-      <a class="sub-nav-item" href="./第02课-量柱七形态.html" target="_blank"><span class="dot"></span>第02课</a>
-      <a class="sub-nav-item" href="./第01课-三先规律.html" target="_blank"><span class="dot"></span>第01课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第10课-大盘环境判断与仓位联动.html', '第10课');return false;"><span class="dot"></span>第10课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第09课-新手常见错误与交易心理.html', '第09课');return false;"><span class="dot"></span>第09课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第08课-十二字令与量波入门.html', '第08课');return false;"><span class="dot"></span>第08课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第07课-黄金柱与高量柱.html', '第07课');return false;"><span class="dot"></span>第07课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第06课-量线与生死线-如何确定关键位.html', '第06课');return false;"><span class="dot"></span>第06课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第05课-左证明右确认.html', '第05课');return false;"><span class="dot"></span>第05课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第04课-位置决定性质.html', '第04课');return false;"><span class="dot"></span>第04课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第03课-量价关系四维度.html', '第03课');return false;"><span class="dot"></span>第03课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第02课-量柱七形态.html', '第02课');return false;"><span class="dot"></span>第02课</a>
+      <a class="sub-nav-item" href="#" onclick="openReader('./第01课-三先规律.html', '第01课');return false;"><span class="dot"></span>第01课</a>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./第10课-大盘环境判断与仓位联动.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第10课-大盘环境判断与仓位联动.html', '第10课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">10</div>
           <div class="card-meta">
@@ -650,7 +712,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">强市6-8成/震荡2-4成/弱市空仓 · 开盘45分钟定势</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第09课-新手常见错误与交易心理.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第09课-新手常见错误与交易心理.html', '第09课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">09</div>
           <div class="card-meta">
@@ -662,7 +724,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">太急/太贪/太迷信图形 · 现代升级=把心态变纪律清单</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第08课-十二字令与量波入门.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第08课-十二字令与量波入门.html', '第08课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">08</div>
           <div class="card-meta">
@@ -674,7 +736,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">传统=阳胜进阴胜出小倍阳大胆入 · 现代升级四条件</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第07课-黄金柱与高量柱.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第07课-黄金柱与高量柱.html', '第07课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">07</div>
           <div class="card-meta">
@@ -686,7 +748,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">传统定义=将军柱+3日缩量不破实底 · 现代三步判定法</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第06课-量线与生死线-如何确定关键位.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第06课-量线与生死线-如何确定关键位.html', '第06课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">06</div>
           <div class="card-meta">
@@ -698,7 +760,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">四把尺子定线（箱体/高量柱/均线/缺口整数）· 三条铁律</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第05课-左证明右确认.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第05课-左证明右确认.html', '第05课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">05</div>
           <div class="card-meta">
@@ -710,7 +772,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">左是猜想、右是确认 · 放量+突破+方向对 · 工业富联案例</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第04课-位置决定性质.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第04课-位置决定性质.html', '第04课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">04</div>
           <div class="card-meta">
@@ -722,7 +784,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">高位≥70%/腰部40-70%/低位<40% · 位置是动态值非固定</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第03课-量价关系四维度.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第03课-量价关系四维度.html', '第03课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">03</div>
           <div class="card-meta">
@@ -734,7 +796,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">四维交叉验证 · 用8股实战教学 · 避免单一信号误导</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第02课-量柱七形态.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第02课-量柱七形态.html', '第02课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">02</div>
           <div class="card-meta">
@@ -746,7 +808,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">高低平倍梯缩+黄金柱 · 六大形态详解 · 8股逐日案例</div>
         <span class="card-status done">已完结</span>
       </a>
-      <a class="lesson-card" href="./第01课-三先规律.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./第01课-三先规律.html', '第01课');return false;">
         <div class="card-head">
           <div class="card-icon lesson">01</div>
           <div class="card-meta">
@@ -765,7 +827,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">1课</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./强化课-左证明右确认量化与生死线画法.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./强化课-左证明右确认量化与生死线画法.html', '强化课');return false;">
         <div class="card-head">
           <div class="card-icon extra">强</div>
           <div class="card-meta">
@@ -784,7 +846,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">1课</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./方法课-复盘三窗口.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./方法课-复盘三窗口.html', '方法课');return false;">
         <div class="card-head">
           <div class="card-icon method">方</div>
           <div class="card-meta">
@@ -803,7 +865,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">1篇</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./专题-淳中8-21假右确认拆解.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./专题-淳中8-21假右确认拆解.html', '专题分析');return false;">
         <div class="card-head">
           <div class="card-icon topic">专</div>
           <div class="card-meta">
@@ -822,7 +884,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">1份</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./资料-量学出处与当代权威理论对照表.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./资料-量学出处与当代权威理论对照表.html', '参考资料');return false;">
         <div class="card-head">
           <div class="card-icon extra">资</div>
           <div class="card-meta">
@@ -841,7 +903,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">3份</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./作业-第04课.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./作业-第04课.html', '第4课作业');return false;">
         <div class="card-head">
           <div class="card-icon homework">✅</div>
           <div class="card-meta">
@@ -853,7 +915,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">6道题 · 全部基于250日核验数据 · 已批改</div>
         <span class="card-status done">已批改</span>
       </a>
-      <a class="lesson-card" href="./测验-第01-03课综合复习.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./测验-第01-03课综合复习.html', '综合测验');return false;">
         <div class="card-head">
           <div class="card-icon homework">✅</div>
           <div class="card-meta">
@@ -865,7 +927,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">10道题 · 巩固用 · 已批改</div>
         <span class="card-status done">已批改</span>
       </a>
-      <a class="lesson-card" href="./作业-第03课.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./作业-第03课.html', '第3课作业');return false;">
         <div class="card-head">
           <div class="card-icon homework">✅</div>
           <div class="card-meta">
@@ -881,7 +943,7 @@ a { text-decoration: none; color: inherit; }
 
     <div class="footer">
       <div class="footer-text">现代量学实战体系 · 讲义仅供个人学习使用<br>不构成任何投资建议 · 股市有风险，入市需谨慎</div>
-      <div class="footer-version">v2026-08-27-22 · 底部Tab导航版</div>
+      <div class="footer-version">v2026-08-27-23 · 内嵌阅读版</div>
     </div>
   </div>
 
@@ -892,7 +954,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">1份</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./开盘预案-2026-08-27.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./开盘预案-2026-08-27.html', '8/27 开盘预案');return false;">
         <div class="card-head">
           <div class="card-icon plan">📋</div>
           <div class="card-meta">
@@ -919,7 +981,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-count">3份</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./复盘-2026-08-26.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./复盘-2026-08-26.html', '8/26 收盘复盘');return false;">
         <div class="card-head">
           <div class="card-icon review">📝</div>
           <div class="card-meta">
@@ -931,7 +993,7 @@ a { text-decoration: none; color: inherit; }
         <div class="card-desc">淳中量比2.03跌破92.6生死线，建议止损离场</div>
         <span class="card-status new">最新</span>
       </a>
-      <a class="lesson-card" href="./复盘-2026-08-25.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./复盘-2026-08-25.html', '8/25 收盘复盘');return false;">
         <div class="card-head">
           <div class="card-icon review">📝</div>
           <div class="card-meta">
@@ -942,7 +1004,7 @@ a { text-decoration: none; color: inherit; }
         </div>
         <div class="card-desc">富联缩量企稳 / 淳中高位震荡</div>
       </a>
-      <a class="lesson-card" href="./复盘-2026-08-24.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./复盘-2026-08-24.html', '8/24 收盘复盘');return false;">
         <div class="card-head">
           <div class="card-icon review">📝</div>
           <div class="card-meta">
@@ -967,7 +1029,7 @@ a { text-decoration: none; color: inherit; }
       <span class="section-title">参考资料</span>
     </div>
     <div class="card-list">
-      <a class="lesson-card" href="./资料-量学出处与当代权威理论对照表.html" target="_blank">
+      <a class="lesson-card" href="#" onclick="openReader('./资料-量学出处与当代权威理论对照表.html', '参考资料');return false;">
         <div class="card-head">
           <div class="card-icon extra">📖</div>
           <div class="card-meta">
@@ -1031,19 +1093,57 @@ a { text-decoration: none; color: inherit; }
 </div>
 
 <script>
+// 切换Tab
 function switchTab(name) {
+  // 关闭阅读器
+  closeReader();
+  
   // 隐藏所有页面
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   // 显示目标页面
   const target = document.getElementById('page-' + name);
   if (target) {
     target.classList.add('active');
-    // 滚动到顶部
     document.querySelector('.main-content').scrollTop = 0;
   }
   // 更新Tab状态
   document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
   event.target.closest('.tab-item').classList.add('active');
+}
+
+// 打开讲义阅读器
+function openReader(url, title) {
+  const readerBar = document.getElementById('readerBar');
+  const readerIframe = document.getElementById('readerIframe');
+  const contentFrame = document.getElementById('contentFrame');
+  const mainContent = document.getElementById('mainContent');
+  
+  // 设置标题
+  document.getElementById('readerTitle').textContent = title;
+  
+  // 显示阅读器
+  readerBar.classList.add('active');
+  readerIframe.classList.add('active');
+  mainContent.classList.add('reader-mode');
+  
+  // 加载内容
+  contentFrame.src = url;
+}
+
+// 关闭讲义阅读器
+function closeReader() {
+  const readerBar = document.getElementById('readerBar');
+  const readerIframe = document.getElementById('readerIframe');
+  const contentFrame = document.getElementById('contentFrame');
+  const mainContent = document.getElementById('mainContent');
+  
+  // 隐藏阅读器
+  readerBar.classList.remove('active');
+  readerIframe.classList.remove('active');
+  mainContent.classList.remove('reader-mode');
+  
+  // 清空iframe
+  contentFrame.src = '';
 }
 </script>
 
