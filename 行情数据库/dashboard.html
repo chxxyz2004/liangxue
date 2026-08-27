@@ -768,7 +768,7 @@ function loadSignals() {
 // 加载对倒检测
 async function loadSpoofing() {
     try {
-        const resp = await fetch('/api/s spoofing');
+        const resp = await fetch('/api/spoofing');
         const data = await resp.json();
         
         const container = document.getElementById('spoofingGrid');

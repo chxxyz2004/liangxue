@@ -54,6 +54,8 @@ class Handler(BaseHTTPRequestHandler):
             self._json(self._signals())
         elif path == '/api/backtest':
             self._json(self._backtest())
+        elif path == '/api/spoofing':
+            self._json(self._spoofing())
         elif path == '/api/config':
             self._json({'version': '2.0', 'holdings': {k: {'name': v['name']} for k, v in HOLDINGS.items()}})
         else:
@@ -138,6 +140,9 @@ class Handler(BaseHTTPRequestHandler):
                 'sh603516': {'name': '淳中科技', 'signals': 14, 'wins': 10, 'losses': 4, 'win_rate': 0.714, 'avg_return': 0.022},
             }
         }
+    
+    def _spoofing(self):
+        return {'results': {sym: {'name': info['name'], 'count': 0, 'severity': '轻微', 'summary': '无异常'} for sym, info in HOLDINGS.items()}}
 
 if __name__ == '__main__':
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8086
