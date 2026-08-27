@@ -58,6 +58,8 @@ class Handler(BaseHTTPRequestHandler):
             self._json(self._spoofing())
         elif path == '/api/config':
             self._json({'version': '2.0', 'holdings': {k: {'name': v['name']} for k, v in HOLDINGS.items()}})
+        elif path == '/api/health':
+            self._json({'status': 'ok', 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
         else:
             # 静态文件
             self._static(path)
