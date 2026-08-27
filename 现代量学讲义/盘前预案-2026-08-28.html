@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>量学盘前预案 2026-08-28</title>
+<style>
+:root { --bg:#0a0e14; --surface:#151b23; --surface2:#1e2530; --border:#2a3441; --text:#e8edf4; --text-dim:#8899a6; --red:#ff4757; --red-dim:rgba(255,71,87,0.12); --green:#2ed573; --green-dim:rgba(46,213,115,0.12); --orange:#e67e22; --orange-dim:rgba(230,126,34,0.12); }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,"PingFang SC",sans-serif; background:var(--bg); color:var(--text); font-size:14px; line-height:1.6; padding:16px; }
+.up { color:var(--red); } .down { color:var(--green); }
+h1 { font-size:20px; font-weight:700; margin-bottom:8px; }
+h2 { font-size:16px; font-weight:600; margin:20px 0 12px; color:var(--text-dim); }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:16px; }
+table { width:100%; border-collapse:collapse; }
+th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border); }
+th { font-size:11px; color:var(--text-dim); text-transform:uppercase; }
+.num { text-align:right; font-variant-numeric:tabular-nums; }
+.signal-tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; margin-right:4px; background:var(--green-dim); color:var(--green); }
+.alert { background:var(--orange-dim); border-left:3px solid var(--orange); padding:12px; border-radius:0 8px 8px 0; margin:8px 0; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.stat-box { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
+.stat-box .value { font-size:24px; font-weight:700; }
+.stat-box .label { font-size:11px; color:var(--text-dim); margin-top:4px; }
+@media(max-width:600px){ .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<h1>量学盘前预案 2026-08-28</h1>
+<p style="color:var(--text-dim);margin-bottom:20px;">盘前预案 · 数据时间: 00:01</p>
+<div class="grid">
+  <div class="stat-box"><div class="value up">+17,279</div><div class="label">总盈亏</div></div>
+  <div class="stat-box"><div class="value">107,894</div><div class="label">持仓市值</div></div>
+  <div class="stat-box"><div class="value up">+19.07%</div><div class="label">收益率</div></div>
+</div>
+<h2>持仓明细</h2>
+<div class="card"><table>
+<thead><tr><th>股票</th><th class="num">现价</th><th class="num">涨跌%</th><th class="num">成本</th><th class="num">盈亏%</th><th>信号</th></tr></thead>
+<tbody><tr>
+<td><strong>淳中科技</strong><br><span style="color:var(--text-dim);font-size:11px">sh603516</span></td>
+<td class="num up">93.60</td>
+<td class="num up">+4.14%</td>
+<td class="num">41.02</td>
+<td class="num up">+128.16%</td>
+<td>-</td>
+</tr><tr>
+<td><strong>工业富联</strong><br><span style="color:var(--text-dim);font-size:11px">sh601138</span></td>
+<td class="num up">63.86</td>
+<td class="num up">+5.43%</td>
+<td class="num">57.35</td>
+<td class="num up">+11.36%</td>
+<td><span class="signal-tag">倍量柱</span></td>
+</tr><tr>
+<td><strong>通富微电</strong><br><span style="color:var(--text-dim);font-size:11px">sz002156</span></td>
+<td class="num up">63.73</td>
+<td class="num up">+4.05%</td>
+<td class="num">64.26</td>
+<td class="num down">-0.82%</td>
+<td>-</td>
+</tr><tr>
+<td><strong>环旭电子</strong><br><span style="color:var(--text-dim);font-size:11px">sh601231</span></td>
+<td class="num up">27.55</td>
+<td class="num up">+3.18%</td>
+<td class="num">45.06</td>
+<td class="num down">-38.86%</td>
+<td>-</td>
+</tr><tr>
+<td><strong>胜宏科技</strong><br><span style="color:var(--text-dim);font-size:11px">sz300476</span></td>
+<td class="num up">263.05</td>
+<td class="num up">+5.46%</td>
+<td class="num">249.58</td>
+<td class="num up">+5.40%</td>
+<td>-</td>
+</tr><tr>
+<td><strong>赛腾股份</strong><br><span style="color:var(--text-dim);font-size:11px">sh603283</span></td>
+<td class="num up">48.48</td>
+<td class="num up">+4.98%</td>
+<td class="num">46.19</td>
+<td class="num up">+4.97%</td>
+<td>-</td>
+</tr></tbody>
+</table></div>
+<h2>关键位提醒</h2>
+<div class="card"><div class="alert">🟢 淳中科技 止损线 90.63 (距现价3.2%)</div><div class="alert">🔴 胜宏科技 进入止盈区间 256-260</div></div>
+</body></html>

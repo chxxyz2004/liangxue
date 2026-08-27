@@ -9,14 +9,8 @@ from datetime import datetime
 sys.path.insert(0, '/workspace/行情数据库')
 sys.path.insert(0, '/workspace/现代量学讲义')
 
-HOLDINGS = {
-    'sh603516': {'name': '淳中科技', 'cost': 98.50, 'shares': 900, 'stop_loss': 90.63, 'life_line': 93},
-    'sh601138': {'name': '工业富联', 'cost': 58.20, 'shares': 1100},
-    'sz002156': {'name': '通富微电', 'cost': 45.80, 'shares': 700},
-    'sh601231': {'name': '环旭电子', 'cost': 28.50, 'shares': 800},
-    'sz300476': {'name': '胜宏科技', 'cost': 230.00, 'shares': 100, 'take_profit': (256, 260)},
-    'sh603283': {'name': '赛腾股份', 'cost': 52.30, 'shares': 400},
-}
+# 引用统一配置中心，禁止硬编码
+from config import HOLDINGS
 
 LATEST_FILES = {
     '预案': None,
@@ -99,42 +93,42 @@ def generate_report_content(report_type, timestamp):
         if not price_data:
             continue
         
-        profit = (price_data['price'] - info['cost']) * info['shares']
-        value = price_data['price'] * info['shares']
-        
+        profit = (price_data['price'] - info.cost) * info.shares
+        value = price_data['price'] * info.shares
+
         total_profit += profit
         total_value += value
-        total_cost += info['cost'] * info['shares']
-        
+        total_cost += info.cost * info.shares
+
         signals = []
         if price_data['vol_ratio'] >= 1.9 and price_data['price'] > data['data'][-1]['open']:
             signals.append('倍量柱')
         if price_data['vol_ratio'] <= 0.5 and price_data['price'] > data['data'][-1]['open']:
             signals.append('缩量柱')
-        
+
         # 止损检查
-        if info.get('stop_loss') and price_data['price'] < info['stop_loss']:
-            alerts.append(f"🔴 {info['name']} 破止损线 {info['stop_loss']}")
-        elif info.get('stop_loss'):
-            dist = (price_data['price'] - info['stop_loss']) / price_data['price'] * 100
-            alerts.append(f"🟢 {info['name']} 止损线 {info['stop_loss']} (距现价{dist:.1f}%)")
-        
+        if info.stop_loss and price_data['price'] < info.stop_loss:
+            alerts.append(f"🔴 {info.name} 破止损线 {info.stop_loss}")
+        elif info.stop_loss:
+            dist = (price_data['price'] - info.stop_loss) / price_data['price'] * 100
+            alerts.append(f"🟢 {info.name} 止损线 {info.stop_loss} (距现价{dist:.1f}%)")
+
         # 止盈检查
-        if info.get('take_profit'):
-            tp_low, tp_high = info['take_profit']
+        if info.take_profit:
+            tp_low, tp_high = info.take_profit
             if price_data['price'] >= tp_low:
-                alerts.append(f"🔴 {info['name']} 进入止盈区间 {tp_low}-{tp_high}")
-        
+                alerts.append(f"🔴 {info.name} 进入止盈区间 {tp_low}-{tp_high}")
+
         stocks.append({
-            'name': info['name'],
+            'name': info.name,
             'sym': sym,
             'price': price_data['price'],
             'change': price_data['change'],
-            'cost': info['cost'],
-            'profit_pct': (price_data['price'] - info['cost']) / info['cost'] * 100,
+            'cost': info.cost,
+            'profit_pct': (price_data['price'] - info.cost) / info.cost * 100,
             'profit': profit,
             'signals': signals,
-            'shares': info['shares']
+            'shares': info.shares
         })
     
     return {
