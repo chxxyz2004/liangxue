@@ -191,4 +191,4 @@ def main():
     return total_signals
 
 if __name__ == '__main__':
-    sys.exit(main())
+    main()

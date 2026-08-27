@@ -78,7 +78,7 @@ class Handler(BaseHTTPRequestHandler):
         file_path = os.path.join(STATIC_DIR, path.lstrip('/'))
         if os.path.exists(file_path) and os.path.isfile(file_path):
             ext = os.path.splitext(file_path)[1]
-            ct = {'html': 'text/html', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json'}.get(ext, 'application/octet-stream')
+            ct = {'html': 'text/html; charset=utf-8', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json'}.get(ext, 'application/octet-stream')
             with open(file_path, 'rb') as f:
                 body = f.read()
             self.send_response(200)
