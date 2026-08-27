@@ -1160,48 +1160,47 @@ a { text-decoration: none; color: inherit; }
 
 <!-- 底部Tab导航 -->
 <div class="tab-bar">
-  <a class="tab-item active" href="#" onclick="switchTab('home', this);return false;">
+  <a class="tab-item active" href="#" data-tab="home">
     <span class="icon">🏠</span>
     <span class="label">首页</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('courses', this);return false;">
+  <a class="tab-item" href="#" data-tab="courses">
     <span class="icon">📚</span>
     <span class="label">课程</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('plans', this);return false;">
+  <a class="tab-item" href="#" data-tab="plans">
     <span class="icon">📋</span>
     <span class="label">预案</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('reviews', this);return false;">
+  <a class="tab-item" href="#" data-tab="reviews">
     <span class="icon">📝</span>
     <span class="label">复盘</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('data', this);return false;">
+  <a class="tab-item" href="#" data-tab="data">
     <span class="icon">📖</span>
     <span class="label">资料</span>
   </a>
 </div>
 
 <script>
-// 切换Tab
-function switchTab(name, el) {
-  // 关闭阅读器
-  closeReader();
+// Tab切换（使用事件委托，避免inline onclick问题）
+document.addEventListener('DOMContentLoaded', function() {
+  var tabBar = document.querySelector('.tab-bar');
+  if (!tabBar) return;
+  
+  tabBar.addEventListener('click', function(e) {
+    var tab = e.target.closest('[data-tab]');
+    if (!tab) return;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var tabName = tab.getAttribute('data-tab');
+    switchTab(tabName);
+  });
+});
+</script>
 
-  // 隐藏所有页面
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  // 显示目标页面
-  const target = document.getElementById('page-' + name);
-  if (target) {
-    target.classList.add('active');
-    document.querySelector('.main-content').scrollTop = 0;
-  }
-  // 更新Tab状态
-  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-  if (el) {
-    el.classList.add('active');
-  }
-}
+</body>
 
 // 打开讲义阅读器
 function openReader(url, title) {
