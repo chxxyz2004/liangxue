@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  liangxue:
+    build: .
+    container_name: liangxue-dashboard
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    volumes:
+      # 挂载数据目录，避免容器重建后数据丢失
+      - ./kline:/workspace/行情数据库/kline
+      - ./kline_5min:/workspace/行情数据库/kline_5min
+      - ./meta.json:/workspace/行情数据库/meta.json:ro
+    environment:
+      - TZ=Asia/Shanghai
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
