@@ -146,37 +146,6 @@ const HOLDING_COST = {
   'sh601138': 61.03, 'sz300476': 249.58, 'sh603220': 39.46, 'sh603057': 14.75,
 };
 
-async function analyzeStock() {
-  const input = document.getElementById('stockInput').value.trim();
-  if (!input) return;
-
-  // 解析股票代码
-  const info = resolveStock(input);
-  if (!info) {
-    showError('未找到该股票，请输入正确的股票代码或名称\n（如：淳中、603516、胜宏）');
-    return;
-  }
-
-  showLoading();
-
-  try {
-    // 并行拉取实时行情和历史数据
-    const [realtime, history] = await Promise.all([
-      fetchRealtime(info.code),
-      fetchHistory(info.code),
-    ]);
-
-    if (!realtime) {
-      showError('实时行情获取失败，请稍后重试');
-      return;
-    }
-
-    renderReport(info, realtime, history);
-  } catch (e) {
-    showError('获取数据失败: ' + e.message);
-  }
-}
-
 function resolveStock(input) {
   // 精确匹配
   if (STOCK_MAP[input]) return STOCK_MAP[input];
@@ -184,14 +153,130 @@ function resolveStock(input) {
   for (const [k, v] of Object.entries(STOCK_MAP)) {
     if (k.includes(input) || v.name.includes(input)) return v;
   }
-  // 数字匹配（代码）
+  // 数字匹配（代码）→ 直接生成code，让API返回真实名字
   const num = input.replace(/\D/g, '');
   if (num.length === 6) {
     const prefix = num.startsWith('6') ? 'sh' : 'sz';
-    const key = prefix + num;
-    if (STOCK_MAP[key]) return STOCK_MAP[key];
+    return { code: prefix + num, name: null };
   }
-  return null;
+  // 纯文本未匹配 → 尝试用腾讯证券API解析名称
+  return { code: null, name: input, isSearch: true };
+}
+
+async function analyzeStock() {
+  const input = document.getElementById('stockInput').value.trim();
+  if (!input) return;
+
+  const resolved = resolveStock(input);
+
+  showLoading();
+
+  try {
+    let info, realtime, history;
+
+    if (resolved.isSearch) {
+      // 文本搜索：用腾讯股票搜索接口
+      info = await searchStockByName(resolved.name);
+      if (!info) {
+        showError('未找到"' + resolved.name + '"，请输入6位代码（如 603256）或简写名称');
+        return;
+      }
+    } else {
+      info = resolved;
+    }
+
+    if (!info.code) {
+      showError('无法解析该股票，请检查输入后重试');
+      return;
+    }
+
+    // 并行拉取实时行情和历史数据
+    const [realtime, history] = await Promise.all([
+      fetchRealtime(info.code),
+      fetchHistory(info.code),
+    ]);
+
+    if (!realtime) {
+      showError('行情获取失败，请检查股票代码是否正确（如 603516、300476）');
+      return;
+    }
+
+    // 用API返回的真实名字覆盖
+    if (!info.name) info.name = realtime.name;
+
+    renderReport(info, realtime, history);
+  } catch (e) {
+    showError('获取数据失败: ' + e.message);
+  }
+}
+
+async function searchStockByName(query) {
+  try {
+    // 使用腾讯股票搜索
+    const resp = await fetch('https://smartbox.gtimg.cn/s3/?q=' + encodeURIComponent(query) + '&t=all');
+    const text = await resp.text();
+    // 格式：var s3="sh603516|淳中科技~sz300476|胜宏科技~"
+    const match = text.match(/var s3="([^"]+)"/);
+    if (!match) return null;
+    const entries = match[1].split('~');
+    for (const entry of entries) {
+      const parts = entry.split('|');
+      if (parts.length >= 2 && parts[1].includes(query)) {
+        return { code: parts[0], name: parts[1] };
+      }
+    }
+    // 没精确匹配，返回第一个
+    if (entries.length > 0) {
+      const parts = entries[0].split('|');
+      if (parts.length >= 2) return { code: parts[0], name: parts[1] };
+    }
+    return null;
+  } catch (e) {
+    console.error('搜索失败:', e);
+    return null;
+  }
+}
+    } else {
+      info = resolved;
+    }
+
+    // 并行拉取实时行情和历史数据
+    const [realtime, history] = await Promise.all([
+      fetchRealtime(info.code),
+      fetchHistory(info.code),
+    ]);
+
+    if (!realtime) {
+      showError('行情获取失败，请检查股票代码是否正确');
+      return;
+    }
+
+    // 用API返回的真实名字覆盖
+    if (!info.name) info.name = realtime.name;
+
+    renderReport(info, realtime, history);
+  } catch (e) {
+    showError('获取数据失败: ' + e.message);
+  }
+}
+
+async function searchStockName(query) {
+  try {
+    const url = 'https://suggest3.sinajs.cn/suggest/type=11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99&key=' + encodeURIComponent(query);
+    const resp = await fetch(url);
+    const text = await resp.text();
+    // 格式：s_sh603516="1~淳中科技~603516~..."
+    const match = text.match(/"([^"]+)"/);
+    if (!match) return null;
+    const fields = match[1].split('~');
+    if (fields.length < 3) return null;
+    const code = fields[0]; // s_sh603516
+    const cleanCode = code.replace(/^s_/, '');
+    return { code: cleanCode, name: fields[1] || fields[2] };
+  } catch (e) {
+    console.error('搜索失败:', e);
+    return null;
+  }
 }
 
 function showLoading() {
