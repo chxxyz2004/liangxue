@@ -275,6 +275,22 @@ Entries discovered by the Agent during task execution should follow this format:
   - 修复后：所有7个Python脚本均通过未来函数检查
   - 系统评分：90分 → 92分
 
+[User Instruction Summary]
+- Date: 2026-08-27
+- Context: 用户要求按时间段自动生成对应类型报告，并实时更新8000端口导航
+- Instructions:
+  - 时间段与报告类型对应关系：
+    * 9:25前 → "开盘"=生成盘前预案
+    * 9:25-9:30 → "开盘"=拉集合竞价数据+盘前预案
+    * 9:30-11:30, 13:00-15:00 → "盯盘"=生成盯盘清单
+    * 11:30-13:00 → "午盘"=生成午盘研判
+    * 15:00后 → "复盘"=生成复盘日报
+  - 报告生成后自动更新index.html导航（快速操作行+复盘列表）
+  - 每个报告头部注明"数据截止时间"（如：15:46）
+  - 脚本位置：/workspace/现代量学讲义/generate_report.py
+  - 8000端口预览：https://8000-202312279de3cd0a.monkeycode-ai.online
+  - 8086端口Web工作台：https://8086-202312279de3cd0a.monkeycode-ai.online
+
 [Project Knowledge Summary]
 - Date: 2026-08-27
 - Context: 系统自我迭代升级，新增回测框架、模拟交易、多数据源和Web工作台
