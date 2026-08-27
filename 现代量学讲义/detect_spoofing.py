@@ -140,14 +140,13 @@ def detect(bars, name):
             if body > 0 and upper_shadow / body >= THRESHOLDS['upper_shadow_ratio'] and pct_chg > 0:
                 signals.append(f'{ts} 🔴长上影 上影{upper_shadow:.2f}/实体{body:.2f}={upper_shadow/body:.1f}x')
             
-            # 规则3：脉冲-回落
-            if i > 1 and i < len(bars) - 2 and pct_chg >= THRESHOLDS['pct_pulse_min']:
-                n1c = float(bars[i + 1]['close'])
-                n2c = float(bars[i + 2]['close'])
-                lowest = min(n1c, n2c)
-                retrace = (c - lowest) / c * 100 if c > 0 else 0
-                if retrace >= THRESHOLDS['pct_drop_retrace']:
-                    signals.append(f'{ts} 💥脉冲回落 涨{pct_chg:.1f}% 回吐{retrace:.0f}%')
+            # 规则3：脉冲-回落（使用当前K线high/low，避免未来函数）
+            if pct_chg >= THRESHOLDS['pct_pulse_min'] and total_range > 0:
+                # 计算从最高点到收盘的回撤幅度
+                retrace_from_high = (h - c) / h * 100 if h > 0 else 0
+                # 只报告涨幅且回撤明显的情况
+                if retrace_from_high >= THRESHOLDS['pct_drop_retrace']:
+                    signals.append(f'{ts} 💥脉冲回落 涨{pct_chg:.1f}% 冲高回落{retrace_from_high:.0f}%')
                     
         except (ValueError, KeyError, IndexError) as e:
             logger.warning(f'{name}: 数据解析异常 - {e}')
