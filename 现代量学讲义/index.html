@@ -1200,7 +1200,35 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-</body>
+// 切换Tab
+function switchTab(name) {
+  // 关闭阅读器
+  closeReader();
+
+  // 隐藏所有页面
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
+  });
+
+  // 显示目标页面
+  var target = document.getElementById('page-' + name);
+  if (target) {
+    target.classList.add('active');
+    var mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.scrollTop = 0;
+    }
+  }
+
+  // 更新Tab状态
+  document.querySelectorAll('.tab-item').forEach(function(t) {
+    t.classList.remove('active');
+  });
+  var activeTab = document.querySelector('[data-tab="' + name + '"]');
+  if (activeTab) {
+    activeTab.classList.add('active');
+  }
+}
 
 // 打开讲义阅读器
 function openReader(url, title) {
