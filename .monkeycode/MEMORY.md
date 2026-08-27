@@ -234,13 +234,15 @@ Entries discovered by the Agent during task execution should follow this format:
 - Context: 配置量化系统自动化调度
 - Category: Build Methods
 - Instructions:
-  - crontab已配置两个定时任务：
-    1. 每日11:30（交易日）运行 auto_noon.sh 入库5分钟K线
-    2. 每日15:30（交易日）运行 auto_update.sh 更新日K+5分钟+对倒检测
-  - 脚本位置：/workspace/行情数据库/auto_update.sh, auto_noon.sh, auto_review.sh
-  - 日志位置：/tmp/liangxue_update.log, /tmp/liangxue_noon.log, /tmp/liangxue_cron.log
-  - 手动触发：收盘后可运行 /workspace/行情数据库/auto_update.sh 立即更新
-  - 检查cron状态：crontab -l 查看任务，service cron status 查看服务
+  - crontab已配置定时任务：
+    1. 每日9:25（交易日）运行 auto_report.sh → 自动生成开盘预案
+    2. 每日11:30（交易日）运行 auto_report.sh → 自动生成午盘研判
+    3. 每日15:00（交易日）运行 auto_report.sh → 自动生成复盘日报
+    4. 每日15:30（交易日）运行 auto_update.sh → 更新日K+5分钟+对倒检测
+  - 脚本位置：/workspace/行情数据库/auto_report.sh, auto_update.sh, auto_noon.sh, auto_review.sh
+  - 日志位置：/tmp/liangxue_report.log, /tmp/liangxue_update.log, /tmp/liangxue_noon.log, /tmp/liangxue_cron.log
+  - 手动触发：运行 /workspace/行情数据库/auto_report.sh
+  - 报告生成逻辑：根据当前时间自动判断类型（盘前/午盘/盯盘/复盘）
 
 [Project Knowledge Summary]
 - Date: 2026-08-27
