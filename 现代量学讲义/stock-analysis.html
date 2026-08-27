@@ -212,67 +212,25 @@ async function analyzeStock() {
 
 async function searchStockByName(query) {
   try {
-    // 使用腾讯股票搜索
+    // 优先尝试直接用数字搜索（如果query包含数字）
+    const nums = query.replace(/\D/g, '');
+    if (nums.length === 6) {
+      const prefix = nums.startsWith('6') ? 'sh' : 'sz';
+      return { code: prefix + nums, name: null };
+    }
+    // 用腾讯股票搜索接口
     const resp = await fetch('https://smartbox.gtimg.cn/s3/?q=' + encodeURIComponent(query) + '&t=all');
     const text = await resp.text();
-    // 格式：var s3="sh603516|淳中科技~sz300476|胜宏科技~"
-    const match = text.match(/var s3="([^"]+)"/);
-    if (!match) return null;
-    const entries = match[1].split('~');
-    for (const entry of entries) {
-      const parts = entry.split('|');
-      if (parts.length >= 2 && parts[1].includes(query)) {
-        return { code: parts[0], name: parts[1] };
-      }
-    }
-    // 没精确匹配，返回第一个
-    if (entries.length > 0) {
-      const parts = entries[0].split('|');
-      if (parts.length >= 2) return { code: parts[0], name: parts[1] };
-    }
-    return null;
-  } catch (e) {
-    console.error('搜索失败:', e);
-    return null;
-  }
-}
-    } else {
-      info = resolved;
-    }
-
-    // 并行拉取实时行情和历史数据
-    const [realtime, history] = await Promise.all([
-      fetchRealtime(info.code),
-      fetchHistory(info.code),
-    ]);
-
-    if (!realtime) {
-      showError('行情获取失败，请检查股票代码是否正确');
-      return;
-    }
-
-    // 用API返回的真实名字覆盖
-    if (!info.name) info.name = realtime.name;
-
-    renderReport(info, realtime, history);
-  } catch (e) {
-    showError('获取数据失败: ' + e.message);
-  }
-}
-
-async function searchStockName(query) {
-  try {
-    const url = 'https://suggest3.sinajs.cn/suggest/type=11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99&key=' + encodeURIComponent(query);
-    const resp = await fetch(url);
-    const text = await resp.text();
-    // 格式：s_sh603516="1~淳中科技~603516~..."
-    const match = text.match(/"([^"]+)"/);
-    if (!match) return null;
-    const fields = match[1].split('~');
-    if (fields.length < 3) return null;
-    const code = fields[0]; // s_sh603516
-    const cleanCode = code.replace(/^s_/, '');
-    return { code: cleanCode, name: fields[1] || fields[2] };
+    // 格式：v_hint="sh~603256~\u5b8f\u548c\u79d1\u6280~hhkj~GP-A"
+    const match = text.match(/v_hint="([^"]+)"/);
+    if (!match || match[1] === 'N') return null;
+    const parts = match[1].split('~');
+    if (parts.length < 3) return null;
+    const code = parts[0];
+    const rawName = parts[2];
+    // 解码可能的Unicode转义
+    const name = rawName.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+    return { code: code, name: name || null };
   } catch (e) {
     console.error('搜索失败:', e);
     return null;
@@ -290,9 +248,11 @@ function showError(msg) {
 async function fetchRealtime(code) {
   try {
     const resp = await fetch('https://qt.gtimg.cn/q=' + code);
-    const text = await resp.text();
+    const buffer = await resp.arrayBuffer();
+    // 腾讯API返回GBK编码，需手动解码
+    const text = new TextDecoder('gbk', {fatal: false}).decode(buffer);
     // 格式：v_sh603516="1~淳中科技~603516~91.20~90.50~..."
-    const match = text.match(/"([^"]+)"/);
+    const match = text.match(/v_[a-zA-Z0-9]+="([^"]+)"/);
     if (!match) return null;
     const fields = match[1].split('~');
     if (fields.length < 45) return null;
@@ -319,27 +279,17 @@ async function fetchRealtime(code) {
 
 async function fetchHistory(code, days = 60) {
   try {
-    const end = new Date();
-    const start = new Date();
-    start.setDate(end.getDate() - days);
-    const startDate = start.toISOString().slice(0, 10);
-    const endDate = end.toISOString().slice(0, 10);
-
-    const url = 'https://ifzq.gtimg.cn/appstock/app/forward/qfqkline/get?param=' + code + ',day,' + startDate + ',' + endDate + ',60,qfq';
+    const url = 'https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=' + code + '&scale=240&ma=no&datalen=' + days;
     const resp = await fetch(url);
     const json = await resp.json();
-    const data = json.data[code]?.klines || [];
-    return data.map(line => {
-      const parts = line.split(',');
-      return {
-        date: parts[0],
-        open: parseFloat(parts[1]),
-        close: parseFloat(parts[2]),
-        high: parseFloat(parts[3]),
-        low: parseFloat(parts[4]),
-        volume: parseFloat(parts[5]),
-      };
-    });
+    return json.map(d => ({
+      date: d.day,
+      open: parseFloat(d.open),
+      close: parseFloat(d.close),
+      high: parseFloat(d.high),
+      low: parseFloat(d.low),
+      volume: parseFloat(d.volume),
+    }));
   } catch (e) {
     console.error('历史数据失败:', e);
     return [];
