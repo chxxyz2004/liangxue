@@ -158,6 +158,16 @@ Entries discovered by the Agent during task execution should follow this format:
 
 [User Instruction Summary]
 - Date: 2026-08-27
+- Context: 用户要求盯盘/复盘/预案置顶，优化首页布局
+- Instructions:
+  - 首页顶部优先展示：盯盘清单（红色danger）、午盘研判（橙色warning）、开盘预案（蓝色info）、昨日复盘（灰色secondary），以横向滚动卡片形式排列
+  - 原有"快速入口"区域仅保留"查看所有讲义"和"原著精华"两个跳转卡片
+  - Hero区展示4只核心股实时价（淳中/胜宏/富联/环旭），每5秒刷新
+  - 持仓行情网格在快速操作行下方，8股同时展示
+  - 文件版本标记为 v2.5.3 盯盘置顶版
+
+[User Instruction Summary]
+- Date: 2026-08-27
 - Context: 用户确认盯盘流程，要求在每次执行盯盘任务时先校准时间再拉数据
 - Instructions:
   - 用户说"盯盘"时，第一步必须执行 `date` 校准当前时间，判断所处时段：开盘前（9:15前）、集合竞价（9:15-9:25）、上午盘中（9:30-11:30）、午间休盘（11:30-13:00）、下午盘中（13:00-15:00）、收盘后（15:00后）。
