@@ -1160,23 +1160,23 @@ a { text-decoration: none; color: inherit; }
 
 <!-- 底部Tab导航 -->
 <div class="tab-bar">
-  <a class="tab-item active" href="#" onclick="switchTab('home');return false;">
+  <a class="tab-item active" href="#" onclick="switchTab('home', this);return false;">
     <span class="icon">🏠</span>
     <span class="label">首页</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('courses');return false;">
+  <a class="tab-item" href="#" onclick="switchTab('courses', this);return false;">
     <span class="icon">📚</span>
     <span class="label">课程</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('plans');return false;">
+  <a class="tab-item" href="#" onclick="switchTab('plans', this);return false;">
     <span class="icon">📋</span>
     <span class="label">预案</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('reviews');return false;">
+  <a class="tab-item" href="#" onclick="switchTab('reviews', this);return false;">
     <span class="icon">📝</span>
     <span class="label">复盘</span>
   </a>
-  <a class="tab-item" href="#" onclick="switchTab('data');return false;">
+  <a class="tab-item" href="#" onclick="switchTab('data', this);return false;">
     <span class="icon">📖</span>
     <span class="label">资料</span>
   </a>
@@ -1184,10 +1184,10 @@ a { text-decoration: none; color: inherit; }
 
 <script>
 // 切换Tab
-function switchTab(name) {
+function switchTab(name, el) {
   // 关闭阅读器
   closeReader();
-  
+
   // 隐藏所有页面
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   // 显示目标页面
@@ -1198,7 +1198,9 @@ function switchTab(name) {
   }
   // 更新Tab状态
   document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-  event.target.closest('.tab-item').classList.add('active');
+  if (el) {
+    el.classList.add('active');
+  }
 }
 
 // 打开讲义阅读器
