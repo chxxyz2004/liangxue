@@ -33,7 +33,23 @@ THRESHOLDS = {
 
 
 def pull_5min(code, datalen=60):
-    """从新浪财经拉取5分钟K线"""
+    """优先从本地数据库读取，无则实时拉取"""
+    # 尝试本地数据
+    local_dir = '/workspace/行情数据库/kline_5min'
+    today = datetime.now().strftime('%Y-%m-%d')
+    local_file = os.path.join(local_dir, f'{code}_{today}.json')
+    
+    if os.path.exists(local_file):
+        try:
+            with open(local_file, 'r') as f:
+                data = json.load(f)
+            bars = data.get('bars', [])
+            if bars:
+                return bars[:datalen]
+        except:
+            pass
+    
+    # 本地无数据，实时拉取
     url = f'https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={code}&scale=5&ma=no&datalen={datalen}'
     try:
         data = urllib.request.urlopen(url, timeout=10).read().decode('gbk')
