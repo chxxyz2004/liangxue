@@ -20,24 +20,8 @@ sys.path.insert(0, '/workspace/现代量学讲义')
 from update_data import fetch_tencent_qfq, fetch_sina_kline
 from detect_spoofing import detect as detect_spoofing, pull_5min
 
-# 持仓股票配置
-HOLDINGS = {
-    'sh603516': {'name': '淳中科技', 'cost': 98.50, 'shares': 900, 'stop_loss': 90.63, 'life_line': 93},
-    'sh601138': {'name': '工业富联', 'cost': 58.20, 'shares': 1100, 'stop_loss': None},
-    'sz002156': {'name': '通富微电', 'cost': 45.80, 'shares': 700, 'stop_loss': None},
-    'sh601231': {'name': '环旭电子', 'cost': 28.50, 'shares': 800, 'stop_loss': None},
-    'sz300476': {'name': '胜宏科技', 'cost': 230.00, 'shares': 100, 'stop_loss': None, 'take_profit': (256, 260)},
-    'sz300394': {'name': '天孚通信', 'cost': 480.00, 'shares': 50, 'stop_loss': None},
-    'sh603220': {'name': '中贝通信', 'cost': 35.20, 'shares': 600, 'stop_loss': None},
-    'sh600629': {'name': '华建集团', 'cost': 18.50, 'shares': 1000, 'stop_loss': None},
-    'sh603283': {'name': '赛腾股份', 'cost': 52.30, 'shares': 400, 'stop_loss': None},
-}
-
-INDEXES = {
-    'sh000001': {'name': '上证指数'},
-    'sz399001': {'name': '深证成指'},
-    'sz399006': {'name': '创业板指'},
-}
+# 引用统一配置中心，禁止硬编码
+from config import HOLDINGS, WATCH_LIST, INDEXES
 
 # 缓存
 _cache = {
@@ -76,7 +60,7 @@ def fetch_prices():
                         prev_close = float(parts[5]) if parts[5] else 0
                         pct_chg = (price - prev_close) / prev_close if prev_close > 0 else 0
                         prices[symbol] = {
-                            'name': info['name'],
+                            'name': info.name,
                             'price': price,
                             'change': price - prev_close,
                             'pct_chg': pct_chg,
@@ -85,10 +69,10 @@ def fetch_prices():
                             'date': parts[31] if len(parts) > 31 else ''
                         }
         except Exception as e:
-            print(f"  ⚠ {info['name']}实时行情获取失败: {e}")
+            print(f"  ⚠ {info.name}实时行情获取失败: {e}")
     
     # 指数 - 腾讯实时行情
-    for symbol, info in INDEXES.items():
+    for symbol, name in INDEXES.items():
         try:
             url = f"https://qt.gtimg.cn/q={symbol}"
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -101,14 +85,14 @@ def fetch_prices():
                         prev_close = float(parts[5]) if parts[5] else 0
                         pct_chg = (price - prev_close) / prev_close if prev_close > 0 else 0
                         prices[symbol] = {
-                            'name': info['name'],
+                            'name': name,
                             'price': price,
                             'change': price - prev_close,
                             'pct_chg': pct_chg,
                             'type': 'index'
                         }
         except Exception as e:
-            print(f"  ⚠ {info['name']}指数获取失败: {e}")
+            print(f"  ⚠ {name}指数获取失败: {e}")
     
     return prices
 
@@ -216,8 +200,8 @@ class DashboardHandler(BaseHTTPRequestHandler):
         for symbol, info in HOLDINGS.items():
             if symbol in prices:
                 price = prices[symbol]['price']
-                total_value += price * info['shares']
-                total_cost += info['cost'] * info['shares']
+                total_value += price * info.shares
+                total_cost += info.cost * info.shares
         
         profit = total_value - total_cost
         profit_pct = (profit / total_cost * 100) if total_cost > 0 else 0
@@ -248,8 +232,8 @@ class DashboardHandler(BaseHTTPRequestHandler):
             current_price = price_data.get('price', 0)
             pct_chg = price_data.get('pct_chg', 0)
             
-            market_value = current_price * info['shares']
-            cost_value = info['cost'] * info['shares']
+            market_value = current_price * info.shares
+            cost_value = info.cost * info.shares
             profit = market_value - cost_value
             profit_pct = (profit / cost_value * 100) if cost_value > 0 else 0
             
@@ -260,17 +244,17 @@ class DashboardHandler(BaseHTTPRequestHandler):
             
             holdings.append({
                 'symbol': symbol,
-                'name': info['name'],
-                'shares': info['shares'],
-                'cost': info['cost'],
+                'name': info.name,
+                'shares': info.shares,
+                'cost': info.cost,
                 'current_price': current_price,
                 'pct_chg': pct_chg,
                 'market_value': round(market_value, 2),
                 'profit': round(profit, 2),
                 'profit_pct': round(profit_pct, 2),
-                'stop_loss': info.get('stop_loss'),
-                'take_profit': info.get('take_profit'),
-                'life_line': info.get('life_line'),
+                'stop_loss': info.stop_loss,
+                'take_profit': info.take_profit,
+                'life_line': info.life_line,
                 'signals': signals
             })
         
@@ -287,7 +271,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 for sig in signals[-5:]:
                     all_signals.append({
                         'symbol': symbol,
-                        'name': info['name'],
+                        'name': info.name,
                         'type': sig['type'],
                         'date': sig['date'],
                         'detail': sig.get('detail', '')
@@ -318,9 +302,9 @@ class DashboardHandler(BaseHTTPRequestHandler):
         all_results = {}
         
         for symbol, info in HOLDINGS.items():
-            result = run_spoofing_check(symbol, info['name'])
+            result = run_spoofing_check(symbol, info.name)
             all_results[symbol] = {
-                'name': info['name'],
+                'name': info.name,
                 **result
             }
         
@@ -343,7 +327,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
     def get_config(self):
         """获取配置信息"""
         return {
-            'holdings': {k: {'name': v['name'], 'shares': v['shares']} for k, v in HOLDINGS.items()},
+            'holdings': {k: {'name': v.name, 'shares': v.shares} for k, v in HOLDINGS.items()},
             'indexes': list(INDEXES.keys()),
             'version': '2.0',
             'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S')

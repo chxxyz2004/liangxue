@@ -8,14 +8,8 @@ from datetime import datetime
 
 sys.path.insert(0, '/workspace/行情数据库')
 
-HOLDINGS = {
-    'sh603516': {'name': '淳中科技', 'cost': 98.50, 'shares': 900, 'stop_loss': 90.63, 'life_line': 92.6},
-    'sh601138': {'name': '工业富联', 'cost': 58.20, 'shares': 1100},
-    'sz002156': {'name': '通富微电', 'cost': 45.80, 'shares': 700},
-    'sh601231': {'name': '环旭电子', 'cost': 28.50, 'shares': 800},
-    'sz300476': {'name': '胜宏科技', 'cost': 230.00, 'shares': 100, 'take_profit': (256, 260)},
-    'sh603283': {'name': '赛腾股份', 'cost': 52.30, 'shares': 400},
-}
+# 引用统一配置中心，禁止硬编码
+from config import HOLDINGS
 
 def load_kline(sym):
     path = f'/workspace/行情数据库/kline/{sym}.json'
@@ -35,7 +29,7 @@ def analyze_stock(sym, info, kl):
     cp, op, high, low = today['close'], today['open'], today['high'], today['low']
     vol_ratio = today['volume'] / yesterday['volume'] if yesterday['volume'] > 0 else 0
     change = (cp - yesterday['close']) / yesterday['close'] * 100
-    profit_pct = (cp - info['cost']) / info['cost'] * 100
+    profit_pct = (cp - info.cost) / info.cost * 100
     
     # 250日位置
     closes = [k['close'] for k in kl]
@@ -104,7 +98,7 @@ def analyze_stock(sym, info, kl):
     
     return {
         'sym': sym,
-        'name': info['name'],
+        'name': info.name,
         'cp': cp,
         'op': op,
         'high': high,
@@ -115,8 +109,10 @@ def analyze_stock(sym, info, kl):
         'pos_250': pos_250,
         'signals': signals,
         'six_steps': six_steps,
-        'stop_loss': info.get('stop_loss'),
-        'take_profit': info.get('take_profit')
+        'stop_loss': info.stop_loss,
+        'take_profit': info.take_profit,
+        'shares': info.shares,
+        'cost': info.cost
     }
 
 def generate_deep_review(today_str, time_str):
@@ -130,9 +126,9 @@ def generate_deep_review(today_str, time_str):
         if kl:
             analysis = analyze_stock(sym, info, kl)
             if analysis:
-                profit = (analysis['cp'] - info['cost']) * info['shares']
+                profit = (analysis['cp'] - info.cost) * info.shares
                 analysis['profit'] = profit
-                analysis['value'] = analysis['cp'] * info['shares']
+                analysis['value'] = analysis['cp'] * info.shares
                 total_profit += profit
                 total_value += analysis['value']
                 all_stocks.append(analysis)

@@ -11,14 +11,8 @@ sys.path.insert(0, '/workspace/现代量学讲义')
 
 from update_data import fetch_tencent_qfq
 
-HOLDINGS = {
-    'sh603516': {'name': '淳中科技', 'cost': 98.50, 'shares': 900, 'stop_loss': 90.63},
-    'sh601138': {'name': '工业富联', 'cost': 58.20, 'shares': 1100},
-    'sz002156': {'name': '通富微电', 'cost': 45.80, 'shares': 700},
-    'sh601231': {'name': '环旭电子', 'cost': 28.50, 'shares': 800},
-    'sz300476': {'name': '胜宏科技', 'cost': 230.00, 'shares': 100, 'take_profit': (256, 260)},
-    'sh603283': {'name': '赛腾股份', 'cost': 52.30, 'shares': 400},
-}
+# 引用统一配置中心，禁止硬编码
+from config import HOLDINGS
 
 # 从本地文件加载最新价格
 def load_prices():
@@ -32,7 +26,7 @@ def load_prices():
                 if kl:
                     last = kl[-1]
                     prices[sym] = {
-                        'name': HOLDINGS[sym]['name'],
+                        'name': HOLDINGS[sym].name,
                         'price': last['close'],
                         'pct_chg': (last['close'] - kl[-2]['close']) / kl[-2]['close'] if len(kl) > 1 and kl[-2]['close'] > 0 else 0
                     }
@@ -52,8 +46,8 @@ class H(BaseHTTPRequestHandler):
             tv, tc = 0, 0
             for s, info in HOLDINGS.items():
                 if s in prices:
-                    tv += prices[s]['price'] * info['shares']
-                    tc += info['cost'] * info['shares']
+                    tv += prices[s]['price'] * info.shares
+                    tc += info.cost * info.shares
             profit = tv - tc
             data = {
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -69,11 +63,11 @@ class H(BaseHTTPRequestHandler):
             for s, info in HOLDINGS.items():
                 pd = prices.get(s, {})
                 cp = pd.get('price', 0)
-                pv = cp * info['shares']
-                cv = info['cost'] * info['shares']
+                pv = cp * info.shares
+                cv = info.cost * info.shares
                 holdings.append({
-                    'symbol': s, 'name': info['name'], 'shares': info['shares'],
-                    'cost': info['cost'], 'current_price': cp, 'pct_chg': pd.get('pct_chg', 0),
+                    'symbol': s, 'name': info.name, 'shares': info.shares,
+                    'cost': info.cost, 'current_price': cp, 'pct_chg': pd.get('pct_chg', 0),
                     'market_value': round(pv, 2), 'profit': round(pv-cv, 2)
                 })
             data = {'holdings': holdings}
@@ -89,7 +83,7 @@ class H(BaseHTTPRequestHandler):
                         k = kl[i]
                         if i > 0 and k.get('volume',0) > 0 and kl[i-1].get('volume',0) > 0:
                             if k['volume'] >= kl[i-1]['volume']*1.9 and k['close'] > k['open']:
-                                all_signals.append({'symbol':s,'name':info['name'],'type':'倍量柱','date':k['day']})
+                                all_signals.append({'symbol':s,'name':info.name,'type':'倍量柱','date':k['day']})
             data = {'signals': all_signals[-20:]}
         elif path == '/api/backtest':
             data = {'total_signals': 61, 'win_rate': 0.717, 'avg_return': 0.023,
