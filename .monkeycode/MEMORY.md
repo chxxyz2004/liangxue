@@ -304,6 +304,7 @@ Entries discovered by the Agent during task execution should follow this format:
   - 每个报告头部注明"数据截止时间"（如：16:44）
   - 脚本位置：/workspace/现代量学讲义/generate_fund_report.py（资金识别主力脚本）
   - 脚本位置：/workspace/现代量学讲义/auto_evening_review.sh（21:00联网复盘脚本）
+  - 配置中心：/workspace/行情数据库/config.py（统一HOLDINGS/INDEXES/阈值配置）
   - 资金识别体系：贯穿全天的核心报告，以"资金行为"为主线
   - 报告合并规则：
     * 盘中盯盘（9:30-11:30, 13:00-15:00）→ 手动触发，拉取实时数据生成
