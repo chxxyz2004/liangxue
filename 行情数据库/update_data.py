@@ -17,26 +17,14 @@ import sys
 import time
 import urllib.request
 
-# 关注股票池（8只算力产业链个股，用腾讯前复权接口）
-STOCKS = {
-    "sh601138": "工业富联",
-    "sz300476": "胜宏科技",
-    "sz300394": "天孚通信",
-    "sh603516": "淳中科技",
-    "sz002156": "通富微电",
-    "sh600584": "长电科技",
-    "sh603283": "赛腾股份",
-    "sh601231": "环旭电子",
-    "sh603220": "中贝通信",
-    "sh600629": "华建集团",
-}
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# 大盘指数（无复权，用新浪接口）
-INDEXES = {
-    "sh000001": "上证指数",
-    "sz399001": "深证成指",
-    "sz399006": "创业板指",
-}
+# 统一配置中心（股票池 = HOLDINGS + WATCH_LIST，禁止硬编码）
+from config import HOLDINGS, WATCH_LIST, INDEXES
+
+# 股票池（持仓 + 关注，用腾讯前复权接口）
+STOCKS = {**{k: v.name for k, v in HOLDINGS.items()},
+          **{k: v.name for k, v in WATCH_LIST.items()}}
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 KLINE_DIR = os.path.join(BASE_DIR, "kline")

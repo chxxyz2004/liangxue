@@ -5,20 +5,17 @@
 """
 import json
 import os
+import sys
 import urllib.request
 from datetime import datetime
 
-STOCKS = {
-    'sh603516': '淳中科技',
-    'sh601138': '工业富联',
-    'sh603283': '赛腾股份',
-    'sz002156': '通富微电',
-    'sh601231': '环旭电子',
-    'sz300476': '胜宏科技',
-    'sh603220': '中贝通信',
-    'sh600629': '华建集团',
-    'sz300394': '天孚通信',
-}
+sys.path.insert(0, '/workspace/行情数据库')
+
+# 统一配置中心（股票池 = HOLDINGS + WATCH_LIST，禁止硬编码）
+from config import HOLDINGS, WATCH_LIST
+
+STOCKS = {**{k: v.name for k, v in HOLDINGS.items()},
+          **{k: v.name for k, v in WATCH_LIST.items()}}
 
 BASE_DIR = '/workspace/行情数据库/kline_5min'
 os.makedirs(BASE_DIR, exist_ok=True)
