@@ -426,4 +426,12 @@
 
 ---
 
-**文档元信息**：v4.1 终极版 · 2026-08-27 · 5.2报告规范+5.3讲义规范全部小白友好化 · 统一看盘标准
+**文档元信息**：v4.1 终极版 · 2026-08-27 · 5.2报告规范+5.3讲义规范全部小白友好化 · 统一看盘标准[Project Knowledge Summary]
+- Date: 2026-08-27
+- Context: 用户移除临时文件下载服务，释放资源
+- Category: Operations & Deployment
+- Instructions:
+  - 9999端口临时文件下载服务已移除
+  - /tmp 下的 liangxue-core.tar.gz 和优化提示词已清理
+  - 当前运行端口：8000（讲义导航）、8086（Web工作台）
+  - 如需重新下载核心文件，从 GitHub 仓库获取：https://github.com/chxxyz2004/liangxue
