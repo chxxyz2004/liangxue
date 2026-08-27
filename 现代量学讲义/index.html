@@ -519,8 +519,8 @@ a { text-decoration: none; color: inherit; }
     <div class="portfolio-item"><div class="name">环旭</div><div class="price" id="p-xs">--</div><div class="change" id="c-xs">--</div></div>
     <div class="portfolio-item"><div class="name">赛腾</div><div class="price" id="p-qt">--</div><div class="change" id="c-qt">--</div></div>
     <div class="portfolio-item"><div class="name">通富</div><div class="price" id="p-tf">--</div><div class="change" id="c-tf">--</div></div>
-    <div class="portfolio-item"><div class="name">中贝</div><div class="price" id="p-zb">--</div><div class="change" id="c-zb">--</div></div>
-    <div class="portfolio-item"><div class="name">华建</div><div class="price" id="p-hj">--</div><div class="change" id="c-hj">--</div></div>
+    <div class="portfolio-item"><div class="name">天孚</div><div class="price" id="p-tf2">--</div><div class="change" id="c-tf2">--</div></div>
+    <div class="portfolio-item"><div class="name">长电</div><div class="price" id="p-ld">--</div><div class="change" id="c-ld">--</div></div>
   </div>
   <div class="portfolio-summary">
     <div><div class="label">持仓市值</div><div class="value" id="totalValue">--</div></div>
@@ -622,11 +622,11 @@ const portfolio = {
   xs: { name: '环旭', code: 'sh601231', cost: 28.50 },
   qt: { name: '赛腾', code: 'sh603283', cost: 52.30 },
   tf: { name: '通富', code: 'sz002156', cost: 45.80 },
-  zb: { name: '中贝', code: 'sh603220', cost: 39.46 },
-  hj: { name: '华建', code: 'sh600629', cost: 14.75 }
+  tf2: { name: '天孚', code: 'sz300394', cost: null, watch: true },
+  ld: { name: '长电', code: 'sh600584', cost: null, watch: true }
 };
 
-const basePrices = { cz: 89.88, sh: 261.50, fl: 60.57, xs: 26.70, qt: 46.18, tf: 61.25, zb: 39.46, hj: 14.75 };
+const basePrices = { cz: 89.88, sh: 261.50, fl: 60.57, xs: 26.70, qt: 46.18, tf: 61.25, tf2: 267.16, ld: 76.54 };
 
 // 更新时间
 function updateTime() {
@@ -671,7 +671,7 @@ function updatePrices() {
     }
     
     // 计算总值和盈亏
-    const shares = { cz: 900, sh: 100, fl: 1100, xs: 800, qt: 400, tf: 700, zb: 500, hj: 500 }[key] || 100;
+    const shares = { cz: 900, sh: 100, fl: 1100, xs: 800, qt: 400, tf: 700 }[key] || 0;
     totalValue += price * shares;
     totalProfit += (price - stock.cost) * shares;
   }
