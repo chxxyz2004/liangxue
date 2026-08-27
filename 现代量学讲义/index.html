@@ -635,6 +635,9 @@ a { text-decoration: none; color: inherit; }
 .quick-card.secondary { border-color: var(--border); }
 .quick-card.secondary::before { background: var(--text-muted); }
 .quick-card.secondary .qc-badge { background: var(--surface2); color: var(--text-dim); }
+.quick-card.purple { border-color: rgba(155,89,182,0.4); }
+.quick-card.purple::before { background: linear-gradient(90deg, var(--purple), #a569bd); }
+.quick-card.purple .qc-badge { background: rgba(155,89,182,0.15); color: var(--purple); }
 
 /* ===== 响应式 ===== */
 @media (max-width: 360px) {
@@ -725,6 +728,12 @@ a { text-decoration: none; color: inherit; }
         <div class="qc-title">昨日复盘</div>
         <div class="qc-sub">淳中89.88破92.6生死线 · 胜宏涨停</div>
         <span class="qc-badge">昨日</span>
+      </div>
+      <div class="quick-card purple" onclick="location.href='./stock-analysis.html'">
+        <div class="qc-icon">🔍</div>
+        <div class="qc-title">个股研判</div>
+        <div class="qc-sub">输入代码/名称 → AI生成趋势研报</div>
+        <span class="qc-badge" style="background:rgba(155,89,182,0.15);color:var(--purple)">新</span>
       </div>
     </div>
 
@@ -1092,7 +1101,7 @@ a { text-decoration: none; color: inherit; }
 
     <div class="footer">
       <div class="footer-text">现代量学实战体系 · 讲义仅供个人学习使用<br>不构成任何投资建议 · 股市有风险，入市需谨慎</div>
-      <div class="footer-version">v2026-08-27-23 · 盯盘置顶版</div>
+      <div class="footer-version">v2026-08-27-24 · 个股研判版</div>
     </div>
   </div>
 
@@ -1349,10 +1358,10 @@ const portfolioData = {
   zb:  { name: '中贝', code: '603220', cost: 39.46, stop: 38.00, action: '止损38.00' },
   hj:  { name: '华建', code: '603057', cost: 14.75, stop: 14.00, action: '止损14.00' },
 };
-// 基准价（开盘前数据）
-const basePrices = { cz: 91.20, qt: 46.45, tf: 61.47, xs: 25.77, fl: 61.03, sh: 249.58, zb: 39.46, hj: 14.75 };
-// 模拟波动 (±0.5% 日内)
-const mockFluctuation = { cz: 0.8, qt: -0.3, tf: 0.2, xs: -0.5, fl: -0.8, sh: 1.2, zb: 0.0, hj: 0.0 };
+// 基准价（基于8/26收盘价，不是成本）
+const basePrices = { cz: 89.88, qt: 46.18, tf: 61.25, xs: 26.70, fl: 60.57, sh: 261.50, zb: 39.46, hj: 14.75 };
+// 日内波动参考（相对昨日收盘）
+const mockFluctuation = { cz: 0.8, qt: 0.3, tf: 0.2, xs: 0.5, fl: 0.8, sh: 1.2, zb: 0.0, hj: 0.0 };
 
 function updatePortfolio() {
   const now = new Date();
@@ -1368,7 +1377,7 @@ function updatePortfolio() {
     const el = document.getElementById('price-' + key);
     if (el) {
       el.textContent = price;
-      el.className = 'price ' + (price >= base ? 'red' : 'green');
+      el.className = 'price ' + (variation >= 0 ? 'red' : 'green');
     }
     totalCost += parseFloat(price) * 100;
   }
