@@ -17,7 +17,6 @@ HOLDINGS = {
     'sz002156': {'name': '通富微电', 'cost': 45.80, 'shares': 700},
     'sh601231': {'name': '环旭电子', 'cost': 28.50, 'shares': 800},
     'sz300476': {'name': '胜宏科技', 'cost': 230.00, 'shares': 100, 'take_profit': (256, 260)},
-    'sz300394': {'name': '天孚通信', 'cost': 480.00, 'shares': 50},
     'sh603283': {'name': '赛腾股份', 'cost': 52.30, 'shares': 400},
 }
 
