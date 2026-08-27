@@ -106,14 +106,14 @@ def _get_env_int(key: str, default: int) -> int:
 
 # 持仓股票配置（唯一数据源，所有脚本从此读取，禁止硬编码）
 HOLDINGS: Dict[str, StockInfo] = {
-    'sh603516': StockInfo(name='淳中科技', cost=98.50, shares=900,
+    'sh603516': StockInfo(name='淳中科技', cost=41.023, shares=300,
                           stop_loss=90.63, life_line=92.6),
-    'sh601138': StockInfo(name='工业富联', cost=58.20, shares=1100),
-    'sz002156': StockInfo(name='通富微电', cost=45.80, shares=700),
-    'sh601231': StockInfo(name='环旭电子', cost=28.50, shares=800),
-    'sz300476': StockInfo(name='胜宏科技', cost=230.00, shares=100,
+    'sh601138': StockInfo(name='工业富联', cost=57.348, shares=500),
+    'sz002156': StockInfo(name='通富微电', cost=64.260, shares=100),
+    'sh601231': StockInfo(name='环旭电子', cost=45.062, shares=200),
+    'sz300476': StockInfo(name='胜宏科技', cost=249.581, shares=100,
                           take_profit=(256, 260)),
-    'sh603283': StockInfo(name='赛腾股份', cost=52.30, shares=400),
+    'sh603283': StockInfo(name='赛腾股份', cost=46.186, shares=200),
 }
 
 # 关注股票池（未持仓）

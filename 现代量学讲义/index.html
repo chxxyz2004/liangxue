@@ -614,19 +614,22 @@ a { text-decoration: none; color: inherit; }
 </div>
 
 <script>
-// 持仓数据
+// 持仓数据（2026-08-27更新）
 const portfolio = {
-  cz: { name: '淳中', code: 'sh603516', cost: 98.50 },
-  sh: { name: '胜宏', code: 'sz300476', cost: 230.00 },
-  fl: { name: '富联', code: 'sh601138', cost: 58.20 },
-  xs: { name: '环旭', code: 'sh601231', cost: 28.50 },
-  qt: { name: '赛腾', code: 'sh603283', cost: 52.30 },
-  tf: { name: '通富', code: 'sz002156', cost: 45.80 },
+  cz: { name: '淳中', code: 'sh603516', cost: 41.023 },
+  sh: { name: '胜宏', code: 'sz300476', cost: 249.581 },
+  fl: { name: '富联', code: 'sh601138', cost: 57.348 },
+  xs: { name: '环旭', code: 'sh601231', cost: 45.062 },
+  qt: { name: '赛腾', code: 'sh603283', cost: 46.186 },
+  tf: { name: '通富', code: 'sz002156', cost: 64.260 },
   tf2: { name: '天孚', code: 'sz300394', cost: null, watch: true },
   ld: { name: '长电', code: 'sh600584', cost: null, watch: true }
 };
 
-const basePrices = { cz: 89.88, sh: 261.50, fl: 60.57, xs: 26.70, qt: 46.18, tf: 61.25, tf2: 267.16, ld: 76.54 };
+const basePrices = { cz: 93.60, sh: 263.05, fl: 63.86, xs: 27.55, qt: 48.48, tf: 63.73, tf2: 267.16, ld: 76.54 };
+
+// 股数映射
+const sharesMap = { cz: 300, sh: 100, fl: 500, xs: 200, qt: 200, tf: 100 };
 
 // 更新时间
 function updateTime() {
@@ -671,7 +674,7 @@ function updatePrices() {
     }
     
     // 计算总值和盈亏
-    const shares = { cz: 900, sh: 100, fl: 1100, xs: 800, qt: 400, tf: 700 }[key] || 0;
+    const shares = sharesMap[key] || 0;
     totalValue += price * shares;
     totalProfit += (price - stock.cost) * shares;
   }
