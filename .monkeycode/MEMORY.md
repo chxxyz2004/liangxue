@@ -239,3 +239,15 @@ Entries discovered by the Agent during task execution should follow this format:
   - 日志位置：/tmp/liangxue_update.log, /tmp/liangxue_noon.log, /tmp/liangxue_cron.log
   - 手动触发：收盘后可运行 /workspace/行情数据库/auto_update.sh 立即更新
   - 检查cron状态：crontab -l 查看任务，service cron status 查看服务
+
+[Project Knowledge Summary]
+- Date: 2026-08-27
+- Context: 创建量学信号库和失效案例库，完善系统文档结构
+- Category: Operations & Deployment
+- Instructions:
+  - 量学信号库位置：/workspace/现代量学讲义/signal_library.md
+  - 失效案例库位置：/workspace/现代量学讲义/failure_cases.md
+  - 信号库包含5类量柱信号（倍量/缩量/高量/低量/百日低量）+ 4类价线信号（黄金线/生命线/攻击线/均线支撑）+ 2类组合信号（二波确认/假突破）的详细识别规则
+  - 失效案例库记录5个真实失效案例，用于教学反思和战法优化
+  - 所有案例必须基于官方数据（腾讯前复权+新浪5分钟K线），严禁凭记忆编造
+  - 信号识别必须经过右确认后再操作，禁止单一信号决策
