@@ -202,6 +202,17 @@ Entries discovered by the Agent during task execution should follow this format:
   - 胜宏关键节点：264.00已超止盈区间256-260，需执行分批止盈
   - 环旭关键节点：27.87已超预案27减仓线，下午执行减1手
 
+
+[Project Knowledge Summary]
+- Date: 2026-08-27
+- Context: 用户确认复盘数据分层策略（Token优化）
+- Category: Build Methods
+- Instructions:
+  - 复盘以日K线为主（判断趋势/支撑阻力/重要价位），5分钟K线为辅（对倒检测）
+  - 重要价位（生死线/止损/减仓线）一律基于【日K线历史高低点】计算
+  - 30分钟K线可省略（Token紧张时），日K已包含关键信息
+  - 不推荐1分钟K线（数据量过大，对散户无额外价值）
+  - 复盘Token预算：日K(~5000) + 5分钟(~15000) ≈ 20000 token
 [Project Knowledge Summary]
 - Date: 2026-08-27
 - Context: 用户询问量化对倒识别所需的最小数据周期，并通过实测验证各周期能力
