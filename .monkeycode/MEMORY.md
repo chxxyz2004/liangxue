@@ -286,8 +286,13 @@ Entries discovered by the Agent during task execution should follow this format:
     * 9:25-9:30（集合竞价）→ "开盘"=拉集合竞价数据+盘前预案
     * 9:30-11:30, 13:00-15:00 → "盯盘"=生成盯盘清单
     * 11:30-13:00 → "午盘"=生成午盘研判
+  - 报告命名规范（统一，消除歧义）：
+    * 盘前预案-YYYY-MM-DD.html（原：开盘预案）
+    * 盘中盯盘-YYYY-MM-DD.html（原：盯盘清单）
+    * 午间研判-YYYY-MM-DD.html（原：午盘研判）
+    * 收盘复盘-YYYY-MM-DD.html（原：复盘）
   - 报告生成后自动更新index.html导航（快速操作行+复盘列表）
-  - 快速操作行中复盘卡片命名为"复盘日报"（非"昨日复盘"），标注"今日"而非"昨日"
+  - 快速操作行标签：今日盘前预案/今日盘中盯盘/午间研判/复盘日报
   - 每个报告头部注明"数据截止时间"（如：16:44）
   - 脚本位置：/workspace/现代量学讲义/generate_report.py
   - 注意：generate_report.py的placeholder替换逻辑可能失效，需直接修改index.html文本

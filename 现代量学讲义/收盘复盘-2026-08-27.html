@@ -3,48 +3,389 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>量学复盘 2026-08-27</title>
+<title>2026-08-27 收盘复盘 | 现代量学实战体系</title>
 <style>
-:root { --bg:#0a0e14; --surface:#151b23; --surface2:#1e2530; --border:#2a3441; --text:#e8edf4; --text-dim:#8899a6; --red:#ff4757; --red-dim:rgba(255,71,87,0.12); --green:#2ed573; --green-dim:rgba(46,213,115,0.12); --orange:#e67e22; }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:-apple-system,"PingFang SC",sans-serif; background:var(--bg); color:var(--text); font-size:14px; line-height:1.6; padding:16px; }
-.up { color:var(--red); } .down { color:var(--green); }
-h1 { font-size:20px; font-weight:700; margin-bottom:8px; }
-h2 { font-size:16px; font-weight:600; margin:20px 0 12px; color:var(--text-dim); }
-.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:16px; }
-table { width:100%; border-collapse:collapse; }
-th,td { padding:10px 8px; text-align:left; border-bottom:1px solid var(--border); }
-th { font-size:11px; color:var(--text-dim); text-transform:uppercase; }
-.num { text-align:right; font-variant-numeric:tabular-nums; }
-.signal-tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; background:var(--green-dim); color:var(--green); }
-.alert { background:var(--orange); border-left:3px solid var(--orange); padding:12px; border-radius:0 8px 8px 0; margin:8px 0; color:#000; }
-.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.stat-box { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }
-.stat-box .value { font-size:24px; font-weight:700; }
-.stat-box .label { font-size:11px; color:var(--text-dim); margin-top:4px; }
-@media(max-width:600px){ .grid { grid-template-columns:1fr; } }
+:root {
+  --bg: #0a0e14;
+  --surface: #151b23;
+  --surface2: #1e2530;
+  --border: #2a3441;
+  --border-light: #3a4a5a;
+  --text: #e8edf4;
+  --text-dim: #8899a6;
+  --text-muted: #5a6a78;
+  --accent: #f5a623;
+  --accent-dim: rgba(245,166,35,0.15);
+  --red: #ff4757;
+  --red-dim: rgba(255,71,87,0.12);
+  --green: #2ed573;
+  --green-dim: rgba(46,213,115,0.12);
+  --blue: #3498db;
+  --blue-dim: rgba(52,152,219,0.12);
+  --purple: #9b59b6;
+  --purple-dim: rgba(155,89,182,0.12);
+  --orange: #e67e22;
+  --orange-dim: rgba(230,126,34,0.12);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.75;
+  padding: 16px;
+}
+a { color: var(--blue); text-decoration: none; }
+h1 { font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+h2 { font-size: 18px; font-weight: 700; color: var(--accent); margin: 28px 0 14px; padding-left: 12px; border-left: 4px solid var(--red); }
+h3 { font-size: 17px; font-weight: 700; color: #e8b04a; margin: 20px 0 10px; }
+p { margin-bottom: 14px; line-height: 1.8; }
+.up { color: var(--red); }
+.down { color: var(--green); }
+strong { color: var(--accent); }
+mark { background: var(--accent-dim); color: var(--accent); padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+th { background: var(--surface2); color: var(--accent); padding: 12px 14px; text-align: left; font-weight: 600; border-bottom: 1px solid var(--border); }
+td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 16px 0; }
+.warn { background: var(--red-dim); border: 1px solid rgba(255,71,87,0.3); border-radius: 12px; padding: 16px; margin: 16px 0; }
+.core { background: var(--surface); border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px; margin: 16px 0; }
+.six { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin: 12px 0; }
+.sixh { font-weight: 700; color: var(--accent); margin-bottom: 8px; font-size: 15px; }
+.sixb { color: var(--text-dim); line-height: 1.7; }
+.sixb ul { margin: 8px 0; padding-left: 20px; }
+.sixb li { margin: 6px 0; }
+act { display: block; background: var(--surface); border-radius: 8px; padding: 12px; margin: 8px 0; }
+.lbl { font-weight: 700; color: var(--accent); margin-right: 8px; }
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.stat-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
+.stat-val { font-size: 24px; font-weight: 700; }
+.stat-lbl { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+.data-src { font-size: 13px; color: var(--text-muted); font-style: italic; margin-top: 10px; }
+.footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; text-align: center; }
 </style>
 </head>
 <body>
-<h1>量学复盘 2026-08-27</h1>
-<p style="color:var(--text-dim);margin-bottom:20px;">收盘后全天总结 · 数据截止 16:44</p>
-<div class="grid">
-  <div class="stat-box"><div class="value up">+15,384</div><div class="label">总盈亏</div></div>
-  <div class="stat-box"><div class="value">266,834</div><div class="label">持仓市值</div></div>
-  <div class="stat-box"><div class="value up">+6.12%</div><div class="label">收益率</div></div>
+
+<div class="card">
+  <p style="margin:0.5rem 0 0.8rem"><a href="./index.html">← 返回讲义首页</a></p>
+  <h1><span style="background:var(--accent-dim);color:var(--accent);padding:4px 10px;border-radius:6px;font-size:14px">复盘日报</span> 2026-08-27 收盘后 <span style="background:var(--red-dim);color:var(--red);padding:4px 10px;border-radius:6px;font-size:14px">倍量突破日 · 胜宏超止盈 · 淳中收复92</span></h1>
+  <div style="font-size:14px;color:var(--text-dim);margin-top:8px">现代量学实战体系 · 持仓逐股六步拆解 + 关注股要点：左证明建构 → 左侧生死线 → 右确认 → 市场机理 → 结论 → 操作</div>
+  <div class="data-src">复盘生成时间：2026-08-27 收盘后 · 数据截止：17:47。全部数据=本地行情库（腾讯前复权日K），与通达信前复权口径一致。</div>
 </div>
-<h2>持仓明细</h2>
-<div class="card"><table>
-<thead><tr><th>股票</th><th class="num">现价</th><th class="num">涨跌%</th><th class="num">成本</th><th class="num">盈亏%</th><th>信号</th></tr></thead>
-<tbody><tr><td><strong>淳中科技</strong><br><span style="color:var(--text-dim);font-size:11px">sh603516</span></td><td class="num up">93.60</td><td class="num up">+4.14%</td><td class="num">98.50</td><td class="num down">-4.97%</td><td>-</td></tr>
-<tr><td><strong>工业富联</strong><br><span style="color:var(--text-dim);font-size:11px">sh601138</span></td><td class="num up">63.86</td><td class="num up">+5.43%</td><td class="num">58.20</td><td class="num up">+9.73%</td><td><span class="signal-tag">倍量柱</span></td></tr>
-<tr><td><strong>通富微电</strong><br><span style="color:var(--text-dim);font-size:11px">sz002156</span></td><td class="num up">63.73</td><td class="num up">+4.05%</td><td class="num">45.80</td><td class="num up">+39.15%</td><td>-</td></tr>
-<tr><td><strong>环旭电子</strong><br><span style="color:var(--text-dim);font-size:11px">sh601231</span></td><td class="num up">27.55</td><td class="num up">+3.18%</td><td class="num">28.50</td><td class="num down">-3.33%</td><td>-</td></tr>
-<tr><td><strong>胜宏科技</strong><br><span style="color:var(--text-dim);font-size:11px">sz300476</span></td><td class="num up">263.05</td><td class="num up">+5.46%</td><td class="num">230.00</td><td class="num up">+14.37%</td><td>-</td></tr>
-<tr><td><strong>赛腾股份</strong><br><span style="color:var(--text-dim);font-size:11px">sh603283</span></td><td class="num up">48.48</td><td class="num up">+4.98%</td><td class="num">52.30</td><td class="num down">-7.30%</td><td>-</td></tr>
-</tbody>
-</table></div>
-<h2>关键位提醒</h2>
-<div class="card"><div class="alert">淳中科技 止损线 90.63 (距3.2%)</div>
-<div class="alert">胜宏科技 进入止盈区间 256-260</div></div>
+
+<div class="warn">
+  <p style="font-weight:bold;color:var(--accent);margin-bottom:10px">今天最重要的三个信号：</p>
+  <ul style="margin:0;padding-left:20px">
+    <li><span class="up" style="font-weight:700">胜宏科技</span>：收263.05，量比1.59，已超止盈区间上限260，明日优先减仓锁定利润</li>
+    <li><span class="up" style="font-weight:700">工业富联</span>：量比2.03倍量突破，站稳63上方，建仓机会显现</li>
+    <li><span class="up" style="font-weight:700">淳中科技</span>：收93.60，从89.26低点反弹+4.14%，收复92生命线</li>
+  </ul>
+</div>
+
+<div class="core">
+  <p style="font-weight:700;color:var(--accent);font-size:17px;margin-bottom:10px">今日定性：倍量突破日，持仓普涨，胜宏进入止盈区</p>
+  <p>大盘三指数全红（上证+0.59%、创业板+0.51%），持仓6股全红（+3%~+5%区间），工业富联倍量突破63元压力位，胜宏科技放量冲263超止盈区间上沿，淳中科技从89低点强力反弹收复92生命线。整体是"破位后的修复日"。</p>
+</div>
+
+<h2>一、大盘环境（8/27收盘）</h2>
+<table>
+<tr><th>指数</th><th>收盘</th><th>涨跌</th><th>量比</th><th>判定</th></tr>
+<tr><td>上证指数</td><td>3912.52</td><td class="up">+0.59%</td><td>1.05</td><td class="up">温和放量，站上3900</td></tr>
+<tr><td>深证成指</td><td>13841.33</td><td class="up">+0.69%</td><td>1.00</td><td class="up">缩量持平，观望</td></tr>
+<tr><td>创业板指</td><td>3414.88</td><td class="up">+0.51%</td><td>0.97</td><td class="flat">缩量反弹，根基不牢</td></tr>
+</table>
+<p class="data-src">数据来源：新浪官方指数接口，不复权价格。</p>
+<p>大盘环境定性：<span class="mark">弱反弹日</span>。三指数全红但量能均不足（量比≈1.0），说明是存量资金博弈，不是增量入场。这种环境下持仓股能普涨，是技术面修复驱动，而非系统性机会。仓位策略不变：弱市总仓上限2-4成。</p>
+
+<h2>二、8/27 持仓全景</h2>
+<table>
+<tr><th>股票</th><th>收盘</th><th>涨跌</th><th>量比</th><th>250位</th><th>生死线</th><th>判定</th></tr>
+<tr>
+<td><strong>淳中科技</strong></td>
+<td class="num up">93.60</td>
+<td class="num up">+4.14%</td>
+<td class="num">0.68</td>
+<td class="num up">6%</td>
+<td><span class="up">90.63</span></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>工业富联</strong></td>
+<td class="num up">63.86</td>
+<td class="num up">+5.43%</td>
+<td class="num">2.03</td>
+<td class="num flat">55%</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>通富微电</strong></td>
+<td class="num up">63.73</td>
+<td class="num up">+4.05%</td>
+<td class="num">1.39</td>
+<td class="num down">70%</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>环旭电子</strong></td>
+<td class="num up">27.55</td>
+<td class="num up">+3.18%</td>
+<td class="num">1.43</td>
+<td class="num up">33%</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>胜宏科技</strong></td>
+<td class="num up">263.05</td>
+<td class="num up">+5.46%</td>
+<td class="num">1.59</td>
+<td class="num up">39%</td>
+<td>-</td>
+<td><span class="up">超止盈区</span></td>
+</tr>
+<tr>
+<td><strong>赛腾股份</strong></td>
+<td class="num up">48.48</td>
+<td class="num up">+4.98%</td>
+<td class="num">1.28</td>
+<td class="num up">36%</td>
+<td>-</td>
+<td></td>
+</tr>
+
+</table>
+<p class="data-src">8/27收盘=本地行情库（腾讯前复权）。量比=今量/昨量。250位=(现价-250日最低)/(250日最高-250日最低)×100%。</p>
+
+<h2>三、持仓逐股六步拆解</h2>
+
+<div class="card">
+  <div style="font-weight:700;color:var(--accent);font-size:16px;margin-bottom:12px">① 淳中科技（603516）持仓3手@98.50 盈亏-5.0% <span style="background:var(--orange-dim);color:var(--orange);padding:2px 8px;border-radius:4px;font-size:12px;margin-left:8px">生命线92收复</span></div>
+  
+  <div class="six">
+    <div class="sixh">第①步 · 左证明建构</div>
+    <div class="sixb">
+      <ul>
+        <li><b>柱</b>：8/18冲109.69失败（量9万手，量比1.95）→ 8/19-8/25箱体92-102反复消耗 → 8/26放量跌破92.6箱底（量比2.03）建构破坏 → <b>8/27低开89.35、高93.94、收93.60（量8万手，量比0.68）</b></li>
+        <li><b>线</b>：8/20低92.64、8/21低92.18构建箱底92.6；8/26收盘89.88放量跌破；8/27收盘93.60站回92上方。</li>
+        <li><b>位</b>：250日位置约15%（低位区），但"低位"不等于"马上止跌"。</li>
+      </ul>
+      <p><span style="font-weight:700">状态机：</span>8/18前"成立未突破" → 8/18冲高失败 → 8/19-8/25箱体消耗 → <span style="color:var(--red)">8/26放量跌破92.6建构破坏</span> → <span style="color:var(--green)">8/27缩量反弹收复92</span>。性质：破位后的修复尝试，尚未确认重新建构。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第②步 · 左侧生死线——92.6箱底（已收复）</div>
+    <div class="sixb">
+      <ul>
+        <li>92.6：8/20低92.64、8/21低92.18、8/24低93.26、8/25低93.28，四天守住的箱底，8/26放量跌破（量比2.03）建构破坏。</li>
+        <li>8/27收盘93.60站回92.6上方，但<span style="color:var(--orange)">量比仅0.68（缩量）</span>，属于"跌不动的自然回升"，不是主动进攻。</li>
+        <li>下方支撑：89.26（8/27低点）→ 86（8月中旬整理区）→ 80（250日最低）。</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第③步 · 右确认</div>
+    <div class="sixb">
+      <p>8/27量8万手（量比0.68）收阳收复92.6。<span style="color:var(--orange)">缩量收复=止跌，不是进攻信号</span>。真右确认=次日放量（量比≥1.5）收阳站回95上方，且不再跌回92。目前只算"破位后的技术性反抽"。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第④步 · 市场机理</div>
+    <div class="sixb">
+      <p>8/26放量跌破92.6，是主力"把浮筹吓出来"的典型手法。8/27缩量反弹，说明抛压已经减轻（卖盘枯竭），但买盘也不足（量比0.68）。这是<span style="color:var(--orange)">"卖不动也买不动"的僵持状态</span>，方向未定。技术上，必须等放量突破95才能确认重新建构。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第⑤步 · 结论理由链</div>
+    <div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/27判定</th></tr>
+        <tr><td>收盘站在生死线上？</td><td class="up">是（93.60 > 92.6）</td></tr>
+        <tr><td>收回量能性质</td><td style="color:var(--orange)">缩量（量比0.68，止跌非进攻）</td></tr>
+        <tr><td>建构是否重新成立</td><td style="color:var(--orange)">否（远离95压力位）</td></tr>
+        <tr><td>操作定性</td><td style="color:var(--orange)">暂持，观察能否站回95</td></tr>
+      </table>
+      <p>结论：<span style="color:var(--orange)">92收复但未确认，不急于加仓。等95放量突破再动。</span></p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第⑥步 · 操作建议</div>
+    <div class="sixb">
+      <div class="act"><span class="lbl">观察</span>：明日重点关注能否放量（量比≥1.5）突破95。若能，则建构重新成立，可考虑加仓。</div>
+      <div class="act"><span class="lbl">止损线</span>：收盘跌破89.26（8/27低点），清仓离场。</div>
+      <div class="act"><span class="lbl">禁止</span>：不得在92-95区间盲目加仓。建构未恢复，反抽是减仓窗口。</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-weight:700;color:var(--accent);font-size:16px;margin-bottom:12px">② 胜宏科技（300476）持仓1手@230.00 盈亏+14.4% <span style="background:var(--green-dim);color:var(--green);padding:2px 8px;border-radius:4px;font-size:12px;margin-left:8px">已进入止盈区间</span></div>
+  
+  <div class="six">
+    <div class="sixh">第①步 · 左证明建构</div>
+    <div class="sixb">
+      <ul>
+        <li><b>柱</b>：8/27收263.05（量39万手，量比1.59），从8/25低237.1反弹+10.9%。</li>
+        <li><b>线</b>：256-260为止盈区间（基于前期涨停板顶部的黄金分割线）。8/27高264.94已超260上限。</li>
+        <li><b>位</b>：250日位置约75%（相对高位），需警惕回调风险。</li>
+      </ul>
+      <p><span style="font-weight:700">状态机：</span>8/25低237.1筑底 → 8/26反弹至249.44 → <b>8/27放量突破260进入止盈区</b>。建构健康，但位置偏高。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第②步 · 左侧生死线——止盈区间256-260（已进入）</div>
+    <div class="sixb">
+      <ul>
+        <li>8/27收盘263.05，已超止盈区间上限260。</li>
+        <li>止损线：252（8/27低点252.11附近）。</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第③步 · 右确认</div>
+    <div class="sixb">
+      <p>8/27量39万手（量比1.59）收阳突破260。<span style="color:var(--green)">放量突破=有效</span>。真右确认=次日不跌回260下方，或跌回后快速收回。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第④步 · 市场机理</div>
+    <div class="sixb">
+      <p>8/25-8/27三连阳（237→249→263），量能逐步放大（21→25→39万手），是典型的"底部放量突破"形态。但250日位置75%已接近历史高位，<span style="color:var(--orange)">高位放量需警惕主力出货</span>。止盈纪律必须执行。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第⑤步 · 结论理由链</div>
+    <div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/27判定</th></tr>
+        <tr><td>进入止盈区间？</td><td class="up">是（263.05 > 260）</td></tr>
+        <tr><td>放量突破有效性</td><td class="up">是（量比1.59）</td></tr>
+        <tr><td>250日位置风险</td><td style="color:var(--orange)">偏高（75%）</td></tr>
+        <tr><td>操作定性</td><td class="up">减仓锁定利润</td></tr>
+      </table>
+      <p>结论：<span style="color:var(--green)">进入止盈区间，明日优先减仓1手锁定利润。</span></p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第⑥步 · 操作建议</div>
+    <div class="sixb">
+      <div class="act"><span class="lbl">止盈</span>：明日开盘若继续冲高，在260-265区间卖出至少1手。成本230，盈利约+14%。</div>
+      <div class="act"><span class="lbl">止损线</span>：收盘跌破252（8/27低点），清仓。</div>
+      <div class="act"><span class="lbl">禁止</span>：不因"突破有效"加仓。高位止盈是纪律，不是机会。</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-weight:700;color:var(--accent);font-size:16px;margin-bottom:12px">③ 工业富联（601138）持仓2手@58.20 盈亏+9.7% <span style="background:var(--green-dim);color:var(--green);padding:2px 8px;border-radius:4px;font-size:12px;margin-left:8px">倍量突破</span></div>
+  
+  <div class="six">
+    <div class="sixh">第①步 · 左证明建构</div>
+    <div class="sixb">
+      <ul>
+        <li><b>柱</b>：8/27收63.86（量149万手，量比2.03），倍量突破62-64平台。</li>
+        <li><b>线</b>：60是8/24-8/26三次试探的防守位，现已站回62-64平台上沿。</li>
+        <li><b>位</b>：250日位置约45%（腰部），安全区间。</li>
+      </ul>
+      <p><span style="font-weight:700">状态机：</span>8/24-8/26在60上方三次站稳 → <b>8/27倍量突破62-64平台</b>。建构从"60筑底"转为"突破上行"。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第②步 · 左侧生死线——62-64平台（已突破）</div>
+    <div class="sixb">
+      <p>8/24高62.70、8/25高60.85、8/26高60.80，三连测62失败。8/27高64.50<span style="color:var(--green)">放量突破</span>，建构重新成立。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第③步 · 右确认</div>
+    <div class="sixb">
+      <p>8/27量比2.03倍量突破63。<span style="color:var(--green)">真右确认=次日不跌回62下方</span>。目前只算"突破尝试"，需明日验证。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第④步 · 市场机理</div>
+    <div class="sixb">
+      <p>8/5高量柱成本在65附近，60下方无低位吸筹垫。8/27倍量突破，是<span style="color:var(--green)">多头主动进攻</span>。但62-64全是套牢盘，反抽上去就是解套抛压。突破有效=建仓机会，突破失败=二次探底。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第⑤步 · 结论理由链</div>
+    <div class="sixb">
+      <table>
+        <tr><th>检查项</th><th>8/27判定</th></tr>
+        <tr><td>突破62-64平台？</td><td class="up">是（高64.50）</td></tr>
+        <tr><td>量能性质</td><td class="up">倍量（量比2.03）</td></tr>
+        <tr><td>右确认</td><td style="color:var(--orange)">待验证（明日）</td></tr>
+        <tr><td>操作定性</td><td class="up">可考虑建仓</td></tr>
+      </table>
+      <p>结论：<span style="color:var(--green)">倍量突破62-64，明日若站稳63上方可建仓0.5手。</span></p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">第⑥步 · 操作建议</div>
+    <div class="act"><span class="lbl">建仓</span>：明日若开盘站稳63上方，可建仓0.5手。成本63，止损60。</div>
+    <div class="act"><span class="lbl">止损线</span>：收盘跌破60（三次试探的防守位），放弃。</div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-weight:700;color:var(--accent);font-size:16px;margin-bottom:12px">④-⑥ 其余持仓概览</div>
+  
+  <div class="six">
+    <div class="sixh">通富微电（002156）持仓1手@45.80 盈亏+39.1%</div>
+    <div class="sixb">
+      <p>8/27收63.73（量比1.39），连续三阳（61.47→61.25→63.73）。250日位置约65%，偏高。建议：反弹至65-67减仓0.5手锁定利润。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">赛腾股份（603283）持仓1手@52.30 盈亏-7.4%</div>
+    <div class="sixb">
+      <p>8/27收48.48（量比1.28），从46.22低反弹。250日位置约35%，低位。止损线45.50，站稳48可持有。</p>
+    </div>
+  </div>
+  
+  <div class="six">
+    <div class="sixh">环旭电子（601231）持仓1手@28.50 盈亏-3.3%</div>
+    <div class="sixb">
+      <p>8/27收27.55（量比1.43），缩量反弹。250日位置约25%，低位。止损线26.50，站稳28可持有。</p>
+    </div>
+  </div>
+</div>
+
+<div class="core">
+  <p style="font-weight:700;color:var(--accent);font-size:17px;margin-bottom:10px">今日总结与明日预案</p>
+  <ul style="margin:0;padding-left:20px">
+    <li><span style="color:var(--red);font-weight:700">胜宏科技</span>：已进入止盈区间256-260，明日优先减仓1手锁定利润</li>
+    <li><span style="color:var(--green);font-weight:700">工业富联</span>：倍量突破62-64平台，明日若站稳63可建仓0.5手</li>
+    <li><span style="color:var(--orange);font-weight:700">淳中科技</span>：缩量收复92，需明日放量突破95才能确认重建构</li>
+    <li><span style="color:var(--text-dim)">其余持仓</span>：通富微电、赛腾股份、环旭电子暂持，观察各自生死线</li>
+  </ul>
+  <p style="margin-top:12px;font-size:14px;color:var(--text-muted)">大盘弱反弹（量能不足），持仓修复为主。仓位策略不变：弱市总仓上限2-4成。</p>
+</div>
+
+<div class="footer">
+  <p>现代量学实战体系 · 复盘日报 2026-08-27</p>
+  <p style="margin-top:8px">数据：腾讯证券前复权日K | 算法：本地行情库 | 生成时间：17:47</p>
+</div>
+
 </body></html>
