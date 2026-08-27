@@ -1160,73 +1160,46 @@ a { text-decoration: none; color: inherit; }
 
 <!-- 底部Tab导航 -->
 <div class="tab-bar">
-  <a class="tab-item active" href="#" data-tab="home">
+  <a class="tab-item active" href="#" onclick="switchTab('home', this);return false;">
     <span class="icon">🏠</span>
     <span class="label">首页</span>
   </a>
-  <a class="tab-item" href="#" data-tab="courses">
+  <a class="tab-item" href="#" onclick="switchTab('courses', this);return false;">
     <span class="icon">📚</span>
     <span class="label">课程</span>
   </a>
-  <a class="tab-item" href="#" data-tab="plans">
+  <a class="tab-item" href="#" onclick="switchTab('plans', this);return false;">
     <span class="icon">📋</span>
     <span class="label">预案</span>
   </a>
-  <a class="tab-item" href="#" data-tab="reviews">
+  <a class="tab-item" href="#" onclick="switchTab('reviews', this);return false;">
     <span class="icon">📝</span>
     <span class="label">复盘</span>
   </a>
-  <a class="tab-item" href="#" data-tab="data">
+  <a class="tab-item" href="#" onclick="switchTab('data', this);return false;">
     <span class="icon">📖</span>
     <span class="label">资料</span>
   </a>
 </div>
 
 <script>
-// Tab切换（使用事件委托，避免inline onclick问题）
-document.addEventListener('DOMContentLoaded', function() {
-  var tabBar = document.querySelector('.tab-bar');
-  if (!tabBar) return;
-  
-  tabBar.addEventListener('click', function(e) {
-    var tab = e.target.closest('[data-tab]');
-    if (!tab) return;
-    e.preventDefault();
-    e.stopPropagation();
-    
-    var tabName = tab.getAttribute('data-tab');
-    switchTab(tabName);
-  });
-});
-</script>
-
 // 切换Tab
-function switchTab(name) {
+function switchTab(name, el) {
   // 关闭阅读器
   closeReader();
 
   // 隐藏所有页面
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('active');
-  });
-
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   // 显示目标页面
-  var target = document.getElementById('page-' + name);
+  const target = document.getElementById('page-' + name);
   if (target) {
     target.classList.add('active');
-    var mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-      mainContent.scrollTop = 0;
-    }
+    document.querySelector('.main-content').scrollTop = 0;
   }
-
   // 更新Tab状态
-  document.querySelectorAll('.tab-item').forEach(function(t) {
-    t.classList.remove('active');
-  });
-  var activeTab = document.querySelector('[data-tab="' + name + '"]');
-  if (activeTab) {
-    activeTab.classList.add('active');
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  if (el) {
+    el.classList.add('active');
   }
 }
 
