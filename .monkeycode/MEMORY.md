@@ -304,6 +304,13 @@ Entries discovered by the Agent during task execution should follow this format:
   - 每个报告头部注明"数据截止时间"（如：16:44）
   - 脚本位置：/workspace/现代量学讲义/generate_fund_report.py（资金识别主力脚本）
   - 资金识别体系：贯穿全天的核心报告，以"资金行为"为主线
+  - 报告合并规则：
+    * 盘中盯盘（9:30-11:30, 13:00-15:00）→ 手动触发，拉取实时数据生成
+    * 午间研判 → 合并为"午间资金识别"，判断主力/量化意图
+    * 收盘复盘 → 合并为"收盘资金识别+全面复盘"，含次日预案
+    * 每日21:00自动生成联网复盘报告（政策面/基本面官方权威源）
+  - 旧报告命名（已废弃）：盘中盯盘、午间研判、收盘复盘
+  - 新报告命名：午间资金识别、收盘资金识别
   - 8000端口预览：https://8000-202312279de3cd0a.monkeycode-ai.online
   - 8086端口Web工作台：https://8086-202312279de3cd0a.monkeycode-ai.online
 
