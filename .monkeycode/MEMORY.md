@@ -291,11 +291,12 @@ Entries discovered by the Agent during task execution should follow this format:
     * 盘中盯盘-YYYY-MM-DD.html（原：盯盘清单）
     * 午间研判-YYYY-MM-DD.html（原：午盘研判）
     * 收盘复盘-YYYY-MM-DD.html（原：复盘）
+  - 复盘报告采用深度六步拆解格式：左证明建构 → 左侧生死线 → 右确认 → 市场机理 → 结论 → 操作建议
   - 报告生成后自动更新index.html导航（快速操作行+复盘列表）
   - 快速操作行标签：今日盘前预案/今日盘中盯盘/午间研判/复盘日报
   - 每个报告头部注明"数据截止时间"（如：16:44）
-  - 脚本位置：/workspace/现代量学讲义/generate_report.py
-  - 注意：generate_report.py的placeholder替换逻辑可能失效，需直接修改index.html文本
+  - 脚本位置：/workspace/现代量学讲义/generate_report.py（简单版）和 generate_deep_report.py（深度版）
+  - 深度版报告包含：大盘环境分析、持仓全景表、逐股六步拆解、明日预案
   - 8000端口预览：https://8000-202312279de3cd0a.monkeycode-ai.online
   - 8086端口Web工作台：https://8086-202312279de3cd0a.monkeycode-ai.online
 
