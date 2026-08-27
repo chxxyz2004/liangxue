@@ -272,3 +272,19 @@ Entries discovered by the Agent during task execution should follow this format:
   - 修复方案：改用当前K线的high和close计算回撤幅度（retrace_from_high = (h - c) / h * 100）
   - 修复后：所有7个Python脚本均通过未来函数检查
   - 系统评分：90分 → 92分
+
+[Project Knowledge Summary]
+- Date: 2026-08-27
+- Context: 系统自我迭代升级，新增回测框架和模拟交易模块
+- Category: Build Methods
+- Instructions:
+  - 回测框架：/workspace/行情数据库/backtest.py
+    - 支持倍量柱/缩量柱信号历史回溯
+    - 右确认验证机制（lookforward参数）
+    - 输出胜率统计和详细信号记录
+  - 模拟交易模块：/workspace/行情数据库/trade_logger.py
+    - 记录买卖决策和交易结果
+    - 支持待执行交易列表和历史统计
+    - 数据保存在/tmp/liangxue_trades.json
+  - 对倒阈值验证：积累30天+5分钟K线数据后可运行回测验证
+  - 建议每周运行一次回测，验证信号有效性并调整参数
