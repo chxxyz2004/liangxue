@@ -333,6 +333,37 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
     </ul>
   </div>
 
+  <!-- 九层过滤网买入检查（通用模板） -->
+  <div class="chapter-title" style="border-color:var(--accent-blue)">五层过滤网买入检查（任何买点必须逐项过检）</div>
+  <div class="card" style="border-color:var(--accent-blue)">
+    <div class="section-label">第1层 · 量学信号层</div>
+    <ul class="checklist">
+      <li><span class="cb" id="filter1"></span><span>买入三问：位置&lt;70%？量比1.5-2.0？有右侧确认？三问不过不出手</span></li>
+    </ul>
+    <div class="section-label" style="margin-top:10px">第2层 · 大盘环境层</div>
+    <ul class="checklist">
+      <li><span class="cb" id="filter2"></span><span>量学三线判断：强/震荡分化/弱（当前：分化市偏弱→上限4成）</span></li>
+      <li><span class="cb" id="filter2b"></span><span>四把体温计：涨跌家数比例、连板高度、炸板率、北向资金（无法获取时跳过）</span></li>
+    </ul>
+    <div class="section-label" style="margin-top:10px">第3层 · 基本面层</div>
+    <ul class="checklist">
+      <li><span class="cb" id="filter3"></span><span>非ST/*ST？PE&lt;50/ROE&gt;8%？（无法获取PE/ROE时降级为仅查非ST）</span></li>
+    </ul>
+    <div class="section-label" style="margin-top:10px">第4层 · 情绪面层（已降级）</div>
+    <ul class="checklist">
+      <li><span class="cb" id="filter4"></span><span>上涨家数&gt;20%≈1000家=正常，&lt;20%=冰点谨慎，&gt;40%=过热禁追（无法获取时用大盘三线替代）</span></li>
+      <li><span class="cb" id="filter4b"></span><span>量化时代不用连板阈值，改用大盘三线判断</span></li>
+    </ul>
+    <div class="section-label" style="margin-top:10px">第5层 · 风险收益比层</div>
+    <ul class="checklist">
+      <li><span class="cb" id="filter5"></span><span>风险收益比≥2:1？风险=入场价−止损价，收益=目标价−入场价</span></li>
+      <li><span class="cb" id="filter5b"></span><span>凯利公式校验：单股仓位=min((胜率×盈亏比−败率)/盈亏比, 30%)，无回测数据用10%观察仓</span></li>
+    </ul>
+    <div class="alert-box" style="margin-top:12px;background:var(--accent-blue);color:#fff;padding:8px 12px;border-radius:6px;font-size:12px">
+      ⚠️ 五层全满足才允许买入，缺任意一层直接放弃。订单流数据无法获取时降级为量柱形态+价量关系验证。
+    </div>
+  </div>
+
   <!-- 纪律卡 -->
   <div class="chapter-title">今日纪律卡</div>
   <div class="card" style="border-color:var(--red)">
@@ -373,6 +404,33 @@ document.querySelectorAll('.checklist li').forEach((li, i) => {
       cb.textContent = '✓';
     }
   };
+});
+
+// 五层过滤网检查统计
+function updateFilterStatus() {
+  const allCbs = document.querySelectorAll('.checklist .cb');
+  const doneCbs = document.querySelectorAll('.checklist .cb.done');
+  const total = allCbs.length;
+  const done = doneCbs.length;
+  
+  // 每层过滤网单独统计
+  const layers = document.querySelectorAll('.card');
+  layers.forEach(layer => {
+    const layerCbs = layer.querySelectorAll('.cb');
+    const layerDone = layer.querySelectorAll('.cb.done');
+    if (layerCbs.length > 0 && layer.querySelector('.section-label')) {
+      const label = layer.querySelector('.section-label').textContent;
+      if (layerDone.length === layerCbs.length && layerCbs.length > 0) {
+        layer.style.borderColor = 'var(--green)';
+      } else if (layerCbs.length > 0) {
+        layer.style.borderColor = 'var(--border)';
+      }
+    }
+  });
+}
+
+document.querySelectorAll('.checklist li').forEach(li => {
+  li.addEventListener('click', updateFilterStatus);
 });
 </script>
 </body>
