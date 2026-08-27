@@ -227,3 +227,15 @@ Entries discovered by the Agent during task execution should follow this format:
     4. 量比异动：单根量能>前5根均值×3倍 → 异常行为
   - 数据来源：新浪财经5分钟K线API (money.finance.sina.com.cn)，无需L2权限
   - 8只持仓代码汇总：淳中sh603516、富联sh601138、赛腾sh603283、通富sz002156、环旭sh601231、胜宏sz300476、中贝sh603220、华建sh600629、天孚sz300394
+[Project Knowledge Summary]
+- Date: 2026-08-27
+- Context: 配置量化系统自动化调度
+- Category: Build Methods
+- Instructions:
+  - crontab已配置两个定时任务：
+    1. 每日11:30（交易日）运行 auto_noon.sh 入库5分钟K线
+    2. 每日15:30（交易日）运行 auto_update.sh 更新日K+5分钟+对倒检测
+  - 脚本位置：/workspace/行情数据库/auto_update.sh, auto_noon.sh, auto_review.sh
+  - 日志位置：/tmp/liangxue_update.log, /tmp/liangxue_noon.log, /tmp/liangxue_cron.log
+  - 手动触发：收盘后可运行 /workspace/行情数据库/auto_update.sh 立即更新
+  - 检查cron状态：crontab -l 查看任务，service cron status 查看服务

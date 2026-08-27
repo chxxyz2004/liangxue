@@ -1,46 +1,46 @@
 {
-  "updated_at": "2026-08-27 00:27:06",
+  "updated_at": "2026-08-27 13:29:14",
   "fq_policy": "股票=腾讯前复权qfq，指数=新浪不复权",
   "stocks": {
     "sh601138": {
       "name": "工业富联",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     },
     "sz300476": {
       "name": "胜宏科技",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     },
     "sz300394": {
       "name": "天孚通信",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     },
     "sh603516": {
       "name": "淳中科技",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     },
     "sz002156": {
       "name": "通富微电",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     },
     "sh600584": {
       "name": "长电科技",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     },
     "sh603283": {
       "name": "赛腾股份",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     },
     "sh601231": {
       "name": "环旭电子",
-      "count": 360,
-      "latest_day": "2026-08-26"
+      "count": 361,
+      "latest_day": "2026-08-27"
     }
   },
   "indexes": {
