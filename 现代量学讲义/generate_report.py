@@ -152,13 +152,13 @@ def save_report(content, today_str):
     report_type = content['type'].replace(' ', '-')
     
     if '复盘' in report_type:
-        filename = f'复盘-{today_str}.html'
+        filename = f'收盘复盘-{today_str}.html'
     elif '盘前' in report_type or '集合竞价' in report_type:
-        filename = f'开盘预案-{today_str}.html'
+        filename = f'盘前预案-{today_str}.html'
     elif '盯盘' in report_type:
-        filename = f'盯盘清单-{today_str}.html'
-    elif '午盘' in report_type:
-        filename = f'午盘研判-{today_str}-{datetime.now().strftime("%H%M")}.html'
+        filename = f'盘中盯盘-{today_str}.html'
+    elif '午盘' in report_type or '午间' in report_type:
+        filename = f'午间研判-{today_str}.html'
     else:
         filename = f'{report_type}-{today_str}.html'
     
