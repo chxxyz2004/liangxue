@@ -301,20 +301,26 @@ def update_index_html(new_files):
       </div>''')
         changes.append(f"午盘: {filename}")
     
-    # 复盘
+    # 复盘 - 直接匹配文本替换
     if '复盘' in new_files and new_files['复盘']:
         filename = new_files['复盘']
         date_str = filename.replace('复盘-', '').replace('.html', '')
-        # 替换昨日复盘
-        old_pattern = "<!-- PREVIEW_PLACEHOLDER_REVIEW -->"
-        if old_pattern in content:
-            content = content.replace(old_pattern, f'''<div class="quick-card secondary" onclick="openReader('./{filename}','{date_str} 收盘复盘');return false;">
+        # 匹配现有的昨日复盘卡片并替换
+        old_pattern = '''<div class="quick-card secondary" onclick="openReader\('./复盘-\d{4}-\d{2}-\d{2}\.html','[^']+'");return false;">
         <div class="qc-icon">📝</div>
-        <div class="qc-title">最新复盘</div>
-        <div class="qc-sub">{date_str} 收盘分析</div>
-        <span class="qc-badge">最新</span>
-      </div>''')
-        changes.append(f"复盘: {filename}")
+        <div class="qc-title">昨日复盘</div>'''
+        new_card = f'''<div class="quick-card secondary" onclick="openReader('./{filename}','{date_str} 收盘复盘');return false;">
+        <div class="qc-icon">📝</div>
+        <div class="qc-title">复盘日报</div>'''
+        if old_pattern in content:
+            content = content.replace(old_pattern, new_card)
+            changes.append(f"复盘: {filename}")
+        else:
+            # 如果没有找到，尝试匹配"昨日复盘"文本
+            if "昨日复盘" in content:
+                content = content.replace("昨日复盘", "复盘日报")
+                content = content.replace("复盘-2026-08-26.html", f"复盘-{today_str}.html")
+                changes.append(f"复盘: {filename}")
     
     # 同时更新复盘页列表
     review_section = '''    <div class="section-header">
