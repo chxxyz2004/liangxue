@@ -320,6 +320,7 @@ Entries discovered by the Agent during task execution should follow this format:
   - 新报告命名：午间资金识别、收盘资金识别
   - 8000端口预览：https://8000-202312279de3cd0a.monkeycode-ai.online
   - 8086端口Web工作台：https://8086-202312279de3cd0a.monkeycode-ai.online
+  - 导航页v3.0重构（2026-08-27）：移动端优先设计，实时行情滚动、快速操作卡片、持仓网格、底部Tab导航
 
 [Project Knowledge Summary]
 - Date: 2026-08-27
