@@ -8,17 +8,11 @@ from datetime import datetime
 
 sys.path.insert(0, '/workspace/行情数据库')
 
-HOLDINGS = {
-    'sh603516': {'name': '淳中科技', 'cost': 98.50, 'shares': 900, 'stop_loss': 90.63, 'life_line': 92.6},
-    'sh601138': {'name': '工业富联', 'cost': 58.20, 'shares': 1100},
-    'sz002156': {'name': '通富微电', 'cost': 45.80, 'shares': 700},
-    'sh601231': {'name': '环旭电子', 'cost': 28.50, 'shares': 800},
-    'sz300476': {'name': '胜宏科技', 'cost': 230.00, 'shares': 100, 'take_profit': (256, 260)},
-    'sh603283': {'name': '赛腾股份', 'cost': 52.30, 'shares': 400},
-}
+# 引用统一配置中心
+from config import HOLDINGS, WATCH_LIST, INDEXES, DATA_DIR
 
 def load_kline(sym):
-    path = f'/workspace/行情数据库/kline/{sym}.json'
+    path = os.path.join(DATA_DIR, f'{sym}.json')
     if os.path.exists(path):
         with open(path) as f:
             return json.load(f).get('data', [])
