@@ -471,28 +471,93 @@ def update_index_html(new_file):
     
     # 提取日期
     today_str = new_file.split('-')[-1].replace('.html', '')
+    date_short = today_str.split('-')[-1]
     
-    # 更新快速操作行
+    # 判断报告类型
+    report_type = ''
     if '午间' in new_file:
-        # 替换午间研判卡片
-        old_pattern = '午间研判'
-        new_card = f'''<div class="quick-card warning" onclick="openReader('./{new_file.split("/")[-1]}','{today_str} 午间资金识别');return false;">
+        report_type = 'noon'
+    elif '收盘' in new_file:
+        report_type = 'close'
+    elif '联网' in new_file:
+        report_type = 'evening'
+    
+    if not report_type:
+        return
+    
+    # 构建新的卡片HTML
+    card_map = {
+        'noon': f'''<div class="quick-card warning" onclick="openReader('./{os.path.basename(new_file)}','{today_str} 午间资金识别');return false;">
         <div class="qc-icon">📊</div>
         <div class="qc-title">午间资金识别</div>
         <div class="qc-sub">{today_str} 上午资金流向</div>
         <span class="qc-badge">11:30数据</span>
-      </div>'''
-        content = content.replace(old_pattern, new_card)
-    elif '收盘' in new_file:
-        # 替换收盘复盘卡片
-        old_pattern = '收盘复盘'
-        new_card = f'''<div class="quick-card secondary" onclick="openReader('./{new_file.split("/")[-1]}','{today_str} 收盘资金识别+全面复盘');return false;">
+      </div>''',
+        'close': f'''<div class="quick-card secondary" onclick="openReader('./{os.path.basename(new_file)}','{today_str} 收盘资金识别+全面复盘');return false;">
         <div class="qc-icon">📝</div>
         <div class="qc-title">收盘资金识别+复盘</div>
         <div class="qc-sub">{today_str} 全天资金流向+次日预案</div>
         <span class="qc-badge">今日</span>
+      </div>''',
+        'evening': f'''<div class="quick-card info" onclick="openReader('./{os.path.basename(new_file)}','{today_str} 联网复盘');return false;">
+        <div class="qc-icon">🌐</div>
+        <div class="qc-title">联网复盘</div>
+        <div class="qc-sub">{today_str} 政策面+基本面官方信息</div>
+        <span class="qc-badge">21:00</span>
       </div>'''
-        content = content.replace(old_pattern, new_card)
+    }
+    
+    new_card = card_map.get(report_type, '')
+    if not new_card:
+        return
+    
+    # 替换快速操作行中的对应卡片
+    # 匹配对应的旧卡片并替换
+    patterns = {
+        'noon': '午间研判',
+        'close': '收盘复盘',
+        'evening': '联网复盘'
+    }
+    
+    old_keyword = patterns.get(report_type, '')
+    
+    # 使用更精确的替换
+    import re
+    if report_type == 'noon':
+        # 替换午间研判卡片
+        content = re.sub(
+            r'<div class="quick-card warning"[^>]*>.*?</div>\s*</div>',
+            new_card,
+            content,
+            count=1,
+            flags=re.DOTALL
+        )
+    elif report_type == 'close':
+        # 替换收盘复盘卡片
+        content = re.sub(
+            r'<div class="quick-card secondary"[^>]*>.*?</div>\s*</div>',
+            new_card,
+            content,
+            count=1,
+            flags=re.DOTALL
+        )
+    elif report_type == 'evening':
+        # 在快速操作行末尾添加联网复盘卡片
+        content = content.replace(
+            '<div class="quick-card purple"',
+            new_card + '\n      <div class="quick-card purple"'
+        )
+    
+    # 更新复盘页列表
+    if report_type in ['noon', 'close']:
+        # 在复盘页添加新报告链接
+        review_link = f'<a class="lesson-card" href="#" onclick="openReader(\'./{os.path.basename(new_file)}\', \'{today_str} {report_type}\');return false;">\n        <div class="card-head">\n          <div class="card-icon review">📝</div>\n          <div class="card-meta">\n            <span class="card-tag review">复盘</span>\n            <div class="card-title">{today_str} {report_type}</div>\n            <div class="card-subtitle">全天资金流向 + 次日预案</div>\n          </div>\n        </div>\n        <div class="card-desc">资金行为分析 + 主力意图判断</div>\n        <span class="card-status new">今日</span>\n      </a>'
+        
+        # 在复盘页第一个位置插入
+        content = content.replace(
+            '<div class="card-list">\n      <a class="lesson-card" href="#" onclick="openReader(\'./收盘资金识别-',
+            '<div class="card-list">\n      ' + review_link + '\n      <a class="lesson-card" href="#" onclick="openReader(\'./收盘资金识别-'
+        )
     
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(content)
