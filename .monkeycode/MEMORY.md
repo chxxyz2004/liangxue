@@ -275,16 +275,13 @@ Entries discovered by the Agent during task execution should follow this format:
 
 [Project Knowledge Summary]
 - Date: 2026-08-27
-- Context: 系统自我迭代升级，新增回测框架和模拟交易模块
+- Context: 系统自我迭代升级，新增回测框架、模拟交易、多数据源和Web工作台
 - Category: Build Methods
 - Instructions:
-  - 回测框架：/workspace/行情数据库/backtest.py
-    - 支持倍量柱/缩量柱信号历史回溯
-    - 右确认验证机制（lookforward参数）
-    - 输出胜率统计和详细信号记录
-  - 模拟交易模块：/workspace/行情数据库/trade_logger.py
-    - 记录买卖决策和交易结果
-    - 支持待执行交易列表和历史统计
-    - 数据保存在/tmp/liangxue_trades.json
+  - 回测框架：/workspace/行情数据库/backtest.py，支持倍量柱/缩量柱信号历史回溯，右确认验证机制
+  - 模拟交易模块：/workspace/行情数据库/trade_logger.py，记录买卖决策，数据保存在/tmp/liangxue_trades.json
   - 对倒阈值验证：积累30天+5分钟K线数据后可运行回测验证
+  - 多数据源管理器：/workspace/行情数据库/data_source_manager.py，腾讯证券为主源，新浪财经fallback
+  - 推送通知模块：/workspace/行情数据库/notification.py，支持企业微信/飞书/钉钉Webhook
+  - Web工作台：/workspace/行情数据库/dashboard_v2.py，端口8085，/api/overview、/api/holdings、/api/signals等接口
   - 建议每周运行一次回测，验证信号有效性并调整参数
