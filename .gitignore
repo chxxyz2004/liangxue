@@ -111,6 +111,12 @@
 *.pem
 *.key
 
+# Trading sensitive data (private user information)
+行情数据库/config.py
+现代量学讲义/index.html
+.monkeycode/MEMORY.md
+MEMORY.md
+
 # Temporary files
 *.tmp
 *.temp
