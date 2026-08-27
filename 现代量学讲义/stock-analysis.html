@@ -219,18 +219,19 @@ async function searchStockByName(query) {
       return { code: prefix + nums, name: null };
     }
     // 用腾讯股票搜索接口
+    // 格式：v_hint="sh~603256~\u5b8f\u548c\u79d1\u6280~hhkj~GP-A"
     const resp = await fetch('https://smartbox.gtimg.cn/s3/?q=' + encodeURIComponent(query) + '&t=all');
     const text = await resp.text();
-    // 格式：v_hint="sh~603256~\u5b8f\u548c\u79d1\u6280~hhkj~GP-A"
     const match = text.match(/v_hint="([^"]+)"/);
     if (!match || match[1] === 'N') return null;
     const parts = match[1].split('~');
     if (parts.length < 3) return null;
-    const code = parts[0];
-    const rawName = parts[2];
-    // 解码可能的Unicode转义
-    const name = rawName.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
-    return { code: code, name: name || null };
+    // parts[0]=市场前缀(sh/sz), parts[1]=代码, parts[2]=名称(可能含Unicode转义)
+    const code = parts[0] + parts[1];
+    let name = parts[2];
+    // 解码Unicode转义序列 \uXXXX
+    name = name.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)));
+    return { code: code, name: name };
   } catch (e) {
     console.error('搜索失败:', e);
     return null;
