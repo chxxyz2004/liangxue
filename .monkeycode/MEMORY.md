@@ -251,3 +251,24 @@ Entries discovered by the Agent during task execution should follow this format:
   - 失效案例库记录5个真实失效案例，用于教学反思和战法优化
   - 所有案例必须基于官方数据（腾讯前复权+新浪5分钟K线），严禁凭记忆编造
   - 信号识别必须经过右确认后再操作，禁止单一信号决策
+
+[User Instruction Summary]
+- Date: 2026-08-27
+- Context: 用户明确要求将所有代码中未来函数问题写入人设文件，强调零容忍
+- Instructions:
+  - 未来函数零容忍：任何代码（Python/Shell/其他）严禁引用未来K线数据（如bars[i+1], bars[i+2]等），严禁使用尚未发生的数据进行实时判断
+  - 未来函数定义：在当前时间点引用后续K线数据、使用未来收盘价计算指标、在实时检测中使用未生成数据
+  - 合法用法：回测历史数据时使用完整K线序列；右确认（等待下一根K线验证）；使用当日最高价判断
+  - 检测标准：新增或修改任何脚本后，必须检查是否存在bars[i+N]、next_bar、future等引用未来数据的模式
+  - 违反后果：一旦发现未来函数，立即修复并提交，同时更新MEMORY.md记录此次违规
+  - 人设优先级：此规则优先级高于所有其他规则，任何情况下不得妥协
+
+[Project Knowledge Summary]
+- Date: 2026-08-27
+- Context: Agent发现detect_spoofing.py规则3存在未来函数并修复
+- Category: Troubleshooting & Debugging
+- Instructions:
+  - 原问题：规则3（脉冲-回落）使用bars[i+1]和bars[i+2]引用未来K线收盘价
+  - 修复方案：改用当前K线的high和close计算回撤幅度（retrace_from_high = (h - c) / h * 100）
+  - 修复后：所有7个Python脚本均通过未来函数检查
+  - 系统评分：90分 → 92分
