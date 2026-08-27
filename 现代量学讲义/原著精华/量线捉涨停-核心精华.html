@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黑马王子原著精华 - 量线捉涨停 | 现代量学实战体系</title>
+<style>
+:root{
+  --bg:#0a0e1a;--card:#131a2e;--border:#1e2a45;
+  --red:#ff4d6d;--green:#00e676;--blue:#4dabf7;--orange:#ff922b;--purple:#9b59b6;
+  --text:#e0e6f0;--muted:#6b7a99;--accent:#ffd43b;
+  --red-dim:rgba(255,77,109,0.12);--green-dim:rgba(0,230,118,0.12);--blue-dim:rgba(77,171,247,0.12);--orange-dim:rgba(255,146,43,0.12);--purple-dim:rgba(155,89,182,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.6;padding-bottom:60px}
+.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;text-align:center;border-bottom:2px solid var(--accent)}
+.header h1{font-size:22px;color:var(--accent)}
+.header .subtitle{font-size:13px;color:var(--muted);margin-top:4px}
+.content{padding:16px}
+.chapter-title{font-size:17px;color:var(--accent);padding:12px 16px;border-left:3px solid var(--accent);margin:20px 0 12px;background:var(--card)}
+.section-title{font-size:15px;font-weight:bold;color:var(--blue);margin:16px 0 8px;padding-left:12px;border-left:2px solid var(--blue)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.card-title{font-size:15px;font-weight:bold}
+.card-sub{font-size:12px;color:var(--muted)}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.price-item{background:rgba(255,255,255,.04);border-radius:6px;padding:10px;text-align:center}
+.price-label{font-size:11px;color:var(--muted);margin-bottom:4px}
+.price-val{font-size:16px;font-weight:bold}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:bold}
+.tag-red{background:var(--red-dim);color:var(--red)}
+.tag-green{background:var(--green-dim);color:var(--green)}
+.tag-blue{background:var(--blue-dim);color:var(--blue)}
+.tag-orange{background:var(--orange-dim);color:var(--orange)}
+.tag-purple{background:var(--purple-dim);color:var(--purple)}
+.action-list{list-style:none;padding:0}
+.action-list li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.action-list li:last-child{border-bottom:none}
+.bullet{color:var(--accent);font-weight:bold;margin-right:8px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+th,td{padding:8px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:rgba(255,255,255,.05);font-weight:bold;color:var(--accent)}
+tr:hover{background:rgba(255,255,255,.02)}
+strong{color:var(--accent)}
+.alert-box{background:var(--blue-dim);border:1px solid var(--blue);border-radius:8px;padding:12px;margin:12px 0;font-size:13px}
+.success-box{background:var(--green-dim);border:1px solid var(--green);border-radius:8px;padding:12px;margin:12px 0;font-size:13px}
+.warn-box{background:var(--orange-dim);border:1px solid var(--orange);border-radius:8px;padding:12px;margin:12px 0;font-size:13px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin:10px 0}
+.step-title{font-size:14px;font-weight:bold;color:var(--accent);margin-bottom:8px}
+.nav-tabs{display:flex;gap:8px;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap}
+.nav-tab{padding:6px 12px;border-radius:20px;font-size:12px;background:var(--border);color:var(--muted);text-decoration:none;white-space:nowrap}
+.nav-tab.active{background:var(--accent);color:#000;font-weight:bold}
+.red-text{color:var(--red)}
+.green-text{color:var(--green)}
+.blue-text{color:var(--blue)}
+.orange-text{color:var(--orange)}
+.purple-text{color:var(--purple)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>黑马王子原著精华</h1>
+  <div class="subtitle">《量线捉涨停》核心内容精编</div>
+</div>
+
+<div class="nav-tabs">
+  <a class="nav-tab active" href="#chapter1">第一单元·量能平衡线</a>
+  <a class="nav-tab" href="#chapter2">第二单元·智能画线</a>
+  <a class="nav-tab" href="#chapter3">第三单元·实战技法</a>
+  <a class="nav-tab" href="#chapter4">第四单元·综合应用</a>
+</div>
+
+<div class="content">
+
+<!-- ==================== 第一单元 ==================== -->
+<div id="chapter1">
+  <div class="chapter-title" id="chapter-title">第一单元：量线的基本原理</div>
+  
+  <div class="section-title">第1章 量线的定义与本质</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">1.1 什么是量线</span>
+      <span class="tag tag-blue">核心概念</span>
+    </div>
+    <p><strong class="orange-text">量线</strong>：以某一根关键量柱（将军柱、黄金柱等）为基准，通过特定规则画出的水平线或斜线。</p>
+    <p>量线的作用：<strong>标示支撑与压力</strong>，指导买卖操作。</p>
+    <div class="success-box">
+      <strong>核心思维：</strong>量线是量柱的延伸。找到正确的量柱，就找到了正确的量线。
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">1.2 量线的七大元素</span>
+      <span class="tag tag-purple">核心框架</span>
+    </div>
+    <table>
+      <tr><th>序号</th><th>量线类型</th><th>画法</th><th>作用</th></tr>
+      <tr><td>1</td><td><strong class="orange-text">生死线</strong></td><td>箱体下沿（触碰≥2次）</td><td>多空分界线</td></tr>
+      <tr><td>2</td><td><strong class="green-text">进攻线</strong></td><td>将军柱实顶/跳空上沿</td><td>买入信号</td></tr>
+      <tr><td>3</td><td><strong class="red-text">防守线</strong></td><td>将军柱实底/跳空下沿</td><td>止损信号</td></tr>
+      <tr><td>4</td><td><strong class="blue-text">精准线</strong></td><td>倍量柱右侧缩量确认</td><td>验证信号</td></tr>
+      <tr><td>5</td><td><strong class="purple-text">灯塔线</strong></td><td>从王牌柱向左上倾斜</td><td>目标指引</td></tr>
+      <tr><td>6</td><td><strong class="orange-text">合力线</strong></td><td>多根量线交汇点</td><td>共振信号</td></tr>
+      <tr><td>7</td><td><strong class="green-text">趋势线</strong></td><td>连接两个以上高点/低点</td><td>趋势方向</td></tr>
+    </table>
+  </div>
+  
+  <div class="section-title">第2章 生命线：防守线与进攻线</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">2.1 将军柱的画线原则</span>
+      <span class="tag tag-red">铁律</span>
+    </div>
+    <p><strong class="red-text">防守线（攻防线）</strong>的画法（从强到弱）：</p>
+    <ol style="padding-left:20px;line-height:2.2">
+      <li><strong>将军柱后三日K线均在其实体上方</strong> → 以<strong class="green-text">实体上沿</strong>为防守线</li>
+      <li><strong>有K线部分在下方</strong> → 以<strong class="orange-text">实体下沿</strong>为防守线</li>
+      <li><strong>所有K线都在下方</strong> → 以<strong class="red-text">三日最低点</strong>为防守线</li>
+      <li><strong>跳空高开</strong> → 以下方<strong class="blue-text">缺口上沿</strong>为防守线</li>
+    </ol>
+    <div class="alert-box">
+      <strong>关键：</strong>防守线一旦画出，跌破必须止损。这不是建议，是纪律。
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">2.2 进攻线的画法</span>
+      <span class="tag tag-green">买入信号</span>
+    </div>
+    <p><strong class="green-text">进攻线</strong>的画法：</p>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>普通将军柱</strong>：以将军柱实顶（收盘价）为进攻线</li>
+      <li><span class="bullet">·</span><strong>倍量将军柱</strong>：以倍量柱实顶为进攻线</li>
+      <li><span class="bullet">·</span><strong>跳空将军柱</strong>：以上方缺口上沿为进攻线</li>
+      <li><span class="bullet">·</span><strong>黄金柱</strong>：以黄金柱实顶为进攻线（更强信号）</li>
+    </ul>
+    <div class="success-box">
+      <strong>买入时机：</strong>价格站稳进攻线上方 + 量能配合（缩量回踩或放量突破）→ 买入信号。
+    </div>
+  </div>
+  
+  <div class="section-title">第3章 生死线：箱体的上沿与下沿</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">3.1 生死线的定义</span>
+      <span class="tag tag-red">关键防线</span>
+    </div>
+    <p><strong class="red-text">生死线</strong>：箱体运行的下沿线，是多空双方的"生命线"。</p>
+    <p>构成条件：</p>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>箱体下沿</strong>：价格至少两次触碰到同一水平位置</li>
+      <li><span class="bullet">·</span><strong>箱体上沿</strong>：价格至少两次触碰到同一水平位置</li>
+      <li><span class="bullet">·</span><strong>箱体颈线</strong>：箱体上沿与下沿的中线</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">3.2 生死线的实战意义</span>
+      <span class="tag tag-orange">操作纪律</span>
+    </div>
+    <table>
+      <tr><th>情况</th><th>含义</th><th>操作</th></tr>
+      <tr><td>站稳生死线</td><td class="green-text">多头强势</td><td>持有或加仓</td></tr>
+      <tr><td>跌破生死线</td><td class="red-text">空头主导</td><td>减仓或清仓</td></tr>
+      <tr><td>突破上沿</td><td class="orange-text">启动信号</td><td>追涨买入</td></tr>
+      <tr><td>回踩确认</td><td class="blue-text">有效突破</td><td>确认加仓</td></tr>
+    </table>
+    <div class="warn-box">
+      <strong>重要：</strong>生死的判定标准是"收盘价"还是"盘中价"？原著强调以<strong class="red-text">收盘价</strong>为准，盘中破位不算。但实战中，急跌破位应提前应对。
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第二单元 ==================== -->
+<div id="chapter2">
+  <div class="chapter-title">第二单元：智能画线体系</div>
+  
+  <div class="section-title">第4章 精准线的画法与验证</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">4.1 精准线的定义</span>
+      <span class="tag tag-blue">核心概念</span>
+    </div>
+    <p><strong class="blue-text">精准线</strong>：以倍量柱或高量柱为基础，经过右侧缩量柱确认后画出的水平线。</p>
+    <p>构成条件：</p>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>左侧：</strong>倍量柱或高量柱（启动信号）</li>
+      <li><span class="bullet">·</span><strong>右侧：</strong>缩量柱（确认信号）</li>
+      <li><span class="bullet">·</span><strong>中间：</strong>价格回踩精准线后反弹</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">4.2 精准线的三类验证</span>
+      <span class="tag tag-green">确认方法</span>
+    </div>
+    <table>
+      <tr><th>验证方式</th><th>特征</th><th>可信度</th></tr>
+      <tr><td>单线验证</td><td>一根精准线被触碰一次</td><td>中等</td></tr>
+      <tr><td>双线验证</td><td>两根精准线交叉或平行</td><td>较高</td></tr>
+      <tr><td>三线验证</td><td>三根精准线形成共振</td><td>最高</td></tr>
+    </table>
+    <div class="success-box">
+      <strong>实战口诀：</strong>一验看形状，二验看位置，三验看力度。三线共振 = 最强信号。
+    </div>
+  </div>
+  
+  <div class="section-title">第5章 灯塔线的画法与运用</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">5.1 灯塔线的定义</span>
+      <span class="tag tag-purple">进阶概念</span>
+    </div>
+    <p><strong class="purple-text">灯塔线</strong>：从王牌柱（将军柱/黄金柱）的最高点向左上方画出的斜线，用于预测反弹目标位。</p>
+    <p>画法：</p>
+    <ol style="padding-left:20px;line-height:2">
+      <li>找到将军柱或黄金柱的最高点</li>
+      <li>从左向右画一条斜线（约45度角）</li>
+      <li>后续价格触及此线 = 目标位到达</li>
+    </ol>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">5.2 灯塔线的实战应用</span>
+      <span class="tag tag-orange">目标预判</span>
+    </div>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>向上灯塔线</strong>：预测上涨目标位，到达后考虑减仓</li>
+      <li><span class="bullet">·</span><strong>向下灯塔线</strong>：预测下跌目标位，到达后考虑抄底</li>
+      <li><span class="bullet">·</span><strong>灯塔线+精准线</strong>：双重确认，信号更强</li>
+    </ul>
+  </div>
+  
+  <div class="section-title">第6章 合力线与共振信号</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">6.1 合力线的定义</span>
+      <span class="tag tag-blue">高级概念</span>
+    </div>
+    <p><strong class="blue-text">合力线</strong>：多条量线（生死线、进攻线、精准线等）交汇于同一位置，形成共振效应。</p>
+    <div class="price-grid">
+      <div class="price-item" style="border:2px solid var(--green)">
+        <div class="price-label">合力线形成条件</div>
+        <div class="price-val green-text" style="font-size:13px">≥2条线交汇于同价位</div>
+      </div>
+      <div class="price-item" style="border:2px solid var(--accent)">
+        <div class="price-label">信号强度</div>
+        <div class="price-val" style="color:var(--accent);font-size:13px">交汇线越多越强</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">6.2 共振信号的分级</span>
+      <span class="tag tag-red">信号强度</span>
+    </div>
+    <table>
+      <tr><th>级别</th><th>交汇线数量</th><th>信号强度</th><th>操作建议</th></tr>
+      <tr><td>一级共振</td><td>2条</td><td>较强</td><td>重点关注</td></tr>
+      <tr><td>二级共振</td><td>3条</td><td>很强</td><td>果断操作</td></tr>
+      <tr><td>三级共振</td><td>≥4条</td><td>极强</td><td>重仓出击</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 第三单元 ==================== -->
+<div id="chapter3">
+  <div class="chapter-title">第三单元：量线实战技法</div>
+  
+  <div class="section-title">第7章 黄金柱画线三步法</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">7.1 画线第一步：找王牌柱</span>
+      <span class="tag tag-blue">定位</span>
+    </div>
+    <p>找到将军柱后，进一步确认是否为黄金柱：</p>
+    <ol style="padding-left:20px;line-height:2">
+      <li><strong>确认将军柱</strong>：后三日不破其实底</li>
+      <li><strong>确认黄金柱</strong>：后三日缩量且收盘价不破实顶</li>
+      <li><strong>标记位置</strong>：在K线图上标注黄金柱编号</li>
+    </ol>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">7.2 画线第二步：画防守线</span>
+      <span class="tag tag-red">关键</span>
+    </div>
+    <p>以黄金柱为基准，按优先级画防守线：</p>
+    <table>
+      <tr><th>情况</th><th>防守线位置</th><th>强度</th></tr>
+      <tr><td>三日K线均在实顶上方</td><td>实顶（收盘价）</td><td>最强</td></tr>
+      <tr><td>部分K线在下方</td><td>实底（最低价）</td><td>中等</td></tr>
+      <tr><td>全部K线在下方</td><td>三日最低点</td><td>最弱</td></tr>
+      <tr><td>跳空高开</td><td>缺口上沿</td><td>较强</td></tr>
+    </table>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">7.3 画线第三步：画进攻线</span>
+      <span class="tag tag-green">买入信号</span>
+    </div>
+    <p>进攻线的位置决定买入时机：</p>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>进攻线在实顶</strong>：价格回到实顶附近 = 买入机会</li>
+      <li><span class="bullet">·</span><strong>进攻线在实底</strong>：价格回到实底附近 = 加仓机会</li>
+      <li><span class="bullet">·</span><strong>进攻线与防守线重合</strong>：该价位既是支撑也是压力</li>
+    </ul>
+    <div class="success-box">
+      <strong>买入策略：</strong>进攻线附近低吸 + 防守线设止损 = 最佳买卖组合。
+    </div>
+  </div>
+  
+  <div class="section-title">第8章 精准线画线四步法</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">8.1 精准线画线步骤</span>
+      <span class="tag tag-blue">操作技法</span>
+    </div>
+    <ol style="padding-left:20px;line-height:2.2">
+      <li><strong>找倍量柱</strong>：左侧找到倍量柱（启动信号）</li>
+      <li><strong>画水平线</strong>：以倍量柱的实顶或实底为基准画水平线</li>
+      <li><strong>右侧确认</strong>：观察右侧是否有缩量柱回踩此线后反弹</li>
+      <li><strong>验证强度</strong>：触碰次数越多，线的有效性越高</li>
+    </ol>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">8.2 精准线的三类形态</span>
+      <span class="tag tag-purple">形态识别</span>
+    </div>
+    <div class="price-grid">
+      <div class="price-item" style="border:1px solid var(--green)">
+        <div class="price-label">V形确认</div>
+        <div class="price-val green-text" style="font-size:12px">回踩后V型反弹</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--blue)">
+        <div class="price-label">W形确认</div>
+        <div class="price-val blue-text" style="font-size:12px">两次回踩确认</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--orange)">
+        <div class="price-label">平底确认</div>
+        <div class="price-val orange-text" style="font-size:12px">多次回踩不破</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--red)">
+        <div class="price-label">假突破确认</div>
+        <div class="price-val red-text" style="font-size:12px">突破后快速收回</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第四单元 ==================== -->
+<div id="chapter4">
+  <div class="chapter-title">第四单元：量线综合应用</div>
+  
+  <div class="section-title">第9章 五层过滤网的量线版</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">9.1 量线版五层过滤网</span>
+      <span class="tag tag-red">综合系统</span>
+    </div>
+    <table>
+      <tr><th>层级</th><th>检查内容</th><th>量线要点</th></tr>
+      <tr><td>第一层 大盘</td><td>大盘三线状态</td><td>上证/深成/创业板生命线</td></tr>
+      <tr><td>第二层 板块</td><td>所属板块强弱</td><td>板块指数防守线是否有效</td></tr>
+      <tr><td>第三层 个股</td><td>个股量线结构</td><td>生死线、进攻线、防守线</td></tr>
+      <tr><td>第四层 形态</td><td>K线形态确认</td><td>是否突破关键量线</td></tr>
+      <tr><td>第五层 量能</td><td>量能配合验证</td><td>突破时是否放量，回踩时是否缩量</td></tr>
+    </table>
+  </div>
+  
+  <div class="section-title">第10章 量线实战口诀</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">10.1 量线核心口诀</span>
+      <span class="tag tag-green">必背</span>
+    </div>
+    <div class="price-grid">
+      <div class="card" style="margin:0">
+        <div class="price-label">口诀一</div>
+        <div class="price-val" style="font-size:13px;color:var(--accent)">找柱画线</div>
+        <div class="price-label" style="margin-top:4px">先找将军柱，再画防守线</div>
+      </div>
+      <div class="card" style="margin:0">
+        <div class="price-label">口诀二</div>
+        <div class="price-val" style="font-size:13px;color:var(--accent)">三线合一</div>
+        <div class="price-label" style="margin-top:4px">攻守生命线，合一处最强</div>
+      </div>
+      <div class="card" style="margin:0">
+        <div class="price-label">口诀三</div>
+        <div class="price-val" style="font-size:13px;color:var(--accent)">量价配合</div>
+        <div class="price-label" style="margin-top:4px">突破要放量，回踩要缩量</div>
+      </div>
+      <div class="card" style="margin:0">
+        <div class="price-label">口诀四</div>
+        <div class="price-val" style="font-size:13px;color:var(--accent)">共振最强</div>
+        <div class="price-label" style="margin-top:4px">多线交汇点，信号最明确</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">10.2 量线操作铁律</span>
+      <span class="tag tag-red">铁律</span>
+    </div>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>不破不立</strong>：守住防守线才能持有，跌破防守线必须走</li>
+      <li><span class="bullet">·</span><strong>量价同步</strong>：突破量线时必须有量能配合</li>
+      <li><span class="bullet">·</span><strong>共振优先</strong>：共振位优先于单一信号</li>
+      <li><span class="bullet">·</span><strong>左证右验</strong>：左边有依据，右边有确认才动手</li>
+      <li><span class="bullet">·</span><strong>宁错过不做错</strong>：信号不明确时，观望胜过操作</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">10.3 量线与量柱的配合使用</span>
+      <span class="tag tag-blue">综合技法</span>
+    </div>
+    <div class="alert-box">
+      <strong>最佳组合：</strong><br>
+      量柱找王牌柱 → 量线画防守线/进攻线 → 量性确认信号 → 量级判断强度<br><br>
+      例如：<br>
+      ① 找到倍量柱（启动信号）<br>
+      ② 三日不破 → 确认为将军柱<br>
+      ③ 画出生死线（防守线）<br>
+      ④ 回踩生死线缩量 → 加仓信号<br>
+      ⑤ 突破进攻线放量 → 加仓确认
+    </div>
+  </div>
+  
+  <div class="success-box">
+    <strong>学习路径：</strong><br>
+    《量柱擒涨停》→ 掌握六要素、九量性、两王牌柱<br>
+    《量线捉涨停》→ 掌握七大量线元素、精准画法<br>
+    《伏击涨停》→ 综合应用十八种战法，盘前预报实战
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div>内容来源：《量线捉涨停》（黑马王子/张得一 著，清华大学出版社）</div>
+  <div style="margin-top:4px">现代量学实战体系 · 双轨制讲义 v1.0</div>
+</div>
+
+<script>
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

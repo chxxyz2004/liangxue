@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黑马王子原著精华 - 量柱擒涨停 | 现代量学实战体系</title>
+<style>
+:root{
+  --bg:#0a0e1a;--card:#131a2e;--border:#1e2a45;
+  --red:#ff4d6d;--green:#00e676;--blue:#4dabf7;--orange:#ff922b;--purple:#9b59b6;
+  --text:#e0e6f0;--muted:#6b7a99;--accent:#ffd43b;
+  --red-dim:rgba(255,77,109,0.12);--green-dim:rgba(0,230,118,0.12);--blue-dim:rgba(77,171,247,0.12);--orange-dim:rgba(255,146,43,0.12);--purple-dim:rgba(155,89,182,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.6;padding-bottom:60px}
+.header{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:20px;text-align:center;border-bottom:2px solid var(--accent)}
+.header h1{font-size:22px;color:var(--accent)}
+.header .subtitle{font-size:13px;color:var(--muted);margin-top:4px}
+.content{padding:16px}
+.chapter-title{font-size:17px;color:var(--accent);padding:12px 16px;border-left:3px solid var(--accent);margin:20px 0 12px;background:var(--card)}
+.section-title{font-size:15px;font-weight:bold;color:var(--blue);margin:16px 0 8px;padding-left:12px;border-left:2px solid var(--blue)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.card-title{font-size:15px;font-weight:bold}
+.card-sub{font-size:12px;color:var(--muted)}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.price-item{background:rgba(255,255,255,.04);border-radius:6px;padding:10px;text-align:center}
+.price-label{font-size:11px;color:var(--muted);margin-bottom:4px}
+.price-val{font-size:16px;font-weight:bold}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:bold}
+.tag-red{background:var(--red-dim);color:var(--red)}
+.tag-green{background:var(--green-dim);color:var(--green)}
+.tag-blue{background:var(--blue-dim);color:var(--blue)}
+.tag-orange{background:var(--orange-dim);color:var(--orange)}
+.tag-purple{background:var(--purple-dim);color:var(--purple)}
+.action-list{list-style:none;padding:0}
+.action-list li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.action-list li:last-child{border-bottom:none}
+.bullet{color:var(--accent);font-weight:bold;margin-right:8px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+th,td{padding:8px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:rgba(255,255,255,.05);font-weight:bold;color:var(--accent)}
+tr:hover{background:rgba(255,255,255,.02)}
+strong{color:var(--accent)}
+mark{background:var(--orange-dim);color:var(--orange);padding:2px 4px;border-radius:3px}
+.blue-text{color:var(--blue)}
+.green-text{color:var(--green)}
+.red-text{color:var(--red)}
+.orange-text{color:var(--orange)}
+.purple-text{color:var(--purple)}
+.alert-box{background:var(--blue-dim);border:1px solid var(--blue);border-radius:8px;padding:12px;margin:12px 0;font-size:13px}
+.success-box{background:var(--green-dim);border:1px solid var(--green);border-radius:8px;padding:12px;margin:12px 0;font-size:13px}
+.warn-box{background:var(--orange-dim);border:1px solid var(--orange);border-radius:8px;padding:12px;margin:12px 0;font-size:13px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin:10px 0}
+.step-title{font-size:14px;font-weight:bold;color:var(--accent);margin-bottom:8px}
+.footer{padding:20px;text-align:center;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
+.back-btn{display:inline-block;padding:8px 16px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--blue);text-decoration:none;margin:12px 0;font-size:13px}
+.back-btn:hover{background:var(--border)}
+/* 导航 */
+.nav-tabs{display:flex;gap:8px;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap}
+.nav-tab{padding:6px 12px;border-radius:20px;font-size:12px;background:var(--border);color:var(--muted);text-decoration:none;white-space:nowrap}
+.nav-tab.active{background:var(--accent);color:#000;font-weight:bold}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>黑马王子原著精华</h1>
+  <div class="subtitle">《量柱擒涨停》+《量线捉涨停》核心内容精编</div>
+</div>
+
+<div class="nav-tabs">
+  <a class="nav-tab active" href="#chapter1">第一单元·基本原理</a>
+  <a class="nav-tab" href="#chapter2">第二单元·六个元素</a>
+  <a class="nav-tab" href="#chapter3">第三单元·量性转化</a>
+  <a class="nav-tab" href="#chapter4">第四单元·量级确认</a>
+  <a class="nav-tab" href="#chapter5">第五单元·实战口诀</a>
+</div>
+
+<div class="content">
+
+<!-- ==================== 第一单元 ==================== -->
+<div id="chapter1">
+  <div class="chapter-title" id="chapter-title">第一单元：量柱擒涨停的基本原理</div>
+  
+  <div class="section-title">第1章 量柱的三重特性</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">1.1 量柱的全息特性</span>
+      <span class="tag tag-blue">核心概念</span>
+    </div>
+    <p>每一根量柱都蕴含着丰富的信息：<strong class="orange-text">价格、成交量、时间、涨跌幅、相对位置</strong>。看一根柱子，要同时看到五个维度。</p>
+    <div class="price-grid">
+      <div class="price-item">
+        <div class="price-label">价柱</div>
+        <div class="price-val">开高低收</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">量柱</div>
+        <div class="price-val">成交量</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">位置</div>
+        <div class="price-val">百分位</div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">相对</div>
+        <div class="price-val">量比</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">1.2 量柱的孪生特性</span>
+      <span class="tag tag-green">对比分析</span>
+    </div>
+    <p>量柱的价值是<strong class="blue-text">比出来</strong>的，不是单看一根柱子就能判断。必须用"就近左推法"：与前一天对比，与左侧对比。</p>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>自身对比</strong>：这根柱子比昨天高还是低？量比是多少？</li>
+      <li><span class="bullet">·</span><strong>左侧对比</strong>：左边有没有类似的柱子？当时后面怎么走？</li>
+      <li><span class="bullet">·</span><strong>右侧验证</strong>：这根柱子后面的走势是否印证了判断？</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">1.3 量柱的洐生特性</span>
+      <span class="tag tag-purple">演化规律</span>
+    </div>
+    <p>量柱不是静止的，是动态演化的。一根柱子在不同位置、不同时间，可能扮演不同角色：</p>
+    <div class="price-grid">
+      <div class="price-item" style="border:1px solid var(--orange)">
+        <div class="price-label">低位倍量柱</div>
+        <div class="price-val green-text" style="font-size:14px">= 启动信号</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--red)">
+        <div class="price-label">高位倍量柱</div>
+        <div class="price-val red-text" style="font-size:14px">= 出货嫌疑</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section-title">第2章 量柱的三先规律</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">2.1 卖在买先</span>
+      <span class="tag tag-red">第一定律</span>
+    </div>
+    <p><strong class="orange-text">量缩在前，量处在后；卖在买先，买在卖后。</strong></p>
+    <p>主力出货时，量柱是先放的；主力建仓时，量柱是先缩的。看量柱的演变，可以判断主力是在出货还是在吸筹。</p>
+    <div class="alert-box">
+      <strong>实战要点：</strong>高位放量→减仓信号；低位缩量→关注信号。永远先看量柱的变化，再看价格的变化。
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">2.2 价在量先</span>
+      <span class="tag tag-blue">第二定律</span>
+    </div>
+    <p><strong class="orange-text">价涨量先，价跌量后。</strong></p>
+    <p>价格的变化往往领先于成交量的变化。当价格开始上涨时，成交量可能还没放大；当价格开始下跌时，成交量可能还没萎缩。</p>
+    <div class="alert-box">
+      <strong>实战要点：</strong>价格突破关键位时，量能是否跟上？价涨量未跟上→假突破；价跌量未跟上→假破位。
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">2.3 庄在散先</span>
+      <span class="tag tag-green">第三定律</span>
+    </div>
+    <p><strong class="orange-text">庄在散先，先知先觉；散在庄后，后知后觉。</strong></p>
+    <p>主力的操作永远领先散户。散户看到放量追涨时，主力可能已经在出货了。看量柱，就是看主力的痕迹。</p>
+    <div class="success-box">
+      <strong>核心思维：</strong>量柱是主力的"脚印"。顺着脚印走，才能跟上主力。
+    </div>
+  </div>
+  
+  <div class="section-title">第3章 量柱的三维特征</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">3.1 量形：看柱子的高度</span>
+      <span class="tag tag-blue">六个元素</span>
+    </div>
+    <p>量形是最直观的量柱形态，六要素足以应对万形：</p>
+    <table>
+      <tr><th>量形</th><th>定义</th><th>特征</th><th>实战意义</th></tr>
+      <tr><td><strong>高量柱</strong></td><td>某一阶段最高量柱</td><td>可能是天量，也可能不是</td><td>欲望与走向的温度计</td></tr>
+      <tr><td><strong>低量柱</strong></td><td>某一阶段最低量柱</td><td>可能是地量，也可能不是</td><td>底线与底气的温度计</td></tr>
+      <tr><td><strong>平量柱</strong></td><td>与前一日基本持平（差距<5%）</td><td>必须两根以上持平</td><td>蓄势与爆发的温度计</td></tr>
+      <tr><td><strong>倍量柱</strong></td><td>比前一日高一倍（≥90%）</td><td>最低要高出90%</td><td>主导方主动行动的标志</td></tr>
+      <tr><td><strong>梯量柱</strong></td><td>比前一日逐步走高的量柱</td><td>一天比一天高</td><td>努力上攻的态势</td></tr>
+      <tr><td><strong>缩量柱</strong></td><td>比前一日逐步缩小的量柱</td><td>连续三天递减</td><td>供不应求，有售必买</td></tr>
+    </table>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">3.2 量性：看柱子的性质</span>
+      <span class="tag tag-purple">九种量性</span>
+    </div>
+    <p>量性是比出来的，九种量性足以衡量万柱：</p>
+    <table>
+      <tr><th>量性</th><th>角色</th><th>特征</th><th>实战意义</th></tr>
+      <tr><td>试探柱</td><td>先锋</td><td>小倍量，试探上方压力</td><td>观察信号</td></tr>
+      <tr><td>建仓柱</td><td>建仓</td><td>低位倍量，主力吸筹</td><td>关注信号</td></tr>
+      <tr><td>增仓柱</td><td>加仓</td><td>放量上涨，继续吸筹</td><td>跟踪信号</td></tr>
+      <tr><td>补仓柱</td><td>补仓</td><td>回调倍量，再次进场</td><td>加仓信号</td></tr>
+      <tr><td>震仓柱</td><td>洗盘</td><td>放量下跌，震出浮筹</td><td>观望信号</td></tr>
+      <tr><td>启动柱</td><td>启动</td><td>倍量突破，行情启动</td><td>买入信号</td></tr>
+      <tr><td>拉升柱</td><td>拉升</td><td>连续放量，快速上涨</td><td>持有信号</td></tr>
+      <tr><td><strong class="orange-text">将军柱</strong></td><td><strong class="orange-text">攻防</strong></td><td><strong class="orange-text">三日不破，独当一面</strong></td><td><strong class="orange-text">生命线</strong></td></tr>
+      <tr><td><strong class="orange-text">黄金柱</strong></td><td><strong class="orange-text">最强</strong></td><td><strong class="orange-text">缩量不破，三日后确认</strong></td><td><strong class="orange-text">买入点</strong></td></tr>
+    </table>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">3.3 量级：看柱子的级别</span>
+      <span class="tag tag-red">王牌柱</span>
+    </div>
+    <p>王牌柱按质量由低到高分为三级：</p>
+    <div class="price-grid">
+      <div class="price-item" style="border:2px solid var(--blue)">
+        <div class="price-label">小王</div>
+        <div class="price-val" style="color:var(--blue)">将军柱</div>
+        <div class="price-label">三日不破实底</div>
+      </div>
+      <div class="price-item" style="border:2px solid var(--accent)">
+        <div class="price-label">大王</div>
+        <div class="price-val" style="color:var(--accent)">黄金柱</div>
+        <div class="price-label">缩量不破实顶</div>
+      </div>
+    </div>
+    <div class="price-grid" style="margin-top:8px">
+      <div class="price-item" style="border:2px solid var(--red)">
+        <div class="price-label">炸弹</div>
+        <div class="price-val" style="color:var(--red)">元帅柱</div>
+        <div class="price-label">多根黄金柱合力</div>
+      </div>
+      <div class="price-item" style="background:var(--card)">
+        <div class="price-label">公式</div>
+        <div class="price-val" style="font-size:12px">将军+缩量+确认=黄金</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第二单元 ==================== -->
+<div id="chapter2">
+  <div class="chapter-title">第二单元：量柱擒涨停的六个元素</div>
+  
+  <div class="section-title">第8章 高量柱：欲望与走向的温度计</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">8.1 高量柱的定义</span>
+      <span class="tag tag-orange">基础概念</span>
+    </div>
+    <p><strong class="orange-text">高量柱</strong>：某一段时间内成交量最大的那根柱子。可能是天量柱，也可能不是天量柱，只要比前后的量柱明显高出即可。</p>
+    <div class="alert-box">
+      <strong>量化标准：</strong>量比≥1.5才算高量柱。量比<1.3的高量柱，不合格。
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">8.2 高量柱的涨跌规律</span>
+      <span class="tag tag-red">核心规律</span>
+    </div>
+    <table>
+      <tr><th>位置</th><th>高量柱性质</th><th>后续走势</th><th>操作建议</th></tr>
+      <tr><td>低位</td><td>可能见底</td><td>缩量反弹</td><td>关注</td></tr>
+      <tr><td>腰部</td><td>可能中继</td><td>震荡整理</td><td>观望</td></tr>
+      <tr><td>高位</td><td>可能见顶</td><td>放量下跌</td><td>减仓</td></tr>
+      <tr><td>突破位</td><td>可能突破</td><td>站稳3日</td><td>买入</td></tr>
+    </table>
+    <div class="warn-box">
+      <strong>铁律：</strong>高量柱之后的走势，大多数向下，少数向上。因为高量=多空分歧大=分歧后可能选方向。
+    </div>
+  </div>
+  
+  <div class="section-title">第9章 低量柱：底线与底气的温度计</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">9.1 低量柱的定义</span>
+      <span class="tag tag-green">基础概念</span>
+    </div>
+    <p><strong class="green-text">低量柱</strong>：某一段时间内成交量最小的那根柱子。可能是地量柱，也可能不是地量柱，只要是某一阶段的明显最低即是。</p>
+    <div class="success-box">
+      <strong>核心规律：</strong>地量见底，但不是所有地量都是底。要看低量柱后面的走势是否支撑。
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">9.2 低量柱的实战意义</span>
+      <span class="tag tag-blue">关键点</span>
+    </div>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>低量柱之后缩量</strong>：抛压衰竭，底部临近</li>
+      <li><span class="bullet">·</span><strong>低量柱之后放量</strong>：资金进场，行情启动</li>
+      <li><span class="bullet">·</span><strong>低量柱之后横盘</strong>：主力吸筹，等待时机</li>
+    </ul>
+  </div>
+  
+  <div class="section-title">第10章 倍量柱：主导方的主动行动</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">10.1 倍量柱的定义</span>
+      <span class="tag tag-orange">核心概念</span>
+    </div>
+    <p><strong class="orange-text">倍量柱</strong>：比前一日量柱高一倍以上的量柱。最低要高出90%。</p>
+    <div class="price-grid">
+      <div class="price-item" style="border:1px solid var(--green)">
+        <div class="price-label">低位倍量</div>
+        <div class="price-val green-text">= 启动信号</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--red)">
+        <div class="price-label">高位倍量</div>
+        <div class="price-val red-text">= 出货嫌疑</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">10.2 倍量柱的九种角色</span>
+      <span class="tag tag-purple">核心角色</span>
+    </div>
+    <p>倍量柱可以承担全部九种角色：</p>
+    <div class="price-grid">
+      <div class="price-item">试探柱</div>
+      <div class="price-item">建仓柱</div>
+      <div class="price-item">增仓柱</div>
+      <div class="price-item">补仓柱</div>
+      <div class="price-item">震仓柱</div>
+      <div class="price-item">启动柱</div>
+      <div class="price-item">拉升柱</div>
+      <div class="price-item">将军柱</div>
+      <div class="price-item">黄金柱</div>
+    </div>
+    <div class="alert-box">
+      <strong>关键点：</strong>倍量柱本身不决定性质，关键看后面的走势。三日不破=将军，缩量不破=黄金。
+    </div>
+  </div>
+  
+  <div class="section-title">第11章 平量柱、梯量柱、缩量柱</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">11.1 平量柱：蓄势与爆发</span>
+      <span class="tag tag-blue">辅助概念</span>
+    </div>
+    <p><strong class="blue-text">平量柱</strong>：与前一日量柱持平或基本持平（差距<5%），必须两根以上持平。</p>
+    <p>平量柱体现了试一试看的味道，观望性多于徘徊性。连续平量=主力控盘，蓄势待发。</p>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">11.2 梯量柱：努力上攻</span>
+      <span class="tag tag-orange">辅助概念</span>
+    </div>
+    <p><strong class="orange-text">梯量柱</strong>：比前一日量柱逐步走高的量柱，一天比一天高。</p>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>量涨价涨</strong>：努力上攻，主力被动买入</li>
+      <li><span class="bullet">·</span><strong>量涨价跌</strong>：抛售踊跃，主力力不从心</li>
+      <li><span class="bullet">·</span><strong>梯量柱到极点</strong>：上到极点必然向下</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">11.3 缩量柱：供不应求</span>
+      <span class="tag tag-green">最珍贵</span>
+    </div>
+    <p><strong class="green-text">缩量柱</strong>：比前一日量柱逐步缩小的量柱，必须连续三天。</p>
+    <div class="success-box">
+      <strong>核心规律：</strong>缩量柱若量价背离（量缩价涨），说明供不应求，有售必买。主力胸有成竹，志在必得。
+    </div>
+    <p><strong>量缩价涨</strong> = 主力主动买入，供不应求<br>
+    <strong>量缩价跌</strong> = 市场信心不足，每况愈下</p>
+  </div>
+</div>
+
+<!-- ==================== 第三单元 ==================== -->
+<div id="chapter3">
+  <div class="chapter-title">第三单元：量性转化与升华</div>
+  
+  <div class="section-title">第12章 量性的三个转化原则</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">12.1 三日定性</span>
+      <span class="tag tag-blue">时间转化</span>
+    </div>
+    <p><strong class="blue-text">三日定性</strong>：根据量柱后三日的走势特征来定性该量柱的性质。</p>
+    <table>
+      <tr><th>后三日走势</th><th>定性</th><th>后续</th></tr>
+      <tr><td>价升量缩，逐步走强</td><td class="green-text">黄金柱</td><td>上涨</td></tr>
+      <tr><td>先阴后阳，先衰后强</td><td class="orange-text">将军柱</td><td>震荡</td></tr>
+      <tr><td>阴阳相间，有气无力</td><td class="red-text">退化</td><td>调整</td></tr>
+      <tr><td>逐步缩小，先强后弱</td><td class="red-text">衰退</td><td>下跌</td></tr>
+    </table>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">12.2 拐点定性</span>
+      <span class="tag tag-purple">空间转化</span>
+    </div>
+    <p><strong class="purple-text">拐点定性</strong>：在关键位置出现的量柱，性质会发生变化。</p>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>触底起柱</strong>：低位倍量=启动信号</li>
+      <li><span class="bullet">·</span><strong>凹口起柱</strong>：凹口倍量=突破信号</li>
+      <li><span class="bullet">·</span><strong>平台起柱</strong>：平台倍量=蓄势信号</li>
+      <li><span class="bullet">·</span><strong>过顶起柱</strong>：过顶倍量=突破信号</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">12.3 集合定性</span>
+      <span class="tag tag-orange">组合转化</span>
+    </div>
+    <p><strong class="orange-text">集合定性</strong>：多根量柱组合产生的新性质。</p>
+    <div class="price-grid">
+      <div class="price-item" style="border:1px solid var(--green)">
+        <div class="price-label">最有价值组合</div>
+        <div class="price-val green-text" style="font-size:12px">倍量柱+缩量柱</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--green)">
+        <div class="price-label">高量+缩量</div>
+        <div class="price-val green-text" style="font-size:12px">= 黄金柱</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--blue)">
+        <div class="price-label">低量+倍量</div>
+        <div class="price-val blue-text" style="font-size:12px">= 启动信号</div>
+      </div>
+      <div class="price-item" style="border:1px solid var(--blue)">
+        <div class="price-label">缩倍柱+倍量</div>
+        <div class="price-val blue-text" style="font-size:12px">= 加仓信号</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第四单元 ==================== -->
+<div id="chapter4">
+  <div class="chapter-title">第四单元：王牌柱的确认与画法</div>
+  
+  <div class="section-title">第13章 将军柱的确认标准</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">13.1 将军柱的三个基本原则</span>
+      <span class="tag tag-red">铁律</span>
+    </div>
+    <ol style="padding-left:20px;line-height:2">
+      <li><strong class="red-text">三日不破</strong>：某量柱后三日的最低价不破该量柱的最低价</li>
+      <li><strong class="blue-text">价升量缩</strong>：最低价与收盘价都逐步抬高，收阳线，成交量逐日减少</li>
+      <li><strong class="green-text">先者优先</strong>：若连续几天都符合，以第一个合格的量柱为将军柱</li>
+    </ol>
+    <div class="alert-box">
+      <strong>重要：</strong>符合上述原则的多数是倍量柱，少数是高量柱，其他量柱只在特定阶段才能充当将军柱。
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">13.2 将军柱的画线方法</span>
+      <span class="tag tag-blue">操作技法</span>
+    </div>
+    <p><strong class="blue-text">防守线（攻防线）</strong>的画法：</p>
+    <ol style="padding-left:20px;line-height:2">
+      <li>以将军柱为基准</li>
+      <li>看将军柱后三日的K线：
+        <ul style="padding-left:20px;margin-top:5px">
+          <li>均在其实体上方→以实心上沿画线</li>
+          <li>有部分在下方→以实体下沿画线</li>
+          <li>全部在下方→以后三日最低点画线</li>
+        </ul>
+      </li>
+      <li>若将军柱是跳空高开→以下方缺口顶部画线</li>
+    </ol>
+  </div>
+  
+  <div class="section-title">第14章 黄金柱的确认标准</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">14.1 黄金柱的定义</span>
+      <span class="tag tag-orange">核心概念</span>
+    </div>
+    <p><strong class="orange-text">黄金柱 = 将军柱 + 缩量柱 + 确认柱</strong></p>
+    <p>黄金柱是以将军柱为基础，以临界点为契机，以缩量柱为陪衬升华而成的经典量柱。</p>
+    <div class="success-box">
+      <strong>三个要素：</strong><br>
+      ① 当天必须是将军柱<br>
+      ② 后三天必须是缩量柱<br>
+      ③ 后三天的收盘价不能跌破将军柱的实顶
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">14.2 黄金柱 vs 将军柱</span>
+      <span class="tag tag-blue">对比分析</span>
+    </div>
+    <table>
+      <tr><th>区别点</th><th>将军柱</th><th>黄金柱</th></tr>
+      <tr><td>基础</td><td>倍量柱或高量柱</td><td>将军柱</td></tr>
+      <tr><td>后三日要求</td><td>不破实底</td><td>不破实顶+缩量</td></tr>
+      <tr><td>收盘价位置</td><td>平均低于实顶</td><td>平均高于实顶</td></tr>
+      <tr><td>强度</td><td>中等</td><td>最强</td></tr>
+      <tr><td>操作</td><td>防守线</td><td>买入信号</td></tr>
+    </table>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">14.3 黄金柱的分类</span>
+      <span class="tag tag-purple">进阶分类</span>
+    </div>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>独立黄金柱</strong>：王牌柱后长期没有黄金柱</li>
+      <li><span class="bullet">·</span><strong>合力黄金柱</strong>：王牌柱后三日内出现黄金柱</li>
+      <li><span class="bullet">·</span><strong>接力黄金柱</strong>：王牌柱三日后出现黄金柱</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== 第五单元 ==================== -->
+<div id="chapter5">
+  <div class="chapter-title">第五单元：实战口诀与总结</div>
+  
+  <div class="section-title">量学核心口诀</div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">五大核心口诀</span>
+      <span class="tag tag-red">必背</span>
+    </div>
+    <div class="price-grid">
+      <div class="price-item" style="border:2px solid var(--accent)">
+        <div class="price-label">口诀一</div>
+        <div class="price-val" style="font-size:13px">量在价先</div>
+      </div>
+      <div class="price-item" style="border:2px solid var(--accent)">
+        <div class="price-label">口诀二</div>
+        <div class="price-val" style="font-size:13px">三日定性</div>
+      </div>
+      <div class="price-item" style="border:2px solid var(--accent)">
+        <div class="price-label">口诀三</div>
+        <div class="price-val" style="font-size:13px">拐点定性</div>
+      </div>
+      <div class="price-item" style="border:2px solid var(--accent)">
+        <div class="price-label">口诀四</div>
+        <div class="price-val" style="font-size:13px">集合定性</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">十二字令</span>
+      <span class="tag tag-green">核心战法</span>
+    </div>
+    <div class="alert-box" style="text-align:center;font-size:16px;padding:20px">
+      <strong class="green-text">阳胜进，阴胜出</strong><br>
+      <strong class="orange-text">小倍阳，大胆入</strong>
+    </div>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>阳胜进</strong>：量柱、价柱同步超越前一日，多头占优，可跟踪低吸</li>
+      <li><span class="bullet">·</span><strong>阴胜出</strong>：量价同步走弱，空头发力，果断减仓</li>
+      <li><span class="bullet">·</span><strong>小倍阳</strong>：成交量温和放大一倍左右，健康资金进场</li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">量学核心方法论</span>
+      <span class="tag tag-blue">方法论</span>
+    </div>
+    <div class="step">
+      <div class="step-title">三步阅读法</div>
+      <p><strong>第一步：</strong>缩图看势（看158根K线=半年）→定大趋势</p>
+      <p><strong>第二步：</strong>放图看柱（看26根K线=一个月）→识量形</p>
+      <p><strong>第三步：</strong>就近对比→定量性→定量级</p>
+    </div>
+    <div class="step">
+      <div class="step-title">看盘三步曲</div>
+      <p><strong>看量形：</strong>高低平倍梯缩 → 一眼看出六要素</p>
+      <p><strong>识量性：</strong>真假胜输强弱 → 判断主力意图</p>
+      <p><strong>定量级：</strong>将军柱、黄金柱、元帅柱 → 找到进攻线和防守线</p>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">实战纪律</span>
+      <span class="tag tag-red">铁律</span>
+    </div>
+    <ul class="action-list">
+      <li><span class="bullet">·</span><strong>不追高</strong>：高位倍量不追，等回踩确认</li>
+      <li><span class="bullet">·</span><strong>不破不立</strong>：跌破将军柱防守线必须走</li>
+      <li><span class="bullet">·</span><strong>左证明右确认</strong>：左边有依据，右边有确认才动手</li>
+      <li><span class="bullet">·</span><strong>宁可错过</strong>：信号不明确时，观望胜过做错</li>
+      <li><span class="bullet">·</span><strong>位置优先</strong>：同样的量柱，低位是金子，高位可能是毒药</li>
+    </ul>
+  </div>
+  
+  <div class="success-box">
+    <strong>原著学习路径：</strong><br>
+    《量柱擒涨停》→ 掌握量形、量性、量级 → 识别将军柱、黄金柱<br>
+    《量线捉涨停》→ 掌握量线七大元素 → 画出生死线、精准线、灯塔线<br>
+    《伏击涨停》→ 十八种战法综合应用 → 盘前预报实战
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div>内容来源：《量柱擒涨停》《量线捉涨停》（黑马王子/张得一 著，清华大学出版社）</div>
+  <div style="margin-top:4px">现代量学实战体系 · 双轨制讲义 v1.0</div>
+</div>
+
+<script>
+// 导航高亮
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
