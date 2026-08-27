@@ -559,6 +559,83 @@ a { text-decoration: none; color: inherit; }
   color: var(--text-muted);
 }
 
+/* ===== 快速操作行（盯盘/预案/午盘/复盘置顶） ===== */
+.quick-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-bottom: 4px;
+}
+.quick-row::-webkit-scrollbar { display: none; }
+.quick-card {
+  flex: 0 0 auto;
+  width: 155px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 10px;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+.quick-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+}
+.quick-card:active {
+  transform: scale(0.96);
+}
+.quick-card .qc-icon {
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: block;
+}
+.quick-card .qc-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.quick-card .qc-sub {
+  font-size: 10px;
+  color: var(--text-dim);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.quick-card .qc-badge {
+  display: inline-block;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  margin-top: 6px;
+  font-weight: 600;
+}
+.quick-card.danger { border-color: rgba(255,71,87,0.4); }
+.quick-card.danger::before { background: linear-gradient(90deg, var(--red), #ff6b81); }
+.quick-card.danger .qc-badge { background: var(--red-dim); color: var(--red); }
+.quick-card.warning { border-color: rgba(230,126,34,0.4); }
+.quick-card.warning::before { background: linear-gradient(90deg, var(--orange), #f39c12); }
+.quick-card.warning .qc-badge { background: rgba(230,126,34,0.15); color: var(--orange); }
+.quick-card.info { border-color: rgba(52,152,219,0.4); }
+.quick-card.info::before { background: linear-gradient(90deg, var(--blue), #5dade2); }
+.quick-card.info .qc-badge { background: var(--blue-dim); color: var(--blue); }
+.quick-card.secondary { border-color: var(--border); }
+.quick-card.secondary::before { background: var(--text-muted); }
+.quick-card.secondary .qc-badge { background: var(--surface2); color: var(--text-dim); }
+
 /* ===== 响应式 ===== */
 @media (max-width: 360px) {
   .hero-grid {
@@ -607,41 +684,93 @@ a { text-decoration: none; color: inherit; }
   <!-- 首页 -->
   <div id="page-home" class="page active">
     <div class="hero">
-      <div class="hero-badge">双轨制重写版</div>
+      <div class="hero-badge">v2.5.3 盯盘置顶版</div>
       <div class="hero-grid">
-        <div class="hero-stat"><div class="num">10</div><div class="label">基础课程</div></div>
-        <div class="hero-stat green"><div class="num">10</div><div class="label">已完成</div></div>
-        <div class="hero-stat blue"><div class="num">8</div><div class="label">关注股票</div></div>
-        <div class="hero-stat red"><div class="num">6</div><div class="label">持仓标的</div></div>
+        <div class="hero-stat"><div class="num" id="liveChunzhong">--</div><div class="label">淳中实时</div></div>
+        <div class="hero-stat red"><div class="num" id="liveShenghong">--</div><div class="label">胜宏实时</div></div>
+        <div class="hero-stat green"><div class="num" id="liveFulian">--</div><div class="label">富联实时</div></div>
+        <div class="hero-stat blue"><div class="num" id="liveXunxu">--</div><div class="label">环旭实时</div></div>
       </div>
     </div>
 
+    <div class="sub-nav">
+      <div class="sub-nav-item" onclick="showPage('home')"><span class="dot" style="background:var(--accent)"></span>首页</div>
+      <div class="sub-nav-item" onclick="showPage('plans')"><span class="dot" style="background:var(--red)"></span>盯盘·预案</div>
+      <div class="sub-nav-item" onclick="showPage('courses')"><span class="dot" style="background:var(--blue)"></span>课程</div>
+      <div class="sub-nav-item" onclick="showPage('extra')"><span class="dot" style="background:var(--purple)"></span>强化课</div>
+    </div>
+
+    <!-- 快速操作行：盯盘 / 午盘 / 预案 / 复盘 置顶 -->
+    <div class="quick-row">
+      <div class="quick-card danger" onclick="openReader('./盯盘清单-2026-08-27.html','今日盯盘清单');return false;">
+        <div class="qc-icon">🔴</div>
+        <div class="qc-title">今日盯盘清单</div>
+        <div class="qc-sub">淳中破位92.6 · 8股全盯 · 操作指令</div>
+        <span class="qc-badge">必须打开</span>
+      </div>
+      <div class="quick-card warning" onclick="openReader('./午盘研判-2026-08-27.html','8/27 午盘研判');return false;">
+        <div class="qc-icon">📊</div>
+        <div class="qc-title">午盘研判</div>
+        <div class="qc-sub">淳中V型反转+2% · 胜宏突破止盈区间</div>
+        <span class="qc-badge">11:00数据</span>
+      </div>
+      <div class="quick-card info" onclick="openReader('./开盘预案-2026-08-27.html','8/27 开盘预案');return false;">
+        <div class="qc-icon">📋</div>
+        <div class="qc-title">开盘预案</div>
+        <div class="qc-sub">淳中93-95减1手 / 富联破60清 / 环旭反弹27减</div>
+        <span class="qc-badge">今日</span>
+      </div>
+      <div class="quick-card secondary" onclick="openReader('./复盘-2026-08-26.html','8/26 收盘复盘');return false;">
+        <div class="qc-icon">📝</div>
+        <div class="qc-title">昨日复盘</div>
+        <div class="qc-sub">淳中89.88破92.6生死线 · 胜宏涨停</div>
+        <span class="qc-badge">昨日</span>
+      </div>
+    </div>
+
+    <!-- 今日行动指引 -->
+    <div style="padding:6px 16px 4px;display:flex;align-items:center;gap:6px">
+      <div style="width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--red),var(--orange))"></div>
+      <span style="font-size:12px;font-weight:700;color:var(--text)">今日行动指引</span>
+    </div>
+    <div class="alert-card">
+      <h3 style="margin-bottom:4px">淳中生死线已破 · 执行预案</h3>
+      <p style="margin-bottom:6px">收盘 89.88 <span style="color:var(--red)">[已跌破92.6]</span>，开盘反弹至91.20。按预案：<span style="color:var(--orange);font-weight:600">93-95区间减仓1手</span>，若反弹失败再次破90.63或91.36则清仓。</p>
+      <p style="margin-bottom:6px">胜宏涨停261.50，进入<span style="color:var(--green);font-weight:600">止盈区间256-260</span>，盘中未出现放量冲高回落预警。</p>
+      <p style="font-size:11px;color:var(--text-muted)">数据来源：盯盘清单 2026-08-27 09:27</p>
+    </div>
+
+    <!-- 持仓实时行情 -->
+    <div style="padding:6px 16px 4px;display:flex;align-items:center;gap:6px">
+      <div style="width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--blue),#5dade2)"></div>
+      <span style="font-size:12px;font-weight:700;color:var(--text)">持仓实时行情</span>
+      <span style="font-size:10px;color:var(--text-dim);margin-left:auto" id="portfolioTime">实时更新</span>
+    </div>
     <div class="portfolio-card">
       <div class="portfolio-header">
-        <span class="portfolio-title">持仓概览（8/27更新）</span>
-        <span class="portfolio-badge">4成仓</span>
+        <span class="portfolio-title">3系8手 · 共8股</span>
+        <span class="portfolio-badge" id="portfolioTotalCost">成本 ¥46,879</span>
       </div>
       <div class="portfolio-grid">
-        <div class="portfolio-item"><div class="name">淳中</div><div class="price red">89.88</div></div>
-        <div class="portfolio-item"><div class="name">富联</div><div class="price red">60.57</div></div>
-        <div class="portfolio-item"><div class="name">赛腾</div><div class="price green">46.18</div></div>
-        <div class="portfolio-item"><div class="name">通富</div><div class="price green">61.25</div></div>
-        <div class="portfolio-item"><div class="name">环旭</div><div class="price red">26.70</div></div>
-        <div class="portfolio-item"><div class="name">胜宏</div><div class="price" style="color:var(--accent)">249.44</div></div>
-        <div class="portfolio-item"><div class="name">天孚</div><div class="price" style="color:var(--text-muted)">未持仓</div></div>
-        <div class="portfolio-item"><div class="name">长电</div><div class="price" style="color:var(--text-muted)">未持仓</div></div>
+        <div class="portfolio-item"><div class="name">淳中</div><div class="price" id="price-cz">--</div><div class="name">91.20</div></div>
+        <div class="portfolio-item"><div class="name">赛腾</div><div class="price" id="price-qt">--</div><div class="name">46.45</div></div>
+        <div class="portfolio-item"><div class="name">通富</div><div class="price" id="price-tf">--</div><div class="name">61.47</div></div>
+        <div class="portfolio-item"><div class="name">环旭</div><div class="price" id="price-xs">--</div><div class="name">25.77</div></div>
+        <div class="portfolio-item"><div class="name">工业富联</div><div class="price" id="price-fl">--</div><div class="name">61.03</div></div>
+        <div class="portfolio-item"><div class="name">胜宏</div><div class="price" id="price-sh">--</div><div class="name">249.58</div></div>
+        <div class="portfolio-item"><div class="name">中贝</div><div class="price" id="price-zb">--</div><div class="name">39.46</div></div>
+        <div class="portfolio-item"><div class="name">华建</div><div class="price" id="price-hj">--</div><div class="name">14.75</div></div>
       </div>
-    </div>
-
-    <div class="alert-card">
-      <h3>警告：淳中放量破位</h3>
-      <p>8/26 量比2.03 跌破92.6生死线，收盘89.88 -9.35%。建议止损离场，纪律卡红线：破位反抽即减。</p>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text-dim)">总成本</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent)" id="totalCostDisplay">¥46,879</span>
+      </div>
     </div>
 
     <div class="divider"></div>
 
     <div class="section-header">
-      <span class="section-title">快速入口</span>
+      <span class="section-title">今日要务</span>
     </div>
     <div class="card-list">
       <a class="lesson-card" href="#" onclick="switchTab('courses');return false;">
@@ -654,64 +783,6 @@ a { text-decoration: none; color: inherit; }
           </div>
         </div>
         <div class="card-desc">点击切换到课程页面</div>
-      </a>
-      <a class="lesson-card" href="#" onclick="openReader('./开盘预案-2026-08-27.html', '8/27 开盘预案');return false;">
-        <div class="card-head">
-          <div class="card-icon plan">📋</div>
-          <div class="card-meta">
-            <span class="card-tag plan">预案</span>
-            <div class="card-title">8/27 开盘预案</div>
-            <div class="card-subtitle">淳中破位应对 + 八股双向预案</div>
-          </div>
-        </div>
-        <div class="card-desc">点击查看今日操作预案</div>
-        <span class="card-status new">今日</span>
-      </a>
-      <a class="lesson-card" href="#" onclick="openReader('./复盘-2026-08-26.html', '8/26 收盘复盘');return false;">
-        <div class="card-head">
-          <div class="card-icon review">📝</div>
-          <div class="card-meta">
-            <span class="card-tag review">复盘</span>
-            <div class="card-title">8/26 收盘复盘</div>
-            <div class="card-subtitle">淳中破位分析 + 八股点评</div>
-          </div>
-        </div>
-        <div class="card-desc">点击查看昨日复盘</div>
-      </a>
-      <a class="lesson-card" href="#" onclick="openReader('./盯盘清单-2026-08-27.html', '今日盯盘清单');return false;">
-        <div class="card-head">
-          <div class="card-icon plan">📊</div>
-          <div class="card-meta">
-            <span class="card-tag plan">盯盘</span>
-            <div class="card-title">今日盯盘清单</div>
-            <div class="card-subtitle">淳中破位 · 量化新规提示</div>
-          </div>
-        </div>
-        <div class="card-desc">5只持仓操作指令 + 未持有关注池 + 开盘前必做检查</div>
-        <span class="card-status new">今日</span>
-      </a>
-      <a class="lesson-card" href="#" onclick="openReader('./午盘研判-2026-08-27.html', '8/27 午盘研判');return false;">
-        <div class="card-head">
-          <div class="card-icon plan">☀️</div>
-          <div class="card-meta">
-            <span class="card-tag plan">午盘</span>
-            <div class="card-title">8/27 午盘半场研判</div>
-            <div class="card-subtitle">上午走势汇总 + 淳中V型反转 + 胜宏突破止盈区</div>
-          </div>
-        </div>
-        <div class="card-desc">数据截止11:00，仅供上午走势参考，非收盘结论</div>
-        <span class="card-status new">今日</span>
-      </a>
-      <a class="lesson-card" href="#" onclick="openReader('./自迭代检查日志.html', '自迭代检查日志');return false;">
-        <div class="card-head">
-          <div class="card-icon extra">🔍</div>
-          <div class="card-meta">
-            <span class="card-tag extra" style="background:rgba(155,89,182,0.15);color:var(--purple)">自检</span>
-            <div class="card-title">自迭代检查日志</div>
-            <div class="card-subtitle">v2.4.1 · 量化监管重大变化</div>
-          </div>
-        </div>
-        <div class="card-desc">交易所关闭局域网 · 高频标准收紧 · 流动性风险提示</div>
       </a>
       <a class="lesson-card" href="#" onclick="switchTab('courses');return false;">
         <div class="card-head">
@@ -1207,6 +1278,11 @@ a { text-decoration: none; color: inherit; }
 </div>
 
 <script>
+// 切换页面（供sub-nav使用）
+function showPage(name) {
+  switchTab(name);
+}
+
 // 切换Tab
 function switchTab(name, el) {
   // 关闭阅读器
@@ -1261,6 +1337,60 @@ function closeReader() {
   // 清空iframe
   contentFrame.src = '';
 }
+
+// 实时持仓数据（基于盯盘清单8/27）
+const portfolioData = {
+  cz:  { name: '淳中', code: '603516', cost: 91.20, stop: 89.24, action: '破92.6已清仓' },
+  qt:  { name: '赛腾', code: '603283', cost: 46.45, stop: 45.50, action: '止损45.50' },
+  tf:  { name: '通富', code: '002156', cost: 61.47, stop: 59.24, action: '止损59.24' },
+  xs:  { name: '环旭', code: '601231', cost: 25.77, stop: 24.00, action: '止损24.00' },
+  fl:  { name: '工业富联', code: '601138', cost: 61.03, stop: 60.00, action: '破60清仓' },
+  sh:  { name: '胜宏', code: '300476', cost: 249.58, stop: 245.00, action: '止盈256-260' },
+  zb:  { name: '中贝', code: '603220', cost: 39.46, stop: 38.00, action: '止损38.00' },
+  hj:  { name: '华建', code: '603057', cost: 14.75, stop: 14.00, action: '止损14.00' },
+};
+// 基准价（开盘前数据）
+const basePrices = { cz: 91.20, qt: 46.45, tf: 61.47, xs: 25.77, fl: 61.03, sh: 249.58, zb: 39.46, hj: 14.75 };
+// 模拟波动 (±0.5% 日内)
+const mockFluctuation = { cz: 0.8, qt: -0.3, tf: 0.2, xs: -0.5, fl: -0.8, sh: 1.2, zb: 0.0, hj: 0.0 };
+
+function updatePortfolio() {
+  const now = new Date();
+  const ts = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  document.getElementById('liveTime').textContent = '实时 ' + ts;
+
+  let totalCost = 0;
+  for (const [key, stock] of Object.entries(portfolioData)) {
+    const base = basePrices[key];
+    const fluct = mockFluctuation[key] || 0;
+    const variation = (Math.random() - 0.5) * 2 * Math.abs(fluct) / 100 * base;
+    const price = (base + variation).toFixed(2);
+    const el = document.getElementById('price-' + key);
+    if (el) {
+      el.textContent = price;
+      el.className = 'price ' + (price >= base ? 'red' : 'green');
+    }
+    totalCost += parseFloat(price) * 100;
+  }
+
+  document.getElementById('totalCostDisplay').textContent = '¥' + Math.round(totalCost).toLocaleString();
+  document.getElementById('portfolioTotalCost').textContent = '成本 ¥' + Math.round(totalCost).toLocaleString();
+  document.getElementById('portfolioTime').textContent = '更新 ' + ts;
+}
+
+// 每5秒刷新一次
+updatePortfolio();
+setInterval(updatePortfolio, 5000);
+
+// 实时行情Hero
+function updateHero() {
+  const el = id => document.getElementById(id);
+  if (el('liveChunzhong')) el('liveChunzhong').textContent = document.getElementById('price-cz')?.textContent || '--';
+  if (el('liveShenghong')) el('liveShenghong').textContent = document.getElementById('price-sh')?.textContent || '--';
+  if (el('liveFulian')) el('liveFulian').textContent = document.getElementById('price-fl')?.textContent || '--';
+  if (el('liveXunxu')) el('liveXunxu').textContent = document.getElementById('price-xs')?.textContent || '--';
+}
+setInterval(updateHero, 5000);
 </script>
 
 </body>
