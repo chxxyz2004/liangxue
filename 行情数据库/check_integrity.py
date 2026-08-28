@@ -63,7 +63,7 @@ class DataIntegrityCheck:
                 # 校验数据类型
                 if bars:
                     sample = bars[-1]
-                    for field in ('open', 'high', 'low', 'close', 'volume'):
+                    for field in ('open', 'high', 'low', 'close', 'volume', 'amount'):
                         val = sample.get(field)
                         if val is not None and not isinstance(val, (int, float)):
                             self.errors.append(f'{name}({code}): {field}值类型异常 {type(val).__name__}={val}')
@@ -128,7 +128,7 @@ class DataIntegrityCheck:
                     # 校验数据类型
                     if bars:
                         sample = bars[0]
-                        for field in ('open', 'high', 'low', 'close', 'volume'):
+                        for field in ('open', 'high', 'low', 'close', 'volume', 'amount'):
                             val = sample.get(field)
                             if val is not None and not isinstance(val, (int, float)):
                                 self.errors.append(f'{name}({code}): 5min {field}值类型异常 {type(val).__name__}')

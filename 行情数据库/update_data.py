@@ -64,6 +64,7 @@ def fetch_tencent_qfq(symbol, datalen):
             "low": float(r[4]),
             "close": float(r[2]),
             "volume": float(r[5]),  # 单位：手
+            "amount": float(r[5]) * float(r[2]) * 100,  # 成交额(元) = 成交量(手) × 收盘价 × 100
         })
     return out
 
@@ -84,6 +85,7 @@ def fetch_sina_kline(symbol, datalen):
             "low": float(d["low"]),
             "close": float(d["close"]),
             "volume": float(d["volume"]),
+            "amount": float(d["volume"]) * float(d["close"]) * 100,  # 成交额(元)
         })
     return out
 

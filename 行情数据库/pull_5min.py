@@ -50,6 +50,7 @@ def pull_5min(code, datalen=48):
                 'low': float(b['low']),
                 'close': float(b['close']),
                 'volume': float(b['volume']),
+                'amount': float(b['volume']) * float(b['close']) * 100,  # 成交额(元)
             })
         return result
     except Exception as e:

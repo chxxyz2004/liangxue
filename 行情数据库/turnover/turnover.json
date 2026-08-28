@@ -1,0 +1,93 @@
+{
+  "updated_at": "2026-08-29 02:30:03",
+  "data": {
+    "sh603516": {
+      "name": "淳中科技",
+      "price": 91.04,
+      "volume": 56483,
+      "turnover_ratio": 2.78,
+      "float_shares": 203268279,
+      "amount": 52678.7189
+    },
+    "sh601138": {
+      "name": "工业富联",
+      "price": 64.04,
+      "volume": 1579645,
+      "turnover_ratio": 0.8,
+      "float_shares": 19844092284,
+      "amount": 1031463.7513
+    },
+    "sz002156": {
+      "name": "通富微电",
+      "price": 63.75,
+      "volume": 917805,
+      "turnover_ratio": 6.05,
+      "float_shares": 1517452222,
+      "amount": 590598.2858
+    },
+    "sh601231": {
+      "name": "环旭电子",
+      "price": 26.99,
+      "volume": 279636,
+      "turnover_ratio": 1.17,
+      "float_shares": 2388935678,
+      "amount": 77474.5532
+    },
+    "sz300476": {
+      "name": "胜宏科技",
+      "price": 241.6,
+      "volume": 572833,
+      "turnover_ratio": 6.62,
+      "float_shares": 865194945,
+      "amount": 1431195.0839
+    },
+    "sh603283": {
+      "name": "赛腾股份",
+      "price": 47.45,
+      "volume": 171574,
+      "turnover_ratio": 4.87,
+      "float_shares": 352526243,
+      "amount": 82995.5637
+    },
+    "sz300394": {
+      "name": "天孚通信",
+      "price": 263.58,
+      "volume": 338960,
+      "turnover_ratio": 3.11,
+      "float_shares": 1088388049,
+      "amount": 910449.0089
+    },
+    "sh600584": {
+      "name": "长电科技",
+      "price": 74.93,
+      "volume": 892019,
+      "turnover_ratio": 4.98,
+      "float_shares": 1789414570,
+      "amount": 680917.7242
+    },
+    "sh000001": {
+      "name": "上证指数",
+      "price": 3952.18,
+      "volume": 510581645,
+      "turnover_ratio": 1.05,
+      "float_shares": 4848119862904,
+      "amount": 97036515.2113
+    },
+    "sz399001": {
+      "name": "深证成指",
+      "price": 13953.07,
+      "volume": 630346080,
+      "turnover_ratio": 2.57,
+      "float_shares": 2454378448590,
+      "amount": 113134987.2246
+    },
+    "sz399006": {
+      "name": "创业板指",
+      "price": 3424.4,
+      "volume": 186154222,
+      "turnover_ratio": 3.47,
+      "float_shares": 536638192662,
+      "amount": 54425510.3825
+    }
+  }
+}
