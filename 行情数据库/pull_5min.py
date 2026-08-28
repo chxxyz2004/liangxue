@@ -19,10 +19,11 @@ from collections import defaultdict
 
 sys.path.insert(0, '/workspace/行情数据库')
 
-from config import HOLDINGS, WATCH_LIST
+from config import HOLDINGS, WATCH_LIST, INDEXES
 
 STOCKS = {**{k: v.name for k, v in HOLDINGS.items()},
-          **{k: v.name for k, v in WATCH_LIST.items()}}
+          **{k: v.name for k, v in WATCH_LIST.items()},
+          **INDEXES}
 
 BASE_DIR = '/workspace/行情数据库/kline_5min'
 os.makedirs(BASE_DIR, exist_ok=True)

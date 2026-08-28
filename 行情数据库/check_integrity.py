@@ -139,11 +139,54 @@ class DataIntegrityCheck:
                     self.errors.append(f'{name}({code}): 5min解析错误 - {e}')
                     print(f"  ✗ {name} {check_date}: 解析错误")
 
+        # 检查指数5分钟K线
+        for code, name in INDEXES.items():
+            for check_date in [today, yesterday]:
+                filepath = os.path.join(self.kline_5min_dir, f'{code}_{check_date}.json')
+                if not os.path.exists(filepath):
+                    if check_date == today:
+                        self.warnings.append(f'{name}({code}): 今日5分钟数据缺失')
+                        print(f"  ⚠ {name}: {check_date}数据缺失")
+                    continue
+
+                try:
+                    with open(filepath, 'r') as f:
+                        data = json.load(f)
+                    bars = data.get('bars', [])
+                    count = data.get('count', len(bars))
+
+                    if count >= 48:
+                        self.ok_count += 1
+                        print(f"  ✓ {name} {check_date}: {count}根K线")
+                    elif count > 0:
+                        self.warnings.append(f'{name}({code}): 5分钟数据不足 ({count}根)')
+                        print(f"  ⚠ {name} {check_date}: {count}根K线")
+                    else:
+                        self.errors.append(f'{name}({code}): 5分钟数据为空')
+                        print(f"  ✗ {name} {check_date}: 数据为空")
+
+                except Exception as e:
+                    self.errors.append(f'{name}({code}): 5min解析错误 - {e}')
+                    print(f"  ✗ {name} {check_date}: 解析错误")
+
     def check_5min_history(self):
         """检查5分钟K线历史覆盖天数"""
         print("\n【5分钟K线历史覆盖】")
 
         for code, name in ALL_STOCKS.items():
+            files = [f for f in os.listdir(self.kline_5min_dir) if f.startswith(f'{code}_') and f.endswith('.json')]
+            dates = sorted(f.replace(f'{code}_', '').replace('.json', '') for f in files)
+
+            if not dates:
+                self.warnings.append(f'{name}({code}): 无5分钟历史数据')
+                print(f"  ⚠ {name}: 无历史数据")
+                continue
+
+            self.ok_count += 1
+            print(f"  ✓ {name}: {len(dates)}天 ({dates[0]} ~ {dates[-1]})")
+
+        # 检查指数5分钟历史覆盖
+        for code, name in INDEXES.items():
             files = [f for f in os.listdir(self.kline_5min_dir) if f.startswith(f'{code}_') and f.endswith('.json')]
             dates = sorted(f.replace(f'{code}_', '').replace('.json', '') for f in files)
 
