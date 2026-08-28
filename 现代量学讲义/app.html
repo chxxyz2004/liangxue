@@ -3,81 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#667eea">
+<meta name="theme-color" content="#0f172a">
 <title>量学实战系统</title>
 <style>
 :root {
-  --primary: #667eea;
-  --primary-dark: #5a67d8;
-  --accent: #ed64a6;
-  --success: #38a169;
-  --warning: #d69e2e;
-  --danger: #e53e3e;
-  --bg: #f7fafc;
-  --surface: #ffffff;
-  --text: #1a202c;
-  --text-dim: #718096;
-  --border: #e2e8f0;
-  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --primary: #6366f1;
+  --primary-light: #818cf8;
+  --accent: #f59e0b;
+  --success: #10b981;
+  --danger: #ef4444;
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-alt: #334155;
+  --text: #f1f5f9;
+  --text-dim: #94a3b8;
+  --border: #334155;
+  --shadow: 0 4px 16px rgba(0,0,0,0.3);
+  --glow: 0 0 20px rgba(99,102,241,0.3);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
-  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  background: var(--bg-dark);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
 }
-a { color: inherit; text-decoration: none; }
 
-/* 顶部渐变区域 */
+/* 动画 */
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+@keyframes spin { to{transform:rotate(360deg)} }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+.page { display: none; animation: fadeIn 0.2s ease; }
+.page.active { display: block; }
+
+/* Hero */
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 24px 20px 60px;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+  padding: 24px 16px 60px;
   position: relative;
   overflow: hidden;
 }
 .hero::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -20%;
+  top: -60%;
+  right: -30%;
   width: 300px;
   height: 300px;
-  background: rgba(255,255,255,0.1);
+  background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%);
   border-radius: 50%;
 }
 .hero::after {
   content: '';
   position: absolute;
-  bottom: -30%;
-  left: -10%;
+  bottom: -40%;
+  left: -20%;
   width: 200px;
   height: 200px;
-  background: rgba(255,255,255,0.08);
+  background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
   border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
 }
-.hero-content {
-  position: relative;
-  z-index: 1;
-}
+.hero-content { position: relative; z-index: 1; }
+
 .hero-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.logo { display: flex; align-items: center; gap: 12px; }
 .logo-icon {
   width: 44px;
   height: 44px;
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, #6366f1, #a855f7);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -85,778 +89,743 @@ a { color: inherit; text-decoration: none; }
   font-size: 22px;
   font-weight: bold;
   color: #fff;
-  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.4);
 }
-.logo-text h1 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.5px;
-}
-.logo-text p {
-  font-size: 11px;
-  color: rgba(255,255,255,0.8);
-  margin-top: 2px;
-}
+.logo-text h1 { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+.logo-text p { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
 .status-badge {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 11px;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.3);
+  gap: 5px;
+  background: rgba(16,185,129,0.2);
+  border: 1px solid rgba(16,185,129,0.3);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 10px;
+  color: #10b981;
 }
 .status-dot {
-  width: 6px;
-  height: 6px;
-  background: #48bb78;
-  border-radius: 50%;
+  width: 6px; height: 6px; background: #10b981; border-radius: 50%;
   animation: pulse 2s infinite;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.2); }
-}
 
-/* 搜索框 */
-.search-wrapper {
-  position: relative;
-  margin-top: 16px;
-}
+.search-box { position: relative; }
 .search-input {
   width: 100%;
-  background: rgba(255,255,255,0.95);
-  border: none;
-  border-radius: 14px;
-  padding: 14px 16px 14px 44px;
-  font-size: 14px;
-  color: var(--text);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 12px 14px 12px 38px;
+  font-size: 13px;
+  color: #fff;
   outline: none;
-  box-shadow: var(--shadow);
   transition: all 0.2s;
 }
+.search-input::placeholder { color: rgba(255,255,255,0.4); }
 .search-input:focus {
-  background: #fff;
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-1px);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(99,102,241,0.5);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
 }
-.search-input::placeholder { color: var(--text-dim); }
 .search-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 16px;
-  opacity: 0.5;
+  position: absolute; left: 12px; top: 50%;
+  transform: translateY(-50%); font-size: 14px; opacity: 0.5;
 }
 
-/* 主内容区 */
-.main {
-  margin-top: -30px;
-  padding: 0 16px 80px;
-  position: relative;
-  z-index: 2;
-}
+/* 主内容 */
+.main { margin-top: -28px; padding: 0 12px 80px; position: relative; z-index: 2; }
 
-/* 统计卡片 */
+/* 统计 */
 .stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 18px;
 }
 .stat-card {
-  background: var(--surface);
+  background: var(--bg-card);
   border-radius: 14px;
-  padding: 14px 10px;
+  padding: 14px 6px;
   text-align: center;
-  box-shadow: var(--shadow);
-  transition: transform 0.2s;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
 }
 .stat-card:active { transform: scale(0.96); }
 .stat-num {
-  font-size: 22px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 20px; font-weight: 800;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.stat-label {
-  font-size: 10px;
-  color: var(--text-dim);
-  margin-top: 4px;
-}
+.stat-label { font-size: 9px; color: var(--text-dim); margin-top: 3px; }
 
-/* 功能区 */
-.section {
-  margin-bottom: 20px;
-}
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
+/* 分区标题 */
+.section { margin-bottom: 18px; }
 .section-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-size: 12px; font-weight: 600; color: var(--text-dim);
+  padding: 0 4px 10px; letter-spacing: 1px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
 }
 .section-title::before {
-  content: '';
-  width: 4px;
-  height: 16px;
-  background: linear-gradient(180deg, #667eea, #764ba2);
-  border-radius: 2px;
-}
-.section-more {
-  font-size: 12px;
-  color: var(--primary);
+  content: ''; width: 3px; height: 12px;
+  background: linear-gradient(180deg, #6366f1, #a855f7); border-radius: 2px;
 }
 
-/* 功能卡片网格 */
-.func-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
+/* 功能卡片 */
+.func-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
 .func-card {
-  background: var(--surface);
-  border-radius: 16px;
-  padding: 18px 16px;
-  box-shadow: var(--shadow);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 6px;
+  text-align: center;
   cursor: pointer;
   transition: all 0.2s;
-  border: 1px solid transparent;
-  position: relative;
-  overflow: hidden;
 }
-.func-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.func-card:active {
-  transform: scale(0.97);
-  border-color: var(--primary);
-}
-.func-card:active::before { opacity: 1; }
+.func-card:active { transform: scale(0.94); background: var(--bg-card-alt); }
 .func-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  margin-bottom: 12px;
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; margin: 0 auto 8px;
 }
-.func-icon.blue { background: linear-gradient(135deg, #ebf4ff, #c3dafe); color: #4299e1; }
-.func-icon.green { background: linear-gradient(135deg, #f0fff4, #c6f6d5); color: #38a169; }
-.func-icon.purple { background: linear-gradient(135deg, #faf5ff, #e9d8fd); color: #805ad5; }
-.func-icon.orange { background: linear-gradient(135deg, #fffaf0, #feebc8); color: #d69e2e; }
-.func-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-.func-desc {
-  font-size: 11px;
-  color: var(--text-dim);
-  line-height: 1.4;
-}
-.func-full { grid-column: span 2; }
+.func-icon.blue { background: linear-gradient(135deg,#1e3a5f,#1e40af); color: #60a5fa; }
+.func-icon.green { background: linear-gradient(135deg,#064e3b,#065f46); color: #34d399; }
+.func-icon.purple { background: linear-gradient(135deg,#3b0764,#4c1d95); color: #a78bfa; }
+.func-icon.orange { background: linear-gradient(135deg,#78350f,#92400e); color: #fbbf24; }
+.func-title { font-size: 11px; font-weight: 600; color: var(--text); }
+.func-desc { font-size: 9px; color: var(--text-dim); margin-top: 2px; }
 
-/* 列表项 */
-.list {
-  background: var(--surface);
-  border-radius: 16px;
+/* 列表 */
+.list-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: var(--shadow);
 }
 .list-item {
-  display: flex;
-  align-items: center;
-  padding: 14px 16px;
+  display: flex; align-items: center;
+  padding: 13px 14px;
   cursor: pointer;
-  transition: background 0.15s;
   border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
 }
 .list-item:last-child { border-bottom: none; }
-.list-item:active { background: #f7fafc; }
-.list-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  min-width: 0;
-}
+.list-item:active { background: rgba(99,102,241,0.08); }
 .list-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; margin-right: 10px; flex-shrink: 0;
 }
-.list-icon.green { background: linear-gradient(135deg, #f0fff4, #c6f6d5); color: #38a169; }
-.list-icon.blue { background: linear-gradient(135deg, #ebf4ff, #c3dafe); color: #4299e1; }
-.list-icon.purple { background: linear-gradient(135deg, #faf5ff, #e9d8fd); color: #805ad5; }
-.list-icon.orange { background: linear-gradient(135deg, #fffaf0, #feebc8); color: #d69e2e; }
-.list-icon.red { background: linear-gradient(135deg, #fff5f5, #fed7d7); color: #e53e3e; }
-.list-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.list-sub {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-top: 2px;
-}
-.list-arrow {
-  color: var(--text-dim);
-  font-size: 18px;
-  flex-shrink: 0;
-  margin-left: 8px;
-}
+.list-icon.green { background: linear-gradient(135deg,#064e3b,#065f46); color: #34d399; }
+.list-icon.blue { background: linear-gradient(135deg,#1e3a5f,#1e40af); color: #60a5fa; }
+.list-icon.purple { background: linear-gradient(135deg,#3b0764,#4c1d95); color: #a78bfa; }
+.list-icon.orange { background: linear-gradient(135deg,#78350f,#92400e); color: #fbbf24; }
+.list-icon.red { background: linear-gradient(135deg,#7f1d1d,#991b1b); color: #f87171; }
+.list-info { flex: 1; min-width: 0; }
+.list-title { font-size: 13px; font-weight: 500; color: var(--text); }
+.list-sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+.list-arrow { color: var(--text-dim); font-size: 16px; margin-left: 8px; }
 
-/* 页脚 */
-.footer {
-  text-align: center;
-  padding: 24px 16px;
-  font-size: 11px;
-  color: var(--text-dim);
-  line-height: 1.8;
+/* 子页面 & 内容页 */
+.sub-page { display: none; }
+.sub-page.active { display: block; animation: fadeIn 0.15s ease; }
+.sub-header {
+  background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%);
+  padding: 14px 16px;
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
+.back-btn {
+  width: 34px; height: 34px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 9px;
+  color: #fff; font-size: 16px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.back-btn:active { background: rgba(255,255,255,0.25); transform: scale(0.94); }
+.page-title { font-size: 16px; font-weight: 600; color: #fff; }
+.sub-content { padding: 12px; margin-top: -16px; position: relative; z-index: 1; }
 
-/* 内容页 */
-.page { display: none; }
-.page.active { display: block; }
-.content-area {
-  background: var(--surface);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: var(--shadow);
-  min-height: 60vh;
+/* 内容卡片 */
+.content-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  animation: fadeIn 0.2s ease;
 }
-.content-area h1 { font-size: 20px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
-.content-area h2 { font-size: 16px; margin: 20px 0 10px; color: var(--primary); }
-.content-area h3 { font-size: 14px; margin: 16px 0 8px; }
-.content-area p { font-size: 13px; line-height: 1.8; margin: 8px 0; color: var(--text); }
-.content-area ul { margin: 8px 0 8px 18px; }
-.content-area li { font-size: 13px; line-height: 1.7; margin: 5px 0; }
-.content-area strong { color: var(--text); }
-.content-area table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
-.content-area th, .content-area td { padding: 8px 10px; border: 1px solid var(--border); text-align: left; }
-.content-area th { background: linear-gradient(135deg, #f7fafc, #edf2f7); font-weight: 600; }
-.content-area hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
-.content-area code { background: #f7fafc; padding: 2px 6px; border-radius: 4px; font-size: 11px; color: #e53e3e; }
-.content-area a { color: var(--primary); }
-.loading { text-align: center; padding: 60px 20px; color: var(--text-dim); }
-.error { text-align: center; padding: 60px 20px; color: var(--danger); }
+.content-card h1 { font-size: 18px; margin-bottom: 14px; color: #fbbf24; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+.content-card h2 { font-size: 15px; margin: 16px 0 8px; color: #60a5fa; }
+.content-card h3 { font-size: 13px; margin: 12px 0 6px; color: var(--text); }
+.content-card p { font-size: 12px; line-height: 1.8; margin: 6px 0; color: var(--text-dim); }
+.content-card ul { margin: 6px 0 6px 16px; }
+.content-card li { font-size: 12px; line-height: 1.7; margin: 4px 0; color: var(--text-dim); }
+.content-card strong { color: var(--text); }
+.content-card table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
+.content-card th, .content-card td { padding: 7px 8px; border: 1px solid var(--border); text-align: left; }
+.content-card th { background: var(--bg-card-alt); color: var(--text); }
+.content-card td { color: var(--text-dim); }
+.content-card hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.content-card code { background: var(--bg-card-alt); padding: 1px 5px; border-radius: 3px; font-size: 10px; color: #fbbf24; }
+
+.loading {
+  text-align: center; padding: 60px 20px;
+  color: var(--text-dim); font-size: 13px;
+}
+.loading::before {
+  content: '';
+  display: block;
+  width: 28px; height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px;
+}
+.error { text-align: center; padding: 50px 20px; color: #f87171; font-size: 13px; }
 
 /* 底部导航 */
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255,255,255,0.95);
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(15,23,42,0.95);
   backdrop-filter: blur(20px);
   border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-around;
-  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  display: flex; justify-content: space-around;
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
   z-index: 100;
 }
 .nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 4px 16px;
-  color: var(--text-dim);
-  font-size: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 2px; padding: 4px 14px; color: var(--text-dim);
+  font-size: 9px; background: none; border: none; cursor: pointer;
   transition: color 0.2s;
 }
-.nav-item.active { color: var(--primary); }
-.nav-item .icon { font-size: 20px; }
+.nav-item.active { color: var(--primary-light); }
+.nav-item .icon { font-size: 18px; }
 
-/* 返回按钮 */
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 13px;
-  color: var(--text);
-  cursor: pointer;
-  margin-bottom: 16px;
-  transition: all 0.15s;
+/* iframe */
+.iframe-container {
+  width: 100%;
+  height: calc(100vh - 130px);
+  border: none;
+  border-radius: 12px;
+  background: #0f172a;
 }
-.back-btn:active { background: var(--border); }
 </style>
 </head>
 <body>
 
-<!-- 首页 -->
-<div class="page active" id="homePage">
-  <!-- Hero区域 -->
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-header">
-        <div class="logo">
-          <div class="logo-icon">量</div>
-          <div class="logo-text">
-            <h1>量学实战系统</h1>
-            <p>基于真实数据的量化分析</p>
-          </div>
-        </div>
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          运行中
+<!-- ============ 首页 ============ -->
+<div id="homePage" class="page active">
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-header">
+      <div class="logo">
+        <div class="logo-icon">量</div>
+        <div class="logo-text">
+          <h1>量学实战系统</h1>
+          <p>基于真实数据的量化分析</p>
         </div>
       </div>
-      <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" placeholder="搜索讲义、案例、报告..." id="searchInput" onkeyup="handleSearch(event)">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        运行中
       </div>
     </div>
-  </div>
-
-  <!-- 主内容 -->
-  <div class="main">
-    <!-- 统计 -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-num">19</div>
-        <div class="stat-label">讲义</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">8</div>
-        <div class="stat-label">案例</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">8</div>
-        <div class="stat-label">图表</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">6</div>
-        <div class="stat-label">持仓</div>
-      </div>
-    </div>
-
-    <!-- 核心功能 -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title">核心功能</div>
-      </div>
-      <div class="func-grid">
-        <div class="func-card" onclick="loadMD('复盘日报','复盘日报.md')">
-          <div class="func-icon green">📊</div>
-          <div class="func-title">复盘日报</div>
-          <div class="func-desc">每日自动更新<br>持仓盈亏分析</div>
-        </div>
-        <div class="func-card" onclick="loadMD('盘前预案','盘前预案.md')">
-          <div class="func-icon blue">📋</div>
-          <div class="func-title">盘前预案</div>
-          <div class="func-desc">次日操作计划<br>关键位标记</div>
-        </div>
-        <div class="func-card" onclick="loadBacktest()">
-          <div class="func-icon purple">⚗</div>
-          <div class="func-title">回测分析</div>
-          <div class="func-desc">策略验证胜率<br>历史回测结果</div>
-        </div>
-        <div class="func-card" onclick="loadCharts()">
-          <div class="func-icon orange">📈</div>
-          <div class="func-title">K线图表</div>
-          <div class="func-desc">技术指标信号<br>黄金线标注</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 学习资料 -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title">学习资料</div>
-      </div>
-      <div class="list">
-        <div class="list-item" onclick="loadMD('实战案例库','案例导航.md')">
-          <div class="list-left">
-            <div class="list-icon green">例</div>
-            <div>
-              <div class="list-title">实战案例库</div>
-              <div class="list-sub">8只股票真实案例分析</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('历史回溯','历史回溯报告_完整.md')">
-          <div class="list-left">
-            <div class="list-icon purple">溯</div>
-            <div>
-              <div class="list-title">历史回溯报告</div>
-              <div class="list-sub">信号效果对比验证</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('案例汇总','案例报告_20260828.md')">
-          <div class="list-left">
-            <div class="list-icon orange">总</div>
-            <div>
-              <div class="list-title">案例汇总报告</div>
-              <div class="list-sub">理论验证结论总结</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 学习路线 -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title">学习路线</div>
-        <span class="section-more" onclick="loadMD('全部路线','学习路线图_量柱擒涨停.md')">查看全部 ›</span>
-      </div>
-      <div class="list">
-        <div class="list-item" onclick="loadMD('量柱擒涨停','学习路线图_量柱擒涨停.md')">
-          <div class="list-left">
-            <div class="list-icon green">1</div>
-            <div>
-              <div class="list-title">量柱擒涨停</div>
-              <div class="list-sub">第一本经典入门</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('量线捉涨停','学习路线图_量线捉涨停.md')">
-          <div class="list-left">
-            <div class="list-icon blue">2</div>
-            <div>
-              <div class="list-title">量线捉涨停</div>
-              <div class="list-sub">第二本经典进阶</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('伏击涨停','学习路线图_伏击涨停.md')">
-          <div class="list-left">
-            <div class="list-icon purple">3</div>
-            <div>
-              <div class="list-title">伏击涨停</div>
-              <div class="list-sub">第三本经典深化</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('涨停密码','学习路线图_涨停密码.md')">
-          <div class="list-left">
-            <div class="list-icon orange">4</div>
-            <div>
-              <div class="list-title">涨停密码</div>
-              <div class="list-sub">第四本经典精通</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 讲义目录 -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title">讲义目录</div>
-        <span class="section-more" onclick="loadMD('全部讲义','讲义_量柱擒涨停.md')">查看全部 ›</span>
-      </div>
-      <div class="list">
-        <div class="list-item" onclick="loadMD('量柱擒涨停讲义','讲义_量柱擒涨停.md')">
-          <div class="list-left">
-            <div class="list-icon blue">讲</div>
-            <div>
-              <div class="list-title">量柱擒涨停</div>
-              <div class="list-sub">黑马王子经典 · 786行</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('量线捉涨停讲义','讲义_量线捉涨停.md')">
-          <div class="list-left">
-            <div class="list-icon blue">讲</div>
-            <div>
-              <div class="list-title">量线捉涨停</div>
-              <div class="list-sub">黑马王子经典 · 731行</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('涨停密码讲义','讲义_涨停密码.md')">
-          <div class="list-left">
-            <div class="list-icon blue">讲</div>
-            <div>
-              <div class="list-title">涨停密码</div>
-              <div class="list-sub">黑马王子经典 · 1158行</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('DeepSeek即时通','讲义_DeepSeek即时通.md')">
-          <div class="list-left">
-            <div class="list-icon green">AI</div>
-            <div>
-              <div class="list-title">DeepSeek即时通</div>
-              <div class="list-sub">黑马王子2025新作</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 个股案例 -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-title">个股案例</div>
-        <span class="section-more" onclick="loadMD('案例导航','案例导航.md')">查看全部 ›</span>
-      </div>
-      <div class="list">
-        <div class="list-item" onclick="loadMD('淳中科技','案例_淳中科技.md')">
-          <div class="list-left">
-            <div class="list-icon red">淳</div>
-            <div>
-              <div class="list-title">淳中科技</div>
-              <div class="list-sub">sh603516 · 持仓股</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('工业富联','案例_工业富联.md')">
-          <div class="list-left">
-            <div class="list-icon red">工</div>
-            <div>
-              <div class="list-title">工业富联</div>
-              <div class="list-sub">sh601138 · 持仓股</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('胜宏科技','案例_胜宏科技.md')">
-          <div class="list-left">
-            <div class="list-icon red">胜</div>
-            <div>
-              <div class="list-title">胜宏科技</div>
-              <div class="list-sub">sz300476 · 持仓股</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-        <div class="list-item" onclick="loadMD('长电科技','案例_长电科技.md')">
-          <div class="list-left">
-            <div class="list-icon red">长</div>
-            <div>
-              <div class="list-title">长电科技</div>
-              <div class="list-sub">sh600584 · 关注池</div>
-            </div>
-          </div>
-          <span class="list-arrow">›</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      数据更新时间: 2026-08-28<br>
-      数据来源: 腾讯财经API
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="搜索讲义、案例、报告..." id="searchInput" onkeyup="handleSearch(event)">
     </div>
   </div>
 </div>
 
-<!-- 内容页 -->
-<div class="page" id="contentPage">
-  <div class="main" style="margin-top:16px">
-    <button class="back-btn" onclick="goHome()">← 返回</button>
-    <div class="content-area" id="contentArea">
+<div class="main">
+  <!-- 统计 -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">19</div><div class="stat-label">讲义</div></div>
+    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">案例</div></div>
+    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">图表</div></div>
+    <div class="stat-card"><div class="stat-num">14</div><div class="stat-label">课程</div></div>
+  </div>
+
+  <!-- 核心功能 -->
+  <div class="section">
+    <div class="section-title">核心功能</div>
+    <div class="func-grid">
+      <div class="func-card" onclick="loadMD('复盘日报','复盘日报.md')">
+        <div class="func-icon green">📊</div>
+        <div class="func-title">复盘日报</div>
+        <div class="func-desc">每日更新</div>
+      </div>
+      <div class="func-card" onclick="loadMD('盘前预案','盘前预案.md')">
+        <div class="func-icon blue">📋</div>
+        <div class="func-title">盘前预案</div>
+        <div class="func-desc">操作计划</div>
+      </div>
+      <div class="func-card" onclick="showBacktest()">
+        <div class="func-icon purple">⚗</div>
+        <div class="func-title">回测分析</div>
+        <div class="func-desc">策略验证</div>
+      </div>
+      <div class="func-card" onclick="showCharts()">
+        <div class="func-icon orange">📈</div>
+        <div class="func-title">K线图表</div>
+        <div class="func-desc">技术分析</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学习资料 -->
+  <div class="section">
+    <div class="section-title">学习资料</div>
+    <div class="list-card">
+      <div class="list-item" onclick="showSubPage('案例库')">
+        <div class="list-icon green">例</div>
+        <div class="list-info"><div class="list-title">实战案例库</div><div class="list-sub">8只股票真实案例</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('历史回溯报告','历史回溯报告_完整.md')">
+        <div class="list-icon purple">溯</div>
+        <div class="list-info"><div class="list-title">历史回溯报告</div><div class="list-sub">信号效果验证</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('案例汇总报告','案例报告_20260828.md')">
+        <div class="list-icon orange">总</div>
+        <div class="list-info"><div class="list-title">案例汇总报告</div><div class="list-sub">理论验证结论</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学习路线 -->
+  <div class="section">
+    <div class="section-title">学习路线</div>
+    <div class="list-card">
+      <div class="list-item" onclick="loadMD('量柱擒涨停路线','学习路线图_量柱擒涨停.md')">
+        <div class="list-icon green">1</div>
+        <div class="list-info"><div class="list-title">量柱擒涨停</div><div class="list-sub">第一本经典入门</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量线捉涨停路线','学习路线图_量线捉涨停.md')">
+        <div class="list-icon blue">2</div>
+        <div class="list-info"><div class="list-title">量线捉涨停</div><div class="list-sub">第二本经典进阶</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('伏击涨停路线','学习路线图_伏击涨停.md')">
+        <div class="list-icon purple">3</div>
+        <div class="list-info"><div class="list-title">伏击涨停</div><div class="list-sub">第三本经典深化</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('涨停密码路线','学习路线图_涨停密码.md')">
+        <div class="list-icon orange">4</div>
+        <div class="list-info"><div class="list-title">涨停密码</div><div class="list-sub">第四本经典精通</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量波逮涨停路线','学习路线图_量波逮涨停.md')">
+        <div class="list-icon red">5</div>
+        <div class="list-info"><div class="list-title">量波逮涨停</div><div class="list-sub">第五本经典大成</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 讲义目录 -->
+  <div class="section">
+    <div class="section-title">讲义目录</div>
+    <div class="list-card">
+      <div class="list-item" onclick="loadMD('量柱擒涨停讲义','讲义_量柱擒涨停.md')">
+        <div class="list-icon blue">讲</div>
+        <div class="list-info"><div class="list-title">量柱擒涨停</div><div class="list-sub">黑马王子经典 · 786行</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量线捉涨停讲义','讲义_量线捉涨停.md')">
+        <div class="list-icon blue">讲</div>
+        <div class="list-info"><div class="list-title">量线捉涨停</div><div class="list-sub">黑马王子经典 · 731行</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('伏击涨停讲义','讲义_伏击涨停.md')">
+        <div class="list-icon blue">讲</div>
+        <div class="list-info"><div class="list-title">伏击涨停</div><div class="list-sub">黑马王子经典 · 811行</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('涨停密码讲义','讲义_涨停密码.md')">
+        <div class="list-icon blue">讲</div>
+        <div class="list-info"><div class="list-title">涨停密码</div><div class="list-sub">黑马王子经典 · 1158行</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量波逮涨停讲义','讲义_量波逮涨停.md')">
+        <div class="list-icon blue">讲</div>
+        <div class="list-info"><div class="list-title">量波逮涨停</div><div class="list-sub">黑马王子经典 · 1036行</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('操盘手记','讲义_操盘手记核心摘要.md')">
+        <div class="list-icon orange">记</div>
+        <div class="list-info"><div class="list-title">操盘手记核心摘要</div><div class="list-sub">实战心得精华</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('DeepSeek即时通','讲义_DeepSeek即时通.md')">
+        <div class="list-icon green">AI</div>
+        <div class="list-info"><div class="list-title">DeepSeek即时通</div><div class="list-sub">黑马王子2025新作</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 个股案例 -->
+  <div class="section">
+    <div class="section-title">个股案例</div>
+    <div class="list-card">
+      <div class="list-item" onclick="loadMD('淳中科技','案例_淳中科技.md')">
+        <div class="list-icon red">淳</div>
+        <div class="list-info"><div class="list-title">淳中科技</div><div class="list-sub">sh603516 · 持仓股</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('工业富联','案例_工业富联.md')">
+        <div class="list-icon red">工</div>
+        <div class="list-info"><div class="list-title">工业富联</div><div class="list-sub">sh601138 · 持仓股</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('胜宏科技','案例_胜宏科技.md')">
+        <div class="list-icon red">胜</div>
+        <div class="list-info"><div class="list-title">胜宏科技</div><div class="list-sub">sz300476 · 持仓股</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('通富微电','案例_通富微电.md')">
+        <div class="list-icon red">通</div>
+        <div class="list-info"><div class="list-title">通富微电</div><div class="list-sub">sz002156 · 持仓股</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('环旭电子','案例_环旭电子.md')">
+        <div class="list-icon red">环</div>
+        <div class="list-info"><div class="list-title">环旭电子</div><div class="list-sub">sh601231 · 持仓股</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('赛腾股份','案例_赛腾股份.md')">
+        <div class="list-icon red">赛</div>
+        <div class="list-info"><div class="list-title">赛腾股份</div><div class="list-sub">sh603283 · 持仓股</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('长电科技','案例_长电科技.md')">
+        <div class="list-icon red">长</div>
+        <div class="list-info"><div class="list-title">长电科技</div><div class="list-sub">sh600584 · 关注池</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('天孚通信','案例_天孚通信.md')">
+        <div class="list-icon red">天</div>
+        <div class="list-info"><div class="list-title">天孚通信</div><div class="list-sub">sz300394 · 关注池</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 课堂作业 -->
+  <div class="section">
+    <div class="section-title">课堂作业</div>
+    <div class="list-card">
+      <div class="list-item" onclick="loadFile('作业-第03课.html')">
+        <div class="list-icon blue">作</div>
+        <div class="list-info"><div class="list-title">第03课作业</div><div class="list-sub">量价关系四维度练习</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('作业-第04课.html')">
+        <div class="list-icon blue">作</div>
+        <div class="list-info"><div class="list-title">第04课作业</div><div class="list-sub">位置决定性质练习</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('测验-第01-03课综合复习.html')">
+        <div class="list-icon purple">测</div>
+        <div class="list-info"><div class="list-title">第01-03课综合测验</div><div class="list-sub">基础理论复习</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 专题课程 -->
+  <div class="section">
+    <div class="section-title">专题课程</div>
+    <div class="list-card">
+      <div class="list-item" onclick="loadFile('强化课-左证明右确认量化与生死线画法.html')">
+        <div class="list-icon purple">强</div>
+        <div class="list-info"><div class="list-title">强化课-左证明右确认</div><div class="list-sub">量化与生死线画法精讲</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('方法课-复盘三窗口.html')">
+        <div class="list-icon blue">方</div>
+        <div class="list-info"><div class="list-title">方法课-复盘三窗口</div><div class="list-sub">复盘方法论</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('资料-量学出处与当代权威理论对照表.html')">
+        <div class="list-icon green">资</div>
+        <div class="list-info"><div class="list-title">量学出处对照表</div><div class="list-sub">理论与实战对照</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('专题-淳中8-21假右确认拆解.html')">
+        <div class="list-icon orange">专</div>
+        <div class="list-info"><div class="list-title">淳中8-21假右确认拆解</div><div class="list-sub">实战案例深度解析</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 原著精华 -->
+  <div class="section">
+    <div class="section-title">原著精华</div>
+    <div class="list-card">
+      <div class="list-item" onclick="loadFile('原著精华/量柱擒涨停-核心精华.html')">
+        <div class="list-icon green">原</div>
+        <div class="list-info"><div class="list-title">量柱擒涨停精华</div><div class="list-sub">黑马王子原著精读</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('原著精华/量线捉涨停-核心精华.html')">
+        <div class="list-icon blue">原</div>
+        <div class="list-info"><div class="list-title">量线捉涨停精华</div><div class="list-sub">黑马王子原著精读</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 每日盯盘 -->
+  <div class="section">
+    <div class="section-title">每日盯盘</div>
+    <div class="list-card">
+      <div class="list-item" onclick="loadFile('盘中盯盘-2026-08-28.html')">
+        <div class="list-icon orange">盘</div>
+        <div class="list-info"><div class="list-title">盘中盯盘 08-28</div><div class="list-sub">今日盘中记录</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('盘前预案-2026-08-28.html')">
+        <div class="list-icon blue">预</div>
+        <div class="list-info"><div class="list-title">盘前预案 08-28</div><div class="list-sub">今日操作计划</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('收盘复盘-2026-08-28.html')">
+        <div class="list-icon green">复</div>
+        <div class="list-info"><div class="list-title">收盘复盘 08-28</div><div class="list-sub">今日复盘总结</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadFile('联网复盘-2026-08-28.html')">
+        <div class="list-icon purple">联</div>
+        <div class="list-info"><div class="list-title">联网复盘 08-28</div><div class="list-sub">市场联网分析</div></div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px;font-size:10px;color:var(--text-dim);">
+    数据更新: 2026-08-28 | 腾讯财经API
+  </div>
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <button class="nav-item active" onclick="goHome()"><span class="icon">🏠</span><span>首页</span></button>
+  <button class="nav-item" onclick="loadMD('复盘日报','复盘日报.md')"><span class="icon">📊</span><span>复盘</span></button>
+  <button class="nav-item" onclick="loadMD('盘前预案','盘前预案.md')"><span class="icon">📋</span><span>预案</span></button>
+  <button class="nav-item" onclick="showCharts()"><span class="icon">📈</span><span>图表</span></button>
+</div>
+</div>
+
+<!-- ============ 子页面（列表） ============ -->
+<div id="subPage" class="sub-page">
+  <div class="sub-header">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <span class="page-title" id="subTitle">标题</span>
+  </div>
+  <div class="sub-content" id="subContent">
+    <div class="loading">加载中...</div>
+  </div>
+</div>
+
+<!-- ============ 内容页 ============ -->
+<div id="contentPage" class="sub-page">
+  <div class="sub-header">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <span class="page-title" id="contentTitle">内容</span>
+  </div>
+  <div class="sub-content">
+    <div class="content-card" id="contentArea">
       <div class="loading">加载中...</div>
     </div>
   </div>
 </div>
 
-<!-- 底部导航 -->
-<div class="bottom-nav" id="bottomNav">
-  <button class="nav-item active" onclick="goHome()">
-    <span class="icon">🏠</span>
-    <span>首页</span>
-  </button>
-  <button class="nav-item" onclick="loadMD('复盘日报','复盘日报.md')">
-    <span class="icon">📊</span>
-    <span>复盘</span>
-  </button>
-  <button class="nav-item" onclick="loadMD('盘前预案','盘前预案.md')">
-    <span class="icon">📋</span>
-    <span>预案</span>
-  </button>
-  <button class="nav-item" onclick="loadCharts()">
-    <span class="icon">📈</span>
-    <span>图表</span>
-  </button>
-</div>
-
 <script>
-let currentTitle = '';
+// 历史记录栈 - 修复多层导航bug
+var navHistory = [];
 
 function showPage(pageId) {
-  document.getElementById('homePage').classList.remove('active');
+  document.getElementById('homePage').style.display = 'none';
+  document.getElementById('subPage').classList.remove('active');
   document.getElementById('contentPage').classList.remove('active');
-  document.getElementById(pageId).classList.add('active');
-  
-  document.querySelectorAll('.nav-item').forEach(function(item) {
-    item.classList.remove('active');
-  });
-  
-  if (pageId === 'homePage') {
-    document.querySelectorAll('.nav-item')[0].classList.add('active');
+  if (pageId === 'home') {
+    document.getElementById('homePage').style.display = 'block';
+  } else if (pageId === 'sub') {
+    document.getElementById('subPage').classList.add('active');
+  } else {
+    document.getElementById('contentPage').classList.add('active');
   }
-  
   window.scrollTo(0, 0);
 }
 
 function goHome() {
-  showPage('homePage');
+  navHistory = [];
+  showPage('home');
+  document.querySelectorAll('.nav-item').forEach(function(item, i) {
+    item.classList.toggle('active', i === 0);
+  });
 }
 
-function loadMD(title, file) {
-  showPage('contentPage');
-  currentTitle = title;
-  const area = document.getElementById('contentArea');
-  area.innerHTML = '<div class="loading">加载中...</div>';
-  document.title = title + ' - 量学实战系统';
+function goBack() {
+  if (navHistory.length > 0) {
+    var prev = navHistory.pop();
+    showPage(prev);
+    // 更新底部导航高亮
+    if (prev === 'home') {
+      document.querySelectorAll('.nav-item').forEach(function(item, i) {
+        item.classList.toggle('active', i === 0);
+      });
+    }
+  } else {
+    goHome();
+  }
+}
 
+// 直接加载Markdown（从首页点击）- 压入home
+function loadMD(title, file) {
+  navHistory.push('home');
+  document.getElementById('contentTitle').textContent = title;
+  var area = document.getElementById('contentArea');
+  area.innerHTML = '<div class="loading"></div>';
+  showPage('content');
   fetch(file)
     .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
     .then(function(md) { area.innerHTML = renderMD(md); })
-    .catch(function(err) {
-      area.innerHTML = '<div class="error">⚠️ ' + err.message + '<br><br><span style="color:var(--text-dim);font-size:12px">文件不存在或路径错误</span></div>';
-    });
+    .catch(function(err) { area.innerHTML = '<div class="error">⚠️ ' + err.message + '</div>'; });
 }
 
-function loadBacktest() {
-  showPage('contentPage');
-  currentTitle = '回测分析';
-  document.title = '回测分析 - 量学实战系统';
-  const area = document.getElementById('contentArea');
-  area.innerHTML = '<div class="loading">回测分析中...</div>';
+// 加载HTML文件
+function loadFile(file) {
+  navHistory.push('home');
+  var title = file.replace('.html','').split('/').pop();
+  document.getElementById('contentTitle').textContent = title;
+  var area = document.getElementById('contentArea');
+  area.innerHTML = '<iframe src="' + file + '" class="iframe-container"></iframe>';
+  showPage('content');
+}
 
+// 显示子页面列表（如案例库）
+function showSubPage(title) {
+  navHistory.push('home');
+  document.getElementById('subTitle').textContent = title;
+  var content = document.getElementById('subContent');
+  showPage('sub');
+  var items = '';
+  if (title === '案例库') {
+    items = [
+      ['淳中科技','案例_淳中科技.md'],
+      ['工业富联','案例_工业富联.md'],
+      ['胜宏科技','案例_胜宏科技.md'],
+      ['通富微电','案例_通富微电.md'],
+      ['环旭电子','案例_环旭电子.md'],
+      ['赛腾股份','案例_赛腾股份.md'],
+      ['长电科技','案例_长电科技.md'],
+      ['天孚通信','案例_天孚通信.md']
+    ].map(function(item) {
+      var t = item[0], f = item[1];
+      return '<div class="list-item" onclick="loadMDFromSub(\'' + t + '\',\'' + f + '\')">' +
+        '<div class="list-icon red">' + t[0] + '</div>' +
+        '<div class="list-info"><div class="list-title">' + t + '</div></div>' +
+        '<span class="list-arrow">›</span></div>';
+    }).join('');
+  }
+  content.innerHTML = '<div class="list-card">' + items + '</div>';
+}
+
+// 从子页面加载内容 - 压入sub
+function loadMDFromSub(title, file) {
+  navHistory.push('sub');
+  document.getElementById('contentTitle').textContent = title;
+  var area = document.getElementById('contentArea');
+  area.innerHTML = '<div class="loading"></div>';
+  showPage('content');
+  fetch(file)
+    .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
+    .then(function(md) { area.innerHTML = renderMD(md); })
+    .catch(function(err) { area.innerHTML = '<div class="error">⚠️ ' + err.message + '</div>'; });
+}
+
+function showBacktest() {
+  navHistory.push('home');
+  document.getElementById('contentTitle').textContent = '回测分析';
+  var area = document.getElementById('contentArea');
+  area.innerHTML = '<div class="loading">回测分析中...</div>';
+  showPage('content');
   fetch('/api/backtest?symbol=sh603516&strategy=all')
     .then(function(r) { return r.json(); })
-    .then(function(data) { renderBacktest(area, data); })
+    .then(function(data) {
+      var s = data.strategies || {};
+      var html = '<h2>' + data.name + ' (' + data.symbol + ')</h2>';
+      html += '<p style="color:var(--text-dim);font-size:11px">' + data.date_range + ' · ' + data.total_days + '日</p>';
+      if (s.golden_line) {
+        var g = s.golden_line;
+        var gc = g.win_rate >= 60 ? '#10b981' : '#f59e0b';
+        html += '<h3>黄金线支撑</h3>';
+        html += '<p style="font-size:28px;font-weight:700;color:' + gc + '">' + g.win_rate + '%</p>';
+        html += '<p style="font-size:11px;color:var(--text-dim)">' + g.total + '次 | 有效' + g.valid + ' 失效' + g.invalid + '</p>';
+        if (g.hits && g.hits.length) {
+          html += '<table><tr><th>日期</th><th>支撑</th><th>结果</th></tr>';
+          g.hits.slice(-5).reverse().forEach(function(h) {
+            html += '<tr><td>' + h.date + '</td><td>' + h.support + '</td><td>' + h.outcome + '</td></tr>';
+          });
+          html += '</table>';
+        }
+      }
+      if (s.price_level) {
+        var p = s.price_level;
+        var pc = p.win_rate >= 60 ? '#10b981' : '#ef4444';
+        html += '<h3>支撑压力位</h3>';
+        html += '<p style="font-size:28px;font-weight:700;color:' + pc + '">' + p.win_rate + '%</p>';
+        html += '<p style="font-size:11px;color:var(--text-dim)">' + p.total + '次 | 有效' + p.valid + '</p>';
+      }
+      area.innerHTML = html;
+    })
     .catch(function(err) {
       area.innerHTML = '<div class="error">⚠️ 回测失败: ' + err.message + '</div>';
     });
 }
 
-function renderBacktest(area, data) {
-  var s = data.strategies || {};
-  var html = '<h1>' + data.name + ' (' + data.symbol + ')</h1>';
-  html += '<p style="color:var(--text-dim);font-size:12px;margin-bottom:20px">' + data.date_range + ' · ' + data.total_days + '个交易日</p>';
-
-  if (s.golden_line) {
-    var g = s.golden_line;
-    var gc = g.win_rate >= 60 ? '#38a169' : (g.win_rate >= 40 ? '#d69e2e' : '#e53e3e');
-    html += '<h2>黄金线支撑测试</h2>';
-    html += '<p style="font-size:32px;font-weight:700;color:' + gc + '">' + g.win_rate + '%</p>';
-    html += '<p style="color:var(--text-dim);font-size:12px">' + g.total + '次测试 | 有效' + g.valid + ' 失效' + g.invalid + '</p>';
-    if (g.hits && g.hits.length) {
-      html += '<table><tr><th>日期</th><th>支撑价</th><th>结果</th></tr>';
-      g.hits.slice(-5).reverse().forEach(function(h) {
-        html += '<tr><td>' + h.date + '</td><td>' + h.support + '</td><td>' + h.outcome + '</td></tr>';
-      });
-      html += '</table>';
-    }
-  }
-
-  if (s.price_level) {
-    var p = s.price_level;
-    var pc = p.win_rate >= 60 ? '#38a169' : '#e53e3e';
-    html += '<h2>支撑压力位测试</h2>';
-    html += '<p style="font-size:32px;font-weight:700;color:' + pc + '">' + p.win_rate + '%</p>';
-    html += '<p style="color:var(--text-dim);font-size:12px">' + p.total + '次测试 | 有效' + p.valid + ' 失效' + p.invalid + '</p>';
-  }
-
-  if (s.volume) {
-    html += '<h2>倍量柱信号</h2>';
-    html += '<p style="font-size:22px;font-weight:600;color:#d69e2e">' + s.volume.count + ' 次</p>';
-    if (s.volume.signals && s.volume.signals.length) {
-      s.volume.signals.slice(-3).reverse().forEach(function(sig) {
-        html += '<p style="font-size:12px;color:var(--text-dim)">' + sig.date + ' 量比' + sig.volume_ratio + 'x 价' + sig.price + ' 涨' + sig.change_pct + '%</p>';
-      });
-    }
-  }
-  area.innerHTML = html;
-}
-
-function loadCharts() {
-  showPage('contentPage');
-  currentTitle = 'K线图表';
-  document.title = 'K线图表 - 量学实战系统';
-  const area = document.getElementById('contentArea');
-  area.innerHTML = '<iframe src="/图表/index.html" style="width:100%;height:70vh;border:none;border-radius:12px;background:#fff"></iframe>';
+function showCharts() {
+  navHistory.push('home');
+  document.getElementById('contentTitle').textContent = 'K线图表';
+  var area = document.getElementById('contentArea');
+  area.innerHTML = '<iframe src="/图表/index.html" class="iframe-container"></iframe>';
+  showPage('content');
 }
 
 function handleSearch(e) {
-  var keyword = e.target.value.toLowerCase();
+  var kw = e.target.value.toLowerCase();
   var items = document.querySelectorAll('.list-item');
   items.forEach(function(item) {
     var text = item.textContent.toLowerCase();
-    item.style.display = (keyword === '' || text.indexOf(keyword) !== -1) ? '' : 'none';
+    item.style.display = (kw === '' || text.indexOf(kw) !== -1) ? '' : 'none';
   });
   var cards = document.querySelectorAll('.func-card');
   cards.forEach(function(card) {
     var text = card.textContent.toLowerCase();
-    card.style.display = (keyword === '' || text.indexOf(keyword) !== -1) ? '' : 'none';
+    card.style.display = (kw === '' || text.indexOf(kw) !== -1) ? '' : 'none';
   });
 }
 
 function renderMD(md) {
   var lines = md.split('\n');
   var html = '';
-  var inTable = false;
-  var inList = false;
-
+  var inTable = false, inList = false;
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i];
-
     if (line.trim().startsWith('|')) {
       if (!inTable) { html += '<table>'; inTable = true; }
       var cells = line.split('|').filter(function(c) { return c.trim() && !/^-+$/.test(c.trim()); });
-      if (cells.length === 0) continue;
+      if (!cells.length) continue;
       var row = '';
       cells.forEach(function(c) { row += '<td>' + renderInline(c.trim()) + '</td>'; });
       html += '<tr>' + row + '</tr>';
@@ -864,15 +833,12 @@ function renderMD(md) {
     } else if (inTable) {
       html += '</table>'; inTable = false;
     }
-
     var h = /^(#{1,3})\s+(.+)$/.exec(line);
     if (h) {
       if (inList) { html += '</ul>'; inList = false; }
-      var level = h[1].length;
-      html += '<h' + level + '>' + renderInline(h[2]) + '</h' + level + '>';
+      html += '<h' + h[1].length + '>' + renderInline(h[2]) + '</h' + h[1].length + '>';
       continue;
     }
-
     var li = /^\s*[-*]\s+(.+)$/.exec(line);
     if (li) {
       if (!inList) { html += '<ul>'; inList = true; }
@@ -881,17 +847,14 @@ function renderMD(md) {
     } else if (inList) {
       html += '</ul>'; inList = false;
     }
-
     if (/^\s*(-{3,}|\*{3,})\s*$/.test(line)) {
       if (inList) { html += '</ul>'; inList = false; }
       html += '<hr>';
       continue;
     }
-
     if (!line.trim()) { html += '<p></p>'; continue; }
     html += '<p>' + renderInline(line.trim()) + '</p>';
   }
-
   if (inTable) html += '</table>';
   if (inList) html += '</ul>';
   return html;
@@ -901,9 +864,10 @@ function renderInline(text) {
   var t = text;
   t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   t = t.replace(/`(.+?)`/g, '<code>$1</code>');
-  t = t.replace(/(^|[^*])\*([^*]+?)\*/g, '$1<em>$2</em>');
   return t;
 }
+
+showPage('home');
 </script>
 </body>
 </html>
