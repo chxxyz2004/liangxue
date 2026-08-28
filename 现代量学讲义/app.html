@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0d1117">
+<title>量学实战系统</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #21262d;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --blue: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* 顶部 */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+.logo-text h1 { font-size: 15px; font-weight: 600; }
+.logo-text p { font-size: 11px; color: var(--text-dim); }
+.status {
+  font-size: 11px;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* 搜索 */
+.search-box {
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px 10px 36px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+}
+.search-box input:focus { border-color: var(--blue); }
+.search-box .search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+}
+
+/* 统计 */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 12px 16px;
+}
+.stat-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.stat-value { font-size: 18px; font-weight: 600; color: var(--blue); }
+.stat-label { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+/* 功能卡片 */
+.section { padding: 0 16px 12px; }
+.section-title {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-title::before {
+  content: '';
+  width: 3px;
+  height: 14px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.card:active { transform: scale(0.98); border-color: var(--blue); }
+.card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.card-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.card-desc { font-size: 11px; color: var(--text-dim); }
+.card-full { grid-column: span 2; }
+.card-blue .card-icon { background: rgba(88,166,255,0.15); color: var(--blue); }
+.card-green .card-icon { background: rgba(63,185,80,0.15); color: var(--green); }
+.card-red .card-icon { background: rgba(248,81,73,0.15); color: var(--red); }
+.card-orange .card-icon { background: rgba(210,153,34,0.15); color: var(--orange); }
+.card-purple .card-icon { background: rgba(188,140,255,0.15); color: var(--purple); }
+
+/* 列表 */
+.list { display: flex; flex-direction: column; gap: 6px; }
+.list-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.list-item:active { background: var(--surface2); }
+.list-left { display: flex; align-items: center; gap: 10px; }
+.list-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.list-title { font-size: 13px; font-weight: 500; }
+.list-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.list-arrow { color: var(--text-dim); }
+
+/* 页面 */
+.page { display: none; padding: 12px 16px; padding-bottom: 80px; }
+.page.active { display: block; }
+.container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+.container h1 { font-size: 18px; margin-bottom: 10px; }
+.container h2 { font-size: 15px; margin: 14px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.container h3 { font-size: 14px; margin: 12px 0 6px; }
+.container p { font-size: 13px; line-height: 1.7; margin: 6px 0; }
+.container ul { margin: 6px 0 6px 18px; }
+.container li { font-size: 13px; line-height: 1.6; margin: 4px 0; }
+.container strong { color: var(--text); }
+.container table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12px; }
+.container th, .container td { padding: 8px; border: 1px solid var(--border); text-align: left; }
+.container th { background: var(--surface2); }
+.container hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.container code { background: var(--surface2); padding: 2px 5px; border-radius: 3px; font-size: 11px; }
+.container a { color: var(--blue); }
+.loading { text-align: center; padding: 40px; color: var(--text-dim); }
+.error { text-align: center; padding: 40px; color: var(--red); }
+.hidden { display: none; }
+
+/* 底部导航 */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 100;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 12px;
+  color: var(--text-dim);
+  font-size: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-item.active { color: var(--blue); }
+.nav-item .icon { font-size: 18px; }
+</style>
+</head>
+<body>
+
+<!-- 头部 -->
+<div class="header" id="header">
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-icon">量</div>
+      <div class="logo-text">
+        <h1>量学实战系统</h1>
+        <p>基于真实数据的量化分析</p>
+      </div>
+    </div>
+    <div class="status"><span class="status-dot"></span>运行中</div>
+  </div>
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="搜索讲义、案例、报告..." id="searchInput" onkeyup="handleSearch(event)">
+  </div>
+</div>
+
+<!-- 首页 -->
+<div class="page active" id="homePage">
+  <!-- 统计 -->
+  <div class="stats">
+    <div class="stat-item"><div class="stat-value">19</div><div class="stat-label">讲义</div></div>
+    <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">案例</div></div>
+    <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">图表</div></div>
+    <div class="stat-item"><div class="stat-value">6</div><div class="stat-label">持仓</div></div>
+  </div>
+
+  <!-- 核心功能 -->
+  <div class="section">
+    <div class="section-title">核心功能</div>
+    <div class="card-grid">
+      <div class="card card-green" onclick="loadMD('复盘日报','复盘日报.md')">
+        <div class="card-icon">📊</div>
+        <div class="card-title">复盘日报</div>
+        <div class="card-desc">每日自动更新</div>
+      </div>
+      <div class="card card-blue" onclick="loadMD('盘前预案','盘前预案.md')">
+        <div class="card-icon">📋</div>
+        <div class="card-title">盘前预案</div>
+        <div class="card-desc">次日操作计划</div>
+      </div>
+      <div class="card card-purple" onclick="loadBacktest()">
+        <div class="card-icon">⚗</div>
+        <div class="card-title">回测分析</div>
+        <div class="card-desc">策略验证胜率</div>
+      </div>
+      <div class="card card-cyan" onclick="loadCharts()">
+        <div class="card-icon">📈</div>
+        <div class="card-title">K线图表</div>
+        <div class="card-desc">技术指标信号</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学习资料 -->
+  <div class="section">
+    <div class="section-title">学习资料</div>
+    <div class="list">
+      <div class="list-item" onclick="loadMD('实战案例库','案例导航.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(63,185,80,0.15);color:var(--green)">⚕</div>
+          <div><div class="list-title">实战案例库</div><div class="list-desc">8只股票真实案例</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('历史回溯','历史回溯报告_完整.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(188,140,255,0.15);color:var(--purple)">📉</div>
+          <div><div class="list-title">历史回溯报告</div><div class="list-desc">信号效果对比验证</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('案例汇总','案例报告_20260828.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(210,153,34,0.15);color:var(--orange)">📝</div>
+          <div><div class="list-title">案例汇总报告</div><div class="list-desc">理论验证结论</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学习路线 -->
+  <div class="section">
+    <div class="section-title">学习路线</div>
+    <div class="list">
+      <div class="list-item" onclick="loadMD('量柱擒涨停路线','学习路线图_量柱擒涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(63,185,80,0.15);color:var(--green)">1</div>
+          <div><div class="list-title">量柱擒涨停</div><div class="list-desc">第一本经典 · 学习路线</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量线捉涨停路线','学习路线图_量线捉涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(63,185,80,0.15);color:var(--green)">2</div>
+          <div><div class="list-title">量线捉涨停</div><div class="list-desc">第二本经典 · 学习路线</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('伏击涨停路线','学习路线图_伏击涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(63,185,80,0.15);color:var(--green)">3</div>
+          <div><div class="list-title">伏击涨停</div><div class="list-desc">第三本经典 · 学习路线</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('涨停密码路线','学习路线图_涨停密码.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(63,185,80,0.15);color:var(--green)">4</div>
+          <div><div class="list-title">涨停密码</div><div class="list-desc">第四本经典 · 学习路线</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量波逮涨停路线','学习路线图_量波逮涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(63,185,80,0.15);color:var(--green)">5</div>
+          <div><div class="list-title">量波逮涨停</div><div class="list-desc">第五本经典 · 学习路线</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 讲义目录 -->
+  <div class="section">
+    <div class="section-title">讲义目录</div>
+    <div class="list">
+      <div class="list-item" onclick="loadMD('量柱擒涨停讲义','讲义_量柱擒涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(88,166,255,0.15);color:var(--blue)">1</div>
+          <div><div class="list-title">量柱擒涨停</div><div class="list-desc">第一本量学经典 · 786行</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量线捉涨停讲义','讲义_量线捉涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(88,166,255,0.15);color:var(--blue)">2</div>
+          <div><div class="list-title">量线捉涨停</div><div class="list-desc">第二本量学经典 · 731行</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('伏击涨停讲义','讲义_伏击涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(88,166,255,0.15);color:var(--blue)">3</div>
+          <div><div class="list-title">伏击涨停</div><div class="list-desc">第三本量学经典 · 811行</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('涨停密码讲义','讲义_涨停密码.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(88,166,255,0.15);color:var(--blue)">4</div>
+          <div><div class="list-title">涨停密码</div><div class="list-desc">第四本量学经典 · 1158行</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('量波逮涨停讲义','讲义_量波逮涨停.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(88,166,255,0.15);color:var(--blue)">5</div>
+          <div><div class="list-title">量波逮涨停</div><div class="list-desc">第五本量学经典 · 1036行</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('DeepSeek即时通','讲义_DeepSeek即时通.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(57,212,192,0.15);color:var(--green)">AI</div>
+          <div><div class="list-title">DeepSeek即时通</div><div class="list-desc">黑马王子2025新作 · AI领域</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 个股案例 -->
+  <div class="section">
+    <div class="section-title">个股案例</div>
+    <div class="list">
+      <div class="list-item" onclick="loadMD('淳中科技案例','案例_淳中科技.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(248,81,73,0.15);color:var(--red)">淳</div>
+          <div><div class="list-title">淳中科技</div><div class="list-desc">sh603516 · 持仓股</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('工业富联案例','案例_工业富联.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(248,81,73,0.15);color:var(--red)">工</div>
+          <div><div class="list-title">工业富联</div><div class="list-desc">sh601138 · 持仓股</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('胜宏科技案例','案例_胜宏科技.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(248,81,73,0.15);color:var(--red)">胜</div>
+          <div><div class="list-title">胜宏科技</div><div class="list-desc">sz300476 · 持仓股</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+      <div class="list-item" onclick="loadMD('长电科技案例','案例_长电科技.md')">
+        <div class="list-left">
+          <div class="list-icon" style="background:rgba(248,81,73,0.15);color:var(--red)">长</div>
+          <div><div class="list-title">长电科技</div><div class="list-desc">sh600584 · 关注池</div></div>
+        </div>
+        <span class="list-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px;font-size:11px;color:var(--text-dim);">
+    数据更新时间: 2026-08-28<br>
+    数据来源: 腾讯财经API
+  </div>
+</div>
+
+<!-- 内容页 -->
+<div class="page" id="contentPage">
+  <div class="container" id="contentArea">
+    <div class="loading">加载中...</div>
+  </div>
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" onclick="goHome()"><span class="icon">🏠</span><span>首页</span></button>
+  <button class="nav-item" onclick="loadMD('复盘日报','复盘日报.md')"><span class="icon">📊</span><span>复盘</span></button>
+  <button class="nav-item" onclick="loadMD('盘前预案','盘前预案.md')"><span class="icon">📋</span><span>预案</span></button>
+  <button class="nav-item" onclick="loadCharts()"><span class="icon">📈</span><span>图表</span></button>
+</div>
+
+<script>
+let currentTitle = '';
+
+function showPage(pageId) {
+  document.getElementById('homePage').classList.remove('active');
+  document.getElementById('contentPage').classList.remove('active');
+  document.getElementById(pageId).classList.add('active');
+  
+  // 更新底部导航状态
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    item.classList.remove('active');
+  });
+  if (pageId === 'homePage') {
+    document.querySelectorAll('.nav-item')[0].classList.add('active');
+    document.getElementById('header').style.display = 'block';
+  } else {
+    document.getElementById('header').style.display = 'none';
+    document.getElementById('bottomNav').style.display = 'none';
+  }
+}
+
+function goHome() {
+  showPage('homePage');
+}
+
+function loadMD(title, file) {
+  showPage('contentPage');
+  currentTitle = title;
+  const area = document.getElementById('contentArea');
+  area.innerHTML = '<div class="loading">加载中...</div>';
+  document.title = title + ' - 量学实战系统';
+
+  fetch(file)
+    .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
+    .then(function(md) { area.innerHTML = renderMD(md); })
+    .catch(function(err) {
+      area.innerHTML = '<div class="error">⚠️ ' + err.message + '<br><br><span style="color:var(--text-dim);font-size:12px">文件不存在</span></div>';
+    });
+}
+
+function loadBacktest() {
+  showPage('contentPage');
+  currentTitle = '回测分析';
+  document.title = '回测分析 - 量学实战系统';
+  const area = document.getElementById('contentArea');
+  area.innerHTML = '<div class="loading">回测分析中...</div>';
+
+  fetch('/api/backtest?symbol=sh603516&strategy=all')
+    .then(function(r) { return r.json(); })
+    .then(function(data) { renderBacktest(area, data); })
+    .catch(function(err) {
+      area.innerHTML = '<div class="error">⚠️ 回测失败: ' + err.message + '</div>';
+    });
+}
+
+function renderBacktest(area, data) {
+  var s = data.strategies || {};
+  var html = '<h2>' + data.name + ' (' + data.symbol + ')</h2>';
+  html += '<p style="color:var(--text-dim);font-size:12px">' + data.date_range + ' · ' + data.total_days + '个交易日</p>';
+
+  if (s.golden_line) {
+    var g = s.golden_line;
+    var gc = g.win_rate >= 60 ? 'var(--green)' : (g.win_rate >= 40 ? 'var(--orange)' : 'var(--red)');
+    html += '<h3>黄金线支撑</h3>';
+    html += '<p style="font-size:28px;font-weight:700;color:' + gc + '">' + g.win_rate + '%</p>';
+    html += '<p style="color:var(--text-dim);font-size:12px">' + g.total + '次测试 | 有效' + g.valid + ' 失效' + g.invalid + '</p>';
+    if (g.hits && g.hits.length) {
+      html += '<table><tr><th>日期</th><th>支撑</th><th>结果</th></tr>';
+      g.hits.slice(-5).reverse().forEach(function(h) {
+        html += '<tr><td>' + h.date + '</td><td>' + h.support + '</td><td>' + h.outcome + '</td></tr>';
+      });
+      html += '</table>';
+    }
+  }
+
+  if (s.price_level) {
+    var p = s.price_level;
+    var pc = p.win_rate >= 60 ? 'var(--green)' : 'var(--red)';
+    html += '<h3>支撑压力位</h3>';
+    html += '<p style="font-size:28px;font-weight:700;color:' + pc + '">' + p.win_rate + '%</p>';
+    html += '<p style="color:var(--text-dim);font-size:12px">' + p.total + '次测试 | 有效' + p.valid + ' 失效' + p.invalid + '</p>';
+  }
+
+  if (s.volume) {
+    html += '<h3>倍量柱信号</h3>';
+    html += '<p style="font-size:22px;font-weight:600;color:var(--orange)">' + s.volume.count + ' 次</p>';
+    if (s.volume.signals && s.volume.signals.length) {
+      s.volume.signals.slice(-3).reverse().forEach(function(sig) {
+        html += '<p style="font-size:12px;color:var(--text-dim)">' + sig.date + ' 量比' + sig.volume_ratio + 'x 价' + sig.price + ' 涨' + sig.change_pct + '%</p>';
+      });
+    }
+  }
+  area.innerHTML = html;
+}
+
+function loadCharts() {
+  showPage('contentPage');
+  currentTitle = 'K线图表';
+  document.title = 'K线图表 - 量学实战系统';
+  const area = document.getElementById('contentArea');
+  area.innerHTML = '<iframe src="/图表/index.html" style="width:100%;height:75vh;border:none;border-radius:8px;background:var(--surface)"></iframe>';
+}
+
+function handleSearch(e) {
+  var keyword = e.target.value.toLowerCase();
+  var items = document.querySelectorAll('.list-item');
+  items.forEach(function(item) {
+    var text = item.textContent.toLowerCase();
+    if (keyword === '' || text.indexOf(keyword) !== -1) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+  // 处理卡片搜索
+  var cards = document.querySelectorAll('.card');
+  cards.forEach(function(card) {
+    var text = card.textContent.toLowerCase();
+    if (keyword === '' || text.indexOf(keyword) !== -1) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function renderMD(md) {
+  var lines = md.split('\n');
+  var html = '';
+  var inTable = false;
+  var inList = false;
+
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+
+    if (line.trim().startsWith('|')) {
+      if (!inTable) { html += '<table>'; inTable = true; }
+      var cells = line.split('|').filter(function(c) { return c.trim() && !/^-+$/.test(c.trim()); });
+      if (cells.length === 0) continue;
+      var row = '';
+      cells.forEach(function(c) { row += '<td>' + renderInline(c.trim()) + '</td>'; });
+      html += '<tr>' + row + '</tr>';
+      continue;
+    } else if (inTable) {
+      html += '</table>'; inTable = false;
+    }
+
+    var h = /^(#{1,3})\s+(.+)$/.exec(line);
+    if (h) {
+      if (inList) { html += '</ul>'; inList = false; }
+      var level = h[1].length;
+      html += '<h' + level + '>' + renderInline(h[2]) + '</h' + level + '>';
+      continue;
+    }
+
+    var li = /^\s*[-*]\s+(.+)$/.exec(line);
+    if (li) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += '<li>' + renderInline(li[1]) + '</li>';
+      continue;
+    } else if (inList) {
+      html += '</ul>'; inList = false;
+    }
+
+    if (/^\s*(-{3,}|\*{3,})\s*$/.test(line)) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += '<hr>';
+      continue;
+    }
+
+    if (!line.trim()) { html += '<p></p>'; continue; }
+    html += '<p>' + renderInline(line.trim()) + '</p>';
+  }
+
+  if (inTable) html += '</table>';
+  if (inList) html += '</ul>';
+  return html;
+}
+
+function renderInline(text) {
+  var t = text;
+  t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/`(.+?)`/g, '<code>$1</code>');
+  t = t.replace(/(^|[^*])\*([^*]+?)\*/g, '$1<em>$2</em>');
+  return t;
+}
+</script>
+</body>
+</html>

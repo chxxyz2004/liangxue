@@ -1,0 +1,484 @@
+{
+  "title": "量学理论持仓股回测报告",
+  "date": "2026-08-28",
+  "symbols": [
+    "sh603516",
+    "sh601138",
+    "sz300476",
+    "sz002156",
+    "sh601231",
+    "sh603283"
+  ],
+  "data": {
+    "sh603516": {
+      "symbol": "sh603516",
+      "name": "淳中科技",
+      "total_days": 361,
+      "date_range": "2025-03-07 ~ 2026-08-27",
+      "strategies": {
+        "volume": {
+          "signals": [],
+          "count": 0
+        },
+        "golden_line": {
+          "total": 3,
+          "valid": 2,
+          "invalid": 1,
+          "hits": [
+            {
+              "date": "2026-06-15",
+              "support": 112.28,
+              "outcome": "有效"
+            },
+            {
+              "date": "2026-06-29",
+              "support": 123.88,
+              "outcome": "有效"
+            },
+            {
+              "date": "2026-07-14",
+              "support": 106.5,
+              "outcome": "失效"
+            }
+          ],
+          "win_rate": 66.7
+        },
+        "price_level": {
+          "total": 9,
+          "valid": 9,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2025-03-25",
+              "level": 146.5,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-01",
+              "level": 142.03,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-17",
+              "level": 117.36,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-25",
+              "level": 96.37,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-30",
+              "level": 96.55,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-16",
+              "level": 102.1,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-21",
+              "level": 102.86,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-26",
+              "level": 109.69,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-30",
+              "level": 102.09,
+              "type": "压力",
+              "outcome": "突破"
+            }
+          ],
+          "win_rate": 100.0
+        }
+      }
+    },
+    "sh601138": {
+      "symbol": "sh601138",
+      "name": "工业富联",
+      "total_days": 361,
+      "date_range": "2025-03-07 ~ 2026-08-27",
+      "strategies": {
+        "volume": {
+          "signals": [
+            {
+              "date": "2026-08-27",
+              "type": "倍量柱",
+              "volume_ratio": 2.03,
+              "price": 63.86,
+              "open": 62.0,
+              "high": 64.5,
+              "low": 62.0,
+              "change_pct": 3.0
+            }
+          ],
+          "count": 1
+        },
+        "golden_line": {
+          "total": 1,
+          "valid": 1,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2026-08-03",
+              "support": 54.64,
+              "outcome": "有效"
+            }
+          ],
+          "win_rate": 100.0
+        },
+        "price_level": {
+          "total": 6,
+          "valid": 6,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2025-03-21",
+              "level": 79.25,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-02",
+              "level": 73.23,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-14",
+              "level": 70.35,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-25",
+              "level": 63.5,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-16",
+              "level": 70.97,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-23",
+              "level": 68.5,
+              "type": "压力",
+              "outcome": "突破"
+            }
+          ],
+          "win_rate": 100.0
+        }
+      }
+    },
+    "sz300476": {
+      "symbol": "sz300476",
+      "name": "胜宏科技",
+      "total_days": 361,
+      "date_range": "2025-03-07 ~ 2026-08-27",
+      "strategies": {
+        "volume": {
+          "signals": [],
+          "count": 0
+        },
+        "golden_line": {
+          "total": 0,
+          "valid": 0,
+          "invalid": 0,
+          "hits": [],
+          "win_rate": 0
+        },
+        "price_level": {
+          "total": 7,
+          "valid": 7,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2025-03-24",
+              "level": 375.8,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-02",
+              "level": 353.97,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-14",
+              "level": 305.45,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-24",
+              "level": 255.99,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-15",
+              "level": 286.15,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-21",
+              "level": 287.68,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-26",
+              "level": 278.29,
+              "type": "压力",
+              "outcome": "突破"
+            }
+          ],
+          "win_rate": 100.0
+        }
+      }
+    },
+    "sz002156": {
+      "symbol": "sz002156",
+      "name": "通富微电",
+      "total_days": 361,
+      "date_range": "2025-03-07 ~ 2026-08-27",
+      "strategies": {
+        "volume": {
+          "signals": [
+            {
+              "date": "2026-08-17",
+              "type": "倍量柱",
+              "volume_ratio": 2.09,
+              "price": 69.26,
+              "open": 63.41,
+              "high": 69.26,
+              "low": 63.4,
+              "change_pct": 9.23
+            }
+          ],
+          "count": 1
+        },
+        "golden_line": {
+          "total": 0,
+          "valid": 0,
+          "invalid": 0,
+          "hits": [],
+          "win_rate": 0
+        },
+        "price_level": {
+          "total": 6,
+          "valid": 6,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2025-03-27",
+              "level": 79.38,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-02",
+              "level": 78.58,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-17",
+              "level": 84.7,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-28",
+              "level": 76.8,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-15",
+              "level": 65.78,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-26",
+              "level": 72.56,
+              "type": "压力",
+              "outcome": "突破"
+            }
+          ],
+          "win_rate": 100.0
+        }
+      }
+    },
+    "sh601231": {
+      "symbol": "sh601231",
+      "name": "环旭电子",
+      "total_days": 361,
+      "date_range": "2025-03-07 ~ 2026-08-27",
+      "strategies": {
+        "volume": {
+          "signals": [
+            {
+              "date": "2026-08-06",
+              "type": "倍量柱",
+              "volume_ratio": 2.79,
+              "price": 27.52,
+              "open": 25.96,
+              "high": 27.88,
+              "low": 25.8,
+              "change_pct": 6.01
+            },
+            {
+              "date": "2026-08-17",
+              "type": "倍量柱",
+              "volume_ratio": 2.09,
+              "price": 28.95,
+              "open": 27.97,
+              "high": 29.41,
+              "low": 27.9,
+              "change_pct": 3.5
+            }
+          ],
+          "count": 2
+        },
+        "golden_line": {
+          "total": 4,
+          "valid": 4,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2026-06-30",
+              "support": 30.6,
+              "outcome": "有效"
+            },
+            {
+              "date": "2026-08-07",
+              "support": 27.1,
+              "outcome": "有效"
+            },
+            {
+              "date": "2026-08-14",
+              "support": 26.96,
+              "outcome": "有效"
+            },
+            {
+              "date": "2026-08-20",
+              "support": 26.68,
+              "outcome": "有效"
+            }
+          ],
+          "win_rate": 100.0
+        },
+        "price_level": {
+          "total": 4,
+          "valid": 4,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2025-03-24",
+              "level": 38.71,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-14",
+              "level": 31.86,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-24",
+              "level": 25.61,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-26",
+              "level": 29.95,
+              "type": "压力",
+              "outcome": "突破"
+            }
+          ],
+          "win_rate": 100.0
+        }
+      }
+    },
+    "sh603283": {
+      "symbol": "sh603283",
+      "name": "赛腾股份",
+      "total_days": 361,
+      "date_range": "2025-03-07 ~ 2026-08-27",
+      "strategies": {
+        "volume": {
+          "signals": [],
+          "count": 0
+        },
+        "golden_line": {
+          "total": 0,
+          "valid": 0,
+          "invalid": 0,
+          "hits": [],
+          "win_rate": 0
+        },
+        "price_level": {
+          "total": 5,
+          "valid": 5,
+          "invalid": 0,
+          "hits": [
+            {
+              "date": "2025-04-02",
+              "level": 88.88,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-04-14",
+              "level": 74.3,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-21",
+              "level": 49.86,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-26",
+              "level": 52.87,
+              "type": "压力",
+              "outcome": "突破"
+            },
+            {
+              "date": "2025-05-30",
+              "level": 48.49,
+              "type": "压力",
+              "outcome": "突破"
+            }
+          ],
+          "win_rate": 100.0
+        }
+      }
+    }
+  }
+}
