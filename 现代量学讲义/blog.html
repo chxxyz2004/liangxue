@@ -413,6 +413,81 @@ button { font-family: inherit; }
 
 /* ===== 选中 ===== */
 ::selection { background: rgba(99,102,241,0.3); color: #fff; }
+
+/* ===== 产业链监控 ===== */
+.industry-view {
+  max-width: 1200px; margin: calc(var(--nav-h) + 20px) auto 80px;
+  padding: 0 16px; animation: fadeIn 0.3s ease;
+}
+.industry-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px; padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--radius);
+}
+.industry-header h2 { font-size: 22px; font-weight: 800; margin: 0; }
+.industry-subtitle { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+.refresh-btn {
+  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
+  color: #fff; padding: 8px 16px; border-radius: var(--radius-sm);
+  font-size: 13px; cursor: pointer; transition: all 0.2s;
+}
+.refresh-btn:hover { background: rgba(255,255,255,0.3); }
+
+.industry-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px; margin-bottom: 24px;
+}
+.industry-stat-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 16px; text-align: center;
+}
+.industry-stat-value { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+.industry-stat-label { font-size: 12px; color: var(--text-muted); }
+
+.industry-chains { display: flex; flex-direction: column; gap: 16px; }
+.industry-chain-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; transition: all 0.3s;
+}
+.industry-chain-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
+.industry-chain-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+}
+.industry-chain-name {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 16px; font-weight: 700;
+}
+.chain-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  display: inline-block;
+}
+.chain-change {
+  font-size: 18px; font-weight: 800;
+}
+.chain-change.up { color: var(--danger); }
+.chain-change.down { color: var(--success); }
+.chain-meta { font-size: 12px; color: var(--text-muted); }
+
+.industry-chain-stocks { padding: 12px 16px; }
+.stock-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.stock-row:last-child { border-bottom: none; }
+.stock-info { display: flex; flex-direction: column; gap: 2px; }
+.stock-name { font-size: 14px; font-weight: 600; }
+.stock-code { font-size: 11px; color: var(--text-muted); }
+.stock-price { font-size: 14px; font-weight: 600; }
+.stock-change { font-size: 13px; font-weight: 700; min-width: 60px; text-align: right; }
+.stock-change.up { color: var(--danger); }
+.stock-change.down { color: var(--success); }
+.holding-badge {
+  display: inline-block; background: var(--primary);
+  color: #fff; font-size: 10px; padding: 2px 6px;
+  border-radius: 4px; margin-left: 6px;
+}
 </style>
 </head>
 <body>
@@ -428,6 +503,7 @@ button { font-family: inherit; }
     <span class="nav-link" onclick="filterPosts('日报')">日报</span>
     <span class="nav-link" onclick="filterPosts('案例')">案例</span>
     <span class="nav-link" onclick="filterPosts('讲义')">讲义</span>
+    <span class="nav-link" onclick="showIndustryView()">产业链</span>
   </div>
 </nav>
 
@@ -535,6 +611,23 @@ button { font-family: inherit; }
   <div style="margin-top:4px">数据仅供参考，不构成投资建议</div>
 </footer>
 
+<!-- 产业链监控页面 -->
+<div id="industryView" class="industry-view" style="display:none">
+  <div class="industry-header">
+    <h2>🔗 产业链监控</h2>
+    <div class="industry-subtitle">科技股核心产业链实时追踪</div>
+    <button class="refresh-btn" onclick="loadIndustryData()">🔄 刷新</button>
+  </div>
+  
+  <div class="industry-stats" id="industryStats">
+    <div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line long"></div></div>
+  </div>
+  
+  <div class="industry-chains" id="industryChains">
+    <!-- 动态生成 -->
+  </div>
+</div>
+
 <!-- 回到顶部 -->
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
@@ -544,6 +637,7 @@ button { font-family: inherit; }
   <button class="bottom-nav-item" onclick="filterPosts('日报')"><span class="icon">📊</span><span>日报</span></button>
   <button class="bottom-nav-item" onclick="filterPosts('案例')"><span class="icon">📈</span><span>案例</span></button>
   <button class="bottom-nav-item" onclick="filterPosts('讲义')"><span class="icon">📚</span><span>讲义</span></button>
+  <button class="bottom-nav-item" onclick="showIndustryView()"><span class="icon">🔗</span><span>产业链</span></button>
 </div>
 
 <!-- Toast -->
@@ -969,6 +1063,111 @@ window.addEventListener('load', function() {
 });
 
 window.addEventListener('hashchange', handleHash);
+
+// ===== 产业链监控 =====
+var industryData = null;
+
+function showIndustryView() {
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('postView').classList.remove('active');
+  document.getElementById('industryView').style.display = 'block';
+  currentView = 'industry';
+  window.scrollTo(0, 0);
+  updateNav();
+  loadIndustryData();
+}
+
+function loadIndustryData() {
+  var statsEl = document.getElementById('industryStats');
+  var chainsEl = document.getElementById('industryChains');
+  statsEl.innerHTML = '<div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line long"></div></div>';
+  chainsEl.innerHTML = '<div class="skeleton-card"><div class="skeleton-line short"></div><div class="skeleton-line long"></div></div>';
+  
+  fetch('/api/industry_chains')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      industryData = data;
+      renderIndustryStats(data);
+      renderIndustryChains(data);
+    })
+    .catch(function() {
+      statsEl.innerHTML = '<div class="empty-state">暂无数据，请先运行 fetch_chain_quotes.py</div>';
+      chainsEl.innerHTML = '';
+    });
+}
+
+function renderIndustryStats(data) {
+  var chains = data.chains || {};
+  var total = Object.keys(chains).length;
+  var upCount = 0;
+  var downCount = 0;
+  var limitUp = 0;
+  var limitDown = 0;
+  
+  Object.values(chains).forEach(function(c) {
+    if (c.avg_change > 0) upCount++;
+    else downCount++;
+    limitUp += c.limit_up || 0;
+    limitDown += c.limit_down || 0;
+  });
+  
+  var html = [
+    '<div class="industry-stat-card"><div class="industry-stat-value" style="color:var(--primary)">' + total + '</div><div class="industry-stat-label">产业链</div></div>',
+    '<div class="industry-stat-card"><div class="industry-stat-value" style="color:var(--danger)">' + upCount + '</div><div class="industry-stat-label">上涨</div></div>',
+    '<div class="industry-stat-card"><div class="industry-stat-value" style="color:var(--success)">' + downCount + '</div><div class="industry-stat-label">下跌</div></div>',
+    '<div class="industry-stat-card"><div class="industry-stat-value" style="color:var(--accent)">' + limitUp + '</div><div class="industry-stat-label">涨停</div></div>',
+    '<div class="industry-stat-card"><div class="industry-stat-value">' + (data.updated_at || '').split(' ')[1] + '</div><div class="industry-stat-label">更新时间</div></div>',
+  ].join('');
+  document.getElementById('industryStats').innerHTML = html;
+}
+
+function renderIndustryChains(data) {
+  var chains = data.chains || {};
+  var chainsHtml = [];
+  
+  // 按涨跌幅排序
+  var sortedChains = Object.entries(chains).sort(function(a, b) {
+    return b[1].avg_change - a[1].avg_change;
+  });
+  
+  sortedChains.forEach(function(entry) {
+    var name = entry[0];
+    var info = entry[1];
+    var isUp = info.avg_change >= 0;
+    var stocksHtml = (info.stocks || []).map(function(s) {
+      var sUp = s.change_pct >= 0;
+      var holding = (data.holdings || []).indexOf(s.code) >= 0 ? '<span class="holding-badge">持仓</span>' : '';
+      return '<div class="stock-row">' +
+        '<div class="stock-info">' +
+          '<span class="stock-name">' + s.name + holding + '</span>' +
+          '<span class="stock-code">' + s.code + '</span>' +
+        '</div>' +
+        '<div style="text-align:right">' +
+          '<div class="stock-price">' + (s.price ? s.price.toFixed(2) : '-') + '</div>' +
+          '<div class="stock-change ' + (sUp ? 'up' : 'down') + '">' + (sUp ? '+' : '') + s.change_pct.toFixed(2) + '%</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    
+    chainsHtml.push(
+      '<div class="industry-chain-card">' +
+        '<div class="industry-chain-header">' +
+          '<div class="industry-chain-name">' +
+            '<span class="chain-dot" style="background:' + info.color + '"></span>' +
+            name +
+          '</div>' +
+          '<div style="text-align:right">' +
+            '<div class="chain-change ' + (isUp ? 'up' : 'down') + '">' + (isUp ? '+' : '') + info.avg_change.toFixed(2) + '%</div>' +
+            '<div class="chain-meta">涨停' + (info.limit_up || 0) + ' 跌停' + (info.limit_down || 0) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="industry-chain-stocks">' + stocksHtml + '</div>' +
+      '</div>'
+    );
+  });
+  
+  document.getElementById('industryChains').innerHTML = chainsHtml.join('');
+}
 </script>
 </body>
 </html>

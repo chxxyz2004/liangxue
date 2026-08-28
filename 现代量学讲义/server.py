@@ -154,6 +154,11 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
         elif path.startswith('/api/search/'):
             keyword = urllib.parse.unquote(path.split('/')[-1])
             self.handle_search(keyword)
+        # 产业链API路由
+        elif path == '/api/industry_chains':
+            self.handle_get_industry_chains()
+        elif path == '/api/industry_chains/latest':
+            self.handle_get_industry_chains_latest()
         
         # 回退到静态文件
         elif path == '/' or path == '':
@@ -309,6 +314,44 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
     
     # ===== 工具方法 =====
     
+    def handle_get_industry_chains(self):
+        """获取产业链数据（从文件读取）"""
+        try:
+            import importlib.util
+            spec = importlib.util.spec_from_file_location(
+                'fetch_chain', '/workspace/行情数据库/fetch_chain_quotes.py')
+            # 直接使用已保存的数据
+            chain_dir = '/workspace/行情数据库/industry_chains'
+            today = datetime.now().strftime('%Y-%m-%d')
+            path = os.path.join(chain_dir, f'{today}.json')
+            
+            if not os.path.exists(path):
+                self.send_json({'error': '暂无数据，请先运行 fetch_chain_quotes.py'}, 404)
+                return
+            
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            self.send_json(data)
+        except Exception as e:
+            self.send_json({'error': str(e)}, 500)
+    
+    def handle_get_industry_chains_latest(self):
+        """获取最新产业链数据（支持缓存刷新）"""
+        try:
+            # 导入并运行采集脚本
+            sys.path.insert(0, '/workspace/行情数据库')
+            from fetch_chain_quotes import fetch_chain_quotes
+            data = fetch_chain_quotes()
+            
+            if not data:
+                self.send_json({'error': '数据采集失败'}, 500)
+                return
+            
+            self.send_json(data)
+        except Exception as e:
+            self.send_json({'error': str(e)}, 500)
+    
     def send_json(self, data, status=200):
         body = json.dumps(data, ensure_ascii=False).encode('utf-8')
         self.send_response(status)
@@ -331,4 +374,5 @@ if __name__ == '__main__':
     print(f"博客首页: /")
     print(f"文章列表: /api/posts")
     print(f"回测API: /api/backtest")
+    print(f"产业链API: /api/industry_chains")
     server.serve_forever()
