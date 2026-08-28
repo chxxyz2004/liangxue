@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0f172a">
-<title>量学实战系统</title>
+<title>量学实战博客</title>
 <style>
 :root {
   --primary: #6366f1;
@@ -12,302 +12,661 @@
   --accent: #f59e0b;
   --success: #10b981;
   --danger: #ef4444;
-  --bg-dark: #0f172a;
+  --bg: #0f172a;
   --bg-card: #1e293b;
-  --bg-card-alt: #334155;
+  --bg-card-hover: #253349;
+  --bg-code: #1a2332;
   --text: #f1f5f9;
   --text-dim: #94a3b8;
+  --text-muted: #64748b;
   --border: #334155;
-  --shadow: 0 4px 16px rgba(0,0,0,0.3);
-  --glow: 0 0 20px rgba(99,102,241,0.3);
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --radius: 16px;
+  --radius-sm: 10px;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-  background: var(--bg-dark);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
+  line-height: 1.7;
   overflow-x: hidden;
 }
 
-/* 动画 */
-@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-@keyframes spin { to{transform:rotate(360deg)} }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+/* ===== 动画定义 ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+@keyframes float {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(2deg); }
+  66% { transform: translateY(-5px) rotate(-1deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes gradientShift {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes borderGlow {
+  0%,100% { border-color: var(--border); }
+  50% { border-color: var(--primary); }
+}
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink { 50% { border-color: transparent; } }
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes progressFill {
+  from { width: 0; }
+  to { width: var(--progress, 100%); }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInRight {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes rotateIn {
+  from { transform: rotate(-180deg) scale(0); opacity: 0; }
+  to { transform: rotate(0) scale(1); opacity: 1; }
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes flipIn {
+  from { transform: perspective(400px) rotateY(90deg); opacity: 0; }
+  to { transform: perspective(400px) rotateY(0); opacity: 1; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes swing {
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(5deg); }
+  80% { transform: rotate(-5deg); }
+  100% { transform: rotate(0); }
+}
 
-.page { display: none; animation: fadeIn 0.2s ease; }
+/* ===== 页面切换动画 ===== */
+.page { display: none; animation: fadeIn 0.3s ease; }
 .page.active { display: block; }
+.page.exit { animation: fadeIn 0.2s ease reverse forwards; }
 
-/* Hero */
+/* ===== 滚动进度条 ===== */
+.progress-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent));
+  z-index: 9999; transform-origin: left;
+  transition: transform 0.1s linear;
+}
+
+/* ===== 回到顶部按钮 ===== */
+.back-to-top {
+  position: fixed; bottom: 80px; right: 20px;
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  border: none; border-radius: 50%;
+  color: #fff; font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0; transform: translateY(20px) scale(0.8);
+  pointer-events: none; z-index: 90;
+}
+.back-to-top.visible {
+  opacity: 1; transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 24px rgba(99,102,241,0.6);
+}
+.back-to-top:active { transform: scale(0.95); }
+
+/* ===== 导航栏 ===== */
+.top-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(15,23,42,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 100;
+  animation: slideDown 0.4s ease;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 15px; color: var(--text);
+  cursor: pointer;
+}
+.nav-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: bold;
+}
+.nav-actions { display: flex; gap: 8px; }
+.nav-btn {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text-dim);
+  font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.nav-btn:hover { background: rgba(99,102,241,0.15); color: var(--primary-light); border-color: var(--primary); }
+.nav-btn:active { transform: scale(0.92); }
+
+/* ===== Hero区域 ===== */
 .hero {
-  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
-  padding: 24px 16px 60px;
+  margin-top: 56px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #312e81 60%, #4c1d95 100%);
+  padding: 60px 20px 80px;
   position: relative;
   overflow: hidden;
 }
 .hero::before {
   content: '';
-  position: absolute;
-  top: -60%;
-  right: -30%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%);
-  border-radius: 50%;
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 20%, rgba(99,102,241,0.25), transparent),
+    radial-gradient(ellipse 500px 300px at 80% 80%, rgba(245,158,11,0.12), transparent),
+    radial-gradient(ellipse 300px 200px at 60% 40%, rgba(168,85,247,0.15), transparent);
 }
 .hero::after {
   content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 60px;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+.hero-particles {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.particle {
   position: absolute;
-  bottom: -40%;
-  left: -20%;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
+  width: 4px; height: 4px;
+  background: rgba(99,102,241,0.5);
   border-radius: 50%;
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
-.hero-content { position: relative; z-index: 1; }
-
-.hero-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
+.particle:nth-child(2) { left: 20%; top: 30%; animation-delay: -2s; background: rgba(245,158,11,0.4); width: 6px; height: 6px; }
+.particle:nth-child(3) { left: 70%; top: 20%; animation-delay: -4s; background: rgba(168,85,247,0.4); width: 3px; height: 3px; }
+.particle:nth-child(4) { left: 50%; top: 60%; animation-delay: -1s; background: rgba(16,185,129,0.3); width: 5px; height: 5px; }
+.particle:nth-child(5) { left: 85%; top: 70%; animation-delay: -3s; }
+.hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; text-align: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(99,102,241,0.2);
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 11px; color: var(--primary-light);
+  margin-bottom: 16px;
+  animation: fadeInUp 0.5s ease both;
 }
-.logo { display: flex; align-items: center; gap: 12px; }
-.logo-icon {
-  width: 44px; height: 44px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; font-weight: bold; color: #fff;
-  box-shadow: 0 4px 12px rgba(99,102,241,0.4);
-}
-.logo-text h1 { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
-.logo-text p { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 2px; }
-
-.status-badge {
-  display: flex; align-items: center; gap: 5px;
-  background: rgba(16,185,129,0.2);
-  border: 1px solid rgba(16,185,129,0.3);
-  padding: 4px 10px; border-radius: 16px;
-  font-size: 10px; color: #10b981;
-}
-.status-dot {
-  width: 6px; height: 6px; background: #10b981; border-radius: 50%;
+.hero-badge .dot {
+  width: 6px; height: 6px; background: var(--success); border-radius: 50%;
   animation: pulse 2s infinite;
 }
+.hero h1 {
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #fbbf24 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease infinite, fadeInUp 0.5s ease 0.1s both;
+  margin-bottom: 10px; letter-spacing: -0.5px;
+}
+.hero p {
+  font-size: 14px; color: rgba(255,255,255,0.6);
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
 
-.search-box { position: relative; }
+/* ===== 搜索框 ===== */
+.search-container {
+  margin-top: 24px;
+  animation: fadeInUp 0.5s ease 0.3s both;
+}
+.search-box {
+  position: relative;
+  max-width: 500px; margin: 0 auto;
+}
 .search-input {
   width: 100%;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 12px;
-  padding: 12px 14px 12px 38px;
-  font-size: 13px; color: #fff; outline: none;
-  transition: all 0.2s;
+  border-radius: 14px;
+  padding: 14px 18px 14px 46px;
+  font-size: 14px; color: #fff; outline: none;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
 }
-.search-input::placeholder { color: rgba(255,255,255,0.4); }
+.search-input::placeholder { color: rgba(255,255,255,0.35); }
 .search-input:focus {
   background: rgba(255,255,255,0.12);
-  border-color: rgba(99,102,241,0.5);
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.15), 0 8px 32px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
 }
 .search-icon {
-  position: absolute; left: 12px; top: 50%;
-  transform: translateY(-50%); font-size: 14px; opacity: 0.5;
+  position: absolute; left: 16px; top: 50%;
+  transform: translateY(-50%); font-size: 16px; opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.search-input:focus ~ .search-icon { opacity: 0.8; }
+.search-clear {
+  position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%);
+  width: 24px; height: 24px;
+  background: rgba(255,255,255,0.1);
+  border: none; border-radius: 50%;
+  color: var(--text-dim); font-size: 14px;
+  cursor: pointer; display: none;
+  align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.search-clear.show { display: flex; }
+.search-clear:hover { background: rgba(239,68,68,0.2); color: #f87171; }
+
+/* ===== 主布局 ===== */
+.layout {
+  max-width: 900px; margin: 0 auto;
+  padding: 0 16px 100px;
+  position: relative; z-index: 2;
 }
 
-/* 主内容 */
-.main { margin-top: -28px; padding: 0 12px 80px; position: relative; z-index: 2; }
-
-/* 统计 */
+/* ===== 统计卡片 ===== */
 .stats-row {
-  display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 18px;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 10px; margin-top: -36px; margin-bottom: 24px;
+  position: relative; z-index: 3;
 }
 .stat-card {
-  background: var(--bg-card); border-radius: 14px; padding: 14px 6px;
-  text-align: center; border: 1px solid var(--border); transition: all 0.2s;
-}
-.stat-card:active { transform: scale(0.96); }
-.stat-num {
-  font-size: 20px; font-weight: 800;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.stat-label { font-size: 9px; color: var(--text-dim); margin-top: 3px; }
-
-/* 分区标题 */
-.section { margin-bottom: 18px; }
-.section-title {
-  font-size: 12px; font-weight: 600; color: var(--text-dim);
-  padding: 0 4px 10px; letter-spacing: 1px; text-transform: uppercase;
-  display: flex; align-items: center; gap: 6px;
-}
-.section-title::before {
-  content: ''; width: 3px; height: 12px;
-  background: linear-gradient(180deg, #6366f1, #a855f7); border-radius: 2px;
-}
-
-/* 功能卡片 */
-.func-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
-.func-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 14px; padding: 14px 6px; text-align: center;
-  cursor: pointer; transition: all 0.2s;
-}
-.func-card:active { transform: scale(0.94); background: var(--bg-card-alt); }
-.func-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; margin: 0 auto 8px;
-}
-.func-icon.blue { background: linear-gradient(135deg,#1e3a5f,#1e40af); color: #60a5fa; }
-.func-icon.green { background: linear-gradient(135deg,#064e3b,#065f46); color: #34d399; }
-.func-icon.purple { background: linear-gradient(135deg,#3b0764,#4c1d95); color: #a78bfa; }
-.func-icon.orange { background: linear-gradient(135deg,#78350f,#92400e); color: #fbbf24; }
-.func-title { font-size: 11px; font-weight: 600; color: var(--text); }
-.func-desc { font-size: 9px; color: var(--text-dim); margin-top: 2px; }
-
-/* 列表 */
-.list-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-}
-.list-item {
-  display: flex; align-items: center;
-  padding: 13px 14px; cursor: pointer;
-  border-bottom: 1px solid var(--border); transition: background 0.15s;
-}
-.list-item:last-child { border-bottom: none; }
-.list-item:active { background: rgba(99,102,241,0.08); }
-.list-icon {
-  width: 34px; height: 34px; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; margin-right: 10px; flex-shrink: 0;
-}
-.list-icon.green { background: linear-gradient(135deg,#064e3b,#065f46); color: #34d399; }
-.list-icon.blue { background: linear-gradient(135deg,#1e3a5f,#1e40af); color: #60a5fa; }
-.list-icon.purple { background: linear-gradient(135deg,#3b0764,#4c1d95); color: #a78bfa; }
-.list-icon.orange { background: linear-gradient(135deg,#78350f,#92400e); color: #fbbf24; }
-.list-icon.red { background: linear-gradient(135deg,#7f1d1d,#991b1b); color: #f87171; }
-.list-info { flex: 1; min-width: 0; }
-.list-title { font-size: 13px; font-weight: 500; color: var(--text); }
-.list-sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
-.list-arrow { color: var(--text-dim); font-size: 16px; margin-left: 8px; }
-
-/* 子页面 & 内容页 */
-.sub-page { display: none; }
-.sub-page.active { display: block; animation: fadeIn 0.15s ease; }
-.sub-header {
-  background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%);
-  padding: 14px 16px; position: sticky; top: 0; z-index: 10;
-  display: flex; align-items: center; gap: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-.back-btn {
-  width: 34px; height: 34px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 9px; color: #fff; font-size: 16px;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-}
-.back-btn:active { background: rgba(255,255,255,0.25); transform: scale(0.94); }
-.page-title { font-size: 16px; font-weight: 600; color: #fff; }
-.sub-content { padding: 12px; margin-top: -16px; position: relative; z-index: 1; }
-
-/* 内容区域 - 支持原生HTML和Markdown */
-.content-area {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px;
-  animation: fadeIn 0.2s ease;
+  border-radius: var(--radius-sm);
+  padding: 16px 8px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
 }
-/* Markdown渲染样式 */
-.content-area.md-mode h1 { font-size: 18px; margin-bottom: 14px; color: #fbbf24; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-.content-area.md-mode h2 { font-size: 15px; margin: 16px 0 8px; color: #60a5fa; }
-.content-area.md-mode h3 { font-size: 13px; margin: 12px 0 6px; color: var(--text); }
-.content-area.md-mode p { font-size: 12px; line-height: 1.8; margin: 6px 0; color: var(--text-dim); }
-.content-area.md-mode ul { margin: 6px 0 6px 16px; }
-.content-area.md-mode li { font-size: 12px; line-height: 1.7; margin: 4px 0; color: var(--text-dim); }
-.content-area.md-mode strong { color: var(--text); }
-.content-area.md-mode table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
-.content-area.md-mode th, .content-area.md-mode td { padding: 7px 8px; border: 1px solid var(--border); text-align: left; }
-.content-area.md-mode th { background: var(--bg-card-alt); color: var(--text); }
-.content-area.md-mode td { color: var(--text-dim); }
-.content-area.md-mode hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
-.content-area.md-mode code { background: var(--bg-card-alt); padding: 1px 5px; border-radius: 3px; font-size: 10px; color: #fbbf24; }
+.stat-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.stat-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow); }
+.stat-card:hover::before { opacity: 1; }
+.stat-num {
+  font-size: 22px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-light), #a855f7);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  display: block;
+}
+.stat-label { font-size: 10px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ===== 功能卡片网格 ===== */
+.section { margin-bottom: 24px; }
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; padding: 0 2px;
+}
+.section-title {
+  font-size: 13px; font-weight: 700; color: var(--text-dim);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title::before {
+  content: ''; width: 4px; height: 16px;
+  background: linear-gradient(180deg, var(--primary), #a855f7);
+  border-radius: 2px;
+}
+.section-more {
+  font-size: 11px; color: var(--text-muted); cursor: pointer;
+  transition: color 0.2s;
+}
+.section-more:hover { color: var(--primary-light); }
+
+.func-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 10px;
+}
+.func-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.func-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(99,102,241,0.15), transparent 60%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.func-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow); }
+.func-card:hover::after { opacity: 1; }
+.func-card:active { transform: scale(0.96); }
+.func-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin: 0 auto 10px;
+  transition: transform 0.3s;
+}
+.func-card:hover .func-icon { transform: scale(1.1) rotate(5deg); }
+.func-icon.blue { background: linear-gradient(135deg,#1e3a5f,#1e40af); color: #60a5fa; box-shadow: 0 4px 12px rgba(30,64,175,0.3); }
+.func-icon.green { background: linear-gradient(135deg,#064e3b,#065f46); color: #34d399; box-shadow: 0 4px 12px rgba(6,95,70,0.3); }
+.func-icon.purple { background: linear-gradient(135deg,#3b0764,#4c1d95); color: #a78bfa; box-shadow: 0 4px 12px rgba(76,29,149,0.3); }
+.func-icon.orange { background: linear-gradient(135deg,#78350f,#92400e); color: #fbbf24; box-shadow: 0 4px 12px rgba(146,64,14,0.3); }
+.func-title { font-size: 11px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.func-desc { font-size: 9px; color: var(--text-muted); }
+
+/* ===== 文章列表 ===== */
+.post-list {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.post-item {
+  display: flex; align-items: center;
+  padding: 14px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.post-item:last-child { border-bottom: none; }
+.post-item::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--primary);
+  transform: scaleY(0); transition: transform 0.2s;
+}
+.post-item:hover { background: var(--bg-card-hover); }
+.post-item:hover::before { transform: scaleY(1); }
+.post-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; margin-right: 12px; flex-shrink: 0;
+  transition: transform 0.3s;
+}
+.post-item:hover .post-icon { transform: rotate(10deg) scale(1.1); }
+.post-icon.green { background: linear-gradient(135deg,#064e3b,#065f46); color: #34d399; }
+.post-icon.blue { background: linear-gradient(135deg,#1e3a5f,#1e40af); color: #60a5fa; }
+.post-icon.purple { background: linear-gradient(135deg,#3b0764,#4c1d95); color: #a78bfa; }
+.post-icon.orange { background: linear-gradient(135deg,#78350f,#92400e); color: #fbbf24; }
+.post-icon.red { background: linear-gradient(135deg,#7f1d1d,#991b1b); color: #f87171; }
+.post-info { flex: 1; min-width: 0; }
+.post-title { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.post-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.post-arrow { color: var(--text-muted); font-size: 16px; margin-left: 8px; transition: transform 0.2s, color 0.2s; }
+.post-item:hover .post-arrow { transform: translateX(4px); color: var(--primary-light); }
+
+/* ===== 文章详情页 ===== */
+.post-page { display: none; animation: fadeIn 0.3s ease; }
+.post-page.active { display: block; }
+.post-header {
+  margin-top: 56px;
+  padding: 32px 20px 24px;
+  background: linear-gradient(180deg, rgba(30,27,75,0.5) 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.post-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 12px;
+  color: var(--text-dim); font-size: 12px; cursor: pointer;
+  transition: all 0.2s; margin-bottom: 16px;
+}
+.post-back:hover { background: rgba(99,102,241,0.15); color: var(--primary-light); border-color: var(--primary); }
+.post-meta {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.post-tag {
+  display: inline-flex; align-items: center;
+  background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 6px; padding: 2px 8px;
+  font-size: 10px; color: var(--primary-light);
+}
+.post-date { font-size: 11px; color: var(--text-muted); }
+.post-title-lg {
+  font-size: clamp(20px, 4vw, 26px);
+  font-weight: 800; color: #fff;
+  line-height: 1.3; margin-bottom: 8px;
+}
+.post-excerpt { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.post-body {
+  padding: 20px 16px;
+  max-width: 800px; margin: 0 auto;
+}
+.post-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  animation: fadeInUp 0.4s ease;
+}
+/* Markdown内容样式 */
+.post-content.md h1 { font-size: 20px; margin: 0 0 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); color: #fbbf24; }
+.post-content.md h2 { font-size: 17px; margin: 24px 0 12px; color: #60a5fa; padding-left: 12px; border-left: 3px solid var(--primary); }
+.post-content.md h3 { font-size: 14px; margin: 18px 0 8px; color: var(--text); }
+.post-content.md p { font-size: 13px; line-height: 1.9; margin: 10px 0; color: var(--text-dim); }
+.post-content.md ul { margin: 10px 0 10px 20px; }
+.post-content.md li { font-size: 13px; line-height: 1.8; margin: 5px 0; color: var(--text-dim); }
+.post-content.md li::marker { color: var(--primary); }
+.post-content.md strong { color: var(--text); font-weight: 600; }
+.post-content.md table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+.post-content.md th, .post-content.md td { padding: 10px 12px; border: 1px solid var(--border); text-align: left; }
+.post-content.md th { background: var(--bg-card-alt); color: var(--text); font-weight: 600; }
+.post-content.md td { color: var(--text-dim); }
+.post-content.md tr:hover td { background: rgba(99,102,241,0.05); }
+.post-content.md hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+.post-content.md code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: #fbbf24; }
+.post-content.md blockquote { border-left: 3px solid var(--primary); padding: 12px 16px; margin: 16px 0; background: rgba(99,102,241,0.08); border-radius: 0 8px 8px 0; }
+.post-content.md blockquote p { margin: 0; color: var(--text); }
 /* HTML内容自适应 */
-.content-area.html-mode { padding: 0; overflow: hidden; border-radius: 14px; }
-.content-area.html-mode > * { border-radius: 14px; }
+.post-content.html { padding: 0; overflow: hidden; border-radius: var(--radius); }
 
-.loading {
-  text-align: center; padding: 60px 20px;
-  color: var(--text-dim); font-size: 13px;
+/* ===== 目录侧边栏（桌面） ===== */
+.toc-sidebar {
+  position: fixed; right: 24px; top: 120px;
+  width: 180px; background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px; display: none;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto; z-index: 50;
 }
-.loading::before {
-  content: ''; display: block;
-  width: 28px; height: 28px; margin: 0 auto 12px;
-  border: 3px solid var(--border); border-top-color: var(--primary);
-  border-radius: 50%; animation: spin 0.8s linear infinite;
+.toc-title { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.toc-link {
+  display: block; padding: 6px 10px;
+  font-size: 11px; color: var(--text-dim);
+  border-left: 2px solid var(--border);
+  transition: all 0.2s; margin-bottom: 2px;
+  text-decoration: none;
 }
-.error { text-align: center; padding: 50px 20px; color: #f87171; font-size: 13px; }
+.toc-link:hover, .toc-link.active { color: var(--primary-light); border-left-color: var(--primary); background: rgba(99,102,241,0.08); }
 
-/* 底部导航 */
+/* ===== 底部导航 ===== */
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0;
-  background: rgba(15,23,42,0.95); backdrop-filter: blur(20px);
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(20px);
   border-top: 1px solid var(--border);
   display: flex; justify-content: space-around;
-  padding: 6px 0 calc(6px + env(safe-area-inset-bottom)); z-index: 100;
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+  z-index: 100;
 }
 .nav-item {
   display: flex; flex-direction: column; align-items: center;
-  gap: 2px; padding: 4px 14px; color: var(--text-dim);
-  font-size: 9px; background: none; border: none; cursor: pointer; transition: color 0.2s;
+  gap: 2px; padding: 4px 16px; color: var(--text-muted);
+  font-size: 9px; background: none; border: none; cursor: pointer;
+  transition: all 0.2s; position: relative;
 }
 .nav-item.active { color: var(--primary-light); }
-.nav-item .icon { font-size: 18px; }
+.nav-item.active::before {
+  content: '';
+  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  width: 20px; height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 1px;
+}
+.nav-item .icon { font-size: 20px; transition: transform 0.3s; }
+.nav-item:hover .icon { transform: scale(1.15); }
+.nav-item:active .icon { transform: scale(0.9); }
+
+/* ===== 加载状态 ===== */
+.loading-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 20px; gap: 16px;
+}
+.loading-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.loading-text { font-size: 12px; color: var(--text-muted); }
+
+/* ===== 错误状态 ===== */
+.error-wrap {
+  text-align: center; padding: 60px 20px;
+  color: #f87171; font-size: 13px;
+}
+.error-icon { font-size: 40px; margin-bottom: 12px; }
+
+/* ===== 响应式 ===== */
+@media (min-width: 768px) {
+  .func-grid { grid-template-columns: repeat(4,1fr); }
+  .stats-row { grid-template-columns: repeat(4,1fr); gap: 14px; }
+  .toc-sidebar { display: block; }
+}
+@media (max-width: 480px) {
+  .func-grid { grid-template-columns: repeat(4,1fr); gap: 8px; }
+  .func-card { padding: 12px 4px; }
+  .func-icon { width: 36px; height: 36px; font-size: 16px; }
+  .stats-row { gap: 6px; }
+  .stat-card { padding: 12px 4px; }
+  .stat-num { font-size: 18px; }
+}
+
+/* ===== 滚动条美化 ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* ===== 选中文字样式 ===== */
+::selection { background: rgba(99,102,241,0.3); color: #fff; }
 </style>
 </head>
 <body>
 
+<!-- 滚动进度条 -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- 顶部导航 -->
+<nav class="top-nav" id="topNav">
+  <div class="nav-logo" onclick="goHome()">
+    <div class="nav-logo-icon">量</div>
+    <span>量学实战博客</span>
+  </div>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="toggleSearch()" title="搜索">🔍</button>
+    <button class="nav-btn" onclick="goHome()" title="首页">🏠</button>
+  </div>
+</nav>
+
 <!-- ============ 首页 ============ -->
 <div id="homePage" class="page active">
 <div class="hero">
+  <div class="hero-particles">
+    <div class="particle" style="left:10%;top:20%"></div>
+    <div class="particle" style="left:30%;top:70%"></div>
+    <div class="particle" style="left:50%;top:40%"></div>
+    <div class="particle" style="left:70%;top:80%"></div>
+    <div class="particle" style="left:90%;top:30%"></div>
+  </div>
   <div class="hero-content">
-    <div class="hero-header">
-      <div class="logo">
-        <div class="logo-icon">量</div>
-        <div class="logo-text">
-          <h1>量学实战系统</h1>
-          <p>基于真实数据的量化分析</p>
-        </div>
+    <div class="hero-badge"><span class="dot"></span>系统运行中</div>
+    <h1>量学实战博客</h1>
+    <p>基于真实数据的量化交易学习笔记</p>
+    <div class="search-container">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="搜索文章、案例、讲义..." oninput="handleSearch(this.value)" onfocus="this.parentElement.style.transform='scale(1.02)'" onblur="this.parentElement.style.transform='scale(1)'">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
       </div>
-      <div class="status-badge"><span class="status-dot"></span>运行中</div>
-    </div>
-    <div class="search-box">
-      <span class="search-icon">🔍</span>
-      <input type="text" class="search-input" placeholder="搜索讲义、案例、报告..." id="searchInput" onkeyup="handleSearch(event)">
     </div>
   </div>
 </div>
 
-<div class="main">
+<div class="layout">
+  <!-- 统计 -->
   <div class="stats-row">
-    <div class="stat-card"><div class="stat-num">19</div><div class="stat-label">讲义</div></div>
-    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">案例</div></div>
-    <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">图表</div></div>
-    <div class="stat-card"><div class="stat-num">14</div><div class="stat-label">课程</div></div>
+    <div class="stat-card"><span class="stat-num" data-count="19">0</span><span class="stat-label">讲义</span></div>
+    <div class="stat-card"><span class="stat-num" data-count="8">0</span><span class="stat-label">案例</span></div>
+    <div class="stat-card"><span class="stat-num" data-count="8">0</span><span class="stat-label">图表</span></div>
+    <div class="stat-card"><span class="stat-num" data-count="14">0</span><span class="stat-label">课程</span></div>
   </div>
 
   <!-- 核心功能 -->
   <div class="section">
-    <div class="section-title">核心功能</div>
+    <div class="section-header">
+      <div class="section-title">核心功能</div>
+    </div>
     <div class="func-grid">
       <div class="func-card" onclick="loadMD('复盘日报','复盘日报.md')">
         <div class="func-icon green">📊</div>
@@ -330,243 +689,263 @@ body {
 
   <!-- 学习资料 -->
   <div class="section">
-    <div class="section-title">学习资料</div>
-    <div class="list-card">
-      <div class="list-item" onclick="showSubPage('案例库')">
-        <div class="list-icon green">例</div>
-        <div class="list-info"><div class="list-title">实战案例库</div><div class="list-sub">8只股票真实案例</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">学习资料</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="showSubPage('案例库')">
+        <div class="post-icon green">例</div>
+        <div class="post-info"><div class="post-title">实战案例库</div><div class="post-sub">8只股票真实案例</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('历史回溯报告','历史回溯报告_完整.md')">
-        <div class="list-icon purple">溯</div>
-        <div class="list-info"><div class="list-title">历史回溯报告</div><div class="list-sub">信号效果验证</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('历史回溯报告','历史回溯报告_完整.md')">
+        <div class="post-icon purple">溯</div>
+        <div class="post-info"><div class="post-title">历史回溯报告</div><div class="post-sub">信号效果验证</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('案例汇总报告','案例报告_20260828.md')">
-        <div class="list-icon orange">总</div>
-        <div class="list-info"><div class="list-title">案例汇总报告</div><div class="list-sub">理论验证结论</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('案例汇总报告','案例报告_20260828.md')">
+        <div class="post-icon orange">总</div>
+        <div class="post-info"><div class="post-title">案例汇总报告</div><div class="post-sub">理论验证结论</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
   <!-- 学习路线 -->
   <div class="section">
-    <div class="section-title">学习路线</div>
-    <div class="list-card">
-      <div class="list-item" onclick="loadMD('量柱擒涨停路线','学习路线图_量柱擒涨停.md')">
-        <div class="list-icon green">1</div>
-        <div class="list-info"><div class="list-title">量柱擒涨停</div><div class="list-sub">第一本经典入门</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">学习路线</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="loadMD('量柱擒涨停路线','学习路线图_量柱擒涨停.md')">
+        <div class="post-icon green">1</div>
+        <div class="post-info"><div class="post-title">量柱擒涨停</div><div class="post-sub">第一本经典入门</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('量线捉涨停路线','学习路线图_量线捉涨停.md')">
-        <div class="list-icon blue">2</div>
-        <div class="list-info"><div class="list-title">量线捉涨停</div><div class="list-sub">第二本经典进阶</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('量线捉涨停路线','学习路线图_量线捉涨停.md')">
+        <div class="post-icon blue">2</div>
+        <div class="post-info"><div class="post-title">量线捉涨停</div><div class="post-sub">第二本经典进阶</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('伏击涨停路线','学习路线图_伏击涨停.md')">
-        <div class="list-icon purple">3</div>
-        <div class="list-info"><div class="list-title">伏击涨停</div><div class="list-sub">第三本经典深化</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('伏击涨停路线','学习路线图_伏击涨停.md')">
+        <div class="post-icon purple">3</div>
+        <div class="post-info"><div class="post-title">伏击涨停</div><div class="post-sub">第三本经典深化</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('涨停密码路线','学习路线图_涨停密码.md')">
-        <div class="list-icon orange">4</div>
-        <div class="list-info"><div class="list-title">涨停密码</div><div class="list-sub">第四本经典精通</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('涨停密码路线','学习路线图_涨停密码.md')">
+        <div class="post-icon orange">4</div>
+        <div class="post-info"><div class="post-title">涨停密码</div><div class="post-sub">第四本经典精通</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('量波逮涨停路线','学习路线图_量波逮涨停.md')">
-        <div class="list-icon red">5</div>
-        <div class="list-info"><div class="list-title">量波逮涨停</div><div class="list-sub">第五本经典大成</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('量波逮涨停路线','学习路线图_量波逮涨停.md')">
+        <div class="post-icon red">5</div>
+        <div class="post-info"><div class="post-title">量波逮涨停</div><div class="post-sub">第五本经典大成</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
   <!-- 讲义目录 -->
   <div class="section">
-    <div class="section-title">讲义目录</div>
-    <div class="list-card">
-      <div class="list-item" onclick="loadMD('量柱擒涨停讲义','讲义_量柱擒涨停.md')">
-        <div class="list-icon blue">讲</div>
-        <div class="list-info"><div class="list-title">量柱擒涨停</div><div class="list-sub">黑马王子经典 · 786行</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">讲义目录</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="loadMD('量柱擒涨停讲义','讲义_量柱擒涨停.md')">
+        <div class="post-icon blue">讲</div>
+        <div class="post-info"><div class="post-title">量柱擒涨停讲义</div><div class="post-sub">黑马王子经典 · 786行</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('量线捉涨停讲义','讲义_量线捉涨停.md')">
-        <div class="list-icon blue">讲</div>
-        <div class="list-info"><div class="list-title">量线捉涨停</div><div class="list-sub">黑马王子经典 · 731行</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('量线捉涨停讲义','讲义_量线捉涨停.md')">
+        <div class="post-icon blue">讲</div>
+        <div class="post-info"><div class="post-title">量线捉涨停讲义</div><div class="post-sub">黑马王子经典 · 731行</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('伏击涨停讲义','讲义_伏击涨停.md')">
-        <div class="list-icon blue">讲</div>
-        <div class="list-info"><div class="list-title">伏击涨停</div><div class="list-sub">黑马王子经典 · 811行</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('伏击涨停讲义','讲义_伏击涨停.md')">
+        <div class="post-icon blue">讲</div>
+        <div class="post-info"><div class="post-title">伏击涨停讲义</div><div class="post-sub">黑马王子经典 · 811行</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('涨停密码讲义','讲义_涨停密码.md')">
-        <div class="list-icon blue">讲</div>
-        <div class="list-info"><div class="list-title">涨停密码</div><div class="list-sub">黑马王子经典 · 1158行</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('涨停密码讲义','讲义_涨停密码.md')">
+        <div class="post-icon blue">讲</div>
+        <div class="post-info"><div class="post-title">涨停密码讲义</div><div class="post-sub">黑马王子经典 · 1158行</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('量波逮涨停讲义','讲义_量波逮涨停.md')">
-        <div class="list-icon blue">讲</div>
-        <div class="list-info"><div class="list-title">量波逮涨停</div><div class="list-sub">黑马王子经典 · 1036行</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('量波逮涨停讲义','讲义_量波逮涨停.md')">
+        <div class="post-icon blue">讲</div>
+        <div class="post-info"><div class="post-title">量波逮涨停讲义</div><div class="post-sub">黑马王子经典 · 1036行</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('操盘手记','讲义_操盘手记核心摘要.md')">
-        <div class="list-icon orange">记</div>
-        <div class="list-info"><div class="list-title">操盘手记核心摘要</div><div class="list-sub">实战心得精华</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('操盘手记','讲义_操盘手记核心摘要.md')">
+        <div class="post-icon orange">记</div>
+        <div class="post-info"><div class="post-title">操盘手记核心摘要</div><div class="post-sub">实战心得精华</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('DeepSeek即时通','讲义_DeepSeek即时通.md')">
-        <div class="list-icon green">AI</div>
-        <div class="list-info"><div class="list-title">DeepSeek即时通</div><div class="list-sub">黑马王子2025新作</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('DeepSeek即时通','讲义_DeepSeek即时通.md')">
+        <div class="post-icon green">AI</div>
+        <div class="post-info"><div class="post-title">DeepSeek即时通</div><div class="post-sub">黑马王子2025新作</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
   <!-- 个股案例 -->
   <div class="section">
-    <div class="section-title">个股案例</div>
-    <div class="list-card">
-      <div class="list-item" onclick="loadMD('淳中科技','案例_淳中科技.md')">
-        <div class="list-icon red">淳</div>
-        <div class="list-info"><div class="list-title">淳中科技</div><div class="list-sub">sh603516 · 持仓股</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">个股案例</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="loadMD('淳中科技','案例_淳中科技.md')">
+        <div class="post-icon red">淳</div>
+        <div class="post-info"><div class="post-title">淳中科技</div><div class="post-sub">sh603516 · 持仓股</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('工业富联','案例_工业富联.md')">
-        <div class="list-icon red">工</div>
-        <div class="list-info"><div class="list-title">工业富联</div><div class="list-sub">sh601138 · 持仓股</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('工业富联','案例_工业富联.md')">
+        <div class="post-icon red">工</div>
+        <div class="post-info"><div class="post-title">工业富联</div><div class="post-sub">sh601138 · 持仓股</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('胜宏科技','案例_胜宏科技.md')">
-        <div class="list-icon red">胜</div>
-        <div class="list-info"><div class="list-title">胜宏科技</div><div class="list-sub">sz300476 · 持仓股</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('胜宏科技','案例_胜宏科技.md')">
+        <div class="post-icon red">胜</div>
+        <div class="post-info"><div class="post-title">胜宏科技</div><div class="post-sub">sz300476 · 持仓股</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('通富微电','案例_通富微电.md')">
-        <div class="list-icon red">通</div>
-        <div class="list-info"><div class="list-title">通富微电</div><div class="list-sub">sz002156 · 持仓股</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('通富微电','案例_通富微电.md')">
+        <div class="post-icon red">通</div>
+        <div class="post-info"><div class="post-title">通富微电</div><div class="post-sub">sz002156 · 持仓股</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('环旭电子','案例_环旭电子.md')">
-        <div class="list-icon red">环</div>
-        <div class="list-info"><div class="list-title">环旭电子</div><div class="list-sub">sh601231 · 持仓股</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('环旭电子','案例_环旭电子.md')">
+        <div class="post-icon red">环</div>
+        <div class="post-info"><div class="post-title">环旭电子</div><div class="post-sub">sh601231 · 持仓股</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('赛腾股份','案例_赛腾股份.md')">
-        <div class="list-icon red">赛</div>
-        <div class="list-info"><div class="list-title">赛腾股份</div><div class="list-sub">sh603283 · 持仓股</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('赛腾股份','案例_赛腾股份.md')">
+        <div class="post-icon red">赛</div>
+        <div class="post-info"><div class="post-title">赛腾股份</div><div class="post-sub">sh603283 · 持仓股</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('长电科技','案例_长电科技.md')">
-        <div class="list-icon red">长</div>
-        <div class="list-info"><div class="list-title">长电科技</div><div class="list-sub">sh600584 · 关注池</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('长电科技','案例_长电科技.md')">
+        <div class="post-icon red">长</div>
+        <div class="post-info"><div class="post-title">长电科技</div><div class="post-sub">sh600584 · 关注池</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadMD('天孚通信','案例_天孚通信.md')">
-        <div class="list-icon red">天</div>
-        <div class="list-info"><div class="list-title">天孚通信</div><div class="list-sub">sz300394 · 关注池</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadMD('天孚通信','案例_天孚通信.md')">
+        <div class="post-icon red">天</div>
+        <div class="post-info"><div class="post-title">天孚通信</div><div class="post-sub">sz300394 · 关注池</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
   <!-- 课堂作业 -->
   <div class="section">
-    <div class="section-title">课堂作业</div>
-    <div class="list-card">
-      <div class="list-item" onclick="loadCourse('作业-第03课.html')">
-        <div class="list-icon blue">作</div>
-        <div class="list-info"><div class="list-title">第03课作业</div><div class="list-sub">量价关系四维度练习</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">课堂作业</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="loadCourse('作业-第03课.html')">
+        <div class="post-icon blue">作</div>
+        <div class="post-info"><div class="post-title">第03课作业</div><div class="post-sub">量价关系四维度练习</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('作业-第04课.html')">
-        <div class="list-icon blue">作</div>
-        <div class="list-info"><div class="list-title">第04课作业</div><div class="list-sub">位置决定性质练习</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('作业-第04课.html')">
+        <div class="post-icon blue">作</div>
+        <div class="post-info"><div class="post-title">第04课作业</div><div class="post-sub">位置决定性质练习</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('测验-第01-03课综合复习.html')">
-        <div class="list-icon purple">测</div>
-        <div class="list-info"><div class="list-title">第01-03课综合测验</div><div class="list-sub">基础理论复习</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('测验-第01-03课综合复习.html')">
+        <div class="post-icon purple">测</div>
+        <div class="post-info"><div class="post-title">第01-03课综合测验</div><div class="post-sub">基础理论复习</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
   <!-- 专题课程 -->
   <div class="section">
-    <div class="section-title">专题课程</div>
-    <div class="list-card">
-      <div class="list-item" onclick="loadCourse('强化课-左证明右确认量化与生死线画法.html')">
-        <div class="list-icon purple">强</div>
-        <div class="list-info"><div class="list-title">强化课-左证明右确认</div><div class="list-sub">量化与生死线画法精讲</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">专题课程</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="loadCourse('强化课-左证明右确认量化与生死线画法.html')">
+        <div class="post-icon purple">强</div>
+        <div class="post-info"><div class="post-title">强化课-左证明右确认</div><div class="post-sub">量化与生死线画法精讲</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('方法课-复盘三窗口.html')">
-        <div class="list-icon blue">方</div>
-        <div class="list-info"><div class="list-title">方法课-复盘三窗口</div><div class="list-sub">复盘方法论</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('方法课-复盘三窗口.html')">
+        <div class="post-icon blue">方</div>
+        <div class="post-info"><div class="post-title">方法课-复盘三窗口</div><div class="post-sub">复盘方法论</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('资料-量学出处与当代权威理论对照表.html')">
-        <div class="list-icon green">资</div>
-        <div class="list-info"><div class="list-title">量学出处对照表</div><div class="list-sub">理论与实战对照</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('资料-量学出处与当代权威理论对照表.html')">
+        <div class="post-icon green">资</div>
+        <div class="post-info"><div class="post-title">量学出处对照表</div><div class="post-sub">理论与实战对照</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('专题-淳中8-21假右确认拆解.html')">
-        <div class="list-icon orange">专</div>
-        <div class="list-info"><div class="list-title">淳中8-21假右确认拆解</div><div class="list-sub">实战案例深度解析</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('专题-淳中8-21假右确认拆解.html')">
+        <div class="post-icon orange">专</div>
+        <div class="post-info"><div class="post-title">淳中8-21假右确认拆解</div><div class="post-sub">实战案例深度解析</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
   <!-- 原著精华 -->
   <div class="section">
-    <div class="section-title">原著精华</div>
-    <div class="list-card">
-      <div class="list-item" onclick="loadCourse('原著精华/量柱擒涨停-核心精华.html')">
-        <div class="list-icon green">原</div>
-        <div class="list-info"><div class="list-title">量柱擒涨停精华</div><div class="list-sub">黑马王子原著精读</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">原著精华</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="loadCourse('原著精华/量柱擒涨停-核心精华.html')">
+        <div class="post-icon green">原</div>
+        <div class="post-info"><div class="post-title">量柱擒涨停精华</div><div class="post-sub">黑马王子原著精读</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('原著精华/量线捉涨停-核心精华.html')">
-        <div class="list-icon blue">原</div>
-        <div class="list-info"><div class="list-title">量线捉涨停精华</div><div class="list-sub">黑马王子原著精读</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('原著精华/量线捉涨停-核心精华.html')">
+        <div class="post-icon blue">原</div>
+        <div class="post-info"><div class="post-title">量线捉涨停精华</div><div class="post-sub">黑马王子原著精读</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
   <!-- 每日盯盘 -->
   <div class="section">
-    <div class="section-title">每日盯盘</div>
-    <div class="list-card">
-      <div class="list-item" onclick="loadCourse('盘中盯盘-2026-08-28.html')">
-        <div class="list-icon orange">盘</div>
-        <div class="list-info"><div class="list-title">盘中盯盘 08-28</div><div class="list-sub">今日盘中记录</div></div>
-        <span class="list-arrow">›</span>
+    <div class="section-header">
+      <div class="section-title">每日盯盘</div>
+    </div>
+    <div class="post-list">
+      <div class="post-item" onclick="loadCourse('盘中盯盘-2026-08-28.html')">
+        <div class="post-icon orange">盘</div>
+        <div class="post-info"><div class="post-title">盘中盯盘 08-28</div><div class="post-sub">今日盘中记录</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('盘前预案-2026-08-28.html')">
-        <div class="list-icon blue">预</div>
-        <div class="list-info"><div class="list-title">盘前预案 08-28</div><div class="list-sub">今日操作计划</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('盘前预案-2026-08-28.html')">
+        <div class="post-icon blue">预</div>
+        <div class="post-info"><div class="post-title">盘前预案 08-28</div><div class="post-sub">今日操作计划</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('收盘复盘-2026-08-28.html')">
-        <div class="list-icon green">复</div>
-        <div class="list-info"><div class="list-title">收盘复盘 08-28</div><div class="list-sub">今日复盘总结</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('收盘复盘-2026-08-28.html')">
+        <div class="post-icon green">复</div>
+        <div class="post-info"><div class="post-title">收盘复盘 08-28</div><div class="post-sub">今日复盘总结</div></div>
+        <span class="post-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadCourse('联网复盘-2026-08-28.html')">
-        <div class="list-icon purple">联</div>
-        <div class="list-info"><div class="list-title">联网复盘 08-28</div><div class="list-sub">市场联网分析</div></div>
-        <span class="list-arrow">›</span>
+      <div class="post-item" onclick="loadCourse('联网复盘-2026-08-28.html')">
+        <div class="post-icon purple">联</div>
+        <div class="post-info"><div class="post-title">联网复盘 08-28</div><div class="post-sub">市场联网分析</div></div>
+        <span class="post-arrow">›</span>
       </div>
     </div>
   </div>
 
-  <div style="text-align:center;padding:20px;font-size:10px;color:var(--text-dim);">
+  <div style="text-align:center;padding:30px 0;font-size:10px;color:var(--text-muted);">
     数据更新: 2026-08-28 | 腾讯财经API
   </div>
+</div>
+
+<!-- 回到顶部 -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
 </div>
 
 <!-- 底部导航 -->
@@ -576,130 +955,143 @@ body {
   <button class="nav-item" onclick="loadMD('盘前预案','盘前预案.md')"><span class="icon">📋</span><span>预案</span></button>
   <button class="nav-item" onclick="showCharts()"><span class="icon">📈</span><span>图表</span></button>
 </div>
-</div>
 
-<!-- ============ 子页面（列表） ============ -->
-<div id="subPage" class="sub-page">
-  <div class="sub-header">
-    <button class="back-btn" onclick="goBack()">←</button>
-    <span class="page-title" id="subTitle">标题</span>
+<!-- ============ 文章详情页 ============ -->
+<div id="postPage" class="post-page">
+  <div class="post-header">
+    <button class="post-back" onclick="goHome()">← 返回首页</button>
+    <div class="post-meta">
+      <span class="post-tag" id="postTag">文章</span>
+      <span class="post-date" id="postDate">2026-08-28</span>
+    </div>
+    <h1 class="post-title-lg" id="postTitle">文章标题</h1>
+    <p class="post-excerpt" id="postExcerpt"></p>
   </div>
-  <div class="sub-content" id="subContent"><div class="loading">加载中...</div></div>
-</div>
-
-<!-- ============ 内容页 ============ -->
-<div id="contentPage" class="sub-page">
-  <div class="sub-header">
-    <button class="back-btn" onclick="goBack()">←</button>
-    <span class="page-title" id="contentTitle">内容</span>
-  </div>
-  <div class="sub-content">
-    <div class="content-area" id="contentArea">
-      <div class="loading">加载中...</div>
+  <div class="post-body">
+    <div class="post-content" id="postContent">
+      <div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">加载中...</div></div>
     </div>
   </div>
 </div>
 
-<script>
-var navHistory = [];
+<!-- ============ 子页面（列表） ============ -->
+<div id="subPage" class="post-page">
+  <div class="post-header">
+    <button class="post-back" onclick="goBack()">← 返回</button>
+    <h1 class="post-title-lg" id="subTitle">分类标题</h1>
+  </div>
+  <div class="post-body">
+    <div class="post-list" id="subContent"><div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">加载中...</div></div></div>
+  </div>
+</div>
 
-function showPage(pageId) {
+<script>
+// ===== 导航状态管理 =====
+var navHistory = [];
+var currentView = 'home'; // home | post | sub
+
+// ===== 页面切换 =====
+function showView(view) {
   document.getElementById('homePage').style.display = 'none';
+  document.getElementById('postPage').classList.remove('active');
   document.getElementById('subPage').classList.remove('active');
-  document.getElementById('contentPage').classList.remove('active');
-  if (pageId === 'home') {
+  
+  if (view === 'home') {
     document.getElementById('homePage').style.display = 'block';
-  } else if (pageId === 'sub') {
+  } else if (view === 'sub') {
     document.getElementById('subPage').classList.add('active');
   } else {
-    document.getElementById('contentPage').classList.add('active');
+    document.getElementById('postPage').classList.add('active');
   }
+  currentView = view;
   window.scrollTo(0, 0);
+  updateNav();
 }
 
 function goHome() {
   navHistory = [];
-  showPage('home');
-  document.querySelectorAll('.nav-item').forEach(function(item, i) {
-    item.classList.toggle('active', i === 0);
-  });
+  showView('home');
 }
 
 function goBack() {
   if (navHistory.length > 0) {
     var prev = navHistory.pop();
-    showPage(prev);
-    if (prev === 'home') {
-      document.querySelectorAll('.nav-item').forEach(function(item, i) {
-        item.classList.toggle('active', i === 0);
-      });
-    }
+    showView(prev);
   } else {
     goHome();
   }
 }
 
-// 加载Markdown
-function loadMD(title, file) {
-  navHistory.push('home');
-  document.getElementById('contentTitle').textContent = title;
-  var area = document.getElementById('contentArea');
-  area.className = 'content-area md-mode';
-  area.innerHTML = '<div class="loading"></div>';
-  showPage('content');
-  fetch(file)
-    .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
-    .then(function(md) { area.innerHTML = renderMD(md); })
-    .catch(function(err) { area.innerHTML = '<div class="error">⚠️ ' + err.message + '</div>'; });
+function updateNav() {
+  var btns = document.querySelectorAll('.bottom-nav .nav-item');
+  btns.forEach(function(b, i) { b.classList.remove('active'); });
+  if (currentView === 'home') btns[0].classList.add('active');
+  else if (currentView === 'post') btns[0].classList.add('active');
 }
 
-// 加载HTML课程文件 - 提取body内容内嵌展示
-function loadCourse(file) {
+// ===== 加载Markdown文章 =====
+function loadMD(title, file) {
   navHistory.push('home');
-  var title = file.replace('.html','').split('/').pop().replace(/^.*[-_]/,'');
-  document.getElementById('contentTitle').textContent = title;
-  var area = document.getElementById('contentArea');
-  area.className = 'content-area html-mode';
-  area.innerHTML = '<div class="loading"></div>';
-  showPage('content');
+  document.getElementById('postTitle').textContent = title;
+  document.getElementById('postTag').textContent = '讲义';
+  document.getElementById('postDate').textContent = '2026-08-28';
+  document.getElementById('postExcerpt').textContent = '';
+  var content = document.getElementById('postContent');
+  content.className = 'post-content md';
+  content.innerHTML = '<div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">加载中...</div></div>';
+  showView('post');
+  
   fetch(file)
     .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
-    .then(function(html) {
-      // 提取body内容
-      var bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-      if (bodyMatch) {
-        var bodyHtml = bodyMatch[1];
-        // 保留所有样式但移除可能冲突的body/html标签
-        bodyHtml = bodyHtml.replace(/<\/?(?:html|head|body)[^>]*>/gi, '');
-        bodyHtml = bodyHtml.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
-        // 提取style内容注入到页面
-        var styleMatch = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
-        if (styleMatch) {
-          addDynamicStyle(styleMatch[1]);
-        }
-        area.innerHTML = bodyHtml;
-      } else {
-        area.innerHTML = '<div class="error">内容解析失败</div>';
-      }
+    .then(function(md) {
+      content.innerHTML = renderMD(md);
+      animateContent(content);
     })
     .catch(function(err) {
-      area.innerHTML = '<div class="error">⚠️ ' + err.message + '</div>';
+      content.innerHTML = '<div class="error-wrap"><div class="error-icon">⚠️</div><div>' + err.message + '</div></div>';
     });
 }
 
-// 动态注入样式
-function addDynamicStyle(css) {
-  var styleEl = document.createElement('style');
-  styleEl.textContent = css;
-  document.head.appendChild(styleEl);
+// ===== 加载HTML课程 =====
+function loadCourse(file) {
+  navHistory.push('home');
+  var name = file.replace('.html','').split('/').pop();
+  document.getElementById('postTitle').textContent = name;
+  document.getElementById('postTag').textContent = '课程';
+  document.getElementById('postDate').textContent = '2026-08-28';
+  document.getElementById('postExcerpt').textContent = '';
+  var content = document.getElementById('postContent');
+  content.className = 'post-content html';
+  content.innerHTML = '<div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">加载中...</div></div>';
+  showView('post');
+  
+  fetch(file)
+    .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
+    .then(function(html) {
+      var bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+      if (bodyMatch) {
+        var bodyHtml = bodyMatch[1];
+        bodyHtml = bodyHtml.replace(/<\/?(?:html|head|body)[^>]*>/gi, '');
+        var styleMatch = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+        if (styleMatch) addDynamicStyle(styleMatch[1]);
+        content.innerHTML = bodyHtml;
+        animateContent(content);
+      } else {
+        content.innerHTML = '<div class="error-wrap"><div class="error-icon">⚠️</div><div>内容解析失败</div></div>';
+      }
+    })
+    .catch(function(err) {
+      content.innerHTML = '<div class="error-wrap"><div class="error-icon">⚠️</div><div>' + err.message + '</div></div>';
+    });
 }
 
-// 显示子页面列表
+// ===== 显示子页面列表 =====
 function showSubPage(title) {
   navHistory.push('home');
   document.getElementById('subTitle').textContent = title;
   var content = document.getElementById('subContent');
-  showPage('sub');
+  showView('sub');
+  
   var items = '';
   if (title === '案例库') {
     items = [
@@ -713,49 +1105,58 @@ function showSubPage(title) {
       ['天孚通信','案例_天孚通信.md']
     ].map(function(item) {
       var t = item[0], f = item[1];
-      return '<div class="list-item" onclick="loadMDFromSub(\'' + t + '\',\'' + f + '\')">' +
-        '<div class="list-icon red">' + t[0] + '</div>' +
-        '<div class="list-info"><div class="list-title">' + t + '</div></div>' +
-        '<span class="list-arrow">›</span></div>';
+      return '<div class="post-item" onclick="loadMDFromSub(\'' + t + '\',\'' + f + '\')">' +
+        '<div class="post-icon red">' + t[0] + '</div>' +
+        '<div class="post-info"><div class="post-title">' + t + '</div></div>' +
+        '<span class="post-arrow">›</span></div>';
     }).join('');
   }
-  content.innerHTML = '<div class="list-card">' + items + '</div>';
+  content.innerHTML = items;
 }
 
 function loadMDFromSub(title, file) {
   navHistory.push('sub');
-  document.getElementById('contentTitle').textContent = title;
-  var area = document.getElementById('contentArea');
-  area.className = 'content-area md-mode';
-  area.innerHTML = '<div class="loading"></div>';
-  showPage('content');
+  document.getElementById('postTitle').textContent = title;
+  document.getElementById('postTag').textContent = '案例';
+  document.getElementById('postDate').textContent = '2026-08-28';
+  document.getElementById('postExcerpt').textContent = '';
+  var content = document.getElementById('postContent');
+  content.className = 'post-content md';
+  content.innerHTML = '<div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">加载中...</div></div>';
+  showView('post');
+  
   fetch(file)
     .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
-    .then(function(md) { area.innerHTML = renderMD(md); })
-    .catch(function(err) { area.innerHTML = '<div class="error">⚠️ ' + err.message + '</div>'; });
+    .then(function(md) { content.innerHTML = renderMD(md); animateContent(content); })
+    .catch(function(err) { content.innerHTML = '<div class="error-wrap"><div class="error-icon">⚠️</div><div>' + err.message + '</div></div>'; });
 }
 
+// ===== 回测分析 =====
 function showBacktest() {
   navHistory.push('home');
-  document.getElementById('contentTitle').textContent = '回测分析';
-  var area = document.getElementById('contentArea');
-  area.className = 'content-area md-mode';
-  area.innerHTML = '<div class="loading">回测分析中...</div>';
-  showPage('content');
+  document.getElementById('postTitle').textContent = '回测分析';
+  document.getElementById('postTag').textContent = '回测';
+  document.getElementById('postDate').textContent = '2026-08-28';
+  document.getElementById('postExcerpt').textContent = '淳中科技 sh603516';
+  var content = document.getElementById('postContent');
+  content.className = 'post-content md';
+  content.innerHTML = '<div class="loading-wrap"><div class="loading-spinner"></div><div class="loading-text">回测分析中...</div></div>';
+  showView('post');
+  
   fetch('/api/backtest?symbol=sh603516&strategy=all')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var s = data.strategies || {};
       var html = '<h2>' + data.name + ' (' + data.symbol + ')</h2>';
-      html += '<p style="color:var(--text-dim);font-size:11px">' + data.date_range + ' · ' + data.total_days + '日</p>';
+      html += '<p>' + data.date_range + ' · ' + data.total_days + '日</p>';
       if (s.golden_line) {
         var g = s.golden_line;
-        var gc = g.win_rate >= 60 ? '#10b981' : '#f59e0b';
+        var gc = g.win_rate >= 60 ? 'var(--success)' : 'var(--accent)';
         html += '<h3>黄金线支撑</h3>';
-        html += '<p style="font-size:28px;font-weight:700;color:' + gc + '">' + g.win_rate + '%</p>';
-        html += '<p style="font-size:11px;color:var(--text-dim)">' + g.total + '次 | 有效' + g.valid + ' 失效' + g.invalid + '</p>';
+        html += '<p style="font-size:32px;font-weight:800;color:' + gc + '">' + g.win_rate + '%</p>';
+        html += '<p>' + g.total + '次 | 有效' + g.valid + ' 失效' + g.invalid + '</p>';
         if (g.hits && g.hits.length) {
-          html += '<table><tr><th>日期</th><th>支撑</th><th>结果</th></tr>';
+          html += '<table><tr><th>日期</th><th>支撑位</th><th>结果</th></tr>';
           g.hits.slice(-5).reverse().forEach(function(h) {
             html += '<tr><td>' + h.date + '</td><td>' + h.support + '</td><td>' + h.outcome + '</td></tr>';
           });
@@ -764,51 +1165,78 @@ function showBacktest() {
       }
       if (s.price_level) {
         var p = s.price_level;
-        var pc = p.win_rate >= 60 ? '#10b981' : '#ef4444';
+        var pc = p.win_rate >= 60 ? 'var(--success)' : 'var(--danger)';
         html += '<h3>支撑压力位</h3>';
-        html += '<p style="font-size:28px;font-weight:700;color:' + pc + '">' + p.win_rate + '%</p>';
-        html += '<p style="font-size:11px;color:var(--text-dim)">' + p.total + '次 | 有效' + p.valid + '</p>';
+        html += '<p style="font-size:32px;font-weight:800;color:' + pc + '">' + p.win_rate + '%</p>';
+        html += '<p>' + p.total + '次 | 有效' + p.valid + '</p>';
       }
-      area.innerHTML = html;
+      content.innerHTML = html;
+      animateContent(content);
     })
     .catch(function(err) {
-      area.innerHTML = '<div class="error">⚠️ 回测失败: ' + err.message + '</div>';
+      content.innerHTML = '<div class="error-wrap"><div class="error-icon">⚠️</div><div>回测失败: ' + err.message + '</div></div>';
     });
 }
 
+// ===== K线图表 =====
 function showCharts() {
   navHistory.push('home');
-  document.getElementById('contentTitle').textContent = 'K线图表';
-  var area = document.getElementById('contentArea');
-  area.className = 'content-area html-mode';
-  // 图表用iframe保持独立样式
-  area.innerHTML = '<iframe src="/图表/index.html" style="width:100%;height:calc(100vh - 130px);border:none;border-radius:14px;background:#0f172a;"></iframe>';
-  showPage('content');
+  document.getElementById('postTitle').textContent = 'K线图表';
+  document.getElementById('postTag').textContent = '图表';
+  document.getElementById('postDate').textContent = '2026-08-28';
+  document.getElementById('postExcerpt').textContent = '技术分析图表';
+  var content = document.getElementById('postContent');
+  content.className = 'post-content html';
+  content.innerHTML = '<iframe src="/图表/index.html" style="width:100%;height:calc(100vh - 200px);border:none;border-radius:16px;background:#0f172a;"></iframe>';
+  showView('post');
 }
 
-function handleSearch(e) {
-  var kw = e.target.value.toLowerCase();
-  var items = document.querySelectorAll('.list-item');
+// ===== 搜索功能 =====
+function handleSearch(val) {
+  var clear = document.getElementById('searchClear');
+  clear.classList.toggle('show', val.length > 0);
+  
+  var kw = val.toLowerCase().trim();
+  var items = document.querySelectorAll('.post-item');
+  var sections = document.querySelectorAll('.section');
+  
   items.forEach(function(item) {
     var text = item.textContent.toLowerCase();
     item.style.display = (kw === '' || text.indexOf(kw) !== -1) ? '' : 'none';
   });
-  var cards = document.querySelectorAll('.func-card');
-  cards.forEach(function(card) {
-    var text = card.textContent.toLowerCase();
-    card.style.display = (kw === '' || text.indexOf(kw) !== -1) ? '' : 'none';
+  
+  // 隐藏空节
+  sections.forEach(function(sec) {
+    var visible = sec.querySelectorAll('.post-item:not([style*="none"])').length;
+    sec.style.display = (kw === '' || visible > 0) ? '' : 'none';
   });
 }
 
+function clearSearch() {
+  var input = document.getElementById('searchInput');
+  input.value = '';
+  input.dispatchEvent(new Event('input'));
+  input.focus();
+}
+
+function toggleSearch() {
+  var input = document.getElementById('searchInput');
+  input.focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== Markdown渲染 =====
 function renderMD(md) {
   var lines = md.split('\n');
-  var html = '';
-  var inTable = false, inList = false;
+  var html = '', inTable = false, inList = false, inBlockquote = false;
+  
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i];
+    
+    // 表格
     if (line.trim().startsWith('|')) {
       if (!inTable) { html += '<table>'; inTable = true; }
-      var cells = line.split('|').filter(function(c) { return c.trim() && !/^-+$/.test(c.trim()); });
+      var cells = line.split('|').filter(function(c) { return c.trim() && !/^-+\|$/.test(c.trim()); });
       if (!cells.length) continue;
       var row = '';
       cells.forEach(function(c) { row += '<td>' + renderInline(c.trim()) + '</td>'; });
@@ -817,12 +1245,25 @@ function renderMD(md) {
     } else if (inTable) {
       html += '</table>'; inTable = false;
     }
+    
+    // 引用
+    if (line.trim().startsWith('>')) {
+      if (!inBlockquote) { html += '<blockquote>'; inBlockquote = true; }
+      html += '<p>' + renderInline(line.trim().substring(1).trim()) + '</p>';
+      continue;
+    } else if (inBlockquote) {
+      html += '</blockquote>'; inBlockquote = false;
+    }
+    
+    // 标题
     var h = /^(#{1,3})\s+(.+)$/.exec(line);
     if (h) {
       if (inList) { html += '</ul>'; inList = false; }
       html += '<h' + h[1].length + '>' + renderInline(h[2]) + '</h' + h[1].length + '>';
       continue;
     }
+    
+    // 列表
     var li = /^\s*[-*]\s+(.+)$/.exec(line);
     if (li) {
       if (!inList) { html += '<ul>'; inList = true; }
@@ -831,16 +1272,24 @@ function renderMD(md) {
     } else if (inList) {
       html += '</ul>'; inList = false;
     }
+    
+    // 分隔线
     if (/^\s*(-{3,}|\*{3,})\s*$/.test(line)) {
       if (inList) { html += '</ul>'; inList = false; }
       html += '<hr>';
       continue;
     }
+    
+    // 空行
     if (!line.trim()) { html += '<p></p>'; continue; }
+    
+    // 普通段落
     html += '<p>' + renderInline(line.trim()) + '</p>';
   }
+  
   if (inTable) html += '</table>';
   if (inList) html += '</ul>';
+  if (inBlockquote) html += '</blockquote>';
   return html;
 }
 
@@ -851,7 +1300,74 @@ function renderInline(text) {
   return t;
 }
 
-showPage('home');
+// ===== 动态注入样式 =====
+function addDynamicStyle(css) {
+  var el = document.createElement('style');
+  el.textContent = css;
+  document.head.appendChild(el);
+}
+
+// ===== 内容动画 =====
+function animateContent(el) {
+  if (!el) return;
+  var children = el.children;
+  for (var i = 0; i < children.length; i++) {
+    children[i].style.opacity = '0';
+    children[i].style.transform = 'translateY(10px)';
+    children[i].style.transition = 'opacity 0.4s ease ' + (i * 0.05) + 's, transform 0.4s ease ' + (i * 0.05) + 's';
+    setTimeout(function(child) {
+      child.style.opacity = '1';
+      child.style.transform = 'translateY(0)';
+    }, 50 + i * 50, children[i]);
+  }
+}
+
+// ===== 回到顶部 =====
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== 滚动事件 =====
+var lastScroll = 0;
+window.addEventListener('scroll', function() {
+  var st = window.pageYOffset;
+  
+  // 进度条
+  var docH = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docH > 0 ? (st / docH) * 100 : 0;
+  document.getElementById('progressBar').style.transform = 'scaleX(' + (pct / 100) + ')';
+  
+  // 回到顶部按钮
+  var btn = document.getElementById('backToTop');
+  btn.classList.toggle('visible', st > 300);
+  
+  // 导航栏阴影
+  var nav = document.getElementById('topNav');
+  nav.style.boxShadow = st > 10 ? '0 4px 20px rgba(0,0,0,0.3)' : 'none';
+  
+  lastScroll = st;
+});
+
+// ===== 数字递增动画 =====
+function animateCounters() {
+  var nums = document.querySelectorAll('.stat-num[data-count]');
+  nums.forEach(function(el) {
+    var target = parseInt(el.getAttribute('data-count'));
+    var current = 0;
+    var step = Math.ceil(target / 20);
+    var timer = setInterval(function() {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = current;
+    }, 50);
+  });
+}
+
+// ===== 初始化 =====
+window.addEventListener('load', function() {
+  showView('home');
+  setTimeout(animateCounters, 300);
+});
 </script>
 </body>
 </html>
