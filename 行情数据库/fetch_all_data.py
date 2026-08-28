@@ -66,8 +66,8 @@ def fetch_pe_pb():
             result[code] = {
                 'name': fields[1],
                 'price': float(fields[3]) if fields[3] else None,
-                'pe': float(fields[64]) if len(fields) > 64 and fields[64] else None,
-                'pb': float(fields[65]) if len(fields) > 65 and fields[65] else None,
+                'pe': float(fields[46]) if len(fields) > 46 and fields[46] else None,  # PE-TTM
+                'pb': float(fields[65]) if len(fields) > 65 and fields[65] else None,  # PB
                 'total_market_cap_yi': float(fields[44]) if len(fields) > 44 and fields[44] else None,
             }
         except (ValueError, IndexError):
@@ -165,11 +165,25 @@ def fetch_lhb():
 
 
 def fetch_north_money():
-    """从akshare获取北向资金"""
+    """从akshare获取北向资金
+    注意: 最近数据可能有NaN字段，需标注数据质量
+    """
     print('\n=== 北向资金 ===')
     try:
         import akshare as ak
         df = ak.stock_hsgt_hist_em(symbol='北向资金')
+        
+        # 检查数据质量
+        latest_dates = df.tail(10)['日期'].tolist() if len(df) >= 10 else df['日期'].tolist()
+        nan_fields = ['当日成交净买额', '买入成交额', '卖出成交额']
+        quality_issues = []
+        
+        for _, row in df.tail(5).iterrows():
+            for field in nan_fields:
+                if pd.isna(row.get(field)):
+                    quality_issues.append(f"{row['日期']}: {field}为NaN")
+                    break
+        
         records = []
         for _, row in df.tail(20).iterrows():
             record = {}
@@ -179,15 +193,20 @@ def fetch_north_money():
                 except:
                     record[k] = str(v) if v is not None else None
             records.append(record)
+        
         data = {
             'updated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             'count': len(df),
+            'latest_dates': latest_dates,
+            'quality_issues': quality_issues[:3],  # 最多记录3个问题
             'latest': records,
         }
         path = os.path.join(NORTH_DIR, 'history.json')
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2, default=json_serial)
         print(f'北向资金: {len(df)}条历史')
+        if quality_issues:
+            print(f'数据质量问题: {len(quality_issues)}条记录异常')
         return data
     except Exception as e:
         print(f'北向资金失败: {e}')
@@ -195,14 +214,21 @@ def fetch_north_money():
 
 
 def fetch_margin():
-    """从akshare获取融资融券"""
+    """从akshare获取融资融券
+    注意: akshare接口可能返回滞后数据，需标注数据日期
+    """
     print('\n=== 融资融券 ===')
     try:
         import akshare as ak
         df_sh = ak.stock_margin_detail_sse()
         df_sz = ak.stock_margin_detail_szse()
+        
+        # 检查数据日期
+        sh_latest_date = df_sh['信用交易日期'].max() if len(df_sh) > 0 else '未知'
+        
         data = {
             'updated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'data_date': str(sh_latest_date),  # 记录实际数据日期
             'sh_count': len(df_sh),
             'sz_count': len(df_sz),
             'sh_latest': json.loads(df_sh.tail(3).to_json(orient='records', force_ascii=False)),
@@ -212,6 +238,7 @@ def fetch_margin():
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2, default=json_serial)
         print(f'沪市融资融券: {len(df_sh)}条, 深市: {len(df_sz)}条')
+        print(f'数据日期: {sh_latest_date}')
         return data
     except Exception as e:
         print(f'融资融券失败: {e}')
