@@ -1,0 +1,82 @@
+{
+  "updated_at": "2026-08-29 02:44:49",
+  "data": {
+    "sh603516": {
+      "name": "淳中科技",
+      "price": 91.04,
+      "pe": 0.11,
+      "pb": 24.88,
+      "total_market_cap_yi": 185.06
+    },
+    "sh601138": {
+      "name": "工业富联",
+      "price": 64.04,
+      "pe": 1.53,
+      "pb": 26.69,
+      "total_market_cap_yi": 12708.16
+    },
+    "sz002156": {
+      "name": "通富微电",
+      "price": 63.75,
+      "pe": 0.13,
+      "pb": 9.24,
+      "total_market_cap_yi": 967.38
+    },
+    "sh601231": {
+      "name": "环旭电子",
+      "price": 26.99,
+      "pe": 1.58,
+      "pb": 9.09,
+      "total_market_cap_yi": 644.77
+    },
+    "sz300476": {
+      "name": "胜宏科技",
+      "price": 241.6,
+      "pe": 0.73,
+      "pb": 13.26,
+      "total_market_cap_yi": 2090.31
+    },
+    "sh603283": {
+      "name": "赛腾股份",
+      "price": 47.45,
+      "pe": 0.88,
+      "pb": 15.53,
+      "total_market_cap_yi": 167.27
+    },
+    "sz300394": {
+      "name": "天孚通信",
+      "price": 263.58,
+      "pe": 0.32,
+      "pb": 37.17,
+      "total_market_cap_yi": 2868.77
+    },
+    "sh600584": {
+      "name": "长电科技",
+      "price": 74.93,
+      "pe": 0.17,
+      "pb": 6.7,
+      "total_market_cap_yi": 1340.81
+    },
+    "sh000001": {
+      "name": "上证指数",
+      "price": 3952.18,
+      "pe": null,
+      "pb": null,
+      "total_market_cap_yi": 618483.97
+    },
+    "sz399001": {
+      "name": "深证成指",
+      "price": 13953.07,
+      "pe": null,
+      "pb": null,
+      "total_market_cap_yi": 381018.89
+    },
+    "sz399006": {
+      "name": "创业板指",
+      "price": 3424.4,
+      "pe": null,
+      "pb": null,
+      "total_market_cap_yi": 150815.74
+    }
+  }
+}

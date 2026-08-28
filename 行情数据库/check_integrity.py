@@ -22,6 +22,13 @@ class DataIntegrityCheck:
         self.base_dir = '/workspace/行情数据库'
         self.kline_dir = os.path.join(self.base_dir, 'kline')
         self.kline_5min_dir = os.path.join(self.base_dir, 'kline_5min')
+        self.quotes_dir = os.path.join(self.base_dir, 'quotes')
+        self.market_dir = os.path.join(self.base_dir, 'market')
+        self.lhb_dir = os.path.join(self.base_dir, 'lhb')
+        self.north_dir = os.path.join(self.base_dir, 'north_money')
+        self.margin_dir = os.path.join(self.base_dir, 'margin')
+        self.restrict_dir = os.path.join(self.base_dir, 'restrictions')
+        self.financial_dir = os.path.join(self.base_dir, 'financial')
         self.errors = []
         self.warnings = []
         self.ok_count = 0
@@ -219,6 +226,136 @@ class DataIntegrityCheck:
             self.warnings.append('meta.json: 不存在')
             print(f"  ⚠ meta.json: 不存在")
 
+    def check_supplemental_data(self):
+        """检查补充数据"""
+        print("\n【补充数据检查】")
+
+        # PE/PB
+        pe_path = os.path.join(self.quotes_dir, 'pe_pb.json')
+        if os.path.exists(pe_path):
+            try:
+                with open(pe_path, 'r') as f:
+                    data = json.load(f)
+                count = len(data.get('data', {}))
+                self.ok_count += 1
+                print(f"  ✓ PE/PB: {count}只 ({data.get('updated_at', '未知')})")
+            except Exception as e:
+                self.errors.append(f'PE/PB: 解析错误 - {e}')
+                print(f"  ✗ PE/PB: 解析错误")
+        else:
+            self.warnings.append('PE/PB数据不存在')
+            print(f"  ⚠ PE/PB数据不存在")
+
+        # 涨跌家数
+        market_path = os.path.join(self.market_dir, 'stats.json')
+        if os.path.exists(market_path):
+            try:
+                with open(market_path, 'r') as f:
+                    data = json.load(f)
+                self.ok_count += 1
+                print(f"  ✓ 涨跌统计: 涨{data.get('up')} 跌{data.get('down')} 总{data.get('total')}")
+            except Exception as e:
+                self.errors.append(f'涨跌统计: 解析错误 - {e}')
+                print(f"  ✗ 涨跌统计: 解析错误")
+        else:
+            self.warnings.append('涨跌统计数据不存在')
+            print(f"  ⚠ 涨跌统计数据不存在")
+
+        # 龙虎榜
+        lhb_files = [f for f in os.listdir(self.lhb_dir) if f.endswith('.json')] if os.path.exists(self.lhb_dir) else []
+        if lhb_files:
+            today_file = os.path.join(self.lhb_dir, f'{datetime.now().strftime("%Y-%m-%d")}.json')
+            if os.path.exists(today_file):
+                with open(today_file, 'r') as f:
+                    data = json.load(f)
+                self.ok_count += 1
+                print(f"  ✓ 龙虎榜: {data.get('count', 0)}条 ({datetime.now().strftime('%Y-%m-%d')})")
+            else:
+                self.warnings.append(f'龙虎榜今日数据缺失')
+                print(f"  ⚠ 龙虎榜今日数据缺失")
+        else:
+            self.warnings.append('龙虎榜数据不存在')
+            print(f"  ⚠ 龙虎榜数据不存在")
+
+        # 北向资金
+        north_path = os.path.join(self.north_dir, 'history.json')
+        if os.path.exists(north_path):
+            try:
+                with open(north_path, 'r') as f:
+                    data = json.load(f)
+                self.ok_count += 1
+                print(f"  ✓ 北向资金: {data.get('count', 0)}条历史")
+            except Exception as e:
+                self.errors.append(f'北向资金: 解析错误 - {e}')
+                print(f"  ✗ 北向资金: 解析错误")
+        else:
+            self.warnings.append('北向资金数据不存在')
+            print(f"  ⚠ 北向资金数据不存在")
+
+        # 融资融券
+        margin_files = [f for f in os.listdir(self.margin_dir) if f.endswith('.json')] if os.path.exists(self.margin_dir) else []
+        if margin_files:
+            today_file = os.path.join(self.margin_dir, f'{datetime.now().strftime("%Y-%m-%d")}.json')
+            if os.path.exists(today_file):
+                with open(today_file, 'r') as f:
+                    data = json.load(f)
+                self.ok_count += 1
+                print(f"  ✓ 融资融券: 沪{data.get('sh_count', 0)}条 深{data.get('sz_count', 0)}条")
+            else:
+                self.warnings.append('融资融券今日数据缺失')
+                print(f"  ⚠ 融资融券今日数据缺失")
+        else:
+            self.warnings.append('融资融券数据不存在')
+            print(f"  ⚠ 融资融券数据不存在")
+
+        # 限售解禁
+        restrict_files = [f for f in os.listdir(self.restrict_dir) if f.endswith('.json')] if os.path.exists(self.restrict_dir) else []
+        if restrict_files:
+            today_file = os.path.join(self.restrict_dir, f'{datetime.now().strftime("%Y-%m-%d")}.json')
+            if os.path.exists(today_file):
+                with open(today_file, 'r') as f:
+                    data = json.load(f)
+                self.ok_count += 1
+                print(f"  ✓ 限售解禁: {data.get('count', 0)}条")
+            else:
+                self.warnings.append('限售解禁今日数据缺失')
+                print(f"  ⚠ 限售解禁今日数据缺失")
+        else:
+            self.warnings.append('限售解禁数据不存在')
+            print(f"  ⚠ 限售解禁数据不存在")
+
+        # 财务指标
+        fin_files = [f for f in os.listdir(self.financial_dir) if f.endswith('.json')] if os.path.exists(self.financial_dir) else []
+        if fin_files:
+            today_file = os.path.join(self.financial_dir, f'{datetime.now().strftime("%Y-%m-%d")}.json')
+            if os.path.exists(today_file):
+                with open(today_file, 'r') as f:
+                    data = json.load(f)
+                count = len(data.get('data', {}))
+                self.ok_count += 1
+                print(f"  ✓ 财务指标: {count}只股票")
+            else:
+                self.warnings.append('财务指标今日数据缺失')
+                print(f"  ⚠ 财务指标今日数据缺失")
+        else:
+            self.warnings.append('财务指标数据不存在')
+            print(f"  ⚠ 财务指标数据不存在")
+
+        # 数据汇总
+        summary_path = os.path.join(self.base_dir, 'data_summary.json')
+        if os.path.exists(summary_path):
+            try:
+                with open(summary_path, 'r') as f:
+                    summary = json.load(f)
+                self.ok_count += 1
+                print(f"  ✓ 数据汇总: {summary.get('updated_at', '未知')}")
+            except Exception as e:
+                self.errors.append(f'数据汇总: 解析错误 - {e}')
+                print(f"  ✗ 数据汇总: 解析错误")
+        else:
+            self.warnings.append('data_summary.json 不存在')
+            print(f"  ⚠ data_summary.json 不存在")
+
     def generate_report(self):
         """生成检查报告"""
         print("\n" + "=" * 50)
@@ -254,6 +391,7 @@ def main():
     checker.check_5min_kline()
     checker.check_5min_history()
     checker.check_meta()
+    checker.check_supplemental_data()
     return checker.generate_report()
 
 
