@@ -54,7 +54,7 @@ TAGS = {
 
 def parse_frontmatter(content):
     """解析Markdown frontmatter"""
-    meta = {'title': '', 'date': '', 'category': '其他', 'tags': []}
+    meta = {'title': '', 'date': '', 'category': '', 'tags': []}
     if not content.startswith('---'):
         return meta, content
     
@@ -112,9 +112,24 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
     
+    @property
+    def decoded_path(self):
+        """正确解码包含UTF-8字符的路径"""
+        if hasattr(self, 'raw_requestline'):
+            try:
+                raw = self.raw_requestline
+                if isinstance(raw, bytes):
+                    decoded = raw.decode('utf-8')
+                    parts = decoded.split(' ')
+                    if len(parts) >= 2:
+                        return parts[1]
+            except (UnicodeDecodeError, IndexError):
+                pass
+        return self.path
+    
     def do_GET(self):
-        parsed = urllib.parse.urlparse(self.path)
-        path = parsed.path
+        parsed = urllib.parse.urlparse(self.decoded_path)
+        path = urllib.parse.unquote(parsed.path)
         params = urllib.parse.parse_qs(parsed.query)
         
         # 博客API路由
@@ -137,7 +152,7 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
         elif path == '/api/backtest':
             self.handle_backtest(params)
         elif path.startswith('/api/search/'):
-            keyword = path.split('/')[-1]
+            keyword = urllib.parse.unquote(path.split('/')[-1])
             self.handle_search(keyword)
         
         # 回退到静态文件
@@ -175,13 +190,13 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
                 meta, body = parse_frontmatter(content)
                 excerpt = extract_excerpt(content)
                 
-                cat = meta.get('category', detect_category(f))
+                cat = meta.get('category') or detect_category(f)
                 if category and cat != category:
                     continue
                 
                 posts.append({
                     'slug': f.replace('.md', ''),
-                    'title': meta.get('title', f.replace('.md', '')),
+                    'title': meta.get('title') or f.replace('.md', ''),
                     'date': meta.get('date', datetime.now().strftime('%Y-%m-%d')),
                     'category': cat,
                     'tags': meta.get('tags', []),
@@ -204,9 +219,9 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
             meta, body = parse_frontmatter(content)
             self.send_json({
                 'slug': slug,
-                'title': meta.get('title', slug),
+                'title': meta.get('title') or slug,
                 'date': meta.get('date', datetime.now().strftime('%Y-%m-%d')),
-                'category': meta.get('category', detect_category(slug + '.md')),
+                'category': meta.get('category') or detect_category(slug + '.md'),
                 'tags': meta.get('tags', []),
                 'content': body,
             })
@@ -253,7 +268,8 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
         with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
         
-        recent = data.get('klines', [])[-60:] if 'klines' in data else []
+        klines = data.get('klines') or data.get('data') or []
+        recent = klines[-60:] if klines else []
         self.send_json({'code': code, 'name': data.get('name', code), 'recent': recent})
     
     def handle_search(self, keyword):
@@ -270,9 +286,9 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
                 meta, _ = parse_frontmatter(content)
                 results.append({
                     'slug': f.replace('.md', ''),
-                    'title': meta.get('title', f),
+                    'title': meta.get('title') or f,
                     'date': meta.get('date', ''),
-                    'category': meta.get('category', detect_category(f)),
+                    'category': meta.get('category') or detect_category(f),
                 })
         self.send_json({'results': results})
     
