@@ -8,102 +8,98 @@
 :root { --bg: #0a0e14; --surface: #151b23; --border: #2a3441; --text: #e8edf4; --text-dim: #8899a6; --blue: #3498db; --red: #ff4757; --green: #2ed573; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, "PingFang SC", sans-serif; background: var(--bg); color: var(--text); }
-a { color: var(--blue); text-decoration: none; }
 .navbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
 .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
 h1 { font-size: 20px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 15px; transition: transform 0.2s; }
-.card:hover { transform: translateY(-2px); border-color: var(--blue); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 15px; }
 .card-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
 .card-info { font-size: 12px; color: var(--text-dim); margin-bottom: 10px; }
 .card-price { font-size: 20px; font-weight: 600; }
-.card-change { font-size: 14px; }
 .green { color: var(--green); }
 .red { color: var(--red); }
-.btn { display: inline-block; padding: 8px 16px; background: var(--blue); color: white; border-radius: 4px; font-size: 13px; }
-.btn:hover { opacity: 0.9; }
+.btn { display: inline-block; padding: 8px 16px; background: var(--blue); color: white; border-radius: 4px; font-size: 13px; cursor: pointer; border: none; }
 .section-title { font-size: 14px; color: var(--text-dim); margin: 20px 0 10px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+.chart-frame { width: 100%; height: 500px; border: none; border-radius: 8px; background: var(--bg); }
+.back-btn { display: inline-block; padding: 8px 16px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px; font-size: 13px; cursor: pointer; margin-bottom: 15px; }
 </style>
 </head>
 <body>
 <div class="navbar">
-  <a href="http://localhost:8000" style="color:var(--text-dim)">← 返回讲义网站</a>
   <h1>K线图表库</h1>
 </div>
-<div class="container">
+<div class="container" id="mainContainer">
   <p style="color:var(--text-dim);margin-bottom:20px;">基于真实K线数据生成，包含技术指标和信号标注</p>
   
+  <div id="chartList">
   <div class="section-title">持仓股</div>
   <div class="grid">
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sh603516.html')">
       <div class="card-title">淳中科技</div>
       <div class="card-info">sh603516 | 最新: 93.6元</div>
       <div class="card-price green">+4.14%</div>
-      <br>
-      <a href="chart_sh603516.html" class="btn" target="_blank">查看图表</a>
     </div>
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sh601138.html')">
       <div class="card-title">工业富联</div>
       <div class="card-info">sh601138 | 最新: 63.86元</div>
       <div class="card-price green">+5.43%</div>
-      <br>
-      <a href="chart_sh601138.html" class="btn" target="_blank">查看图表</a>
     </div>
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sz002156.html')">
       <div class="card-title">通富微电</div>
       <div class="card-info">sz002156 | 最新: 63.73元</div>
       <div class="card-price green">+4.05%</div>
-      <br>
-      <a href="chart_sz002156.html" class="btn" target="_blank">查看图表</a>
     </div>
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sh601231.html')">
       <div class="card-title">环旭电子</div>
       <div class="card-info">sh601231 | 最新: 27.55元</div>
       <div class="card-price green">+3.18%</div>
-      <br>
-      <a href="chart_sh601231.html" class="btn" target="_blank">查看图表</a>
     </div>
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sz300476.html')">
       <div class="card-title">胜宏科技</div>
       <div class="card-info">sz300476 | 最新: 263.05元</div>
       <div class="card-price green">+5.46%</div>
-      <br>
-      <a href="chart_sz300476.html" class="btn" target="_blank">查看图表</a>
     </div>
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sh603283.html')">
       <div class="card-title">赛腾股份</div>
       <div class="card-info">sh603283 | 最新: 48.48元</div>
       <div class="card-price green">+4.98%</div>
-      <br>
-      <a href="chart_sh603283.html" class="btn" target="_blank">查看图表</a>
     </div>
   </div>
   
-  <div class="section-title">关注池</div>
+  <div class="section-title" style="margin-top:20px;">关注池</div>
   <div class="grid">
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sz300394.html')">
       <div class="card-title">天孚通信</div>
       <div class="card-info">sz300394</div>
-      <br>
-      <a href="chart_sz300394.html" class="btn" target="_blank">查看图表</a>
     </div>
-    <div class="card">
+    <div class="card" onclick="showChart('chart_sh600584.html')">
       <div class="card-title">长电科技</div>
       <div class="card-info">sh600584 | 最新: 76.54元</div>
       <div class="card-price green">+3.97%</div>
-      <br>
-      <a href="chart_sh600584.html" class="btn" target="_blank">查看图表</a>
     </div>
   </div>
+  </div>
   
-  <div class="section-title">图表说明</div>
+  <div id="chartDisplay" style="margin-top:20px;"></div>
+  
+  <div class="section-title" style="margin-top:20px;">图表说明</div>
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;font-size:13px;color:var(--text-dim);line-height:1.8;">
-    <div><strong style="color:var(--text)">■ 阳线</strong> / <strong style="color:var(--text)">▓ 阴线</strong> / · 影线</div>
+    <div><strong style="color:var(--red)">■ 阳线（红涨）</strong> / <strong style="color:var(--green)">■ 阴线（绿跌）</strong></div>
     <div>技术指标：MA5/MA10/MA20、MACD、KDJ、RSI、布林带</div>
-    <div>信号标注：✓ 买入信号 / ⚠ 风险提示</div>
     <div style="margin-top:10px;">数据来源：腾讯财经API，每日自动更新</div>
   </div>
 </div>
+
+<script>
+function showChart(chartFile) {
+  var display = document.getElementById('chartDisplay');
+  display.innerHTML = '<button class="back-btn" onclick="hideChart()">← 返回图表列表</button><iframe src="' + chartFile + '" class="chart-frame" id="chartIframe"></iframe>';
+  window.scrollTo(0, 0);
+}
+
+function hideChart() {
+  document.getElementById('chartDisplay').innerHTML = '';
+}
+</script>
 </body>
 </html>

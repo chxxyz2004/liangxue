@@ -88,7 +88,7 @@ svg {{ width: 100%; height: auto; }}
 </head>
 <body>
 <div class="container">
-<a href="/" class="back-btn">← 返回</a>
+<a href="#" onclick="history.back();return false" class="back-btn">← 返回</a>
 <h1>{name} ({symbol})</h1>
 <div class="info">
 ''')
@@ -101,7 +101,7 @@ svg {{ width: 100%; height: auto; }}
         change_pct = (latest - prev) / prev * 100
         
         rows.append(f'''<div class="info-item"><div class="info-label">最新价</div><div class="info-value">{latest}</div></div>
-<div class="info-item"><div class="info-label">涨跌</div><div class="info-value" style="color:{'#2ed573' if change_pct >= 0 else '#ff4757'}">{change_pct:+.2f}%</div></div>
+<div class="info-item"><div class="info-label">涨跌</div><div class="info-value" style="color:{'#ff4757' if change_pct >= 0 else '#2ed573'}">{change_pct:+.2f}%</div></div>
 <div class="info-item"><div class="info-label">MA5</div><div class="info-value">{ind['ma']['ma5']}</div></div>
 <div class="info-item"><div class="info-label">MA10</div><div class="info-value">{ind['ma']['ma10']}</div></div>
 <div class="info-item"><div class="info-label">MA20</div><div class="info-value">{ind['ma']['ma20']}</div></div>
@@ -185,8 +185,8 @@ svg {{ width: 100%; height: auto; }}
 <div><span style="color:#f39c12;">━</span> MA5</div>
 <div><span style="color:#3498db;">━</span> MA10</div>
 <div><span style="color:#9b59b6;">━</span> MA20</div>
-<div><span style="color:#2ed573;">■</span> 阳线</div>
-<div><span style="color:#ff4757;">■</span> 阴线</div>
+<div><span style="color:#ff4757;">■</span> 阳线</div>
+<div><span style="color:#2ed573;">■</span> 阴线</div>
 </div>\n''')
     
     # 信号列表
