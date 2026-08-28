@@ -28,7 +28,15 @@ else
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 5分钟K线入库成功" >> $LOG
 fi
 
-# 4. 运行对倒检测
+# 4. 全量补充数据采集（PE/PB、龙虎榜、北向资金、融资融券、解禁、财务）
+python3 fetch_all_data.py >> $LOG 2>&1
+if [ $? -ne 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✗ 补充数据更新失败" >> $LOG
+else
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 补充数据更新成功" >> $LOG
+fi
+
+# 5. 运行对倒检测
 python3 /workspace/现代量学讲义/detect_spoofing.py >> $LOG 2>&1
 if [ $? -ne 0 ]; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✗ 对倒检测失败" >> $LOG
