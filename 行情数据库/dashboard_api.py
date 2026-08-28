@@ -57,16 +57,19 @@ def fetch_prices():
                     parts = raw.split('~')
                     if len(parts) > 40 and parts[3]:
                         price = float(parts[3])
-                        prev_close = float(parts[5]) if parts[5] else 0
+                        prev_close = float(parts[4]) if parts[4] else 0
                         pct_chg = (price - prev_close) / prev_close if prev_close > 0 else 0
                         prices[symbol] = {
                             'name': info.name,
                             'price': price,
                             'change': price - prev_close,
-                            'pct_chg': pct_chg,
-                            'volume': float(parts[6]) * 10000 if parts[6] else 0,
+                            'pct_chg': pct_chg,  # 小数格式，前端*100显示
+                            'volume': float(parts[6]) if parts[6] else 0,  # 手
+                            'amount': float(parts[37]) * 10000 if len(parts) > 37 and parts[37] else 0,  # 万元→元
+                            'high': float(parts[33]) if len(parts) > 33 and parts[33] else 0,
+                            'low': float(parts[34]) if len(parts) > 34 and parts[34] else 0,
                             'time': parts[30] if len(parts) > 30 else '',
-                            'date': parts[31] if len(parts) > 31 else ''
+                            'date': parts[30][:8] if len(parts) > 30 and len(parts[30]) >= 8 else ''
                         }
         except Exception as e:
             print(f"  ⚠ {info.name}实时行情获取失败: {e}")
@@ -82,13 +85,13 @@ def fetch_prices():
                     parts = raw.split('~')
                     if len(parts) > 40 and parts[3]:
                         price = float(parts[3])
-                        prev_close = float(parts[5]) if parts[5] else 0
+                        prev_close = float(parts[4]) if parts[4] else 0
                         pct_chg = (price - prev_close) / prev_close if prev_close > 0 else 0
                         prices[symbol] = {
                             'name': name,
                             'price': price,
                             'change': price - prev_close,
-                            'pct_chg': pct_chg,
+                            'pct_chg': pct_chg,  # 小数格式，前端*100显示
                             'type': 'index'
                         }
         except Exception as e:

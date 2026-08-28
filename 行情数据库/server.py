@@ -133,7 +133,7 @@ class Handler(BaseHTTPRequestHandler):
                 'shares': info.shares,
                 'cost': info.cost,
                 'current_price': cp,
-                'pct_chg': round((cp-pc)/pc*100, 2) if pc > 0 else 0,
+                'pct_chg': round((cp-pc)/pc, 4) if pc > 0 else 0,
                 'market_value': round(pv, 2),
                 'profit': round(pv-cv, 2) if cv > 0 else 0,
                 'stop_loss': info.stop_loss,
@@ -162,7 +162,7 @@ class Handler(BaseHTTPRequestHandler):
                 'symbol': sym,
                 'name': info.name,
                 'current_price': cp,
-                'pct_chg': round((cp-pc)/pc*100, 2) if pc > 0 else 0,
+                'pct_chg': round((cp-pc)/pc, 4) if pc > 0 else 0,
                 'signals': get_signals(kl)
             })
         return {'watchlist': watchlist}

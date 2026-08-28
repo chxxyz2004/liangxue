@@ -82,15 +82,24 @@ class DataSourceManager:
             if '~' in data:
                 parts = data.split('~')
                 if len(parts) > 40:
+                    # 腾讯qt接口字段定义（经2026-08-29实测验证）：
+                    #   [3]当前价 [4]昨收 [5]今开 [6]成交量(手) [30]时间戳
+                    #   [31]涨跌额 [32]涨跌幅% [33]最高 [34]最低 [37]成交额(万元)
+                    price = float(parts[3]) if parts[3] else 0
+                    prev_close = float(parts[4]) if len(parts) > 4 and parts[4] else 0
                     return {
                         'code': symbol,
                         'name': parts[1] if len(parts) > 1 else name,
-                        'price': float(parts[3]) if parts[3] else 0,
-                        'change': float(parts[32]) if len(parts) > 32 and parts[32] else 0,
-                        'pct_chg': float(parts[33]) if len(parts) > 33 and parts[33] else 0,
-                        'volume': float(parts[6]) * 10000 if parts[6] else 0,
+                        'price': price,
+                        'prev_close': prev_close,
+                        'change': float(parts[31]) if len(parts) > 31 and parts[31] else 0,
+                        'pct_chg': float(parts[32]) if len(parts) > 32 and parts[32] else 0,
+                        'volume': float(parts[6]) if len(parts) > 6 and parts[6] else 0,  # 手
+                        'amount': float(parts[37]) * 10000 if len(parts) > 37 and parts[37] else 0,  # 万元→元
+                        'high': float(parts[33]) if len(parts) > 33 and parts[33] else 0,
+                        'low': float(parts[34]) if len(parts) > 34 and parts[34] else 0,
                         'time': parts[30] if len(parts) > 30 else '',
-                        'date': parts[31] if len(parts) > 31 else ''
+                        'date': parts[30][:8] if len(parts) > 30 and len(parts[30]) >= 8 else ''
                     }
         except Exception as e:
             print(f"⚠ {name}实时行情获取失败: {e}")

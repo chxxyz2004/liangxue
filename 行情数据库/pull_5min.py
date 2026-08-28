@@ -50,7 +50,7 @@ def pull_5min(code, datalen=48):
                 'low': float(b['low']),
                 'close': float(b['close']),
                 'volume': float(b['volume']),
-                'amount': float(b['volume']) * float(b['close']) * 100,  # 成交额(元)
+                'amount': float(b['volume']) * float(b['close']) * 100,  # 成交额(元)【估算】= 成交量(手)×收盘价×100，新浪5min接口不含真实成交额
             })
         return result
     except Exception as e:

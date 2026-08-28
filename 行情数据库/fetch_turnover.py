@@ -38,7 +38,7 @@ def parse_qt_data(raw):
             'volume': int(float(fields[6])) if len(fields) > 6 and fields[6] else 0,  # 手
             'turnover_ratio': float(fields[38]) if len(fields) > 38 and fields[38] else None,  # 换手率%
             'float_shares': int(float(fields[72])) if len(fields) > 72 and fields[72] else None,  # 流通股本(股)
-            'amount': float(fields[57]) if len(fields) > 57 and fields[57] else None,  # 成交额(万元)
+            'amount': float(fields[57]) * 10000 if len(fields) > 57 and fields[57] else None,  # 成交额(万元)→(元)
         }
     return result
 

@@ -54,8 +54,8 @@ def fetch_chain_quotes():
                 'name': fields[1],
                 'price': float(fields[3]) if fields[3] else None,
                 'change_pct': float(fields[32]) if len(fields) > 32 and fields[32] else 0,
-                'volume': float(fields[6]) if len(fields) > 6 and fields[6] else 0,
-                'amount': float(fields[37]) if len(fields) > 37 and fields[37] else 0,
+                'volume': float(fields[6]) if len(fields) > 6 and fields[6] else 0,  # 手
+                'amount': float(fields[37]) * 10000 if len(fields) > 37 and fields[37] else 0,  # 万元→元
                 'high': float(fields[33]) if len(fields) > 33 and fields[33] else 0,
                 'low': float(fields[34]) if len(fields) > 34 and fields[34] else 0,
                 'open': float(fields[5]) if len(fields) > 5 and fields[5] else 0,
@@ -89,21 +89,34 @@ def fetch_chain_quotes():
         limit_up = 0
         limit_down = 0
         
-        for code, name in chain_stocks.items():
+        for code, stock in chain_stocks.items():
+            # 兼容两种格式：旧版 value=名称字符串，新版 value={'name':..,'source':..}
+            if isinstance(stock, dict):
+                stock_name = stock.get('name', code)
+                stock_source = stock.get('source', '')
+            else:
+                stock_name = stock
+                stock_source = ''
             quote = final_quotes.get(code, {})
             change_pct = quote.get('change_pct', 0)
             stocks_data.append({
                 'code': code,
-                'name': name,
+                'name': stock_name,
+                'source': stock_source,
                 'price': quote.get('price'),
                 'change_pct': change_pct,
                 'volume': quote.get('volume', 0),
                 'amount': quote.get('amount', 0),
             })
             total_change += change_pct
-            if change_pct >= 9.9:
+            # 涨停/跌停阈值按板块区分：创业板(30开头)/科创板(68开头)=20%，主板=10%
+            if code[2:3] in ('3', '6') and (code.startswith('sz30') or code.startswith('sh68')):
+                limit_pct = 19.9
+            else:
+                limit_pct = 9.9
+            if change_pct >= limit_pct:
                 limit_up += 1
-            elif change_pct <= -9.9:
+            elif change_pct <= -limit_pct:
                 limit_down += 1
         
         # 计算板块指数（简单平均涨跌幅）

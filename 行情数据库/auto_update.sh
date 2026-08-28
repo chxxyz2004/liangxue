@@ -36,7 +36,23 @@ else
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 补充数据更新成功" >> $LOG
 fi
 
-# 5. 运行对倒检测
+# 5. 采集产业链行情（新增）
+python3 fetch_chain_quotes.py >> $LOG 2>&1
+if [ $? -ne 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✗ 产业链行情采集失败" >> $LOG
+else
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 产业链行情采集成功" >> $LOG
+fi
+
+# 6. 采集换手率数据（新增）
+python3 fetch_turnover.py >> $LOG 2>&1
+if [ $? -ne 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✗ 换手率采集失败" >> $LOG
+else
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 换手率采集成功" >> $LOG
+fi
+
+# 7. 运行对倒检测
 python3 /workspace/现代量学讲义/detect_spoofing.py >> $LOG 2>&1
 if [ $? -ne 0 ]; then
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✗ 对倒检测失败" >> $LOG

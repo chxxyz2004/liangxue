@@ -299,7 +299,7 @@ def fetch_financial():
                     'revenue': float(latest.get('TOTALOPERATEREVE', 0)) if pd.notna(latest.get('TOTALOPERATEREVE')) else None,
                     'net_profit': float(latest.get('PARENTNETPROFIT', 0)) if pd.notna(latest.get('PARENTNETPROFIT')) else None,
                 }
-                print(f"  {code}: ROE={results[code]['roe']}%, 营收={results[code]['revenue']:.0f}万")
+                print(f"  {code}: ROE={results[code]['roe']}%, 营收={results[code]['revenue']:.0f}元({results[code]['revenue']/1e8:.2f}亿)")
             time.sleep(0.3)
         except Exception as e:
             print(f"  {code}: 失败 - {e}")

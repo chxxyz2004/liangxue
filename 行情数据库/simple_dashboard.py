@@ -24,7 +24,8 @@ def fetch_prices():
                 raw = r.read().decode('gbk', errors='ignore')
                 parts = raw.split('~')
                 if len(parts) > 40 and parts[3]:
-                    p, pc = float(parts[3]), float(parts[5]) if parts[5] else 0
+                    # 腾讯qt字段: [4]昨收 [5]今开，涨跌幅基准必须是昨收
+                    p, pc = float(parts[3]), float(parts[4]) if parts[4] else 0
                     prices[sym] = {'name': info.name, 'price': p, 'pct_chg': (p-pc)/pc if pc>0 else 0}
         except: pass
     for sym, name in INDEXES.items():
@@ -35,7 +36,7 @@ def fetch_prices():
                 raw = r.read().decode('gbk', errors='ignore')
                 parts = raw.split('~')
                 if len(parts) > 40 and parts[3]:
-                    p, pc = float(parts[3]), float(parts[5]) if parts[5] else 0
+                    p, pc = float(parts[3]), float(parts[4]) if parts[4] else 0
                     prices[sym] = {'name': name, 'price': p, 'pct_chg': (p-pc)/pc if pc>0 else 0, 'type':'index'}
         except: pass
     return prices

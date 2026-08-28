@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-08-29 03:51:56",
+  "version": "1.0",
+  "target": "数据层质量诊断",
+  "principle": "所有数据必须真实、可靠、官方、权威",
+  "checks": {
+    "kline": [],
+    "pe_pb": [],
+    "margin": [
+      {
+        "level": "ERROR",
+        "msg": "融资融券沪市数据严重滞后: 20230922"
+      }
+    ],
+    "north_money": [
+      {
+        "level": "WARNING",
+        "msg": "北向资金最近5条数据资金流向为NaN，可能接口异常"
+      }
+    ],
+    "financial": [],
+    "lhb": [],
+    "chain": []
+  },
+  "summary": {
+    "total_errors": 1,
+    "total_warnings": 1,
+    "errors": [
+      "margin: 融资融券沪市数据严重滞后: 20230922"
+    ],
+    "warnings": [
+      "north_money: 北向资金最近5条数据资金流向为NaN，可能接口异常"
+    ]
+  }
+}

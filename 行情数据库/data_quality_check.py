@@ -55,20 +55,25 @@ def check_pe_pb_data():
     """检查PE/PB数据质量"""
     issues = []
     path = os.path.join(BASE_DIR, 'quotes/pe_pb.json')
-    
+
     if not os.path.exists(path):
         issues.append({'level': 'ERROR', 'msg': 'PE/PB数据文件不存在'})
         return issues
-    
+
     with open(path) as f:
         data = json.load(f)
-    
+
+    # 指数无 PE/PB 概念，跳过 sh000001/sz399001/sz399006
+    index_codes = {'sh000001', 'sz399001', 'sz399006'}
+
     # 检查字段值合理性
     for code, info in data.get('data', {}).items():
+        if code in index_codes:
+            continue
         pe = info.get('pe')
         pb = info.get('pb')
         name = info.get('name', code)
-        
+
         # PE合理性检查
         if pe is not None:
             if pe < 0 or pe > 500:
@@ -77,13 +82,13 @@ def check_pe_pb_data():
             elif pe < 1:
                 issues.append({'level': 'WARNING', 'code': code, 'field': 'pe',
                              'value': pe, 'msg': f'{name} PE值过低，可能数据错误: {pe}'})
-        
+
         # PB合理性检查
         if pb is not None:
             if pb < 0 or pb > 100:
                 issues.append({'level': 'ERROR', 'code': code, 'field': 'pb',
                              'value': pb, 'msg': f'{name} PB值异常: {pb}'})
-    
+
     return issues
 
 
@@ -280,33 +285,39 @@ if __name__ == '__main__':
     print('=' * 70)
     print('数据层质量诊断报告')
     print('=' * 70)
-    print(f'生成时间: {report[\"generated_at\"]}')
-    print(f'诊断原则: {report[\"principle\"]}')
+    gen = report['generated_at']
+    prin = report['principle']
+    print(f'生成时间: {gen}')
+    print(f'诊断原则: {prin}')
     print()
-    
+
     # 打印各检查项结果
     for check_name, issues in report['checks'].items():
         if issues:
             status = '✗ 有问题' if any(i.get('level') == 'ERROR' for i in issues) else '⚠ 有警告'
             print(f'{check_name}: {status}')
             for issue in issues:
-                print(f'  - [{issue.get(\"level\")}] {issue.get(\"msg\", issue.get(\"code\", \"\"))}')
+                imsg = issue.get('msg', issue.get('code', ''))
+                ilevel = issue.get('level')
+                print(f'  - [{ilevel}] {imsg}')
         else:
             print(f'{check_name}: ✓ 正常')
-    
+
     print()
     print('=' * 70)
     print('诊断总结')
     print('=' * 70)
-    print(f'错误数: {report[\"summary\"][\"total_errors\"]}')
-    print(f'警告数: {report[\"summary\"][\"total_warnings\"]}')
-    
+    errs = report['summary']['total_errors']
+    warns = report['summary']['total_warnings']
+    print(f'错误数: {errs}')
+    print(f'警告数: {warns}')
+
     if report['summary']['errors']:
         print()
         print('严重错误:')
         for err in report['summary']['errors']:
             print(f'  ✗ {err}')
-    
+
     if report['summary']['warnings']:
         print()
         print('警告信息:')
