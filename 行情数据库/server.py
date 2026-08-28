@@ -78,7 +78,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def _static(self, path):
         if path == '/' or path == '':
-            path = '/index.html'
+            path = '/dashboard.html'
         file_path = os.path.join(STATIC_DIR, path.lstrip('/'))
         if os.path.exists(file_path) and os.path.isfile(file_path):
             ext = os.path.splitext(file_path)[1]
