@@ -32,10 +32,8 @@ body {
 
 /* 动画 */
 @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
 @keyframes spin { to{transform:rotate(360deg)} }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 
 .page { display: none; animation: fadeIn 0.2s ease; }
@@ -79,31 +77,22 @@ body {
 }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo-icon {
-  width: 44px;
-  height: 44px;
+  width: 44px; height: 44px;
   background: linear-gradient(135deg, #6366f1, #a855f7);
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: bold;
-  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: bold; color: #fff;
   box-shadow: 0 4px 12px rgba(99,102,241,0.4);
 }
 .logo-text h1 { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
 .logo-text p { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
 .status-badge {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  display: flex; align-items: center; gap: 5px;
   background: rgba(16,185,129,0.2);
   border: 1px solid rgba(16,185,129,0.3);
-  padding: 4px 10px;
-  border-radius: 16px;
-  font-size: 10px;
-  color: #10b981;
+  padding: 4px 10px; border-radius: 16px;
+  font-size: 10px; color: #10b981;
 }
 .status-dot {
   width: 6px; height: 6px; background: #10b981; border-radius: 50%;
@@ -117,9 +106,7 @@ body {
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 12px;
   padding: 12px 14px 12px 38px;
-  font-size: 13px;
-  color: #fff;
-  outline: none;
+  font-size: 13px; color: #fff; outline: none;
   transition: all 0.2s;
 }
 .search-input::placeholder { color: rgba(255,255,255,0.4); }
@@ -141,12 +128,8 @@ body {
   display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 18px;
 }
 .stat-card {
-  background: var(--bg-card);
-  border-radius: 14px;
-  padding: 14px 6px;
-  text-align: center;
-  border: 1px solid var(--border);
-  transition: all 0.2s;
+  background: var(--bg-card); border-radius: 14px; padding: 14px 6px;
+  text-align: center; border: 1px solid var(--border); transition: all 0.2s;
 }
 .stat-card:active { transform: scale(0.96); }
 .stat-num {
@@ -171,13 +154,9 @@ body {
 /* 功能卡片 */
 .func-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
 .func-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px 6px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 14px 6px; text-align: center;
+  cursor: pointer; transition: all 0.2s;
 }
 .func-card:active { transform: scale(0.94); background: var(--bg-card-alt); }
 .func-icon {
@@ -194,17 +173,13 @@ body {
 
 /* 列表 */
 .list-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
 }
 .list-item {
   display: flex; align-items: center;
-  padding: 13px 14px;
-  cursor: pointer;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s;
+  padding: 13px 14px; cursor: pointer;
+  border-bottom: 1px solid var(--border); transition: background 0.15s;
 }
 .list-item:last-child { border-bottom: none; }
 .list-item:active { background: rgba(99,102,241,0.08); }
@@ -228,8 +203,7 @@ body {
 .sub-page.active { display: block; animation: fadeIn 0.15s ease; }
 .sub-header {
   background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%);
-  padding: 14px 16px;
-  position: sticky; top: 0; z-index: 10;
+  padding: 14px 16px; position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; gap: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
@@ -237,8 +211,7 @@ body {
   width: 34px; height: 34px;
   background: rgba(255,255,255,0.12);
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 9px;
-  color: #fff; font-size: 16px;
+  border-radius: 9px; color: #fff; font-size: 16px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: all 0.15s;
 }
@@ -246,71 +219,59 @@ body {
 .page-title { font-size: 16px; font-weight: 600; color: #fff; }
 .sub-content { padding: 12px; margin-top: -16px; position: relative; z-index: 1; }
 
-/* 内容卡片 */
-.content-card {
+/* 内容区域 - 支持原生HTML和Markdown */
+.content-area {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 18px;
   animation: fadeIn 0.2s ease;
 }
-.content-card h1 { font-size: 18px; margin-bottom: 14px; color: #fbbf24; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-.content-card h2 { font-size: 15px; margin: 16px 0 8px; color: #60a5fa; }
-.content-card h3 { font-size: 13px; margin: 12px 0 6px; color: var(--text); }
-.content-card p { font-size: 12px; line-height: 1.8; margin: 6px 0; color: var(--text-dim); }
-.content-card ul { margin: 6px 0 6px 16px; }
-.content-card li { font-size: 12px; line-height: 1.7; margin: 4px 0; color: var(--text-dim); }
-.content-card strong { color: var(--text); }
-.content-card table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
-.content-card th, .content-card td { padding: 7px 8px; border: 1px solid var(--border); text-align: left; }
-.content-card th { background: var(--bg-card-alt); color: var(--text); }
-.content-card td { color: var(--text-dim); }
-.content-card hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
-.content-card code { background: var(--bg-card-alt); padding: 1px 5px; border-radius: 3px; font-size: 10px; color: #fbbf24; }
+/* Markdown渲染样式 */
+.content-area.md-mode h1 { font-size: 18px; margin-bottom: 14px; color: #fbbf24; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+.content-area.md-mode h2 { font-size: 15px; margin: 16px 0 8px; color: #60a5fa; }
+.content-area.md-mode h3 { font-size: 13px; margin: 12px 0 6px; color: var(--text); }
+.content-area.md-mode p { font-size: 12px; line-height: 1.8; margin: 6px 0; color: var(--text-dim); }
+.content-area.md-mode ul { margin: 6px 0 6px 16px; }
+.content-area.md-mode li { font-size: 12px; line-height: 1.7; margin: 4px 0; color: var(--text-dim); }
+.content-area.md-mode strong { color: var(--text); }
+.content-area.md-mode table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
+.content-area.md-mode th, .content-area.md-mode td { padding: 7px 8px; border: 1px solid var(--border); text-align: left; }
+.content-area.md-mode th { background: var(--bg-card-alt); color: var(--text); }
+.content-area.md-mode td { color: var(--text-dim); }
+.content-area.md-mode hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.content-area.md-mode code { background: var(--bg-card-alt); padding: 1px 5px; border-radius: 3px; font-size: 10px; color: #fbbf24; }
+/* HTML内容自适应 */
+.content-area.html-mode { padding: 0; overflow: hidden; border-radius: 14px; }
+.content-area.html-mode > * { border-radius: 14px; }
 
 .loading {
   text-align: center; padding: 60px 20px;
   color: var(--text-dim); font-size: 13px;
 }
 .loading::before {
-  content: '';
-  display: block;
-  width: 28px; height: 28px;
-  border: 3px solid var(--border);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 12px;
+  content: ''; display: block;
+  width: 28px; height: 28px; margin: 0 auto 12px;
+  border: 3px solid var(--border); border-top-color: var(--primary);
+  border-radius: 50%; animation: spin 0.8s linear infinite;
 }
 .error { text-align: center; padding: 50px 20px; color: #f87171; font-size: 13px; }
 
 /* 底部导航 */
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0;
-  background: rgba(15,23,42,0.95);
-  backdrop-filter: blur(20px);
+  background: rgba(15,23,42,0.95); backdrop-filter: blur(20px);
   border-top: 1px solid var(--border);
   display: flex; justify-content: space-around;
-  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
-  z-index: 100;
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom)); z-index: 100;
 }
 .nav-item {
   display: flex; flex-direction: column; align-items: center;
   gap: 2px; padding: 4px 14px; color: var(--text-dim);
-  font-size: 9px; background: none; border: none; cursor: pointer;
-  transition: color 0.2s;
+  font-size: 9px; background: none; border: none; cursor: pointer; transition: color 0.2s;
 }
 .nav-item.active { color: var(--primary-light); }
 .nav-item .icon { font-size: 18px; }
-
-/* iframe */
-.iframe-container {
-  width: 100%;
-  height: calc(100vh - 130px);
-  border: none;
-  border-radius: 12px;
-  background: #0f172a;
-}
 </style>
 </head>
 <body>
@@ -327,10 +288,7 @@ body {
           <p>基于真实数据的量化分析</p>
         </div>
       </div>
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        运行中
-      </div>
+      <div class="status-badge"><span class="status-dot"></span>运行中</div>
     </div>
     <div class="search-box">
       <span class="search-icon">🔍</span>
@@ -340,7 +298,6 @@ body {
 </div>
 
 <div class="main">
-  <!-- 统计 -->
   <div class="stats-row">
     <div class="stat-card"><div class="stat-num">19</div><div class="stat-label">讲义</div></div>
     <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">案例</div></div>
@@ -354,23 +311,19 @@ body {
     <div class="func-grid">
       <div class="func-card" onclick="loadMD('复盘日报','复盘日报.md')">
         <div class="func-icon green">📊</div>
-        <div class="func-title">复盘日报</div>
-        <div class="func-desc">每日更新</div>
+        <div class="func-title">复盘日报</div><div class="func-desc">每日更新</div>
       </div>
       <div class="func-card" onclick="loadMD('盘前预案','盘前预案.md')">
         <div class="func-icon blue">📋</div>
-        <div class="func-title">盘前预案</div>
-        <div class="func-desc">操作计划</div>
+        <div class="func-title">盘前预案</div><div class="func-desc">操作计划</div>
       </div>
       <div class="func-card" onclick="showBacktest()">
         <div class="func-icon purple">⚗</div>
-        <div class="func-title">回测分析</div>
-        <div class="func-desc">策略验证</div>
+        <div class="func-title">回测分析</div><div class="func-desc">策略验证</div>
       </div>
       <div class="func-card" onclick="showCharts()">
         <div class="func-icon orange">📈</div>
-        <div class="func-title">K线图表</div>
-        <div class="func-desc">技术分析</div>
+        <div class="func-title">K线图表</div><div class="func-desc">技术分析</div>
       </div>
     </div>
   </div>
@@ -522,17 +475,17 @@ body {
   <div class="section">
     <div class="section-title">课堂作业</div>
     <div class="list-card">
-      <div class="list-item" onclick="loadFile('作业-第03课.html')">
+      <div class="list-item" onclick="loadCourse('作业-第03课.html')">
         <div class="list-icon blue">作</div>
         <div class="list-info"><div class="list-title">第03课作业</div><div class="list-sub">量价关系四维度练习</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('作业-第04课.html')">
+      <div class="list-item" onclick="loadCourse('作业-第04课.html')">
         <div class="list-icon blue">作</div>
         <div class="list-info"><div class="list-title">第04课作业</div><div class="list-sub">位置决定性质练习</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('测验-第01-03课综合复习.html')">
+      <div class="list-item" onclick="loadCourse('测验-第01-03课综合复习.html')">
         <div class="list-icon purple">测</div>
         <div class="list-info"><div class="list-title">第01-03课综合测验</div><div class="list-sub">基础理论复习</div></div>
         <span class="list-arrow">›</span>
@@ -544,22 +497,22 @@ body {
   <div class="section">
     <div class="section-title">专题课程</div>
     <div class="list-card">
-      <div class="list-item" onclick="loadFile('强化课-左证明右确认量化与生死线画法.html')">
+      <div class="list-item" onclick="loadCourse('强化课-左证明右确认量化与生死线画法.html')">
         <div class="list-icon purple">强</div>
         <div class="list-info"><div class="list-title">强化课-左证明右确认</div><div class="list-sub">量化与生死线画法精讲</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('方法课-复盘三窗口.html')">
+      <div class="list-item" onclick="loadCourse('方法课-复盘三窗口.html')">
         <div class="list-icon blue">方</div>
         <div class="list-info"><div class="list-title">方法课-复盘三窗口</div><div class="list-sub">复盘方法论</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('资料-量学出处与当代权威理论对照表.html')">
+      <div class="list-item" onclick="loadCourse('资料-量学出处与当代权威理论对照表.html')">
         <div class="list-icon green">资</div>
         <div class="list-info"><div class="list-title">量学出处对照表</div><div class="list-sub">理论与实战对照</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('专题-淳中8-21假右确认拆解.html')">
+      <div class="list-item" onclick="loadCourse('专题-淳中8-21假右确认拆解.html')">
         <div class="list-icon orange">专</div>
         <div class="list-info"><div class="list-title">淳中8-21假右确认拆解</div><div class="list-sub">实战案例深度解析</div></div>
         <span class="list-arrow">›</span>
@@ -571,12 +524,12 @@ body {
   <div class="section">
     <div class="section-title">原著精华</div>
     <div class="list-card">
-      <div class="list-item" onclick="loadFile('原著精华/量柱擒涨停-核心精华.html')">
+      <div class="list-item" onclick="loadCourse('原著精华/量柱擒涨停-核心精华.html')">
         <div class="list-icon green">原</div>
         <div class="list-info"><div class="list-title">量柱擒涨停精华</div><div class="list-sub">黑马王子原著精读</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('原著精华/量线捉涨停-核心精华.html')">
+      <div class="list-item" onclick="loadCourse('原著精华/量线捉涨停-核心精华.html')">
         <div class="list-icon blue">原</div>
         <div class="list-info"><div class="list-title">量线捉涨停精华</div><div class="list-sub">黑马王子原著精读</div></div>
         <span class="list-arrow">›</span>
@@ -588,22 +541,22 @@ body {
   <div class="section">
     <div class="section-title">每日盯盘</div>
     <div class="list-card">
-      <div class="list-item" onclick="loadFile('盘中盯盘-2026-08-28.html')">
+      <div class="list-item" onclick="loadCourse('盘中盯盘-2026-08-28.html')">
         <div class="list-icon orange">盘</div>
         <div class="list-info"><div class="list-title">盘中盯盘 08-28</div><div class="list-sub">今日盘中记录</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('盘前预案-2026-08-28.html')">
+      <div class="list-item" onclick="loadCourse('盘前预案-2026-08-28.html')">
         <div class="list-icon blue">预</div>
         <div class="list-info"><div class="list-title">盘前预案 08-28</div><div class="list-sub">今日操作计划</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('收盘复盘-2026-08-28.html')">
+      <div class="list-item" onclick="loadCourse('收盘复盘-2026-08-28.html')">
         <div class="list-icon green">复</div>
         <div class="list-info"><div class="list-title">收盘复盘 08-28</div><div class="list-sub">今日复盘总结</div></div>
         <span class="list-arrow">›</span>
       </div>
-      <div class="list-item" onclick="loadFile('联网复盘-2026-08-28.html')">
+      <div class="list-item" onclick="loadCourse('联网复盘-2026-08-28.html')">
         <div class="list-icon purple">联</div>
         <div class="list-info"><div class="list-title">联网复盘 08-28</div><div class="list-sub">市场联网分析</div></div>
         <span class="list-arrow">›</span>
@@ -631,9 +584,7 @@ body {
     <button class="back-btn" onclick="goBack()">←</button>
     <span class="page-title" id="subTitle">标题</span>
   </div>
-  <div class="sub-content" id="subContent">
-    <div class="loading">加载中...</div>
-  </div>
+  <div class="sub-content" id="subContent"><div class="loading">加载中...</div></div>
 </div>
 
 <!-- ============ 内容页 ============ -->
@@ -643,14 +594,13 @@ body {
     <span class="page-title" id="contentTitle">内容</span>
   </div>
   <div class="sub-content">
-    <div class="content-card" id="contentArea">
+    <div class="content-area" id="contentArea">
       <div class="loading">加载中...</div>
     </div>
   </div>
 </div>
 
 <script>
-// 历史记录栈 - 修复多层导航bug
 var navHistory = [];
 
 function showPage(pageId) {
@@ -679,7 +629,6 @@ function goBack() {
   if (navHistory.length > 0) {
     var prev = navHistory.pop();
     showPage(prev);
-    // 更新底部导航高亮
     if (prev === 'home') {
       document.querySelectorAll('.nav-item').forEach(function(item, i) {
         item.classList.toggle('active', i === 0);
@@ -690,11 +639,12 @@ function goBack() {
   }
 }
 
-// 直接加载Markdown（从首页点击）- 压入home
+// 加载Markdown
 function loadMD(title, file) {
   navHistory.push('home');
   document.getElementById('contentTitle').textContent = title;
   var area = document.getElementById('contentArea');
+  area.className = 'content-area md-mode';
   area.innerHTML = '<div class="loading"></div>';
   showPage('content');
   fetch(file)
@@ -703,17 +653,48 @@ function loadMD(title, file) {
     .catch(function(err) { area.innerHTML = '<div class="error">⚠️ ' + err.message + '</div>'; });
 }
 
-// 加载HTML文件
-function loadFile(file) {
+// 加载HTML课程文件 - 提取body内容内嵌展示
+function loadCourse(file) {
   navHistory.push('home');
-  var title = file.replace('.html','').split('/').pop();
+  var title = file.replace('.html','').split('/').pop().replace(/^.*[-_]/,'');
   document.getElementById('contentTitle').textContent = title;
   var area = document.getElementById('contentArea');
-  area.innerHTML = '<iframe src="' + file + '" class="iframe-container"></iframe>';
+  area.className = 'content-area html-mode';
+  area.innerHTML = '<div class="loading"></div>';
   showPage('content');
+  fetch(file)
+    .then(function(r) { if (!r.ok) throw new Error('加载失败(' + r.status + ')'); return r.text(); })
+    .then(function(html) {
+      // 提取body内容
+      var bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+      if (bodyMatch) {
+        var bodyHtml = bodyMatch[1];
+        // 保留所有样式但移除可能冲突的body/html标签
+        bodyHtml = bodyHtml.replace(/<\/?(?:html|head|body)[^>]*>/gi, '');
+        bodyHtml = bodyHtml.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+        // 提取style内容注入到页面
+        var styleMatch = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+        if (styleMatch) {
+          addDynamicStyle(styleMatch[1]);
+        }
+        area.innerHTML = bodyHtml;
+      } else {
+        area.innerHTML = '<div class="error">内容解析失败</div>';
+      }
+    })
+    .catch(function(err) {
+      area.innerHTML = '<div class="error">⚠️ ' + err.message + '</div>';
+    });
 }
 
-// 显示子页面列表（如案例库）
+// 动态注入样式
+function addDynamicStyle(css) {
+  var styleEl = document.createElement('style');
+  styleEl.textContent = css;
+  document.head.appendChild(styleEl);
+}
+
+// 显示子页面列表
 function showSubPage(title) {
   navHistory.push('home');
   document.getElementById('subTitle').textContent = title;
@@ -741,11 +722,11 @@ function showSubPage(title) {
   content.innerHTML = '<div class="list-card">' + items + '</div>';
 }
 
-// 从子页面加载内容 - 压入sub
 function loadMDFromSub(title, file) {
   navHistory.push('sub');
   document.getElementById('contentTitle').textContent = title;
   var area = document.getElementById('contentArea');
+  area.className = 'content-area md-mode';
   area.innerHTML = '<div class="loading"></div>';
   showPage('content');
   fetch(file)
@@ -758,6 +739,7 @@ function showBacktest() {
   navHistory.push('home');
   document.getElementById('contentTitle').textContent = '回测分析';
   var area = document.getElementById('contentArea');
+  area.className = 'content-area md-mode';
   area.innerHTML = '<div class="loading">回测分析中...</div>';
   showPage('content');
   fetch('/api/backtest?symbol=sh603516&strategy=all')
@@ -798,7 +780,9 @@ function showCharts() {
   navHistory.push('home');
   document.getElementById('contentTitle').textContent = 'K线图表';
   var area = document.getElementById('contentArea');
-  area.innerHTML = '<iframe src="/图表/index.html" class="iframe-container"></iframe>';
+  area.className = 'content-area html-mode';
+  // 图表用iframe保持独立样式
+  area.innerHTML = '<iframe src="/图表/index.html" style="width:100%;height:calc(100vh - 130px);border:none;border-radius:14px;background:#0f172a;"></iframe>';
   showPage('content');
 }
 
