@@ -412,17 +412,18 @@ def generate_html(content, filename):
 
         # 龙虎榜标签
         lhb_tag = ''
-        lhb = s.get('lhb')
-        if lhb:
-            net = lhb.get('net_buy', 0)
+        lhb_proc = s.get('liangxue', {}).get('lhb')
+        lhb_raw = s.get('lhb')
+        if lhb_proc:
+            net = lhb_proc.get('net_buy', 0)
             if net > 0:
                 lhb_tag = f'<span class="lx-tag gx" title="机构净买{net:.0f}万">LHB+{net:.0f}万</span>'
             elif net < 0:
                 lhb_tag = f'<span class="lx-tag jj" title="机构净卖{abs(net):.0f}万">LHB-{abs(net):.0f}万</span>'
             else:
                 lhb_tag = f'<span class="lx-tag yz" title="龙虎榜上榜">LHB上榜</span>'
-            if lhb.get('date'):
-                lhb_tag += f'<span class="lx-tag yz" title="上榜日">{lhb["date"]}</span>'
+            if lhb_proc.get('date'):
+                lhb_tag += f'<span class="lx-tag yz" title="上榜日">{lhb_proc["date"]}</span>'
 
         # 对倒检测标签
         spoof_tag = ''
@@ -464,10 +465,14 @@ def generate_html(content, filename):
 
     if lhb_stocks:
         for s in lhb_stocks:
-            lhb = s['lhb']
+            lhb = s.get('liangxue', {}).get('lhb')
+            if not lhb:
+                continue
             net = lhb.get('net_buy', 0)
             net_str = f'+{net:.0f}万' if net >= 0 else f'{net:.0f}万'
-            fund_flow_lines.append(f'<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>{s["name"]}</strong> LHB {lhb.get("date","")} · 解读:{lhb.get("interpretation","")} · 净买{net_str} · 上榜后1日:{lhb.get("return_1d","?")}%</div>')
+            ret1 = lhb.get('return_1d')
+            ret1_str = f'{float(ret1):.1f}' if ret1 and str(ret1) != 'nan' else '?'
+            fund_flow_lines.append(f'<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:12px"><strong>{s["name"]}</strong> LHB {lhb.get("date","")} · 解读:{lhb.get("interpretation","")} · 净买{net_str} · 上榜后1日:{ret1_str}%</div>')
     else:
         fund_flow_lines.append('<div style="color:var(--text-dim);font-size:12px;padding:6px 0">近30日持仓股无龙虎榜上榜记录</div>')
 
