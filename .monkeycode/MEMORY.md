@@ -611,3 +611,29 @@ python3 signal_report.py --all
   - `generate_report.py`：持仓表格新增「量学战法」列，显示倍量柱/关键柱/精准支撑压力标签
   - `auto_update.sh` 第9步：每日自动运行 `python3 liangxue_engine.py --save`
   - 自动生成量学复盘日报 Markdown（`量学复盘日报_YYYYMMDD.md`），含速览表+逐股解读
+
+### 11.3 日报资金流向层增强（2026-08-29）
+
+- **数据采集**：`fetch_all_data.py` 新增以下函数
+  - `fetch_concept_fund_flow()`：概念板块资金流向（东财行业板块接口，387个板块）
+  - `fetch_individual_fund_flow()`：东财push2个股资金流向kline（当前被限流阻断）
+  - `fetch_north_holdings()`：北向资金持股明细（数据截止2024-08，标记过期）
+  - 数据存储目录：`/workspace/行情数据库/fund_flow/`
+- **日报展示**：`generate_report.py` 新增
+  - `load_concept_fund_flow()`：加载最新概念资金流向数据
+  - `concept_flow_for_stock()`：按持仓股关键词匹配相关板块
+  - 在「资金流向与交叉验证」卡片下方新增「板块资金流向」子区域
+  - 显示格式：股票名 + 相关板块表格（净流入、涨跌、领涨股）
+- **博客网站修复**：`blog_server.py` 的 `serve_static` 函数增加 `urllib.parse.unquote()` 解码，支持中文文件名访问
+- **预览地址**：https://8000-202312279de3cd0a.monkeycode-ai.online/盘中盯盘-2026-08-29.html
+
+### 11.4 龙虎榜交叉验证机制（2026-08-29）
+
+- **LHB数据**：`/workspace/行情数据库/lhb/` 目录下JSON文件（龙虎榜上榜记录）
+- **对倒检测**：`/tmp/liangxue_spoofing_result_*.txt`（量化对倒信号检测结果）
+- **交叉验证逻辑**（`cross_validate_lhb_intent`）：
+  - LHB机构卖出 + 高量柱意图为吸筹/拉升 → 降低置信度0.15，标记「冲突」
+  - LHB机构买入 + 高量柱意图为吸筹/拉升 → 提升置信度0.10，标记「共振」
+  - 对倒信号 > 5个 + 意图为吸筹/拉升 → 强制告警「对倒异常需警惕」
+  - 对倒信号 ≤ 2个 + 意图为吸筹/拉升 → 可信度提升
+- **展示标签**：持仓表格「量学战法」列新增LHB标签（绿色gx=机构净买，红色jj=机构净卖）
