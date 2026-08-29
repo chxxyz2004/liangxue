@@ -4,7 +4,7 @@
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import defaultdict
 
 sys.path.insert(0, '/workspace/行情数据库')
@@ -74,7 +74,7 @@ def cross_validate_lhb_intent(hv_intent, lhb_records):
     """高量柱意图与龙虎榜交叉验证，返回额外置信度调整和对冲信号"""
     if not lhb_records:
         return 0, []
-    recent = [r for r in lhb_records if r.get('上榜日') >= (datetime.now() - __import__('datetime').timedelta(days=30)).strftime('%Y-%m-%d')]
+    recent = [r for r in lhb_records if r.get('上榜日') >= (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')]
     if not recent:
         return 0, []
     signals = []
