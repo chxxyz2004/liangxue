@@ -9,6 +9,10 @@
   5. 融资融券（akshare）
   6. 限售解禁（akshare）
   7. 财务指标（akshare）
+  8. 概念板块资金流向（akshare）
+  9. 行业板块资金流向（akshare）
+  10. 个股主力资金流向kline（东财push2 API）
+  11. 北向资金持股明细（akshare）
 """
 import json
 import os
@@ -29,6 +33,7 @@ MARGIN_DIR = os.path.join(BASE_DIR, 'margin')
 RESTRICT_DIR = os.path.join(BASE_DIR, 'restrictions')
 FINANCIAL_DIR = os.path.join(BASE_DIR, 'financial')
 MARKET_DIR = os.path.join(BASE_DIR, 'market')
+FUND_FLOW_DIR = os.path.join(BASE_DIR, 'fund_flow')
 
 os.makedirs(QUOTES_DIR, exist_ok=True)
 os.makedirs(LHB_DIR, exist_ok=True)
@@ -37,6 +42,7 @@ os.makedirs(MARGIN_DIR, exist_ok=True)
 os.makedirs(RESTRICT_DIR, exist_ok=True)
 os.makedirs(FINANCIAL_DIR, exist_ok=True)
 os.makedirs(MARKET_DIR, exist_ok=True)
+os.makedirs(FUND_FLOW_DIR, exist_ok=True)
 
 STOCK_CODES = list({**{k: v.name for k, v in HOLDINGS.items()},
                     **{k: v.name for k, v in WATCH_LIST.items()},
@@ -311,6 +317,213 @@ def fetch_financial():
     return results
 
 
+def fetch_concept_fund_flow():
+    """从akshare获取概念板块资金流向"""
+    print('\n=== 概念板块资金流向 ===')
+    try:
+        import akshare as ak
+        df = ak.stock_fund_flow_concept()
+        records = []
+        for _, row in df.iterrows():
+            record = {}
+            for k, v in row.items():
+                try:
+                    record[k] = float(v) if pd.notna(v) and isinstance(v, (int, float)) else str(v) if v is not None else None
+                except:
+                    record[k] = str(v) if v is not None else None
+            records.append(record)
+        data = {
+            'updated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'count': len(df),
+            'data': records,
+        }
+        path = os.path.join(FUND_FLOW_DIR, f'concept_{TODAY}.json')
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2, default=json_serial)
+        print(f'概念板块: {len(df)}条')
+        # 筛选持仓股相关概念
+        relevant_keywords = ['AI', '算力', '光模块', '半导体', '芯片', '通信', '电子', '机器人', 'PCB', '液冷', '数据中心']
+        matched = [r for r in records if any(kw in str(r.get('行业', '')) for kw in relevant_keywords)]
+        print(f'相关概念({len(matched)}条):')
+        for r in sorted(matched, key=lambda x: float(x.get('净额') or 0), reverse=True)[:10]:
+            print(f"  {r.get('行业','?')}: 涨跌{r.get('行业-涨跌幅','?')}% 净额{r.get('净额','?')}亿")
+        return data
+    except Exception as e:
+        print(f'概念板块资金流向失败: {e}')
+        return None
+
+
+def fetch_industry_fund_flow():
+    """从akshare获取行业板块资金流向"""
+    print('\n=== 行业板块资金流向 ===')
+    try:
+        import akshare as ak
+        df = ak.stock_sector_fund_flow_rank(indicator='今日', sector_type='行业资金流')
+        records = []
+        for _, row in df.iterrows():
+            record = {}
+            for k, v in row.items():
+                try:
+                    record[k] = float(v) if pd.notna(v) and isinstance(v, (int, float)) else str(v) if v is not None else None
+                except:
+                    record[k] = str(v) if v is not None else None
+            records.append(record)
+        data = {
+            'updated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'count': len(df),
+            'data': records,
+        }
+        path = os.path.join(FUND_FLOW_DIR, f'industry_{TODAY}.json')
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2, default=json_serial)
+        print(f'行业板块: {len(df)}条')
+        # 筛选持仓股相关行业
+        relevant_keywords = ['电子', '通信', '计算机', '半导体', '芯片', '机械']
+        matched = [r for r in records if any(kw in str(r.get('行业', '')) for kw in relevant_keywords)]
+        print(f'相关行业({len(matched)}条):')
+        for r in sorted(matched, key=lambda x: float(x.get('净额') or 0), reverse=True)[:10]:
+            print(f"  {r.get('行业','?')}: 涨跌{r.get('行业-涨跌幅','?')}% 净额{r.get('净额','?')}亿")
+        return data
+    except Exception as e:
+        print(f'行业板块资金流向失败: {e}')
+        return None
+
+
+def fetch_individual_fund_flow():
+    """从东财push2 API获取个股主力资金流向kline数据"""
+    print('\n=== 个股主力资金流向 ===')
+    stock_map = {
+        'sh603516': '1.603516',
+        'sh601138': '1.601138',
+        'sz002156': '0.002156',
+        'sh601231': '1.601231',
+        'sz300476': '0.300476',
+        'sh603283': '1.603283',
+        'sz300394': '0.300394',
+        'sh600584': '1.600584',
+    }
+    results = {}
+    for sym, secid in stock_map.items():
+        success = False
+        for retry in range(5):
+            try:
+                url = (
+                    f"https://push2.eastmoney.com/api/qt/stock/fflow/kline/get"
+                    f"?lmt=0&klt=101&secid={secid}"
+                    f"&fields1=f1,f2,f3,f7&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61,f62,f63,f64,f65"
+                )
+                req = urllib.request.Request(url, headers={
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                    'Referer': 'https://quote.eastmoney.com/',
+                    'Accept': '*/*',
+                })
+                with urllib.request.urlopen(req, timeout=20) as resp:
+                    data = json.loads(resp.read().decode('utf-8'))
+                kl = data.get('data', {}).get('klines', [])
+                if kl:
+                    # 解析: date,主力净流入,小单净流入,中单净流入,大单净流入,超大单净流入
+                    parsed = []
+                    for kline in kl:
+                        parts = kline.split(',')
+                        if len(parts) >= 6:
+                            try:
+                                parsed.append({
+                                    'date': parts[0],
+                                    'net_main': float(parts[1]) / 10000,  # 万->亿
+                                    'net_small': float(parts[2]) / 10000,
+                                    'net_medium': float(parts[3]) / 10000,
+                                    'net_big': float(parts[4]) / 10000,
+                                    'net_super': float(parts[5]) / 10000,
+                                })
+                            except (ValueError, IndexError):
+                                pass
+                    results[sym] = parsed
+                    print(f'  {sym}: {len(parsed)}条K线, 最新={parsed[-1]["date"] if parsed else "N/A"}')
+                    success = True
+                    break
+                else:
+                    print(f'  {sym}: 无数据返回')
+                    break
+            except Exception as e:
+                if retry < 4:
+                    wait = (retry + 1) * 1.5
+                    print(f'  {sym}: 重试{retry+1}/5 ({wait:.1f}s后) - {str(e)[:50]}')
+                    time.sleep(wait)
+                else:
+                    print(f'  {sym}: 失败 - {e}')
+                    results[sym] = None
+            time.sleep(0.3)
+        if not success and sym not in results:
+            results[sym] = None
+
+    data = {
+        'updated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'stocks': results,
+    }
+    path = os.path.join(FUND_FLOW_DIR, f'individual_{TODAY}.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2, default=json_serial)
+    print(f'个股资金流向: 成功{sum(1 for v in results.values() if v)}/{len(results)}只')
+    return data
+
+
+def fetch_north_holdings():
+    """从akshare获取北向资金持股明细"""
+    print('\n=== 北向资金持股明细 ===')
+    stock_map = {
+        'sh603516': '603516',
+        'sh601138': '601138',
+        'sz002156': '002156',
+        'sh601231': '601231',
+        'sz300476': '300476',
+        'sh603283': '603283',
+        'sz300394': '300394',
+        'sh600584': '600584',
+    }
+    results = {}
+    try:
+        import akshare as ak
+        for sym, code in stock_map.items():
+            try:
+                df = ak.stock_hsgt_individual_em(symbol=code)
+                if df is None:
+                    results[sym] = {'error': '接口返回None', 'record_count': 0}
+                    print(f'  {sym}: 接口返回None（该股无北水持股数据）')
+                    time.sleep(0.3)
+                    continue
+                if len(df) > 0:
+                    latest = df.iloc[-1]
+                    results[sym] = {
+                        'name': HOLDINGS.get(sym, WATCH_LIST.get(sym, INDEXES.get(sym, {}))).get('name', sym) if hasattr(HOLDINGS.get(sym), 'name') else sym,
+                        'latest_date': str(latest.get('持股日期', '')),
+                        'latest_shares': float(latest.get('持股数量', 0)) if pd.notna(latest.get('持股数量')) else None,
+                        'latest_value': float(latest.get('持股市值', 0)) if pd.notna(latest.get('持股市值')) else None,
+                        'latest_pct': float(latest.get('持股数量占A股百分比', 0)) if pd.notna(latest.get('持股数量占A股百分比')) else None,
+                        'record_count': len(df),
+                        'data_quality': '过期' if '2024' in str(latest.get('持股日期', '')) else '正常',
+                    }
+                    print(f'  {sym}: 最新={results[sym]["latest_date"]} 持股{results[sym]["latest_shares"]:.0f}股 市值{results[sym]["latest_value"]:.0f}元')
+                else:
+                    results[sym] = {'error': '无数据', 'record_count': 0}
+                    print(f'  {sym}: 无数据')
+            except Exception as e:
+                results[sym] = {'error': str(e), 'record_count': 0}
+                print(f'  {sym}: 失败 - {e}')
+            time.sleep(0.3)
+    except Exception as e:
+        print(f'北向资金持股采集失败: {e}')
+        return None
+
+    data = {
+        'updated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'data': results,
+    }
+    path = os.path.join(FUND_FLOW_DIR, f'north_holdings_{TODAY}.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2, default=json_serial)
+    return data
+
+
 def main():
     print(f'数据全量采集 {TODAY}')
     print('=' * 50)
@@ -324,7 +537,7 @@ def main():
     # 3. 龙虎榜
     lhb = fetch_lhb()
 
-    # 4. 北向资金
+    # 4. 北向资金历史汇总
     north = fetch_north_money()
 
     # 5. 融资融券
@@ -336,6 +549,18 @@ def main():
     # 7. 财务指标（较慢）
     financial = fetch_financial()
 
+    # 8. 概念板块资金流向
+    concept_flow = fetch_concept_fund_flow()
+
+    # 9. 行业板块资金流向
+    industry_flow = fetch_industry_fund_flow()
+
+    # 10. 个股主力资金流向
+    individual_flow = fetch_individual_fund_flow()
+
+    # 11. 北向资金持股明细
+    north_holdings = fetch_north_holdings()
+
     # 汇总报告
     summary = {
         'updated_at': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -346,6 +571,10 @@ def main():
         'margin_count': (margin['sh_count'] + margin['sz_count']) if margin else 0,
         'restriction_count': restrictions['count'] if restrictions else 0,
         'financial_count': len(financial) if financial else 0,
+        'concept_flow_count': concept_flow['count'] if concept_flow else 0,
+        'industry_flow_count': industry_flow['count'] if industry_flow else 0,
+        'individual_flow_ok': sum(1 for v in (individual_flow.get('stocks', {}) if individual_flow else {}).values() if v) if individual_flow else 0,
+        'north_holdings_ok': sum(1 for v in (north_holdings.get('data', {}) if north_holdings else {}).values() if not v.get('error')) if north_holdings else 0,
     }
 
     summary_path = os.path.join(BASE_DIR, 'data_summary.json')
@@ -360,6 +589,10 @@ def main():
     print(f'  融资融券: {summary["margin_count"]}条')
     print(f'  限售解禁: {summary["restriction_count"]}条')
     print(f'  财务指标: {summary["financial_count"]}只')
+    print(f'  概念板块资金: {summary["concept_flow_count"]}条')
+    print(f'  行业板块资金: {summary["industry_flow_count"]}条')
+    print(f'  个股资金流向: {summary["individual_flow_ok"]}/8只成功')
+    print(f'  北向持股明细: {summary["north_holdings_ok"]}/8只成功')
 
 
 if __name__ == '__main__':

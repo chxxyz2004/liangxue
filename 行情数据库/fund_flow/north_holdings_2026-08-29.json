@@ -1,0 +1,57 @@
+{
+  "updated_at": "2026-08-29 14:42:11",
+  "data": {
+    "sh603516": {
+      "error": "'NoneType' object is not subscriptable"
+    },
+    "sh601138": {
+      "latest_date": "2024-08-16",
+      "latest_shares": 655964212.0,
+      "latest_value": 13814606304.72,
+      "record_count": 1296,
+      "data_quality": "过期"
+    },
+    "sz002156": {
+      "latest_date": "2024-08-16",
+      "latest_shares": 28090760.0,
+      "latest_value": 580074194.0,
+      "record_count": 1685,
+      "data_quality": "过期"
+    },
+    "sh601231": {
+      "latest_date": "2024-08-16",
+      "latest_shares": 124831931.0,
+      "latest_value": 1893700393.27,
+      "record_count": 1678,
+      "data_quality": "过期"
+    },
+    "sz300476": {
+      "latest_date": "2024-08-16",
+      "latest_shares": 16046236.0,
+      "latest_value": 555039303.24,
+      "record_count": 1680,
+      "data_quality": "过期"
+    },
+    "sh603283": {
+      "latest_date": "2024-08-16",
+      "latest_shares": 4523840.0,
+      "latest_value": 254375523.2,
+      "record_count": 281,
+      "data_quality": "过期"
+    },
+    "sz300394": {
+      "latest_date": "2024-08-16",
+      "latest_shares": 13833466.0,
+      "latest_value": 1247778633.2,
+      "record_count": 1034,
+      "data_quality": "过期"
+    },
+    "sh600584": {
+      "latest_date": "2024-08-16",
+      "latest_shares": 108011273.0,
+      "latest_value": 3307305179.26,
+      "record_count": 1686,
+      "data_quality": "过期"
+    }
+  }
+}

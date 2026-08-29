@@ -102,6 +102,63 @@ def cross_validate_lhb_intent(hv_intent, lhb_records):
                 signals.append("LHB机构买入，观望可能转为积极")
     return adjustment, signals
 
+
+# 持仓股-相关概念板块关键词映射
+STOCK_CONCEPT_MAP = {
+    '淳中科技': ['AI', '智能', '显示', '视觉', '计算机', '视频', '语音', '机器人'],
+    '工业富联': ['AI', '服务器', '算力', '数据中心', '通信', '液冷'],
+    '通富微电': ['半导体', '芯片', '封装', 'IC', '先进封装', '第三代半导体'],
+    '环旭电子': ['消费电子', 'PCB', '电子', '智能穿戴'],
+    '胜宏科技': ['PCB', '电子', '芯片', 'MCU芯片'],
+    '赛腾股份': ['机器人', '自动化', '半导体'],
+    '天孚通信': ['光模块', '通信', '光学', 'CPO', '共封装光学'],
+    '长电科技': ['半导体', '芯片', '封装', '先进封装'],
+}
+
+
+def load_concept_fund_flow():
+    """加载概念板块资金流向数据"""
+    pattern = '/workspace/行情数据库/fund_flow/concept_*.json'
+    files = [f for f in os.listdir('/workspace/行情数据库/fund_flow')
+             if f.startswith('concept_') and f.endswith('.json')]
+    if not files:
+        return []
+    latest = sorted(files, reverse=True)[0]
+    with open(f'/workspace/行情数据库/fund_flow/{latest}') as f:
+        d = json.load(f)
+    records = d.get('data', [])
+    return records
+
+
+def concept_flow_for_stock(stock_name, records):
+    """获取某持仓股相关概念板块的资金流向"""
+    keywords = STOCK_CONCEPT_MAP.get(stock_name, [])
+    if not keywords or not records:
+        return []
+    matched = []
+    for r in records:
+        name = r.get('行业', '')
+        for kw in keywords:
+            if kw in name:
+                try:
+                    net = float(r.get('净额', 0))
+                except (ValueError, TypeError):
+                    net = 0
+                try:
+                    chg = float(r.get('行业-涨跌幅', 0))
+                except (ValueError, TypeError):
+                    chg = 0
+                matched.append({
+                    'sector': name,
+                    'change': chg,
+                    'net': net,
+                    'leading_stock': r.get('领涨股', ''),
+                    'leading_change': r.get('领涨股-涨跌幅', ''),
+                })
+                break
+    return matched
+
+
 def find_latest_file(prefix):
     """查找该类型最新文件"""
     files = []
@@ -489,6 +546,33 @@ def generate_html(content, filename):
                 fund_flow_lines.append(f'<div style="padding:6px 0;font-size:12px"><strong>{s["name"]}</strong> <span class="lx-tag {cls}">{ca}</span></div>')
 
     fund_flow_html = ''.join(fund_flow_lines) if fund_flow_lines else '<p style="color:var(--text-dim)">无资金流向数据</p>'
+
+    # 概念板块资金流向
+    concept_records = load_concept_fund_flow()
+    concept_lines = []
+    for s in content['stocks']:
+        name = s['name']
+        cf = concept_flow_for_stock(name, concept_records)
+        if cf:
+            positive = [x for x in cf if x['net'] > 0]
+            negative = [x for x in cf if x['net'] <= 0]
+            rows = []
+            for x in cf:
+                cls = 'up' if x['net'] >= 0 else 'down'
+                sign = '+' if x['net'] >= 0 else ''
+                rows.append(f'<tr><td>{x["sector"]}</td><td class="num {cls}">{sign}{x["net"]:.2f}亿</td><td class="num {cls}">{sign}{x["change"]:.2f}%</td><td style="font-size:11px;color:var(--text-dim)">{x["leading_stock"]}({x["leading_change"]})</td></tr>')
+            concept_lines.append(
+                f'<div style="margin-bottom:8px"><strong style="font-size:13px">{name}</strong>'
+                f'<table style="margin-top:4px;font-size:11px"><thead><tr><th>相关板块</th><th class="num">净流入</th><th class="num">涨跌</th><th>领涨股</th></tr></thead>'
+                f'<tbody>{"".join(rows)}</tbody></table></div>'
+            )
+    if concept_lines:
+        concept_html = '<div style="border-top:1px solid var(--border);padding-top:10px;margin-top:6px">' + \
+                       '<div style="font-size:12px;color:var(--text-dim);margin-bottom:8px">板块资金流向（持仓股相关概念，按净流入排序）</div>' + \
+                       ''.join(concept_lines) + '</div>'
+        fund_flow_html += concept_html
+    else:
+        fund_flow_html += '<div style="color:var(--text-dim);font-size:11px;margin-top:6px">概念板块资金流向数据采集失败或未找到相关板块</div>'
 
     type_label = content['type']
     header_label = f"{type_label} · 数据时间: {time_str}" if time_str else type_label
