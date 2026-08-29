@@ -1,0 +1,632 @@
+{
+  "updated_at": "2026-08-29 05:25:01",
+  "summary": {
+    "high_risk": [
+      "胜宏科技",
+      "天孚通信"
+    ],
+    "medium_risk": [
+      "淳中科技",
+      "工业富联",
+      "环旭电子",
+      "赛腾股份"
+    ],
+    "low_risk": [],
+    "normal_risk": [
+      "通富微电",
+      "长电科技"
+    ],
+    "death_cross": [
+      "淳中科技",
+      "工业富联",
+      "通富微电",
+      "环旭电子",
+      "胜宏科技",
+      "赛腾股份",
+      "天孚通信",
+      "长电科技"
+    ],
+    "golden_cross": [],
+    "volume_breakout": [
+      {
+        "symbol": "sh601138",
+        "name": "工业富联",
+        "count": 1,
+        "latest": {
+          "date": "2026-08-27",
+          "volume": 1490388.0,
+          "prev_volume": 733405.0,
+          "ratio": 2.03
+        }
+      },
+      {
+        "symbol": "sz002156",
+        "name": "通富微电",
+        "count": 1,
+        "latest": {
+          "date": "2026-08-17",
+          "volume": 1476243.0,
+          "prev_volume": 707119.0,
+          "ratio": 2.09
+        }
+      },
+      {
+        "symbol": "sh601231",
+        "name": "环旭电子",
+        "count": 2,
+        "latest": {
+          "date": "2026-08-17",
+          "volume": 416407.0,
+          "prev_volume": 199654.0,
+          "ratio": 2.09
+        }
+      }
+    ],
+    "price_volume_divergence": [
+      "淳中科技",
+      "通富微电",
+      "环旭电子",
+      "胜宏科技",
+      "天孚通信",
+      "长电科技"
+    ]
+  },
+  "stocks": {
+    "sh603516": {
+      "name": "淳中科技",
+      "daily": {
+        "symbol": "sh603516",
+        "name": "淳中科技",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 93.82,
+          "close": 91.04,
+          "high": 96.16,
+          "low": 91.01,
+          "volume": 56483.0,
+          "amount": 514221232.0
+        },
+        "ma": {
+          "ma5": 93.91,
+          "ma10": 96.015,
+          "ma20": 97.049,
+          "ma60": 107.585
+        },
+        "macd": {
+          "dif": -2.2228,
+          "dea": -2.0243,
+          "macd": -0.3969
+        },
+        "vol_ma": {
+          "vol_ma5": 74226.4,
+          "vol_ma10": 67968.0
+        },
+        "volume_ratio": 0.76,
+        "doubling_volume": [],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "无显著发散",
+          "confidence": 0.2
+        }
+      },
+      "risk": {
+        "symbol": "sh603516",
+        "risk_score": 25,
+        "risk_level": "中风险",
+        "risk_factors": [
+          "量价背离"
+        ],
+        "cv_volume": 0.51,
+        "correlation": -0.3
+      },
+      "intraday": {
+        "symbol": "sh603516",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": -2.96,
+        "correlation": -0.084,
+        "volume_anomaly": 0.16,
+        "signals": [
+          {
+            "type": "价量",
+            "subtype": "弱势波动",
+            "detail": "当日-2.96%",
+            "confidence": 0.5926241739501145
+          }
+        ]
+      }
+    },
+    "sh601138": {
+      "name": "工业富联",
+      "daily": {
+        "symbol": "sh601138",
+        "name": "工业富联",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 64.04,
+          "close": 64.04,
+          "high": 66.69,
+          "low": 63.8,
+          "volume": 1579645.0,
+          "amount": 10116046580.000002
+        },
+        "ma": {
+          "ma5": 61.804,
+          "ma10": 63.025,
+          "ma20": 64.033,
+          "ma60": 65.508
+        },
+        "macd": {
+          "dif": -0.2781,
+          "dea": -0.1718,
+          "macd": -0.2126
+        },
+        "vol_ma": {
+          "vol_ma5": 1107917.4,
+          "vol_ma10": 1143575.0
+        },
+        "volume_ratio": 1.43,
+        "doubling_volume": [
+          {
+            "date": "2026-08-27",
+            "volume": 1490388.0,
+            "prev_volume": 733405.0,
+            "ratio": 2.03
+          }
+        ],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "价量共振（价涨量升）",
+          "confidence": 0.7
+        }
+      },
+      "risk": {
+        "symbol": "sh601138",
+        "risk_score": 25,
+        "risk_level": "中风险",
+        "risk_factors": [
+          "成交量过于均匀"
+        ],
+        "cv_volume": 0.463,
+        "correlation": 0.345
+      },
+      "intraday": {
+        "symbol": "sh601138",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": 0.0,
+        "correlation": -0.006,
+        "volume_anomaly": 0.388,
+        "signals": []
+      }
+    },
+    "sz002156": {
+      "name": "通富微电",
+      "daily": {
+        "symbol": "sz002156",
+        "name": "通富微电",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 63.4,
+          "close": 63.75,
+          "high": 65.9,
+          "low": 63.24,
+          "volume": 917805.0,
+          "amount": 5851006875.0
+        },
+        "ma": {
+          "ma5": 62.174,
+          "ma10": 64.141,
+          "ma20": 62.267,
+          "ma60": 66.458
+        },
+        "macd": {
+          "dif": -0.7842,
+          "dea": -0.9435,
+          "macd": 0.3185
+        },
+        "vol_ma": {
+          "vol_ma5": 791408.0,
+          "vol_ma10": 1096786.3
+        },
+        "volume_ratio": 1.16,
+        "doubling_volume": [
+          {
+            "date": "2026-08-17",
+            "volume": 1476243.0,
+            "prev_volume": 707119.0,
+            "ratio": 2.09
+          }
+        ],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "无显著发散",
+          "confidence": 0.2
+        }
+      },
+      "risk": {
+        "symbol": "sz002156",
+        "risk_score": 0,
+        "risk_level": "正常",
+        "risk_factors": [],
+        "cv_volume": 0.748,
+        "correlation": 0.753
+      },
+      "intraday": {
+        "symbol": "sz002156",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": 0.55,
+        "correlation": 0.227,
+        "volume_anomaly": 0.048,
+        "signals": []
+      }
+    },
+    "sh601231": {
+      "name": "环旭电子",
+      "daily": {
+        "symbol": "sh601231",
+        "name": "环旭电子",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 27.31,
+          "close": 26.99,
+          "high": 28.49,
+          "low": 26.98,
+          "volume": 279636.0,
+          "amount": 754737564.0
+        },
+        "ma": {
+          "ma5": 26.718,
+          "ma10": 27.259,
+          "ma20": 26.857,
+          "ma60": 29.377
+        },
+        "macd": {
+          "dif": -0.0967,
+          "dea": -0.2393,
+          "macd": 0.2853
+        },
+        "vol_ma": {
+          "vol_ma5": 248725.6,
+          "vol_ma10": 273501.7
+        },
+        "volume_ratio": 1.12,
+        "doubling_volume": [
+          {
+            "date": "2026-08-06",
+            "volume": 737955.0,
+            "prev_volume": 264956.0,
+            "ratio": 2.79
+          },
+          {
+            "date": "2026-08-17",
+            "volume": 416407.0,
+            "prev_volume": 199654.0,
+            "ratio": 2.09
+          }
+        ],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "价量发散（价跌量升）",
+          "confidence": 0.7
+        }
+      },
+      "risk": {
+        "symbol": "sh601231",
+        "risk_score": 25,
+        "risk_level": "中风险",
+        "risk_factors": [
+          "量价背离"
+        ],
+        "cv_volume": 0.541,
+        "correlation": 0.159
+      },
+      "intraday": {
+        "symbol": "sh601231",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": -1.17,
+        "correlation": 0.516,
+        "volume_anomaly": 0.929,
+        "signals": [
+          {
+            "type": "异动",
+            "subtype": "异常放量",
+            "detail": "尾段放量93%",
+            "confidence": 0.9292247397299831
+          }
+        ]
+      }
+    },
+    "sz300476": {
+      "name": "胜宏科技",
+      "daily": {
+        "symbol": "sz300476",
+        "name": "胜宏科技",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 255.68,
+          "close": 241.6,
+          "high": 258.47,
+          "low": 241.49,
+          "volume": 572833.0,
+          "amount": 13839645279.999998
+        },
+        "ma": {
+          "ma5": 248.816,
+          "ma10": 254.205,
+          "ma20": 254.02,
+          "ma60": 279.722
+        },
+        "macd": {
+          "dif": -2.6076,
+          "dea": -2.822,
+          "macd": 0.4288
+        },
+        "vol_ma": {
+          "vol_ma5": 335210.8,
+          "vol_ma10": 329525.9
+        },
+        "volume_ratio": 1.71,
+        "doubling_volume": [],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "价量发散（价跌量升）",
+          "confidence": 0.7
+        }
+      },
+      "risk": {
+        "symbol": "sz300476",
+        "risk_score": 50,
+        "risk_level": "高风险",
+        "risk_factors": [
+          "成交量过于均匀",
+          "量价背离"
+        ],
+        "cv_volume": 0.371,
+        "correlation": 0.17
+      },
+      "intraday": {
+        "symbol": "sz300476",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": -5.51,
+        "correlation": -0.283,
+        "volume_anomaly": -0.103,
+        "signals": [
+          {
+            "type": "价量",
+            "subtype": "弱势波动",
+            "detail": "当日-5.51%",
+            "confidence": 1.0
+          }
+        ]
+      }
+    },
+    "sh603283": {
+      "name": "赛腾股份",
+      "daily": {
+        "symbol": "sh603283",
+        "name": "赛腾股份",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 48.48,
+          "close": 47.45,
+          "high": 49.51,
+          "low": 47.38,
+          "volume": 171574.0,
+          "amount": 814118630.0000001
+        },
+        "ma": {
+          "ma5": 47.362,
+          "ma10": 47.775,
+          "ma20": 45.61,
+          "ma60": 53.572
+        },
+        "macd": {
+          "dif": -0.4505,
+          "dea": -1.0917,
+          "macd": 1.2825
+        },
+        "vol_ma": {
+          "vol_ma5": 225628.0,
+          "vol_ma10": 242796.8
+        },
+        "volume_ratio": 0.76,
+        "doubling_volume": [],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "价量共振（价涨量升）",
+          "confidence": 0.7
+        }
+      },
+      "risk": {
+        "symbol": "sh603283",
+        "risk_score": 25,
+        "risk_level": "中风险",
+        "risk_factors": [
+          "量价背离"
+        ],
+        "cv_volume": 0.648,
+        "correlation": 0.198
+      },
+      "intraday": {
+        "symbol": "sh603283",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": -2.12,
+        "correlation": 0.018,
+        "volume_anomaly": 0.031,
+        "signals": [
+          {
+            "type": "价量",
+            "subtype": "弱势波动",
+            "detail": "当日-2.12%",
+            "confidence": 0.42491749174917254
+          }
+        ]
+      }
+    },
+    "sz300394": {
+      "name": "天孚通信",
+      "daily": {
+        "symbol": "sz300394",
+        "name": "天孚通信",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 266.2,
+          "close": 263.58,
+          "high": 274.99,
+          "low": 261.92,
+          "volume": 338960.0,
+          "amount": 8934307680.0
+        },
+        "ma": {
+          "ma5": 258.184,
+          "ma10": 269.565,
+          "ma20": 248.57,
+          "ma60": 259.761
+        },
+        "macd": {
+          "dif": 8.2634,
+          "dea": 6.7057,
+          "macd": 3.1155
+        },
+        "vol_ma": {
+          "vol_ma5": 464495.8,
+          "vol_ma10": 515523.3
+        },
+        "volume_ratio": 0.73,
+        "doubling_volume": [],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "无显著发散",
+          "confidence": 0.2
+        }
+      },
+      "risk": {
+        "symbol": "sz300394",
+        "risk_score": 50,
+        "risk_level": "高风险",
+        "risk_factors": [
+          "成交量过于均匀",
+          "量价背离"
+        ],
+        "cv_volume": 0.389,
+        "correlation": -0.208
+      },
+      "intraday": {
+        "symbol": "sz300394",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": -0.98,
+        "correlation": 0.129,
+        "volume_anomaly": 0.345,
+        "signals": []
+      }
+    },
+    "sh600584": {
+      "name": "长电科技",
+      "daily": {
+        "symbol": "sh600584",
+        "name": "长电科技",
+        "latest": {
+          "day": "2026-08-28",
+          "open": 76.6,
+          "close": 74.93,
+          "high": 77.98,
+          "low": 74.85,
+          "volume": 892019.0,
+          "amount": 6683898367.000001
+        },
+        "ma": {
+          "ma5": 74.588,
+          "ma10": 78.0,
+          "ma20": 75.995,
+          "ma60": 82.974
+        },
+        "macd": {
+          "dif": -1.3598,
+          "dea": -1.3478,
+          "macd": -0.0239
+        },
+        "vol_ma": {
+          "vol_ma5": 903953.2,
+          "vol_ma10": 1173621.9
+        },
+        "volume_ratio": 0.99,
+        "doubling_volume": [],
+        "cross": {
+          "type": "空头排列",
+          "signal": "空头排列（死叉）",
+          "confidence": 0.6
+        },
+        "price_volume": {
+          "signal": "无显著发散",
+          "confidence": 0.2
+        }
+      },
+      "risk": {
+        "symbol": "sh600584",
+        "risk_score": 0,
+        "risk_level": "正常",
+        "risk_factors": [],
+        "cv_volume": 0.869,
+        "correlation": 0.325
+      },
+      "intraday": {
+        "symbol": "sh600584",
+        "date": "2026-08-28",
+        "period": "5分钟",
+        "bars": 48,
+        "day_pct": -2.18,
+        "correlation": -0.05,
+        "volume_anomaly": 0.126,
+        "signals": [
+          {
+            "type": "价量",
+            "subtype": "弱势波动",
+            "detail": "当日-2.18%",
+            "confidence": 0.43603133159268603
+          }
+        ]
+      }
+    }
+  }
+}

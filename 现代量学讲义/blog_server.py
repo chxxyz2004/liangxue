@@ -89,8 +89,19 @@ class BlogHandler(BaseHTTPRequestHandler):
         elif path == '/api/posts':
             self.send_json(self.get_posts(params))
         elif path.startswith('/api/posts/'):
-            slug = path.split('/')[-1]
+            import urllib.parse
+            slug = urllib.parse.unquote(path[len('/api/posts/'):])
+            if not slug:
+                self.send_json({'error': '缺少文章标识'})
+                return
             self.send_json(self.get_post(slug))
+        elif path.startswith('/post/'):
+            import urllib.parse
+            slug = urllib.parse.unquote(path[len('/post/'):])
+            if not slug:
+                self.send_error(404)
+                return
+            self.send_html(self.get_post_html(slug))
         elif path == '/api/categories':
             self.send_json(self.get_categories())
         elif path == '/api/tags':
@@ -150,12 +161,12 @@ a{text-decoration:none;color:inherit}
 <div class="posts" id="posts"><div class="loading">加载中...</div></div>
 </div>
 <script>
-fetch('/api/posts').then(r=>r.json()).then(data=>{
+fetch('/api/posts?limit=50').then(r=>r.json()).then(data=>{
 const posts=data.posts||[];
 const el=document.getElementById('posts');
 if(!posts.length){el.innerHTML='<div class="loading">暂无文章</div>';return;}
 el.innerHTML=posts.map(p=>`
-<div class="post-card" onclick="window.location.href='/api/posts/${p.slug}'">
+<div class="post-card" onclick="window.location.href='/post/${encodeURIComponent(p.slug)}'">
 <div class="post-meta">
 <span class="tag">${p.category||'文章'}</span>
 ${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
@@ -172,53 +183,65 @@ ${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
     def get_posts(self, params):
         """获取文章列表"""
         category = params.get('category', [None])[0]
-        limit = int(params.get('limit', [20])[0])
+        limit = int(params.get('limit', [50])[0])
         
         posts = []
-        md_files = [f for f in os.listdir(BLOG_DIR) if f.endswith('.md') and not f.startswith('.')]
-        
-        for f in md_files:
-            path = os.path.join(BLOG_DIR, f)
-            try:
-                with open(path, 'r', encoding='utf-8') as fp:
-                    content = fp.read()
-                
-                # 解析frontmatter
-                meta = self.parse_frontmatter(content)
-                
-                # 提取摘要
-                excerpt = self.extract_excerpt(content)
-                
-                # 分类
-                cat = meta.get('category', '其他')
-                if category and cat != category:
+        for root, dirs, files in os.walk(BLOG_DIR):
+            md_files = [f for f in files if f.endswith('.md') and not f.startswith('.')]
+            for f in md_files:
+                relpath = os.path.relpath(os.path.join(root, f), BLOG_DIR)
+                path = os.path.join(root, f)
+                try:
+                    with open(path, 'r', encoding='utf-8') as fp:
+                        content = fp.read()
+
+                    # 解析frontmatter
+                    meta = self.parse_frontmatter(content)
+
+                    # 提取摘要
+                    excerpt = self.extract_excerpt(content)
+
+                    # 分类
+                    cat = meta.get('category', '其他')
+                    if category and cat != category:
+                        continue
+
+                    slug = relpath.replace('.md', '').replace(os.sep, '/')
+                    posts.append({
+                        'slug': slug,
+                        'title': meta.get('title', f.replace('.md', '')),
+                        'date': meta.get('date', datetime.now().strftime('%Y-%m-%d')),
+                        'category': cat,
+                        'tags': meta.get('tags', []),
+                        'excerpt': excerpt,
+                    })
+                except Exception as e:
                     continue
-                
-                posts.append({
-                    'slug': f.replace('.md', ''),
-                    'title': meta.get('title', f.replace('.md', '')),
-                    'date': meta.get('date', datetime.now().strftime('%Y-%m-%d')),
-                    'category': cat,
-                    'tags': meta.get('tags', []),
-                    'excerpt': excerpt,
-                })
-            except Exception as e:
-                continue
-        
+
         # 排序
         posts.sort(key=lambda x: x['date'], reverse=True)
-        
+
         return {'posts': posts[:limit], 'total': len(posts)}
     
     def get_post(self, slug):
         """获取单篇文章"""
+        # 先查顶层目录
         path = os.path.join(BLOG_DIR, slug + '.md')
         if not os.path.exists(path):
+            # 再查子目录
+            for root, dirs, files in os.walk(BLOG_DIR):
+                relpath = os.path.relpath(root, BLOG_DIR).replace(os.sep, '/')
+                candidate = os.path.join(root, slug.split('/')[-1] + '.md')
+                if os.path.exists(candidate):
+                    path = candidate
+                    break
+        if not os.path.exists(path):
             # 尝试查找HTML文件
-            path = os.path.join(BLOG_DIR, slug + '.html')
-            if os.path.exists(path):
-                with open(path, 'r', encoding='utf-8') as f:
-                    return {'type': 'html', 'content': f.read()}
+            for root, dirs, files in os.walk(BLOG_DIR):
+                candidate = os.path.join(root, slug.split('/')[-1] + '.html')
+                if os.path.exists(candidate):
+                    with open(candidate, 'r', encoding='utf-8') as f:
+                        return {'type': 'html', 'content': f.read()}
             return {'error': '文章不存在'}
         
         with open(path, 'r', encoding='utf-8') as f:
@@ -234,12 +257,97 @@ ${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
             'content': content,
         }
     
+    def get_post_html(self, slug):
+        """返回文章HTML页面"""
+        post = self.get_post(slug)
+        if 'error' in post:
+            return f'<!DOCTYPE html><html><head><meta charset="UTF-8"><title>文章不存在</title></head><body><h1>文章不存在</h1><a href="/">返回首页</a></body></html>'
+
+        title = post.get('title') or post.get('slug', '文章')
+        date = post.get('date', '')
+        category = post.get('category', '其他')
+        tags = post.get('tags', [])
+        content = post.get('content', '')
+        # 简单markdown转HTML：标题加粗，段落换行
+        html_lines = []
+        for line in content.split('\n'):
+            stripped = line.strip()
+            if stripped.startswith('# '):
+                html_lines.append(f'<h1>{stripped[2:]}</h1>')
+            elif stripped.startswith('## '):
+                html_lines.append(f'<h2>{stripped[3:]}</h2>')
+            elif stripped.startswith('### '):
+                html_lines.append(f'<h3>{stripped[4:]}</h3>')
+            elif stripped.startswith('- '):
+                html_lines.append(f'<li>{stripped[2:]}</li>')
+            elif stripped.startswith('> '):
+                html_lines.append(f'<blockquote>{stripped[2:]}</blockquote>')
+            elif stripped == '':
+                html_lines.append('<br>')
+            else:
+                # 处理内联标记
+                text = stripped.replace('**', '<b>').replace('__', '<b>')
+                html_lines.append(f'<p>{text}</p>')
+
+        content_html = '\n'.join(html_lines)
+        tags_html = ''.join(f'<span class="tag">{t}</span>' for t in tags)
+
+        return f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title} - 量学实战博客</title>
+<style>
+:root{{--primary:#6366f1;--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--dim:#94a3b8;--border:#334155}}
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;line-height:1.8}}
+a{{text-decoration:none;color:inherit}}
+.nav{{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:100}}
+.nav-logo{{font-size:18px;font-weight:700;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}}
+.container{{max-width:800px;margin:0 auto;padding:80px 20px 40px}}
+.post-header{{margin-bottom:24px}}
+.post-title{{font-size:28px;font-weight:800;margin-bottom:8px}}
+.post-meta{{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}}
+.tag{{background:rgba(99,102,241,0.15);color:#818cf8;padding:2px 8px;border-radius:4px;font-size:11px}}
+.post-date{{font-size:12px;color:var(--dim)}}
+.post-content{{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;font-size:15px}}
+.post-content h1{{font-size:22px;margin:20px 0 12px;color:#a78bfa}}
+.post-content h2{{font-size:18px;margin:16px 0 10px;color:#c4b5fd}}
+.post-content h3{{font-size:16px;margin:12px 0 8px;color:#8b5cf6}}
+.post-content p{{margin:8px 0}}
+.post-content li{{margin:4px 0 4px 20px}}
+.post-content blockquote{{border-left:3px solid var(--primary);padding-left:12px;color:var(--dim);margin:8px 0}}
+.post-content b{{color:#a78bfa}}
+.back-link{{display:inline-block;margin-bottom:16px;color:var(--dim);font-size:14px}}
+.back-link:hover{{color:var(--primary)}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav-logo">量学实战博客</div></nav>
+<div class="container">
+<a class="back-link" href="/">← 返回首页</a>
+<div class="post-header">
+<div class="post-meta">
+<span class="tag">{category}</span>
+{tags_html}
+</div>
+<h1 class="post-title">{title}</h1>
+<div class="post-date">{date}</div>
+</div>
+<div class="post-content">{content_html}</div>
+</div>
+</body>
+</html>'''
+
     def get_categories(self):
         """获取分类列表"""
         cats = {}
-        for f in os.listdir(BLOG_DIR):
-            if f.endswith('.md'):
-                path = os.path.join(BLOG_DIR, f)
+        for root, dirs, files in os.walk(BLOG_DIR):
+            for f in files:
+                if not f.endswith('.md'):
+                    continue
+                path = os.path.join(root, f)
                 with open(path, 'r', encoding='utf-8') as fp:
                     meta = self.parse_frontmatter(fp.read())
                 cat = meta.get('category', '其他')
@@ -252,8 +360,8 @@ ${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
     
     def get_stats(self):
         """获取统计数据"""
-        md_count = len([f for f in os.listdir(BLOG_DIR) if f.endswith('.md')])
-        html_count = len([f for f in os.listdir(BLOG_DIR) if f.endswith('.html')])
+        md_count = sum(1 for root, dirs, files in os.walk(BLOG_DIR) for f in files if f.endswith('.md'))
+        html_count = sum(1 for root, dirs, files in os.walk(BLOG_DIR) for f in files if f.endswith('.html'))
         stock_count = len([f for f in os.listdir(KLINE_DIR) if f.endswith('.json')]) if os.path.exists(KLINE_DIR) else 0
         return {
             'posts': md_count,
@@ -297,22 +405,24 @@ ${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
     def search_posts(self, keyword):
         """搜索文章"""
         results = []
-        for f in os.listdir(BLOG_DIR):
-            if not f.endswith('.md'):
-                continue
-            path = os.path.join(BLOG_DIR, f)
-            with open(path, 'r', encoding='utf-8') as fp:
-                content = fp.read()
-            
-            if keyword.lower() in content.lower():
-                meta = self.parse_frontmatter(content)
-                results.append({
-                    'slug': f.replace('.md', ''),
-                    'title': meta.get('title', f),
-                    'date': meta.get('date', ''),
-                    'category': meta.get('category', '其他'),
-                })
-        
+        for root, dirs, files in os.walk(BLOG_DIR):
+            for f in files:
+                if not f.endswith('.md'):
+                    continue
+                path = os.path.join(root, f)
+                with open(path, 'r', encoding='utf-8') as fp:
+                    content = fp.read()
+
+                if keyword.lower() in content.lower():
+                    meta = self.parse_frontmatter(content)
+                    relpath = os.path.relpath(path, BLOG_DIR).replace('.md', '').replace(os.sep, '/')
+                    results.append({
+                        'slug': relpath,
+                        'title': meta.get('title', f),
+                        'date': meta.get('date', ''),
+                        'category': meta.get('category', '其他'),
+                    })
+
         return {'results': results}
     
     def parse_frontmatter(self, content):

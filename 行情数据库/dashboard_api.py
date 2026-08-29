@@ -20,6 +20,9 @@ sys.path.insert(0, '/workspace/现代量学讲义')
 from update_data import fetch_tencent_qfq, fetch_sina_kline
 from detect_spoofing import detect as detect_spoofing, pull_5min
 
+# 引入统一信号引擎
+from signal_engine import signal_engine
+
 # 引用统一配置中心，禁止硬编码
 from config import HOLDINGS, WATCH_LIST, INDEXES
 
@@ -100,42 +103,10 @@ def fetch_prices():
     return prices
 
 def detect_signals(symbol, data):
-    """检测信号"""
-    signals = []
-    if not data or 'data' not in data:
-        return signals
-    
-    klines = data['data']
-    if len(klines) < 10:
-        return signals
-    
-    for i in range(max(0, len(klines) - 30), len(klines)):
-        k = klines[i]
-        vol = k.get('volume', 0)
-        close = k.get('close', 0)
-        high = k.get('high', 0)
-        open_p = k.get('open', 0)
-        
-        if vol <= 0 or close <= 0:
-            continue
-        
-        # 倍量柱
-        if i > 0 and klines[i-1].get('volume', 0) > 0:
-            if vol >= klines[i-1]['volume'] * 1.9 and close > open_p:
-                signals.append({'type': '倍量柱', 'date': k['day'], 'detail': f'成交量{vol/10000:.1f}万手'})
-        
-        # 缩量柱
-        if i > 0 and klines[i-1].get('volume', 0) > 0:
-            if vol <= klines[i-1]['volume'] * 0.5 and close > open_p:
-                signals.append({'type': '缩量柱', 'date': k['day'], 'detail': f'成交量{vol/10000:.1f}万手'})
-        
-        # 长上影
-        if high > 0 and close > 0:
-            upper_shadow = (high - max(close, open_p)) / close if close > 0 else 0
-            if upper_shadow > 0.03 and high > open_p:
-                signals.append({'type': '长上影', 'date': k['day'], 'detail': f'上影线占比{upper_shadow*100:.1f}%'})
-    
-    return signals
+    """从signal_engine获取倍量柱信号（保留兼容）"""
+    ind = signal_engine.daily_indicators(symbol)
+    return [{'type': '倍量柱', 'date': s['date'], 'detail': f"量比{s['ratio']:.2f}x"}
+            for s in ind.get('doubling_volume', [])]
 
 def run_spoofing_check(symbol, name):
     """运行对倒检测"""
@@ -178,6 +149,14 @@ class DashboardHandler(BaseHTTPRequestHandler):
             data = self.get_holdings()
         elif path == '/api/signals':
             data = self.get_signals()
+        elif path == '/api/risk':
+            data = self.get_risk()
+        elif path == '/api/5min':
+            symbol = params.get('symbol', [''])[0]
+            data = self.get_5min(symbol)
+        elif path == '/api/indicators':
+            symbol = params.get('symbol', [''])[0]
+            data = self.get_indicators(symbol)
         elif path == '/api/backtest':
             data = self.get_backtest()
         elif path == '/api/spoofing':
@@ -226,7 +205,7 @@ class DashboardHandler(BaseHTTPRequestHandler):
         }
     
     def get_holdings(self):
-        """获取持仓详情"""
+        """获取持仓详情（含技术指标与风险评级）"""
         prices = fetch_prices()
         holdings = []
         
@@ -236,14 +215,12 @@ class DashboardHandler(BaseHTTPRequestHandler):
             pct_chg = price_data.get('pct_chg', 0)
             
             market_value = current_price * info.shares
-            cost_value = info.cost * info.shares
+            cost_value = info.cost * info.shares if info.cost else 0
             profit = market_value - cost_value
             profit_pct = (profit / cost_value * 100) if cost_value > 0 else 0
             
-            signals = []
-            kline_data = load_kline(symbol)
-            if kline_data:
-                signals = detect_signals(symbol, kline_data)[-3:]
+            ind = signal_engine.daily_indicators(symbol)
+            risk = signal_engine.risk_assessment(symbol)
             
             holdings.append({
                 'symbol': symbol,
@@ -258,32 +235,81 @@ class DashboardHandler(BaseHTTPRequestHandler):
                 'stop_loss': info.stop_loss,
                 'take_profit': info.take_profit,
                 'life_line': info.life_line,
-                'signals': signals
+                'ma': ind.get('ma', {}),
+                'macd': ind.get('macd', {}),
+                'volume_ratio': ind.get('volume_ratio'),
+                'cross_signal': ind.get('cross', {}).get('signal', ''),
+                'risk_level': risk.get('risk_level'),
+                'risk_score': risk.get('risk_score'),
+                'recent_doubling': [{'date': s['date'], 'ratio': s['ratio']}
+                                    for s in ind.get('doubling_volume', [])[-3:]]
             })
         
         return {'holdings': holdings}
     
     def get_signals(self):
-        """获取所有信号"""
+        """获取所有技术指标与信号（倍量柱+均线交叉+价量发散+风险评级）"""
         all_signals = []
-        
-        for symbol, info in HOLDINGS.items():
-            kline_data = load_kline(symbol)
-            if kline_data:
-                signals = detect_signals(symbol, kline_data)
-                for sig in signals[-5:]:
-                    all_signals.append({
-                        'symbol': symbol,
-                        'name': info.name,
-                        'type': sig['type'],
-                        'date': sig['date'],
-                        'detail': sig.get('detail', '')
-                    })
-        
-        all_signals.sort(key=lambda x: x['date'], reverse=True)
-        
-        return {'signals': all_signals[:30]}
+        for sym, info in HOLDINGS.items():
+            ind = signal_engine.daily_indicators(sym)
+            risk = signal_engine.risk_assessment(sym)
+            # 倍量柱
+            for s in ind.get('doubling_volume', []):
+                all_signals.append({'symbol': sym, 'name': info.name,
+                                    'type': '倍量柱', 'date': s['date'],
+                                    'detail': f"量比{s['ratio']:.2f}x"})
+            # 均线交叉
+            cross = ind.get('cross', {})
+            if cross.get('signal'):
+                all_signals.append({'symbol': sym, 'name': info.name,
+                                    'type': cross['type'], 'signal': cross['signal'],
+                                    'confidence': cross['confidence'],
+                                    'date': datetime.now().strftime('%Y-%m-%d')})
+            # 价量发散
+            pv = ind.get('price_volume', {})
+            if pv.get('signal'):
+                all_signals.append({'symbol': sym, 'name': info.name,
+                                    'type': '价量发散', 'signal': pv['signal'],
+                                    'confidence': pv['confidence'],
+                                    'date': datetime.now().strftime('%Y-%m-%d')})
+            # 风险评级
+            all_signals.append({'symbol': sym, 'name': info.name,
+                                'type': '风险评级', 'risk_level': risk['risk_level'],
+                                'risk_score': risk['risk_score'],
+                                'factors': risk.get('risk_factors', []),
+                                'date': datetime.now().strftime('%Y-%m-%d')})
+        all_signals.sort(key=lambda x: x.get('date', ''), reverse=True)
+        return {'signals': all_signals[:50]}
     
+    def get_risk(self):
+        """量化风险评级汇总"""
+        results = []
+        for sym, info in HOLDINGS.items():
+            r = signal_engine.risk_assessment(sym)
+            results.append({
+                'symbol': sym, 'name': info.name,
+                'risk_level': r.get('risk_level'),
+                'risk_score': r.get('risk_score'),
+                'cv_volume': r.get('cv_volume'),
+                'correlation': r.get('correlation'),
+                'factors': r.get('risk_factors', [])
+            })
+        return {'risks': results}
+
+    def get_5min(self, symbol):
+        """5分钟分时分析"""
+        if not symbol:
+            return {'error': '需要symbol参数，如 /api/5min?symbol=sh603516'}
+        return signal_engine.intraday_analysis(symbol)
+
+    def get_indicators(self, symbol):
+        """单只股票完整技术指标"""
+        if not symbol:
+            return {'error': '需要symbol参数'}
+        ind = signal_engine.daily_indicators(symbol)
+        risk = signal_engine.risk_assessment(symbol)
+        return {**ind, **risk}
+
     def get_backtest(self):
         """获取回测统计"""
         # 简化版回测统计

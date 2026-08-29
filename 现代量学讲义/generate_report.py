@@ -119,6 +119,58 @@ def generate_report_content(report_type, timestamp):
             if price_data['price'] >= tp_low:
                 alerts.append(f"🔴 {info.name} 进入止盈区间 {tp_low}-{tp_high}")
 
+        # 量学战法信号
+        liangxue_info = {}
+        try:
+            from liangxue_engine import liangxue_engine
+            lx = liangxue_engine.full_analysis(sym)
+            kb = lx.get('key_bars', {})
+            vb = lx.get('volume_bars', {}).get('summary', {})
+            ql = lx.get('quantity_lines', {})
+            pl = lx.get('precision_lines', {})
+            latest_close = price_data['price']
+
+            # 量柱
+            dbls = vb.get('doubling_bars', [])
+            shrinks = vb.get('shrinking_bars', [])
+            if dbls:
+                liangxue_info['doubling'] = f"{dbls[-1]['date']}({dbls[-1]['ratio']:.2f}x)"
+            if shrinks:
+                liangxue_info['shrinking'] = shrinks[-1]['date']
+
+            # 关键柱
+            golden = kb.get('golden_bars', [])
+            marshal = kb.get('marshal_bars', [])
+            general = kb.get('general_bars', [])
+            if golden:
+                liangxue_info['golden'] = f"黄金柱{golden[-1]['date']}(回调{golden[-1]['drawdown_ratio']:.0%})"
+            elif marshal:
+                liangxue_info['marshal'] = f"元帅柱{marshal[-1]['date']}(回调{marshal[-1]['drawdown_ratio']:.0%})"
+            elif general:
+                liangxue_info['general'] = f"将军柱{general[-1]['date']}(回调{general[-1]['drawdown_ratio']:.0%})"
+
+            # 量线位置
+            peak_lines = ql.get('peak_lines', [])
+            valley_lines = ql.get('valley_lines', [])
+            nearest_valley = min(valley_lines, key=lambda x: abs(x['price'] - latest_close), default=None) if valley_lines else None
+            nearest_peak = min(peak_lines, key=lambda x: abs(x['price'] - latest_close), default=None) if peak_lines else None
+            if nearest_valley:
+                liangxue_info['support'] = f"{nearest_valley['price']:.2f}({nearest_valley['count']}点)"
+            if nearest_peak:
+                liangxue_info['resistance'] = f"{nearest_peak['price']:.2f}({nearest_peak['count']}点)"
+
+            # 精准线
+            precise_valleys = pl.get('precise_valley_lines', []) if isinstance(pl, dict) else []
+            precise_peaks = pl.get('precise_peak_lines', []) if isinstance(pl, dict) else []
+            if precise_valleys:
+                best_v = max(precise_valleys, key=lambda x: x['precision_score'])
+                liangxue_info['precise_support'] = f"{best_v['line_price']:.2f}({best_v['precision_score']:.0%})"
+            if precise_peaks:
+                best_p = max(precise_peaks, key=lambda x: x['precision_score'])
+                liangxue_info['precise_resistance'] = f"{best_p['line_price']:.2f}({best_p['precision_score']:.0%})"
+        except Exception:
+            pass
+
         stocks.append({
             'name': info.name,
             'sym': sym,
@@ -128,7 +180,8 @@ def generate_report_content(report_type, timestamp):
             'profit_pct': (price_data['price'] - info.cost) / info.cost * 100,
             'profit': profit,
             'signals': signals,
-            'shares': info.shares
+            'shares': info.shares,
+            'liangxue': liangxue_info,
         })
     
     return {
@@ -177,6 +230,22 @@ def generate_html(content, filename):
         pct_cls = 'up' if s['change'] >= 0 else 'down'
         profit_cls = 'up' if s['profit'] >= 0 else 'down'
         signals_html = ' '.join([f'<span class="signal-tag">{sg}</span>' for sg in s['signals']]) or '-'
+        lx = s.get('liangxue', {})
+        lx_tags = ''
+        if lx.get('doubling'):
+            lx_tags += f'<span class="lx-tag" title="倍量柱">倍{lx["doubling"]}</span>'
+        if lx.get('golden'):
+            lx_tags += f'<span class="lx-tag gx" title="黄金柱">{lx["golden"]}</span>'
+        elif lx.get('marshal'):
+            lx_tags += f'<span class="lx-tag yz" title="元帅柱">{lx["marshal"]}</span>'
+        elif lx.get('general'):
+            lx_tags += f'<span class="lx-tag jj" title="将军柱">{lx["general"]}</span>'
+        if lx.get('precise_support'):
+            lx_tags += f'<span class="lx-tag sup" title="精准支撑">{lx["precise_support"]}</span>'
+        if lx.get('precise_resistance'):
+            lx_tags += f'<span class="lx-tag res" title="精准压力">{lx["precise_resistance"]}</span>'
+        if not lx_tags:
+            lx_tags = '-'
         rows += f'''<tr>
 <td><strong>{s['name']}</strong><br><span style="color:var(--text-dim);font-size:11px">{s['sym']}</span></td>
 <td class="num {pct_cls}">{s['price']:.2f}</td>
@@ -184,6 +253,7 @@ def generate_html(content, filename):
 <td class="num">{s['cost']:.2f}</td>
 <td class="num {profit_cls}">{s['profit_pct']:+.2f}%</td>
 <td>{signals_html}</td>
+<td style="font-size:11px;line-height:1.5">{lx_tags}</td>
 </tr>'''
     
     # 警报
@@ -215,6 +285,12 @@ th,td {{ padding:10px 8px; text-align:left; border-bottom:1px solid var(--border
 th {{ font-size:11px; color:var(--text-dim); text-transform:uppercase; }}
 .num {{ text-align:right; font-variant-numeric:tabular-nums; }}
 .signal-tag {{ display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; margin-right:4px; background:var(--green-dim); color:var(--green); }}
+.lx-tag {{ display:inline-block; padding:1px 5px; border-radius:3px; font-size:10px; font-weight:600; margin:1px 2px; background:rgba(46,213,115,0.1); color:var(--green); }}
+.lx-tag.gx {{ background:rgba(245,166,35,0.15); color:var(--accent); }}
+.lx-tag.yz {{ background:rgba(230,126,34,0.15); color:var(--orange); }}
+.lx-tag.jj {{ background:rgba(255,71,87,0.12); color:var(--red); }}
+.lx-tag.sup {{ background:rgba(46,213,115,0.1); color:var(--green); }}
+.lx-tag.res {{ background:rgba(255,71,87,0.1); color:var(--red); }}
 .alert {{ background:var(--orange-dim); border-left:3px solid var(--orange); padding:12px; border-radius:0 8px 8px 0; margin:8px 0; }}
 .grid {{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }}
 .stat-box {{ background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; text-align:center; }}
@@ -233,7 +309,7 @@ th {{ font-size:11px; color:var(--text-dim); text-transform:uppercase; }}
 </div>
 <h2>持仓明细</h2>
 <div class="card"><table>
-<thead><tr><th>股票</th><th class="num">现价</th><th class="num">涨跌%</th><th class="num">成本</th><th class="num">盈亏%</th><th>信号</th></tr></thead>
+<thead><tr><th>股票</th><th class="num">现价</th><th class="num">涨跌%</th><th class="num">成本</th><th class="num">盈亏%</th><th>信号</th><th>量学战法</th></tr></thead>
 <tbody>{rows}</tbody>
 </table></div>
 <h2>关键位提醒</h2>

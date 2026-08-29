@@ -89,7 +89,7 @@ def analyze_quant_pattern(minutes, name):
     # 5. 均匀度评分（0-100，越接近100越均匀，疑似量化）
     uniformity_score = max(0, min(100, 100 - cv_volume * 100))
     
-    # 量化风险评级
+# 量化风险评级
     risk_score = 0
     risk_factors = []
     if cv_volume < 0.5:
@@ -104,7 +104,26 @@ def analyze_quant_pattern(minutes, name):
     if uniformity_score > 70:
         risk_score += 25
         risk_factors.append("均匀度过高")
-    
+
+    # ==== 新增：技术指标与信号生成 ====
+    # 计算短中长期移动平均（假设已有收盘价序列）
+    prices = [d['price'] for d in data]
+    if len(prices) >= 10:
+        # 简单示例：5日均线、10日均线
+        ma5 = sum(prices[-5:]) / 5
+        ma10 = sum(prices[-10:]) / 10
+        # Golden Cross / Death Cross 信号
+        if ma5 > ma10:
+            risk_factors.append("多头排列（金叉）")
+            risk_score += 10
+        elif ma5 < ma10:
+            risk_factors.append("空头排列（死叉）")
+            risk_score += 10
+    # ==== 为止损/止盈判断（基于止损线、取利价）=====
+    # 假设已有 stop_loss、take_profit 参数（此处简化示例）
+    # 如果最新价触及止损或止盈，生成对应信号
+    # 这里不做具体实现，仅占位示意
+    # ==== 最终风险等级 ===
     if risk_score == 0:
         risk_level = "正常"
     elif risk_score < 25:
@@ -115,7 +134,7 @@ def analyze_quant_pattern(minutes, name):
         risk_level = "高风险"
     else:
         risk_level = "极高风险"
-    
+
     return {
         'name': name,
         'bars': len(data),
@@ -128,7 +147,11 @@ def analyze_quant_pattern(minutes, name):
         'risk_level': risk_level,
         'risk_factors': risk_factors,
         'latest_price': prices[-1],
-        'latest_volume': volumes[-1]
+        'latest_volume': volumes[-1],
+        # ==== 技术指标输出 ===
+        'ma5': ma5,
+        'ma10': ma10,
+        'signal': risk_level  # 简化输出信号
     }
 
 def main():
