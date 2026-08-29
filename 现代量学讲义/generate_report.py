@@ -149,6 +149,20 @@ def generate_report_content(report_type, timestamp):
             elif general:
                 liangxue_info['general'] = f"将军柱{general[-1]['date']}(回调{general[-1]['drawdown_ratio']:.0%})"
 
+            # 高量柱意图分析
+            hva = lx.get('high_vol_analysis', {})
+            hv_bars = hva.get('bars', [])
+            if hv_bars:
+                latest_hv = hv_bars[-1]
+                intent = latest_hv.get('intent', {})
+                rc = latest_hv.get('right_confirm', {})
+                intent_label = intent.get('intent', '')
+                rc_dir = rc.get('direction', '')
+                rc_arrow = {'strong_up': '↑↑', 'up': '↑', 'down': '↓', 'strong_down': '↓↓'}.get(rc_dir, '')
+                pos = intent.get('price_position', 0.5)
+                pos_label = '低' if pos < 0.3 else ('中' if pos < 0.7 else '高')
+                liangxue_info['high_vol'] = f"{latest_hv['date']}({intent_label},{pos_label}位{rc_arrow})"
+
             # 量线位置
             peak_lines = ql.get('peak_lines', [])
             valley_lines = ql.get('valley_lines', [])
@@ -244,6 +258,10 @@ def generate_html(content, filename):
             lx_tags += f'<span class="lx-tag sup" title="精准支撑">{lx["precise_support"]}</span>'
         if lx.get('precise_resistance'):
             lx_tags += f'<span class="lx-tag res" title="精准压力">{lx["precise_resistance"]}</span>'
+        if lx.get('high_vol'):
+            intent = lx['high_vol'].split('(')[1].split(',')[0] if '(' in lx['high_vol'] else ''
+            intent_cls = {'吸筹': 'gx', '拉升': 'gx', '出货': 'jj', '砸盘': 'jj', '洗盘': 'yz', '观望': ''}.get(intent, '')
+            lx_tags += f'<span class="lx-tag {intent_cls}" title="高量柱意图">{lx["high_vol"]}</span>'
         if not lx_tags:
             lx_tags = '-'
         rows += f'''<tr>
