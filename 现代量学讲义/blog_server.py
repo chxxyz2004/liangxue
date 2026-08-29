@@ -475,6 +475,8 @@ a{{text-decoration:none;color:inherit}}
     
     def serve_static(self, filepath):
         """提供静态文件"""
+        import urllib.parse
+        filepath = urllib.parse.unquote(filepath)
         fullpath = os.path.join(BLOG_DIR, filepath)
         if os.path.exists(fullpath) and os.path.isfile(fullpath):
             ext = os.path.splitext(fullpath)[1].lower()
