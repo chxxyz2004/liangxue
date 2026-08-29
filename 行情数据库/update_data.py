@@ -30,9 +30,32 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 KLINE_DIR = os.path.join(BASE_DIR, "kline")
 META_FILE = os.path.join(BASE_DIR, "meta.json")
 
-N_DAYS = 300  # 目标交易日数量
+N_DAYS = 1200  # 目标交易日数量
 
 TENCENT_API = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param={symbol},day,,,{datalen},qfq"
+
+SINA_KLINE_API = "https://quotes.sina.cn/cn/api/json_v2.php/CN_MarketDataService.getKLineData?symbol={symbol}&scale=240&ma=no&datalen={datalen}"
+
+def fetch_sina_kline_backup(symbol, datalen):
+    """新浪日K备用接口"""
+    url = SINA_KLINE_API.format(symbol=symbol, datalen=datalen)
+    raw = fetch(url).strip()
+    if raw.startswith("var"):
+        raw = raw[raw.index("=") + 1:].strip()
+    data = json.loads(raw)
+    out = []
+    for d in data:
+        out.append({
+            "day": d["day"],
+            "open": float(d["open"]),
+            "high": float(d["high"]),
+            "low": float(d["low"]),
+            "close": float(d["close"]),
+            "volume": float(d["volume"]),
+            "amount": float(d["volume"]) * float(d["close"]) * 100,
+        })
+    return out
+
 SINA_API = "https://quotes.sina.cn/cn/api/json_v2.php/CN_MarketDataService.getKLineData?symbol={symbol}&scale=240&ma=no&datalen={datalen}"
 
 
@@ -103,7 +126,7 @@ def main():
     all_ok = True
     for symbol, name in STOCKS.items():
         try:
-            data = fetch_tencent_qfq(symbol, N_DAYS + 60)
+            data = fetch_tencent_qfq(symbol, N_DAYS + 100)
             latest = data[-1]["day"]
             fpath = os.path.join(KLINE_DIR, f"{symbol}.json")
             with open(fpath, "w", encoding="utf-8") as f:
@@ -116,7 +139,7 @@ def main():
 
     for symbol, name in INDEXES.items():
         try:
-            data = fetch_sina_kline(symbol, N_DAYS + 60)
+            data = fetch_sina_kline(symbol, N_DAYS + 100)
             latest = data[-1]["day"]
             fpath = os.path.join(KLINE_DIR, f"{symbol}.json")
             with open(fpath, "w", encoding="utf-8") as f:
