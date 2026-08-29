@@ -319,6 +319,27 @@ def generate_report_content(report_type, timestamp):
             if nearest_peak:
                 liangxue_info['resistance'] = f"{nearest_peak['price']:.2f}({nearest_peak['count']}点)"
 
+            # 金线（新增）
+            golden_lines = ql.get('golden_lines', [])
+            marshal_lines = ql.get('marshal_lines', [])
+            general_lines = ql.get('general_lines', [])
+            if golden_lines:
+                latest_golden = max(golden_lines, key=lambda x: x.get('touches', 0))
+                liangxue_info['golden_line'] = f"{latest_golden['price']:.2f}(触及{latest_golden['touches']}次,{latest_golden['strength']})"
+            if marshal_lines:
+                latest_marshal = max(marshal_lines, key=lambda x: x.get('touches', 0))
+                liangxue_info['marshal_line'] = f"{latest_marshal['price']:.2f}(触及{latest_marshal['touches']}次,{latest_marshal['strength']})"
+            if general_lines:
+                # 找最近的将军峰顶线（压力线）和将军谷底线（支撑线）
+                peak_gl = [g for g in general_lines if '峰顶' in g.get('type', '')]
+                valley_gl = [g for g in general_lines if '谷底' in g.get('type', '')]
+                if valley_gl:
+                    nearest_val_gl = min(valley_gl, key=lambda x: abs(x['price'] - latest_close))
+                    liangxue_info['general_support'] = f"{nearest_val_gl['price']:.2f}(触及{nearest_val_gl['touches']}次)"
+                if peak_gl:
+                    nearest_pk_gl = min(peak_gl, key=lambda x: abs(x['price'] - latest_close))
+                    liangxue_info['general_resistance'] = f"{nearest_pk_gl['price']:.2f}(触及{nearest_pk_gl['touches']}次)"
+
             # 精准线
             precise_valleys = pl.get('precise_valley_lines', []) if isinstance(pl, dict) else []
             precise_peaks = pl.get('precise_peak_lines', []) if isinstance(pl, dict) else []

@@ -208,7 +208,7 @@ def find_golden_pillar(data, lookback=60):
         
         if shrinking_volume and no_break_low:
             candidate['golden'] = True
-            candidate['golden_line'] = base_low  # 黄金线=将军柱实底
+            candidate['golden_line'] = curr['close']  # 黄金线=黄金柱实顶（收盘价）
             return candidate
     
     return None

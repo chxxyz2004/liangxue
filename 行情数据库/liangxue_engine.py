@@ -457,6 +457,8 @@ class KeyBarDetector:
                         'volume_ratio': round(k_vol / dbl_vol, 2) if dbl_vol > 0 else 0,
                         'type': '将军柱',
                         'note': f'回调{drawdown:.0%}实体，守住倍量柱低点{ref_low:.2f}',
+                        'high': k.get('high', 0),
+                        'low': k.get('low', 0),
                     })
                     found_key_bar = True
                     break
@@ -470,6 +472,8 @@ class KeyBarDetector:
                         'volume_ratio': round(k_vol / dbl_vol, 2) if dbl_vol > 0 else 0,
                         'type': '元帅柱',
                         'note': f'回调{drawdown:.0%}实体',
+                        'high': k.get('high', 0),
+                        'low': k.get('low', 0),
                     })
                     found_key_bar = True
                     break
@@ -483,6 +487,8 @@ class KeyBarDetector:
                         'volume_ratio': round(k_vol / dbl_vol, 2) if dbl_vol > 0 else 0,
                         'type': '黄金柱',
                         'note': f'回调{drawdown:.0%}实体，强支撑',
+                        'high': k.get('high', 0),
+                        'low': k.get('low', 0),
                     })
                     found_key_bar = True
                     break
@@ -686,54 +692,211 @@ class QuantityLineDetector:
 
         return lines
 
-    def find_general_lines(self, kl: List[Dict], peaks: List[Dict], valleys: List[Dict]) -> List[Dict]:
-        """将军线：从重要高低点发出的水平支撑/压力线。
+    def find_golden_lines(self, kl: List[Dict], golden_bars: List[Dict]) -> List[Dict]:
+        """黄金线：从黄金柱的最高价向右画水平线。
 
-        将军线定义：从最近的重要峰顶或谷底发出，向右延伸的水平线。
-        将军线分为：
-        - 将军峰顶线：从重要峰顶发出，作为压力线
-        - 将军谷底线：从重要谷底发出，作为支撑线
+        黄金线定义（黑马王子《量线捉涨停》）：
+        - 以黄金柱的最高价（实顶）为基准，向右延伸的水平线
+        - 是主力的攻防线、生命线
+        - 回踩黄金线是最佳介入点
         """
         lines = []
         n = len(kl)
 
-        if not peaks and not valleys:
-            return lines
+        for bar in golden_bars[-5:]:  # 只看最近5根黄金柱
+            bar_idx = bar.get('index', 0)
+            bar_high = bar.get('high', 0)
+            if bar_high <= 0:
+                continue
 
-        # 取最近3个峰顶和谷底作为将军线起点
-        recent_peaks = peaks[-3:] if len(peaks) >= 3 else peaks
-        recent_valleys = valleys[-3:] if len(valleys) >= 3 else valleys
-
-        for pk in recent_peaks:
-            pk_idx = pk.get('index', 0)
-            # 将军峰顶线：从此峰顶向右延伸，计算触及次数
+            # 从黄金柱最高价向右延伸，计算触及次数
             touches = 0
-            for k in kl[pk_idx + 1:]:
-                if abs(k.get('high', 0) - pk['price']) / pk['price'] <= self.tolerance:
+            confirm_up = 0  # 触及后上涨确认
+            confirm_down = 0  # 触及后下跌确认
+
+            for k in kl[bar_idx + 1:]:
+                high = k.get('high', 0)
+                low = k.get('low', 0)
+                close = k.get('close', 0)
+
+                # 上影线触及（压力线检测）
+                if abs(high - bar_high) / bar_high <= self.tolerance:
                     touches += 1
+                    # 后续收盘价高于线 → 支撑确认
+                    if bar_idx + 1 < n:
+                        next_k = kl[bar_idx + touches]
+                        if next_k.get('close', 0) > bar_high * (1 - self.tolerance):
+                            confirm_up += 1
+                        elif next_k.get('close', 0) < bar_high * (1 - self.tolerance):
+                            confirm_down += 1
+
             lines.append({
-                'type': '将军峰顶线',
-                'price': round(pk['price'], 2),
-                'origin_date': pk.get('date', ''),
-                'origin_index': pk_idx,
+                'type': '黄金线',
+                'price': round(bar_high, 2),
+                'origin_date': bar.get('date', ''),
+                'origin_index': bar_idx,
                 'touches': touches,
-                'strength': '强' if touches >= 2 else '中',
+                'confirm_up': confirm_up,
+                'confirm_down': confirm_down,
+                'strength': '强' if touches >= 2 and confirm_up >= 1 else ('中' if touches >= 1 else '弱'),
             })
 
-        for vl in recent_valleys:
-            vl_idx = vl.get('index', 0)
+        return lines
+
+    def find_marshal_lines(self, kl: List[Dict], marshal_bars: List[Dict]) -> List[Dict]:
+        """元帅线：从元帅柱的最高价向右画水平线。
+
+        元帅线定义：
+        - 以元帅柱的最高价为基准，向右延伸的水平线
+        - 可靠性高于黄金线
+        """
+        lines = []
+        n = len(kl)
+
+        for bar in marshal_bars[-5:]:  # 只看最近5根元帅柱
+            bar_idx = bar.get('index', 0)
+            bar_high = bar.get('high', 0)
+            if bar_high <= 0:
+                continue
+
+            # 从元帅柱最高价向右延伸，计算触及次数
             touches = 0
-            for k in kl[vl_idx + 1:]:
-                if abs(k.get('low', 0) - vl['price']) / vl['price'] <= self.tolerance:
+            confirm_up = 0
+            confirm_down = 0
+
+            for k in kl[bar_idx + 1:]:
+                high = k.get('high', 0)
+                close = k.get('close', 0)
+
+                # 上影线触及
+                if abs(high - bar_high) / bar_high <= self.tolerance:
                     touches += 1
+                    if bar_idx + 1 < n:
+                        next_k = kl[bar_idx + touches]
+                        if next_k.get('close', 0) > bar_high * (1 - self.tolerance):
+                            confirm_up += 1
+                        elif next_k.get('close', 0) < bar_high * (1 - self.tolerance):
+                            confirm_down += 1
+
             lines.append({
-                'type': '将军谷底线',
-                'price': round(vl['price'], 2),
-                'origin_date': vl.get('date', ''),
-                'origin_index': vl_idx,
+                'type': '元帅线',
+                'price': round(bar_high, 2),
+                'origin_date': bar.get('date', ''),
+                'origin_index': bar_idx,
                 'touches': touches,
-                'strength': '强' if touches >= 2 else '中',
+                'confirm_up': confirm_up,
+                'confirm_down': confirm_down,
+                'strength': '强' if touches >= 2 and confirm_up >= 1 else ('中' if touches >= 1 else '弱'),
             })
+
+        return lines
+
+    def find_general_lines(self, kl: List[Dict], peaks: List[Dict], valleys: List[Dict],
+                          general_bars: List[Dict] = None) -> List[Dict]:
+        """将军线：从将军柱的最高价向右画水平线。
+
+        将军线定义（黑马王子《量线捉涨停》）：
+        - 以将军柱的最高价为基准，向右延伸的水平线
+        - 将军线分为：
+          - 将军峰顶线：从将军柱最高价发出，作为压力线
+          - 将军谷底线：从将军柱最低价发出，作为支撑线
+        - 可靠性：元帅线 > 黄金线 > 将军线
+        """
+        lines = []
+        n = len(kl)
+
+        # 优先从将军柱画线（更准确）
+        if general_bars:
+            for bar in general_bars[-5:]:  # 只看最近5根将军柱
+                bar_idx = bar.get('index', 0)
+                bar_high = bar.get('high', 0)
+                bar_low = bar.get('low', 0)
+
+                if bar_high <= 0:
+                    continue
+
+                # 将军峰顶线：从最高价向右延伸
+                touches_high = 0
+                confirm_up = 0
+                confirm_down = 0
+
+                for k in kl[bar_idx + 1:]:
+                    high = k.get('high', 0)
+                    close = k.get('close', 0)
+
+                    if abs(high - bar_high) / bar_high <= self.tolerance:
+                        touches_high += 1
+                        if bar_idx + 1 < n:
+                            next_k = kl[bar_idx + touches_high]
+                            if next_k.get('close', 0) > bar_high * (1 - self.tolerance):
+                                confirm_up += 1
+                            elif next_k.get('close', 0) < bar_high * (1 - self.tolerance):
+                                confirm_down += 1
+
+                lines.append({
+                    'type': '将军峰顶线',
+                    'price': round(bar_high, 2),
+                    'origin_date': bar.get('date', ''),
+                    'origin_index': bar_idx,
+                    'touches': touches_high,
+                    'confirm_up': confirm_up,
+                    'confirm_down': confirm_down,
+                    'strength': '强' if touches_high >= 2 and confirm_up >= 1 else ('中' if touches_high >= 1 else '弱'),
+                })
+
+                # 将军谷底线：从最低价向右延伸（支撑线）
+                if bar_low > 0:
+                    touches_low = 0
+                    for k in kl[bar_idx + 1:]:
+                        low = k.get('low', 0)
+                        if abs(low - bar_low) / bar_low <= self.tolerance:
+                            touches_low += 1
+
+                    lines.append({
+                        'type': '将军谷底线',
+                        'price': round(bar_low, 2),
+                        'origin_date': bar.get('date', ''),
+                        'origin_index': bar_idx,
+                        'touches': touches_low,
+                        'strength': '强' if touches_low >= 2 else ('中' if touches_low >= 1 else '弱'),
+                    })
+        else:
+            # 备用：从峰顶/谷底画线
+            if not peaks and not valleys:
+                return lines
+
+            recent_peaks = peaks[-3:] if len(peaks) >= 3 else peaks
+            recent_valleys = valleys[-3:] if len(valleys) >= 3 else valleys
+
+            for pk in recent_peaks:
+                pk_idx = pk.get('index', 0)
+                touches = 0
+                for k in kl[pk_idx + 1:]:
+                    if abs(k.get('high', 0) - pk['price']) / pk['price'] <= self.tolerance:
+                        touches += 1
+                lines.append({
+                    'type': '将军峰顶线',
+                    'price': round(pk['price'], 2),
+                    'origin_date': pk.get('date', ''),
+                    'origin_index': pk_idx,
+                    'touches': touches,
+                    'strength': '强' if touches >= 2 else '中',
+                })
+
+            for vl in recent_valleys:
+                vl_idx = vl.get('index', 0)
+                touches = 0
+                for k in kl[vl_idx + 1:]:
+                    if abs(k.get('low', 0) - vl['price']) / vl['price'] <= self.tolerance:
+                        touches += 1
+                lines.append({
+                    'type': '将军谷底线',
+                    'price': round(vl['price'], 2),
+                    'origin_date': vl.get('date', ''),
+                    'origin_index': vl_idx,
+                    'touches': touches,
+                    'strength': '强' if touches >= 2 else '中',
+                })
 
         return lines
 
@@ -781,8 +944,13 @@ class QuantityLineDetector:
 
         return parallel_lines[:6]  # 最多保留6条平行线
 
-    def detect_all(self, kl: List[Dict]) -> Dict:
-        """完整量线检测。"""
+    def detect_all(self, kl: List[Dict], key_bars: Dict = None) -> Dict:
+        """完整量线检测。
+
+        Args:
+            kl: K线数据列表
+            key_bars: 关键柱检测结果（包含golden_bars/marshal_bars/general_bars）
+        """
         n = len(kl)
         if n < 20:
             return {'error': '数据不足'}
@@ -799,8 +967,16 @@ class QuantityLineDetector:
         # 3. 找凹口平衡线
         concave_lines = self.find_concave_balance_lines(peaks, valleys)
 
-        # 4. 找将军线
-        general_lines = self.find_general_lines(kl, peaks, all_lines := peak_lines + valley_lines)
+        # 4. 找金线（从关键柱画线）
+        golden_lines = []
+        marshal_lines = []
+        general_lines = []
+
+        if key_bars:
+            golden_lines = self.find_golden_lines(kl, key_bars.get('golden_bars', []))
+            marshal_lines = self.find_marshal_lines(kl, key_bars.get('marshal_bars', []))
+            general_lines = self.find_general_lines(kl, peaks, valleys,
+                                                     key_bars.get('general_bars', []))
 
         # 5. 找平行线
         all_lines_data = peak_lines + valley_lines
@@ -812,6 +988,8 @@ class QuantityLineDetector:
             'peak_lines': peak_lines,       # 峰顶线
             'valley_lines': valley_lines,   # 谷底线
             'concave_lines': concave_lines, # 凹口平衡线
+            'golden_lines': golden_lines,   # 黄金线（新增）
+            'marshal_lines': marshal_lines, # 元帅线（新增）
             'general_lines': general_lines, # 将军线
             'parallel_lines': parallel_lines,  # 平行线
         }
@@ -1196,8 +1374,12 @@ class LiangXueEngine:
             },
             'volume_bars': self.volume_detector.detect_all(kl),
             'key_bars': self.key_bar_detector.detect_all(kl),
-            'quantity_lines': self.line_detector.detect_all(kl),
         }
+
+        # 量线检测（需要关键柱数据）
+        result['quantity_lines'] = self.line_detector.detect_all(
+            kl, result.get('key_bars')
+        )
 
         # 精准线验证
         pl = result['quantity_lines']
