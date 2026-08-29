@@ -1244,11 +1244,11 @@ class LiangXueEngine:
         signals = []
 
         # ---- 量柱信号 ----
-         vb = analysis.get('volume_bars', {})
-         doubling = vb.get('summary', {}).get('doubling_bars', [])
-         shrinking = vb.get('summary', {}).get('shrinking_bars', [])
-         high_vol = vb.get('summary', {}).get('high_vol_bars', [])
-         low_vol = vb.get('summary', {}).get('low_vol_bars', [])
+        vb = analysis.get('volume_bars', {})
+        doubling = vb.get('summary', {}).get('doubling_bars', [])
+        shrinking = vb.get('summary', {}).get('shrinking_bars', [])
+        high_vol = vb.get('summary', {}).get('high_vol_bars', [])
+        low_vol = vb.get('summary', {}).get('low_vol_bars', [])
 
         if doubling:
             latest_dbl = doubling[-1]
