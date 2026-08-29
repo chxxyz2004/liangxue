@@ -60,4 +60,20 @@ else
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 对倒检测完成" >> $LOG
 fi
 
+# 8. 计算技术指标并保存缓存（供复盘报告引用）
+python3 signal_engine.py --save >> $LOG 2>&1
+if [ $? -ne 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✗ 信号计算失败" >> $LOG
+else
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 信号缓存已更新: signal_cache.json" >> $LOG
+fi
+
+# 9. 计算量学战法并保存缓存（供复盘报告引用）
+python3 liangxue_engine.py --save >> $LOG 2>&1
+if [ $? -ne 0 ]; then
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✗ 量学计算失败" >> $LOG
+else
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✓ 量学缓存已更新: liangxue_cache.json" >> $LOG
+fi
+
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] 自动更新完成" >> $LOG

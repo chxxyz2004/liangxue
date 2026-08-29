@@ -1075,7 +1075,7 @@ class LiangXueEngine:
         lines.append("")
 
         # 量柱形态
-        vb = analysis.get('volume_bars', {})
+        vb = analysis.get('volume_bars', {}).get('summary', {})
         doubling = vb.get('doubling_bars', [])
         shrinking = vb.get('shrinking_bars', [])
         high_vol = vb.get('high_vol_bars', [])
