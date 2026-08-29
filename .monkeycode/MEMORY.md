@@ -679,3 +679,31 @@ python3 signal_report.py --all
 - 使用量比阈值2.0作为入场标准
 - 单股仓位不超过20%
 - 设置8%-10%止损线
+
+## 金线体系实现（2026-08-29）
+
+### 金线定义
+根据黑马王子《量线捉涨停》讲义：
+- **黄金线**：从黄金柱的最高价（实顶）向右画水平线
+- **元帅线**：从元帅柱的最高价向右画水平线
+- **将军线**：从将军柱的最高价向右画水平线
+
+### 可靠性排序
+元帅线 > 黄金线 > 将军线
+
+### 代码实现
+- `liangxue_engine.py` 中新增 `find_golden_lines()` 和 `find_marshal_lines()` 方法
+- `find_general_lines()` 改进：优先从将军柱画线，备用从峰顶/谷底画线
+- `QuantityLineDetector.detect_all()` 新增 `key_bars` 参数，传入关键柱数据
+- `smart_levels_v2.py` 修复黄金线定义：从 `base_low` 改为 `close`（实顶）
+
+### 使用示例
+```python
+from liangxue_engine import LiangXueEngine
+engine = LiangXueEngine(lookback=100)
+result = engine.full_analysis('sh601138')
+ql = result.get('quantity_lines', {})
+golden_lines = ql.get('golden_lines', [])
+marshal_lines = ql.get('marshal_lines', [])
+general_lines = ql.get('general_lines', [])
+```
