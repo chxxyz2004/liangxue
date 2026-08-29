@@ -112,6 +112,13 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=DIRECTORY, **kwargs)
     
+    def end_headers(self):
+        """覆盖默认方法，添加禁用缓存头"""
+        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        self.send_header('Pragma', 'no-cache')
+        self.send_header('Expires', '0')
+        super().end_headers()
+    
     @property
     def decoded_path(self):
         """正确解码包含UTF-8字符的路径"""
@@ -159,6 +166,15 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
             self.handle_get_industry_chains()
         elif path == '/api/industry_chains/latest':
             self.handle_get_industry_chains_latest()
+        # 持仓跟踪API路由
+        elif path == '/api/holdings':
+            self.handle_get_holdings()
+        elif path == '/api/watchlist':
+            self.handle_get_watchlist()
+        elif path == '/api/signals':
+            self.handle_get_signals()
+        elif path == '/api/portfolio':
+            self.handle_get_portfolio()
         
         # 回退到静态文件
         elif path == '/' or path == '':
@@ -360,6 +376,193 @@ class BlogHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
     
+    # ===== 持仓跟踪API =====
+    
+    def handle_get_holdings(self):
+        """获取持仓数据"""
+        try:
+            sys.path.insert(0, '/workspace/行情数据库')
+            from config import HOLDINGS
+            import sqlite3
+            import os
+            
+            DB_PATH = '/workspace/行情数据库/liangxue_system.db'
+            conn = sqlite3.connect(DB_PATH)
+            cursor = conn.cursor()
+            
+            holdings = []
+            for sym, info in HOLDINGS.items():
+                name = info.name if hasattr(info, 'name') else info.get('name', sym)
+                shares = info.shares if hasattr(info, 'shares') else info.get('shares', 0)
+                cost = info.cost if hasattr(info, 'cost') else info.get('cost', 0)
+                stop_loss = info.stop_loss if hasattr(info, 'stop_loss') else info.get('stop_loss', 0)
+                life_line = info.life_line if hasattr(info, 'life_line') else info.get('life_line', 0)
+                
+                # 获取最新K线
+                cursor.execute("""
+                    SELECT date, open, high, low, close, volume 
+                    FROM daily_kline 
+                    WHERE code = ? 
+                    ORDER BY date DESC 
+                    LIMIT 2
+                """, (sym,))
+                rows = cursor.fetchall()
+                
+                if len(rows) >= 1:
+                    latest = rows[0]
+                    cp = latest[4]  # close
+                    pct_chg = ((cp - latest[4]) / latest[4] * 100) if len(rows) > 1 else 0
+                    if len(rows) > 1:
+                        prev_close = rows[1][4]
+                        pct_chg = (cp - prev_close) / prev_close
+                    market_value = cp * shares
+                    profit = (cp - cost) * shares if cost else 0
+                else:
+                    cp = 0
+                    pct_chg = 0
+                    market_value = 0
+                    profit = 0
+                
+                # 获取MA数据
+                cursor.execute("""
+                    SELECT date, close FROM daily_kline 
+                    WHERE code = ? AND date >= date('now', '-60 days')
+                    ORDER BY date DESC
+                """, (sym,))
+                closes = [r[1] for r in cursor.fetchall()[:60]]
+                
+                ma = {}
+                if len(closes) >= 5:
+                    ma['ma5'] = sum(closes[:5])/5
+                if len(closes) >= 10:
+                    ma['ma10'] = sum(closes[:10])/10
+                if len(closes) >= 20:
+                    ma['ma20'] = sum(closes[:20])/20
+                if len(closes) >= 60:
+                    ma['ma60'] = sum(closes[:60])/60
+                
+                holdings.append({
+                    'symbol': sym,
+                    'name': name,
+                    'shares': shares,
+                    'cost': cost,
+                    'current_price': round(cp, 2),
+                    'pct_chg': round(pct_chg, 4),
+                    'market_value': round(market_value, 2),
+                    'profit': round(profit, 2),
+                    'stop_loss': stop_loss,
+                    'life_line': life_line,
+                    'ma': {k: round(v, 2) for k, v in ma.items()},
+                })
+            
+            conn.close()
+            self.send_json({'holdings': holdings})
+        except Exception as e:
+            self.send_json({'error': str(e)}, 500)
+    
+    def handle_get_watchlist(self):
+        """获取关注列表"""
+        try:
+            sys.path.insert(0, '/workspace/行情数据库')
+            from config import WATCH_LIST
+            import sqlite3
+            
+            DB_PATH = '/workspace/行情数据库/liangxue_system.db'
+            conn = sqlite3.connect(DB_PATH)
+            cursor = conn.cursor()
+            
+            watchlist = []
+            for sym, info in WATCH_LIST.items():
+                name = info.name if hasattr(info, 'name') else info.get('name', sym)
+                
+                cursor.execute("""
+                    SELECT date, close, volume FROM daily_kline 
+                    WHERE code = ? ORDER BY date DESC LIMIT 1
+                """, (sym,))
+                row = cursor.fetchone()
+                
+                if row:
+                    watchlist.append({
+                        'symbol': sym,
+                        'name': name,
+                        'price': row[1],
+                        'volume': row[2],
+                        'date': row[0],
+                    })
+            
+            conn.close()
+            self.send_json({'watchlist': watchlist})
+        except Exception as e:
+            self.send_json({'error': str(e)}, 500)
+    
+    def handle_get_signals(self):
+        """获取量学信号"""
+        try:
+            import sqlite3
+            DB_PATH = '/workspace/行情数据库/liangxue_system.db'
+            conn = sqlite3.connect(DB_PATH)
+            cursor = conn.cursor()
+            
+            cursor.execute("""
+                SELECT code, date, signal_type, bar_type, volume_ratio, key_price
+                FROM liangxue_signals 
+                WHERE date >= date('now', '-30 days')
+                ORDER BY date DESC LIMIT 20
+            """)
+            signals = []
+            for row in cursor.fetchall():
+                signals.append({
+                    'code': row[0],
+                    'date': row[1],
+                    'type': row[2],
+                    'bar_type': row[3],
+                    'volume_ratio': row[4],
+                    'key_price': row[5],
+                })
+            
+            conn.close()
+            self.send_json({'signals': signals})
+        except Exception as e:
+            self.send_json({'error': str(e)}, 500)
+    
+    def handle_get_portfolio(self):
+        """获取投资组合汇总"""
+        try:
+            import sqlite3
+            sys.path.insert(0, '/workspace/行情数据库')
+            from config import HOLDINGS
+            
+            DB_PATH = '/workspace/行情数据库/liangxue_system.db'
+            conn = sqlite3.connect(DB_PATH)
+            cursor = conn.cursor()
+            
+            total_value = 0
+            total_cost = 0
+            for sym in HOLDINGS:
+                cursor.execute("SELECT close, volume FROM daily_kline WHERE code = ? ORDER BY date DESC LIMIT 1", (sym,))
+                row = cursor.fetchone()
+                if row:
+                    info = HOLDINGS[sym]
+                    shares = info.shares if hasattr(info, 'shares') else info.get('shares', 0)
+                    cost = info.cost if hasattr(info, 'cost') else info.get('cost', 0)
+                    total_value += row[0] * shares
+                    total_cost += cost * shares
+            
+            conn.close()
+            
+            profit = total_value - total_cost
+            profit_pct = (profit / total_cost * 100) if total_cost > 0 else 0
+            
+            self.send_json({
+                'total_value': round(total_value, 2),
+                'total_cost': round(total_cost, 2),
+                'profit': round(profit, 2),
+                'profit_pct': round(profit_pct, 2),
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            })
+        except Exception as e:
+            self.send_json({'error': str(e)}, 500)
+    
     def log_message(self, format, *args):
         pass
 
@@ -375,4 +578,7 @@ if __name__ == '__main__':
     print(f"文章列表: /api/posts")
     print(f"回测API: /api/backtest")
     print(f"产业链API: /api/industry_chains")
+    print(f"持仓API: /api/holdings")
+    print(f"信号API: /api/signals")
+    print(f"组合API: /api/portfolio")
     server.serve_forever()

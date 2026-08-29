@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六维看盘量化评分体系 - 量学实战系统</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --blue: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --cyan: #39d4c0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+}
+h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: var(--blue);
+}
+h2 {
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--green);
+  border-left: 4px solid var(--green);
+  padding-left: 15px;
+}
+h3 {
+  font-size: 17px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: var(--orange);
+}
+p {
+  margin-bottom: 15px;
+  color: var(--text);
+}
+blockquote {
+  background: var(--bg);
+  border-left: 4px solid var(--blue);
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: left;
+}
+th {
+  background: var(--bg);
+  color: var(--blue);
+  font-weight: 600;
+}
+td {
+  color: var(--text);
+}
+pre {
+  background: var(--bg);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 15px 0;
+  font-family: monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 30px 0;
+}
+ul, ol {
+  margin: 15px 0;
+  padding-left: 25px;
+}
+li {
+  margin-bottom: 8px;
+}
+strong {
+  color: var(--blue);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+}
+.back-btn:hover {
+  background: var(--border);
+}
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--red);
+  color: white;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.meta {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-top: 10px;
+}
+.tree {
+  background: var(--bg);
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cyan);
+}
+.highlight {
+  background: rgba(63, 185, 80, 0.1);
+  border: 1px solid var(--green);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.warning {
+  background: rgba(248, 81, 73, 0.1);
+  border: 1px solid var(--red);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.score-card {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  margin: 4px;
+}
+.score-excellent { background: var(--green); color: white; }
+.score-good { background: var(--blue); color: white; }
+.score-normal { background: var(--orange); color: white; }
+.score-poor { background: var(--red); color: white; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <span class="tag">量化评分</span>
+      <div class="meta">版本：v1.0 · 2026-08-29</div>
+    </div>
+    <a href="/" class="back-btn">← 返回首页</a>
+  </div>
+  
+  <h1>六维看盘量化评分体系</h1>
+  <p style="color: var(--text-dim);">核心原则：总分100分，各维度权重不同，设置明确阈值</p>
+  
+  <hr>
+  
+  <h2>一、六维权重分配（总分100分）</h2>
+  
+  <table>
+    <tr><th>维度</th><th>权重</th><th>等级</th><th>核心作用</th></tr>
+    <tr><td><strong>环境维度</strong></td><td><span class="score-card score-excellent">25分</span></td><td>一票否决</td><td>决定去留、仓位、策略选择</td></tr>
+    <tr><td><strong>板块维度</strong></td><td><span class="score-card score-good">20分</span></td><td>关键筛选</td><td>决定主线热点、资金流向</td></tr>
+    <tr><td><strong>逻辑维度</strong></td><td><span class="score-card score-good">15分</span></td><td>持续性</td><td>决定行情持续时间</td></tr>
+    <tr><td><strong>情绪维度</strong></td><td><span class="score-card score-normal">15分</span></td><td>入场时机</td><td>决定买点在哪个情绪阶段</td></tr>
+    <tr><td><strong>资金维度</strong></td><td><span class="score-card score-normal">15分</span></td><td>信号验证</td><td>决定技术信号是否可信</td></tr>
+    <tr><td><strong>技术维度</strong></td><td><span class="score-card score-poor">10分</span></td><td>择时买点</td><td>决定具体入场价位和止损位</td></tr>
+  </table>
+  
+  <hr>
+  
+  <h2>二、各维度详细评分标准</h2>
+  
+  <h3>2.1 环境维度（25分）⭐ 最高权重</h3>
+  <p><strong>核心问题</strong>：现在是增量牛还是缩量熊？</p>
+  
+  <table>
+    <tr><th>评分项</th><th>满分</th><th>得分标准</th><th>阈值</th></tr>
+    <tr><td>大盘趋势方向</td><td>8分</td><td>周月均线多头排列且向上</td><td>>20日均线=+4分，均线拐头向上=+4分</td></tr>
+    <tr><td>成交量趋势</td><td>8分</td><td>日均成交额>2万亿且放量</td><td>>2.5万亿=+5分，>2万亿=+3分，<1万亿=-4分</td></tr>
+    <tr><td>市场宽度</td><td>9分</td><td>上涨家数占比</td><td>>60%=+4分，<40%=-2分</td></tr>
+  </table>
+  
+  <div class="warning">
+    <strong>一票否决条件</strong>（直接判定"放弃操作"）：<br>
+    - 大盘周月均线双死叉 + 成交量连续5日萎缩 → 总分&lt;10分，强制空仓<br>
+    - 上证指数跌破20周均线且放量下跌 → 总分&lt;15分，减仓至2成以下
+  </div>
+  
+  <h3>2.2 板块维度（20分）</h3>
+  <table>
+    <tr><th>评分项</th><th>满分</th><th>得分标准</th><th>阈值</th></tr>
+    <tr><td>主线清晰度</td><td>7分</td><td>是否有明确主线板块</td><td>主线清晰=+7分，无主线=-3分</td></tr>
+    <tr><td>板块轮动节奏</td><td>6分</td><td>板块轮动是否有序</td><td>有序轮动=+6分，无序轮动=-3分</td></tr>
+    <tr><td>资金集中度</td><td>7分</td><td>成交额占比前10%个股吸走多少资金</td><td>>50%=+7分，&lt;30%=-2分</td></tr>
+  </table>
+  
+  <h3>2.3 逻辑维度（15分）</h3>
+  <table>
+    <tr><th>评分项</th><th>满分</th><th>得分标准</th><th>阈值</th></tr>
+    <tr><td>驱动类型</td><td>5分</td><td>政策/业绩/消息</td><td>政策驱动=+5分，消息驱动=+2分</td></tr>
+    <tr><td>持续性判断</td><td>5分</td><td>长期成长还是短期炒作</td><td>产业周期3年以上=+5分，&lt;1年=+1分</td></tr>
+    <tr><td>预期差</td><td>5分</td><td>市场预期vs实际情况</td><td>超预期=+5分，低于预期=-3分</td></tr>
+  </table>
+  
+  <h3>2.4 情绪维度（15分）</h3>
+  <table>
+    <tr><th>评分项</th><th>满分</th><th>得分标准</th><th>阈值</th></tr>
+    <tr><td>连板高度</td><td>5分</td><td>市场最高连板数</td><td>≥7板=+5分，&lt;3板=-2分</td></tr>
+    <tr><td>涨停家数</td><td>5分</td><td>当日涨停股票数量</td><td>≥100只=+5分，&lt;20只=-3分</td></tr>
+    <tr><td>赚钱效应</td><td>5分</td><td>昨日涨停今日溢价</td><td>平均涨&gt;3%=+5分，&lt;0%=-3分</td></tr>
+  </table>
+  
+  <div class="highlight">
+    <strong>情绪阈值</strong>：<br>
+    - 情绪亢奋线：主板涨幅&gt;3% + 创业板涨幅&gt;5% → 阶段性顶部预警<br>
+    - 情绪冰底线：跌停家数&gt;50只 + 连板高度&lt;3板 → 底部信号关注
+  </div>
+  
+  <h3>2.5 资金维度（15分）</h3>
+  <table>
+    <tr><th>评分项</th><th>满分</th><th>得分标准</th><th>阈值</th></tr>
+    <tr><td>北向资金</td><td>5分</td><td>北向资金净流入</td><td>>50亿=+5分，<0=-3分</td></tr>
+    <tr><td>主力资金</td><td>5分</td><td>大单净流入占比</td><td>>3%=+5分，<0=-3分</td></tr>
+    <tr><td>成交额验证</td><td>5分</td><td>高价股成交额是否同步放大</td><td>同步放大=+5分，背离=-3分</td></tr>
+  </table>
+  
+  <h3>2.6 技术维度（10分）</h3>
+  <table>
+    <tr><th>评分项</th><th>满分</th><th>得分标准</th><th>阈值</th></tr>
+    <tr><td>K线形态</td><td>4分</td><td>主力行为信号</td><td>倍量柱+阳线=+4分，普通阳线=+1分</td></tr>
+    <tr><td>量价配合</td><td>3分</td><td>量价关系健康度</td><td>量价齐升=+3分，量价背离=-2分</td></tr>
+    <tr><td>支撑压力</td><td>3分</td><td>关键价位确认</td><td>回踩支撑不破=+3分，破位=-3分</td></tr>
+  </table>
+  
+  <hr>
+  
+  <h2>三、六维共振决策模型</h2>
+  
+  <h3>3.1 总分计算</h3>
+  <div class="tree">
+总分 = 环境分 + 板块分 + 逻辑分 + 情绪分 + 资金分 + 技术分
+
+最高分：100分
+最低分：-40分（各维度最低分之和）
+  </div>
+  
+  <h3>3.2 决策阈值表</h3>
+  <table>
+    <tr><th>总分区间</th><th>等级</th><th>操作建议</th><th>仓位上限</th><th>风险等级</th></tr>
+    <tr><td><strong>85-100分</strong></td><td>极优</td><td>果断出击，抓住主升浪</td><td>8成</td><td>低风险</td></tr>
+    <tr><td><strong>70-84分</strong></td><td>优良</td><td>积极参与，顺势而为</td><td>6成</td><td>中低风险</td></tr>
+    <tr><td><strong>55-69分</strong></td><td>一般</td><td>选择性参与，控制仓位</td><td>4成</td><td>中风险</td></tr>
+    <tr><td><strong>40-54分</strong></td><td>偏弱</td><td>轻仓试探，设紧止损</td><td>2成</td><td>中高风险</td></tr>
+    <tr><td><strong>&lt;40分</strong></td><td>较差</td><td>放弃操作，空仓观望</td><td>0</td><td>高风险</td></tr>
+  </table>
+  
+  <h3>3.3 关键否决条件</h3>
+  <div class="warning">
+    以下情况即使总分&gt;70分也必须放弃操作：
+    <ul>
+      <li>环境分&lt;10分：大盘趋势向下，系统性风险高</li>
+      <li>逻辑分&lt;5分：纯题材炒作，无持续性</li>
+      <li>资金分&lt;5分：北向+主力同时流出，信号失真</li>
+      <li>技术分&lt;3分：关键支撑位跌破，趋势破坏</li>
+      <li>情绪分&gt;13分：情绪亢奋期，加速赶顶风险</li>
+    </ul>
+  </div>
+  
+  <hr>
+  
+  <h2>四、核心口诀</h2>
+  
+  <blockquote>
+    环境定去留，板块找主线；<br>
+    逻辑判持续，情绪择时机；<br>
+    资金验信号，技术选买点。<br>
+    六维共振处，方是出手时。
+  </blockquote>
+  
+  <h2>五、关键阈值速记</h2>
+  
+  <table>
+    <tr><th>维度</th><th>高确定性阈值</th><th>警戒阈值</th><th>放弃阈值</th></tr>
+    <tr><td>环境</td><td>≥20分</td><td>15-19分</td><td>&lt;15分</td></tr>
+    <tr><td>板块</td><td>≥15分</td><td>10-14分</td><td>&lt;10分</td></tr>
+    <tr><td>逻辑</td><td>≥12分</td><td>8-11分</td><td>&lt;8分</td></tr>
+    <tr><td>情绪</td><td>9-11分入场</td><td>12-13分警戒</td><td>&gt;13分离场</td></tr>
+    <tr><td>资金</td><td>≥12分</td><td>8-11分</td><td>&lt;8分</td></tr>
+    <tr><td>技术</td><td>≥8分</td><td>5-7分</td><td>&lt;5分</td></tr>
+    <tr><td><strong>总分</strong></td><td><strong>≥85分</strong></td><td><strong>70-84分</strong></td><td><strong>&lt;70分</strong></td></tr>
+  </table>
+  
+  <hr>
+  <p style="color: var(--text-dim); text-align: center; font-size: 13px;">
+    本评分体系基于职业股民六维分析法、CSDN六维全维度股票投资决策系统研究整理<br>
+    股市有风险，投资需谨慎
+  </p>
+</div>
+</body>
+</html>

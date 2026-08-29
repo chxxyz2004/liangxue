@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四维看盘 - 量学实战系统</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --blue: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+}
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: var(--blue);
+}
+h2 {
+  font-size: 22px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--green);
+  border-left: 4px solid var(--green);
+  padding-left: 15px;
+}
+h3 {
+  font-size: 18px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: var(--orange);
+}
+p {
+  margin-bottom: 15px;
+  color: var(--text);
+}
+blockquote {
+  background: var(--bg);
+  border-left: 4px solid var(--blue);
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 12px;
+  text-align: left;
+}
+th {
+  background: var(--bg);
+  color: var(--blue);
+  font-weight: 600;
+}
+td {
+  color: var(--text);
+}
+pre {
+  background: var(--bg);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 15px 0;
+  font-family: monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 30px 0;
+}
+ul, ol {
+  margin: 15px 0;
+  padding-left: 25px;
+}
+li {
+  margin-bottom: 8px;
+}
+strong {
+  color: var(--blue);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+}
+.back-btn:hover {
+  background: var(--border);
+}
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--blue);
+  color: var(--bg);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.meta {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-top: 10px;
+}
+.code {
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: var(--orange);
+  font-size: 14px;
+}
+.tree {
+  background: var(--bg);
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cyan, #39d4c0);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <span class="tag">量学核心</span>
+      <div class="meta">发布时间：2026-08-29</div>
+    </div>
+    <a href="/" class="back-btn">← 返回首页</a>
+  </div>
+  
+  <h1>《四维看盘》讲义</h1>
+  <p style="color: var(--text-dim);">量学核心理论 · 黑马王子 · 清华大学出版社</p>
+  <p>量价阴阳循环理论的实战应用</p>
+  
+  <hr>
+  
+  <h2>一、什么是四维看盘</h2>
+  <p>四维看盘是量学理论的核心看盘方法，强调从<strong>四个维度</strong>综合分析股票的价格和成交量，遵循<strong>就近对比原则</strong>，通过<strong>量价阴阳变化</strong>预判涨跌趋势。</p>
+  
+  <h3>核心定义</h3>
+  <ul>
+    <li><strong>价柱</strong>：记录每日开盘、最高、最低、收盘价</li>
+    <li><strong>量柱</strong>：记录每日成交量（资金态度的直观体现）</li>
+    <li><strong>阴阳</strong>：阳线（收涨）= 多方胜利；阴线（收跌）= 空方胜利</li>
+    <li><strong>四维</strong>：价格维、成交量维、时间维、空间维</li>
+  </ul>
+  
+  <h3>市场机理</h3>
+  <div class="code">
+股价 = f(资金, 情绪, 时机)<br><br>
+资金 &rarr; 成交量（量柱）<br>
+情绪 &rarr; 买卖意愿（阴阳变化）<br>
+时机 &rarr; 时间节点（时间维）<br>
+空间 &rarr; 支撑压力（空间维）
+  </div>
+  
+  <p><strong>核心逻辑</strong>：</p>
+  <ol>
+    <li>量在价先：成交量变化通常领先价格变化</li>
+    <li>量价互证：量与价必须相互验证，单边不可信</li>
+    <li>阴阳转化：阳中有阴、阴中有阳，辩证看待</li>
+    <li>平衡失衡：市场永远在平衡与失衡之间循环</li>
+  </ol>
+  
+  <hr>
+  
+  <h2>二、四维循环对比法</h2>
+  <p>四维看盘遵循<strong>就近对比原则</strong>，从当前价柱开始，按以下顺序循环对比：</p>
+  
+  <h3>第一维：从右到左（时间回溯）</h3>
+  <p><strong>目的</strong>：寻找历史参照系</p>
+  <p><strong>方法</strong>：</p>
+  <ul>
+    <li>从今日K线向左依次对比</li>
+    <li>峰跟峰比量柱：筹码是否转移</li>
+    <li>谷跟谷比价柱：主力是否撤离</li>
+    <li>寻找相似形态和量价特征</li>
+  </ul>
+  <blockquote>口诀："往左看，找参照；峰比峰，谷比价；主力习惯藏左边"</blockquote>
+  
+  <h3>第二维：从上到下（空间定位）</h3>
+  <p><strong>目的</strong>：判断当前位置</p>
+  <p><strong>方法</strong>：</p>
+  <ul>
+    <li>从高点向下扫描，寻找关键价位</li>
+    <li>识别峰顶线、谷底线、黄金线等量线</li>
+    <li>判断当前价格在量线体系中的位置</li>
+    <li>确定支撑位和压力位</li>
+  </ul>
+  <blockquote>口诀："从上到下找关键；峰顶线是压力关；谷底线是生命线"</blockquote>
+  
+  <h3>第三维：从左到右（趋势演进）</h3>
+  <p><strong>目的</strong>：观察趋势演变</p>
+  <p><strong>方法</strong>：</p>
+  <ul>
+    <li>从左向右观察量价配合</li>
+    <li>判断趋势方向（上升、下降、横盘）</li>
+    <li>识别量柱形态变化（倍量、缩量、梯量）</li>
+    <li>观察量价关系健康度</li>
+  </ul>
+  <blockquote>口诀："从左到右看趋势；量价配合是根本；背离预警要警惕"</blockquote>
+  
+  <h3>第四维：从下到上（反弹动能）</h3>
+  <p><strong>目的</strong>：评估反弹力度</p>
+  <p><strong>方法</strong>：</p>
+  <ul>
+    <li>从底部向上观察反弹过程</li>
+    <li>量能是否逐步放大（梯量柱）</li>
+    <li>价格是否突破关键阻力</li>
+    <li>反弹是否得到量价确认</li>
+  </ul>
+  <blockquote>口诀："从下到上看反弹；量能放大是真干；无量反弹都是骗"</blockquote>
+  
+  <hr>
+  
+  <h2>三、量价阴阳辩证法</h2>
+  
+  <h3>阴阳定义</h3>
+  <table>
+    <tr><th>类型</th><th>定义</th><th>市场含义</th></tr>
+    <tr><td>阳胜</td><td>量增价涨</td><td>多方占优，趋势健康</td></tr>
+    <tr><td>阴胜</td><td>量降价跌</td><td>空方占优，趋势走弱</td></tr>
+    <tr><td>阳假</td><td>量缩价涨</td><td>上涨乏力，警惕背离</td></tr>
+    <tr><td>阴假</td><td>量增价跌</td><td>下跌恐慌，可能见底</td></tr>
+  </table>
+  
+  <h3>十二字令</h3>
+  <blockquote>阳胜进，阴胜出；小倍阳，大胆入</blockquote>
+  <ul>
+    <li><strong>阳胜进</strong>：量价双胜，多方占优，果断进场</li>
+    <li><strong>阴胜出</strong>：量价双败，空方占优，立即离场</li>
+    <li><strong>小倍阳</strong>：量比昨日略增（1.5-2倍），价涨，主力有序建仓</li>
+    <li><strong>大胆入</strong>：小倍阳确认，可放心介入</li>
+  </ul>
+  
+  <hr>
+  
+  <h2>四、三维互动体系</h2>
+  <p>量学核心方法论：<strong>量柱选股 &rarr; 量线选价 &rarr; 量波选时</strong></p>
+  
+  <h3>第一维：量柱选股（基础）</h3>
+  <p><strong>功能</strong>：发现涨停基因</p>
+  <p><strong>方法</strong>：</p>
+  <ul>
+    <li>识别六大元素：高量柱、低量柱、倍量柱、平量柱、梯量柱、缩量柱</li>
+    <li>判定关键柱：黄金柱、元帅柱、将军柱</li>
+    <li>检测异动：量柱异常变化往往是主力动作信号</li>
+  </ul>
+  <p><strong>输出</strong>：候选股票池</p>
+  
+  <h3>第二维：量线选价（核心）</h3>
+  <p><strong>功能</strong>：精准定价</p>
+  <p><strong>方法</strong>：</p>
+  <ul>
+    <li>画量线：峰顶线、谷底线、黄金线、元帅线、将军线</li>
+    <li>找精准线：被多次验证的水平支撑/压力位</li>
+    <li>定目标位：量线测算涨幅目标</li>
+  </ul>
+  <p><strong>输出</strong>：买入价位、目标价位、止损价位</p>
+  
+  <h3>第三维：量波选时（临门一脚）</h3>
+  <p><strong>功能</strong>：盘中决策</p>
+  <p><strong>方法</strong>：</p>
+  <ul>
+    <li>观察分时量波：波形、波向、波势、波幅</li>
+    <li>十字线定位：平衡线移植到分时图</li>
+    <li>四步攻防：先防守后进攻，先确认后跟随</li>
+  </ul>
+  <p><strong>输出</strong>：最佳买入时机、盘中战术</p>
+  
+  <hr>
+  
+  <h2>五、实战操作步骤</h2>
+  
+  <h3>盘前预案（三步走）</h3>
+  <div class="tree">
+第一步：扫图识势（缩图看势）<br>
+  - 打开股票，缩图观察整体趋势<br>
+  - 判断当前处于什么位置（低位/中位/高位）<br>
+  - 识别主要量线（峰顶线、谷底线、黄金线）<br><br>
+第二步：找柱识庄（放图察柱）<br>
+  - 放大查看最近30-60根K线<br>
+  - 寻找倍量柱、黄金柱、关键量线<br>
+  - 分析主力意图（吸筹/拉升/出货）<br><br>
+第三步：定计划（临界预判）<br>
+  - 上行找大阴实顶（压力位）<br>
+  - 下行找大阳实底（支撑位）<br>
+  - 制定买入价、止损价、目标价
+  </div>
+  
+  <h3>盘中盯盘（四关注）</h3>
+  <ul>
+    <li><strong>关注一：量波形态</strong> - 白线是否在黄线上方，红波多还是绿波多</li>
+    <li><strong>关注二：量价配合</strong> - 价格上涨时量能是否放大</li>
+    <li><strong>关注三：十字线反应</strong> - 价格回踩十字线后是否有反向运动</li>
+    <li><strong>关注四：异动侦测</strong> - 该涨不涨则弱势，该跌不跌则强势</li>
+  </ul>
+  
+  <h3>盘后复盘（四维循环）</h3>
+  <ol>
+    <li><strong>从右到左（时间回溯）</strong>：今日K线与历史相似形态对比</li>
+    <li><strong>从上到下（空间定位）</strong>：当前价格在量线体系中的位置</li>
+    <li><strong>从左到右（趋势演进）</strong>：本周趋势是否延续</li>
+    <li><strong>从下到上（反弹动能）</strong>：反弹是否得到量能确认</li>
+  </ol>
+  
+  <hr>
+  
+  <h2>六、市场机理深度解析</h2>
+  
+  <h3>量价关系的本质</h3>
+  <div class="code">
+成交量 = 多空分歧程度<br>
+  - 放量 = 分歧加大（有人拼命买，有人拼命卖）<br>
+  - 缩量 = 意见一致（要么都看好，要么都看空）<br><br>
+价格 = 多空博弈结果<br>
+  - 上涨 = 买方力量强<br>
+  - 下跌 = 卖方力量强
+  </div>
+  
+  <h3>主力行为解码</h3>
+  <table>
+    <tr><th>量价形态</th><th>主力意图</th><th>操作建议</th></tr>
+    <tr><td>低位倍量柱</td><td>主力进场吸筹</td><td>关注，等待确认</td></tr>
+    <tr><td>倍量后缩量回踩</td><td>洗盘，测试支撑</td><td>黄金线附近介入</td></tr>
+    <tr><td>梯量柱逐步放大</td><td>主力边拉边吸</td><td>持股待涨</td></tr>
+    <tr><td>高位放量滞涨</td><td>主力出货</td><td>减仓/离场</td></tr>
+    <tr><td>缩量涨停</td><td>主力高度控盘</td><td>持股，设止盈</td></tr>
+    <tr><td>地量地价</td><td>底部区域</td><td>关注，等待启动信号</td></tr>
+  </table>
+  
+  <hr>
+  
+  <h2>七、常见误区与纠正</h2>
+  <table>
+    <tr><th>误区</th><th>正确理解</th></tr>
+    <tr><td>只看K线不看量柱</td><td>K线是表象，量柱是本质；量在价先</td></tr>
+    <tr><td>放量涨就追，放量跌就跑</td><td>必须结合位置：低位放量是机会，高位放量是陷阱</td></tr>
+    <tr><td>阳线一定好，阴线一定坏</td><td>假阴真阳可以是机会，假阳真阴必须警惕</td></tr>
+    <tr><td>指标金叉就买，死叉就卖</td><td>传统指标滞后，量学看盘更前瞻</td></tr>
+    <tr><td>预测明天涨跌</td><td>量学不算命，只做概率优势下的决策</td></tr>
+  </table>
+  
+  <hr>
+  
+  <h2>八、总结</h2>
+  <p>四维看盘是量学理论的核心看盘方法，其精髓在于：</p>
+  <ol>
+    <li><strong>四维循环</strong>：从右到左、从上到下、从左到右、从下到上</li>
+    <li><strong>就近对比</strong>：峰比峰、谷比价，寻找历史参照</li>
+    <li><strong>量价阴阳</strong>：辩证分析，识别真假信号</li>
+    <li><strong>三维互动</strong>：量柱选股 + 量线选价 + 量波选时</li>
+  </ol>
+  <blockquote><strong>终极目标</strong>：找到平衡与失衡的建构区间，预判涨跌趋势，实现"伏击涨停"。</blockquote>
+  <p style="text-align: center; color: var(--text-dim); margin-top: 30px;">
+    本讲义基于黑马王子《量线捉涨停》《量波逮涨停》等著作整理<br>
+    股市有风险，投资需谨慎
+  </p>
+</div>
+</body>
+</html>

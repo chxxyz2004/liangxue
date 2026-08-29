@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>量学战法回测报告 v3.0 - 量学实战系统</title>
+<style>
+:root { --bg:#0d1117; --surface:#161b22; --border:#30363d; --text:#e6edf3; --text-dim:#8b949e; --blue:#58a6ff; --green:#3fb950; --red:#f85149; --orange:#d29922; --purple:#bc8cff; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,"PingFang SC","Helvetica Neue",sans-serif; background:var(--bg); color:var(--text); line-height:1.8; padding:20px; }
+.container { max-width:950px; margin:0 auto; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:40px; }
+h1 { font-size:24px; margin-bottom:10px; color:var(--blue); }
+h2 { font-size:18px; margin-top:30px; margin-bottom:15px; color:var(--green); border-left:4px solid var(--green); padding-left:15px; }
+h3 { font-size:16px; margin-top:25px; margin-bottom:10px; color:var(--orange); }
+p { margin-bottom:15px; }
+table { width:100%; border-collapse:collapse; margin:15px 0; font-size:13px; }
+th,td { border:1px solid var(--border); padding:8px; text-align:left; }
+th { background:var(--bg); color:var(--blue); font-weight:600; }
+blockquote { background:var(--bg); border-left:4px solid var(--blue); padding:15px 20px; margin:20px 0; border-radius:0 8px 8px 0; }
+pre { background:var(--bg); padding:15px; border-radius:8px; overflow-x:auto; margin:15px 0; font-family:monospace; font-size:12px; white-space:pre-wrap; }
+hr { border:none; border-top:1px solid var(--border); margin:30px 0; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; padding-bottom:20px; border-bottom:1px solid var(--border); }
+.back-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--text); text-decoration:none; font-size:14px; }
+.tag { display:inline-block; padding:4px 12px; background:var(--green); color:white; border-radius:12px; font-size:12px; font-weight:600; }
+.score-card { display:inline-block; padding:3px 10px; border-radius:6px; font-weight:bold; margin:3px; font-size:12px; }
+.score-excellent { background:var(--green); color:white; }
+.score-good { background:var(--blue); color:white; }
+.score-normal { background:var(--orange); color:white; }
+.score-poor { background:var(--red); color:white; }
+.highlight { background:rgba(63,185,80,0.1); border:1px solid var(--green); padding:15px; border-radius:8px; margin:15px 0; }
+.warning { background:rgba(248,81,73,0.1); border:1px solid var(--red); padding:15px; border-radius:8px; margin:15px 0; }
+.meta { color:var(--text-dim); font-size:13px; margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div>
+      <span class="tag">回测报告</span>
+      <div class="meta">v3.0 | 2026-08-29 | 环境得分:38（震荡偏弱）</div>
+    </div>
+    <a href="/" class="back-btn">← 返回首页</a>
+  </div>
+  <h1>量学战法回测报告</h1>
+  <p style="color:var(--text-dim)">回测周期：2024-01-08 ~ 2026-08-28（640根K线，约2年）| 8只股票 | 四大战法</p>
+  <hr>
+  <h2>一、市场环境参数调整</h2>
+  <table>
+    <tr><th>环境得分</th><th>倍量阈值</th><th>最小回调</th><th>建议仓位</th><th>操作建议</th></tr>
+    <tr><td>≥70（强势牛市）</td><td>1.7</td><td>≤15%实体</td><td>8成</td><td>满仓出击</td></tr>
+    <tr><td>50-69（震荡偏多）</td><td>1.9</td><td>≤33%实体</td><td>6成</td><td>积极参与</td></tr>
+    <tr style="background:rgba(210,153,34,0.1)"><td><strong>30-49（当前38分）</strong></td><td><strong>2.2</strong></td><td><strong>≤50%实体</strong></td><td><strong>4成</strong></td><td><strong>严格筛选</strong></td></tr>
+    <tr><td>&lt;30（弱势熊市）</td><td>2.2+</td><td>≤50%+</td><td>2成以下</td><td>空仓观望</td></tr>
+  </table>
+  <h2>二、各战法汇总</h2>
+  <table>
+    <tr><th>战法</th><th>总信号数</th><th>平均胜率</th><th>平均收益</th><th>评价</th></tr>
+    <tr><td>倍量柱</td><td>88</td><td>38.6%</td><td>-2.31%</td><td><span class="score-card score-normal">一般</span></td></tr>
+    <tr><td>黄金柱</td><td>59</td><td>40.5%</td><td>-2.02%</td><td><span class="score-card score-normal">一般</span></td></tr>
+    <tr><td>元帅柱</td><td>0</td><td>-</td><td>-</td><td><span class="score-card score-poor">无信号</span></td></tr>
+    <tr><td>将军柱</td><td>24</td><td>38.9%</td><td>-1.91%</td><td><span class="score-card score-normal">一般</span></td></tr>
+  </table>
+  <h2>三、分股票详细回测</h2>
+  <h3>长电科技（sh600584）-- 最佳表现</h3>
+  <table>
+    <tr><th>战法</th><th>信号数</th><th>胜率</th><th>均收</th><th>盈亏比</th></tr>
+    <tr style="background:rgba(63,185,80,0.1)"><td>黄金柱</td><td>9</td><td><strong>66.7%</strong></td><td><strong>+0.34%</strong></td><td>7.41</td></tr>
+    <tr style="background:rgba(63,185,80,0.05)"><td>倍量柱</td><td>11</td><td><strong>63.6%</strong></td><td><strong>+0.16%</strong></td><td>7.41</td></tr>
+    <tr><td>将军柱</td><td>2</td><td>50.0%</td><td>-0.61%</td><td>0.72</td></tr>
+  </table>
+  <h3>环旭电子（sh601231）-- 次佳表现</h3>
+  <table>
+    <tr><th>战法</th><th>信号数</th><th>胜率</th><th>均收</th><th>盈亏比</th></tr>
+    <tr style="background:rgba(63,185,80,0.05)"><td>将军柱</td><td>5</td><td><strong>60.0%</strong></td><td><strong>+1.37%</strong></td><td>3.03</td></tr>
+    <tr><td>倍量柱</td><td>15</td><td><strong>53.3%</strong></td><td><strong>+0.48%</strong></td><td>11.55</td></tr>
+    <tr><td>黄金柱</td><td>10</td><td>50.0%</td><td>+0.03%</td><td>11.55</td></tr>
+  </table>
+  <h3>工业富联（sh601138）</h3>
+  <table>
+    <tr><th>战法</th><th>信号数</th><th>胜率</th><th>均收</th><th>盈亏比</th></tr>
+    <tr><td>将军柱</td><td>3</td><td><strong>66.7%</strong></td><td>-0.20%</td><td>0.52</td></tr>
+    <tr><td>倍量柱</td><td>12</td><td>50.0%</td><td>-1.38%</td><td>2.15</td></tr>
+    <tr><td>黄金柱</td><td>9</td><td>44.4%</td><td>-1.78%</td><td>2.15</td></tr>
+  </table>
+  <h3>其他股票汇总</h3>
+  <table>
+    <tr><th>股票</th><th>最佳战法</th><th>胜率</th><th>均收</th><th>备注</th></tr>
+    <tr><td>胜宏科技</td><td>将军柱</td><td>50.0%</td><td>+0.01%</td><td>信号极少（2个）</td></tr>
+    <tr><td>天孚通信</td><td>黄金柱</td><td>33.3%</td><td>-4.00%</td><td>表现较差</td></tr>
+    <tr><td>淳中科技</td><td>黄金柱</td><td>66.7%</td><td>-2.51%</td><td>样本少</td></tr>
+    <tr><td>通富微电</td><td>黄金柱</td><td>22.2%</td><td>-2.12%</td><td>胜率偏低</td></tr>
+    <tr><td>赛腾股份</td><td>黄金柱</td><td>37.5%</td><td>-0.71%</td><td>中等</td></tr>
+  </table>
+  <h2>四、核心发现</h2>
+  <div class="highlight">
+    <strong>发现1：元帅柱在当前市场无信号</strong><br>
+    元帅柱要求回调1/3~1/2实体，但当前震荡偏弱市场将判定门槛放宽至1/2，导致元帅柱区间与将军柱重叠，实际无独立信号。建议与将军柱合并评估。
+  </div>
+  <div class="highlight">
+    <strong>发现2：长电科技黄金柱表现最佳</strong><br>
+    胜率66.7%，平均收益+0.34%，盈亏比7.41。在640根K线中产生9个信号，统计显著性较好。
+  </div>
+  <div class="highlight">
+    <strong>发现3：环旭电子将军柱均收最高</strong><br>
+    胜率60%，平均收益+1.37%，盈亏比3.03。虽然信号少（5个），但收益质量最高。
+  </div>
+  <div class="warning">
+    <strong>发现4：当前市场环境下整体胜率偏低</strong><br>
+    除长电科技和环旭电子外，其他股票胜率均低于50%。震荡偏弱市场（38分）应严格执行仓位限制，仅参与胜率>50%的信号。
+  </div>
+  <h2>五、实战建议</h2>
+  <h3>信号选择优先级</h3>
+  <pre>第一优先：长电科技 黄金柱（胜率66.7%，盈亏比7.41）
+第二优先：环旭电子 将军柱（胜率60%，均收+1.37%）
+第三优先：环旭电子 倍量柱（胜率53.3%，盈亏比11.55）
+第四优先：工业富联 将军柱（胜率66.7%）</pre>
+  <h3>止损止盈规则</h3>
+  <table>
+    <tr><th>环境得分</th><th>止损线</th><th>止盈线</th></tr>
+    <tr><td>≥70（牛市）</td><td>买入价 × 0.90</td><td>买入价 × 1.20</td></tr>
+    <tr><td>50-69（震荡偏多）</td><td>买入价 × 0.95</td><td>买入价 × 1.15</td></tr>
+    <tr style="background:rgba(210,153,34,0.1)"><td>30-49（当前38分）</td><td><strong>买入价 × 0.95（更紧）</strong></td><td><strong>买入价 × 1.10（更低）</strong></td></tr>
+    <tr><td>&lt;30（熊市）</td><td>买入价 × 0.93</td><td>买入价 × 1.05</td></tr>
+  </table>
+  <h3>仓位控制公式</h3>
+  <pre>单只仓位 = min(总资金 × 环境系数 × 胜率系数, 总资金 × 20%)
+
+环境系数：≥70分=1.0, 50-69分=0.75, 30-49分=0.5, &lt;30分=0
+胜率系数：&gt;60%=1.2, 50-60%=1.0, 40-50%=0.8, &lt;40%=0.5
+
+当前环境（38分）示例：
+单只仓位 = min(100000 × 0.5 × 1.0, 20000) = 20,000元</pre>
+  <h2>六、模拟盘回测结果</h2>
+  <table>
+    <tr><th>指标</th><th>数值</th></tr>
+    <tr><td>初始资金</td><td>100,000</td></tr>
+    <tr><td>最终净值</td><td>93,072</td></tr>
+    <tr><td>总盈亏</td><td>-6,928 (-6.93%)</td></tr>
+    <tr><td>最大回撤</td><td>6.93%</td></tr>
+    <tr><td>交易次数</td><td>8（4买4卖）</td></tr>
+    <tr><td>胜率</td><td>0.0%</td></tr>
+  </table>
+  <p style="color:var(--text-dim);font-size:13px;margin-top:15px">
+    注：模拟盘仅覆盖最近60天数据，信号极少（仅2次买入）。640根K线的完整回测显示，在震荡偏弱市场中，
+    量学战法的胜率和收益普遍偏低，需配合六维评分体系严格筛选。
+  </p>
+  <hr>
+  <p style="color:var(--text-dim);text-align:center;font-size:13px">
+    回测框架：strategy_backtest.py v3.0 | 数据源：腾讯财经（前复权日线）<br>
+    历史回测不代表未来表现，投资需谨慎
+  </p>
+</div>
+</body>
+</html>

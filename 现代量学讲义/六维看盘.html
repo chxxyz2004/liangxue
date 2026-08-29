@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六维看盘完善版 - 量学实战系统</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --blue: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --cyan: #39d4c0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+}
+h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: var(--blue);
+}
+h2 {
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--green);
+  border-left: 4px solid var(--green);
+  padding-left: 15px;
+}
+h3 {
+  font-size: 17px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: var(--orange);
+}
+p {
+  margin-bottom: 15px;
+  color: var(--text);
+}
+blockquote {
+  background: var(--bg);
+  border-left: 4px solid var(--blue);
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: left;
+}
+th {
+  background: var(--bg);
+  color: var(--blue);
+  font-weight: 600;
+}
+td {
+  color: var(--text);
+}
+pre {
+  background: var(--bg);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 15px 0;
+  font-family: monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 30px 0;
+}
+ul, ol {
+  margin: 15px 0;
+  padding-left: 25px;
+}
+li {
+  margin-bottom: 8px;
+}
+strong {
+  color: var(--blue);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+}
+.back-btn:hover {
+  background: var(--border);
+}
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--purple);
+  color: var(--bg);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.meta {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-top: 10px;
+}
+.tree {
+  background: var(--bg);
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cyan);
+}
+.highlight {
+  background: rgba(63, 185, 80, 0.1);
+  border: 1px solid var(--green);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.warning {
+  background: rgba(248, 81, 73, 0.1);
+  border: 1px solid var(--red);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.priority-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+.priority-1 { background: var(--red); color: white; }
+.priority-2 { background: var(--orange); color: white; }
+.priority-3 { background: var(--blue); color: white; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="class="header">
+    <div>
+      <span class="tag">研究分析</span>
+      <div class="meta">研究时间：2026-08-29 · 从五维到六维的升级</div>
+    </div>
+    <a href="/" class="back-btn">← 返回首页</a>
+  </div>
+  
+  <h1>六维看盘完善版</h1>
+  <p style="color: var(--text-dim);">数据来源：东方财富财富号、CSDN博客、职业股民复盘方法论</p>
+  
+  <hr>
+  
+  <h2>一、五维看盘的不足</h2>
+  
+  <h3>1.1 现有五维框架</h3>
+  <div class="tree">
+五维 = 量 + 价 + 时 + 空 + 资金
+  </div>
+  
+  <h3>1.2 核心缺失</h3>
+  <p>从联网搜索结果来看，职业股民和机构普遍采用<strong>六维分析法</strong>，比我们现有的五维框架缺少了两个关键维度：</p>
+  
+  <table>
+    <tr><th>缺失维度</th><th>重要性</th><th>原因</th></tr>
+    <tr><td><strong>市场环境</strong></td><td>⭐最高</td><td>决定去留、仓位、策略选择</td></tr>
+    <tr><td><strong>板块结构</strong></td><td>⭐极高</td><td>决定资金流向、主线热点</td></tr>
+    <tr><td><strong>情绪周期</strong></td><td>高</td><td>决定入场时机、风险控制</td></tr>
+  </table>
+  
+  <hr>
+  
+  <h2>二、职业股民的六维框架</h2>
+  
+  <h3>2.1 周期&gt;结构&gt;逻辑&gt;情绪&gt;资金&gt;图形</h3>
+  <p><strong>来源：东方财富财富号《职业股民如何复盘——周期结构逻辑情绪资金图形六维分析法》（2026-08-26）</strong></p>
+  
+  <div class="tree">
+优先级从高到低：
+周期 &gt; 结构 &gt; 逻辑 &gt; 情绪 &gt; 资金 &gt; 图形
+  </div>
+  
+  <h3>第一维：周期（最高优先级）</h3>
+  <p><strong>核心问题</strong>：现在是增量牛还是缩量熊？</p>
+  
+  <table>
+    <tr><th>市场状态</th><th>判断标准</th><th>操作策略</th></tr>
+    <tr><td>增量牛</td><td>周月均线上行、成交量持续放大</td><td>看Top1机构青睐的成长板块</td></tr>
+    <tr><td>缩量熊</td><td>周月均线下行、成交量萎缩</td><td>看Top1增量情绪票</td></tr>
+  </table>
+  
+  <h3>第二维：结构（板块结构）</h3>
+  <p><strong>核心问题</strong>：资金在哪里？哪个板块处于主升？</p>
+  
+  <blockquote>
+    "最近几周就是有色和医药处于明显主升，而科技处于大的调整周期，情绪投机票里的种业、药、消费明显赚钱效应更好"<br><br>
+    ——东方财富财富号《职业股民如何复盘》
+  </blockquote>
+  
+  <h3>第三维：逻辑</h3>
+  <p><strong>核心问题</strong>：为何而涨？持续性如何？</p>
+  
+  <table>
+    <tr><th>逻辑类型</th><th>特征</th><th>持续性</th></tr>
+    <tr><td>长期成长预期</td><td>AI硬件产业链、半导体国产替代</td><td>持久（数月）</td></tr>
+    <tr><td>短期消息刺激</td><td>雅鲁藏布江水电站等事件驱动</td><td>短暂（一周游）</td></tr>
+    <tr><td>业绩兑现</td><td>中报验证、订单落地</td><td>中等（数周）</td></tr>
+  </table>
+  
+  <h3>第四维：情绪</h3>
+  <p><strong>核心问题</strong>：市场处于什么情绪周期？</p>
+  
+  <table>
+    <tr><th>情绪阶段</th><th>特征</th><th>连板高度</th><th>涨跌家数</th></tr>
+    <tr><td>冰点期</td><td>恐慌抛售、成交萎缩</td><td>&lt;3板</td><td>百股以下涨停</td></tr>
+    <tr><td>修复期</td><td>逐步回暖、尝试反弹</td><td>3-5板</td><td>百股涨停</td></tr>
+    <tr><td>高潮期</td><td>亢奋狂热、一致看多</td><td>&gt;7板</td><td>百股以上涨停</td></tr>
+    <tr><td>退潮期</td><td>分化加剧、亏钱效应</td><td>&lt;3板</td><td>百股以下涨停</td></tr>
+  </table>
+  
+  <h3>第五维：资金</h3>
+  <p><strong>核心问题</strong>：筹码是否稳定？资金流向哪里？</p>
+  
+  <h3>第六维：图形（技术指标）</h3>
+  <blockquote>
+    "技术分析是用来约束你操作的，并不是用来让你选股的。单独使用技术分析没什么用，主要逻辑驱动的资金流向才是重要的。"
+  </blockquote>
+  
+  <hr>
+  
+  <h2>三、完善后的六维框架</h2>
+  
+  <h3>3.1 新六维定义</h3>
+  <div class="tree">
+六维 = 环境 &gt; 板块 &gt; 逻辑 &gt; 情绪 &gt; 资金 &gt; 技术
+
+其中：
+- 环境：大盘周期 + 250日百分位 + 量能趋势
+- 板块：板块轮动 + 资金流向 + 主线热点
+- 逻辑：驱动因素 + 持续性判断 + 预期管理
+- 情绪：情绪周期 + 连板高度 + 赚钱效应
+- 资金：北向资金 + 主力资金 + 量化行为
+- 技术：量柱形态 + K线形态 + 支撑压力
+  </div>
+  
+  <h3>3.2 六维共振规则</h3>
+  <blockquote><strong>优先级从高到低：环境 &gt; 板块 &gt; 逻辑 &gt; 情绪 &gt; 资金 &gt; 技术</strong></blockquote>
+  
+  <p><strong>共振标准</strong>：</p>
+  <ul>
+    <li>至少3个高优先级维度（环境+板块+逻辑）同向</li>
+    <li>资金和技术作为验证维度</li>
+    <li>任何单一维度异常都要降低操作信心</li>
+  </ul>
+  
+  <hr>
+  
+  <h2>四、关键发现</h2>
+  
+  <h3>4.1 成交额优先原则</h3>
+  <blockquote>
+    "观察成交额能更真实地感知大资金的参与深度。"<br><br>
+    ——东方财富财富号《技术分析的八维共振》（2026-08-15）
+  </blockquote>
+  
+  <h3>4.2 量在价先不是铁律</h3>
+  <table>
+    <tr><th>场景</th><th>量能表现</th><th>含义</th></tr>
+    <tr><td>底部反转</td><td>量先见底，价后见底</td><td>✅ 量在价先成立</td></tr>
+    <tr><td>平台突破</td><td>量先抬升，价后突破</td><td>✅ 量在价先成立</td></tr>
+    <tr><td>顶部见顶</td><td>天量先出现，天价后跟上</td><td>✅ 量在价先成立</td></tr>
+    <tr><td>主升浪</td><td>缩量加速上涨</td><td>❌ 价在量先（常态）</td></tr>
+    <tr><td>阴跌趋势</td><td>缩量持续下跌</td><td>❌ 价在量先（常态）</td></tr>
+  </table>
+  
+  <div class="warning">
+    <strong>重要修正</strong>：量在价先只适用于反转和突破场景，不适用于趋势延续场景。
+  </div>
+  
+  <h3>4.3 量比榜比涨幅榜更有价值</h3>
+  <blockquote>
+    "涨幅榜是给人看的，量比榜是给聪明人看的。"<br><br>
+    ——今日头条《涨幅榜就是散户收割机！》（2026-08-29）
+  </blockquote>
+  
+  <p><strong>早盘固定动作</strong>：</p>
+  <ol>
+    <li>打开量比排行榜，看前30名</li>
+    <li>筛掉涨幅&gt;4%的，只看还没大涨的</li>
+    <li>找低位+量比突然放大的，纳入观察</li>
+  </ol>
+  
+  <hr>
+  
+  <h2>五、六维检查清单</h2>
+  
+  <h3>5.1 盘前六维扫描</h3>
+  <div class="tree">
+第一步：看环境
+  □ 大盘周月均线方向？
+  □ 成交量趋势？（放量/缩量）
+  □ 当前是增量牛还是缩量熊？
+
+第二步：看板块
+  □ 哪个板块处于主升？
+  □ 资金流向哪里？
+  □ 主线热点是否清晰？
+
+第三步：看逻辑
+  □ 驱动因素是什么？（政策/业绩/消息）
+  □ 持续性如何判断？
+  □ 是长期成长还是短期炒作？
+
+第四步：看情绪
+  □ 连板高度？
+  □ 涨跌家数比？
+  □ 情绪处于哪个周期？（冰点/修复/高潮/退潮）
+
+第五步：看资金
+  □ 北向资金流向？
+  □ 主力资金净流入？
+  □ 量化资金是否介入？
+
+第六步：看技术
+  □ K线形态是否健康？
+  □ 量价配合是否到位？
+  □ 支撑压力位是否明确？
+  </div>
+  
+  <h3>5.2 六维共振决策树</h3>
+  <div class="tree">
+                    六维共振决策
+                         │
+         ┌───────────────┼───────────────┐
+         │               │               │
+      环境判断        板块判断        逻辑判断
+         │               │               │
+    增量牛？      主线清晰？     长期驱动？
+         │               │               │
+    ┌────┴────┐     ┌────┴────┐     ┌────┴────┐
+   是         否    是         否    是         否
+   │          │     │          │     │          │
+继续研究   降低仓位  继续研究  降低仓位  继续研究  降低仓位
+         └──────────┴─────┴──────────┴─────┴──────────┘
+                         │
+                    情绪+资金+技术
+                         │
+                   至少3维同向
+                         │
+                   ┌─────┴─────┐
+                  是           否
+                  │            │
+              执行操作       放弃观察
+  </div>
+  
+  <hr>
+  
+  <h2>六、总结</h2>
+  
+  <h3>6.1 六维框架完整性</h3>
+  <table>
+    <tr><th>维度</th><th>必要性</th><th>评级</th></tr>
+    <tr><td>环境</td><td>决定去留、仓位</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td>板块</td><td>决定主线热点</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td>逻辑</td><td>决定持续性</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td>情绪</td><td>决定入场时机</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td>资金</td><td>决定信号验证</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td>技术</td><td>决定择时买点</td><td>⭐⭐⭐</td></tr>
+  </table>
+  
+  <h3>6.2 实施建议</h3>
+  <ol>
+    <li><strong>将六维框架整合到现有系统中</strong>：新增环境、板块、逻辑、情绪四个维度</li>
+    <li><strong>优先级调整</strong>：环境 &gt; 板块 &gt; 逻辑 &gt; 情绪 &gt; 资金 &gt; 技术</li>
+    <li><strong>六维共振规则</strong>：至少3个高优先级维度同向才出手</li>
+  </ol>
+  
+  <blockquote>
+    <strong>记住</strong>：先看环境定去留，再看板块找主线，最后用技术择时。六维共振，方为高手。
+  </blockquote>
+  
+  <hr>
+  <p style="color: var(--text-dim); text-align: center; font-size: 13px;">
+    本分析基于联网搜索核实<br>
+    股市有风险，投资需谨慎
+  </p>
+</div>
+</body>
+</html>
