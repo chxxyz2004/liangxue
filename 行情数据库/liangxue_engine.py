@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""黑马王子张得一量学战法信号引擎
+"""黑马王子张得一量学战法信号引擎 v2.0
 
 实现量学核心战法体系：
   - 量柱形态：高量柱、低量柱、倍量柱、平量柱、梯量柱、缩量柱、阴量柱
+  - 高量柱战法：位置判定、右确认机制、量化/主力意图识别
   - 关键柱：黄金柱、元帅柱、将军柱（基于倍量柱后缩量回调幅度判定）
   - 量线体系：峰顶线、谷底线、凹口平衡线、将军线、平行线
   - 精准线：精准回踩、精准划线判断
@@ -117,16 +118,51 @@ class VolumeBarDetector:
         vols = [k.get('volume', 0) for k in kl]
         dates = [k.get('day', '') for k in kl]
 
+        # 预填充 _prev_volume 供 _bar_features 使用
+        for i, k in enumerate(kl):
+            k['_prev_volume'] = kl[i - 1].get('volume', 0) if i > 0 else 0
+
         # ---- 1. 高量柱：近 lookback 日最高量 ----
+        # 额外用60日窗口做位置判定和年内涨幅
+        pos_lookback = min(60, n)
+
         for i in range(max(0, n - self.lookback), n):
             window = vols[max(0, i - self.lookback + 1):i + 1]
             if max(window) > 0 and vols[i] >= max(window) * 0.98:
-                results['summary']['high_vol_bars'].append({
+                item = {
                     'date': dates[i],
                     'index': i,
                     'volume': vols[i],
                     'ratio': round(vols[i] / _mean(window), 2) if _mean(window) > 0 else 0,
-                })
+                }
+                # --- 位置判定：当日收盘在60日区间中的相对位置 ---
+                pos_window = kl[max(0, i - pos_lookback + 1):i + 1]
+                ph = max(k.get('high', 0) for k in pos_window) if pos_window else 0
+                pl = min(k.get('low', 0) for k in pos_window) if pos_window else 0
+                pr = kl[i].get('close', 0)
+                price_range = ph - pl
+                if price_range > 0:
+                    item['price_position'] = round((pr - pl) / price_range, 3)
+                else:
+                    item['price_position'] = 0.5
+                # --- 年内/周期涨幅 ---
+                if i >= pos_lookback:
+                    start_close = pos_window[0].get('close', 0)
+                    if start_close > 0:
+                        item['period_return'] = round((pr - start_close) / start_close, 4)
+                    else:
+                        item['period_return'] = 0.0
+                else:
+                    # 数据不足，用可用区间
+                    avail = kl[:i + 1]
+                    start_close = avail[0].get('close', 0)
+                    if start_close > 0:
+                        item['period_return'] = round((pr - start_close) / start_close, 4)
+                    else:
+                        item['period_return'] = 0.0
+                # --- K线形态特征 ---
+                item.update(self._bar_features(kl[i]))
+                results['summary']['high_vol_bars'].append(item)
 
         # ---- 2. 低量柱：近 lookback 日最低量 ----
         for i in range(max(0, n - self.lookback), n):
@@ -279,10 +315,46 @@ class VolumeBarDetector:
 
         return results
 
+    def _bar_features(self, k: Dict) -> Dict:
+        """提取单根K线的形态特征，用于意图分析。"""
+        open_p = k.get('open', 0)
+        high_p = k.get('high', 0)
+        low_p = k.get('low', 0)
+        close_p = k.get('close', 0)
+        volume = k.get('volume', 0)
+        amount = k.get('amount', 0)
+        tr = k.get('turnover_ratio', 0)
+        total_range = high_p - low_p if high_p > low_p else 1
 
-# ================================================================
-# 二、关键柱判断：黄金柱、元帅柱、将军柱
-# ================================================================
+        body = close_p - open_p
+        is_yang = body >= 0
+        abs_body = abs(body)
+
+        # 上影线 / 下影线 / 实体占比
+        upper_shadow = high_p - max(close_p, open_p)
+        lower_shadow = min(close_p, open_p) - low_p
+        body_pct = abs_body / total_range if total_range > 0 else 0
+        upper_pct = upper_shadow / total_range if total_range > 0 else 0
+        lower_pct = lower_shadow / total_range if total_range > 0 else 0
+
+        # 量比（当日量 / 前一日量）
+        prev_vol = k.get('_prev_volume', 0)
+        vol_ratio = volume / prev_vol if prev_vol > 0 else 0.0
+
+        return {
+            'is_yang': is_yang,
+            'body': round(body, 4),
+            'abs_body': round(abs_body, 4),
+            'upper_shadow': round(upper_shadow, 4),
+            'lower_shadow': round(lower_shadow, 4),
+            'body_pct': round(body_pct, 3),
+            'upper_pct': round(upper_pct, 3),
+            'lower_pct': round(lower_pct, 3),
+            'turnover_ratio': round(tr, 2) if tr else 0.0,
+            'amount': round(amount, 2) if amount else 0.0,
+            'vol_ratio': round(vol_ratio, 2),
+            'total_range': round(total_range, 4),
+        }
 
 class KeyBarDetector:
     """关键柱识别：黄金柱、元帅柱、将军柱
@@ -854,6 +926,238 @@ class PrecisionLineDetector:
 
 
 # ================================================================
+# 四、高量柱意图分析：右确认 + 量化/主力行为识别
+# ================================================================
+
+class RightConfirmAnalyzer:
+    """高量柱右确认分析器
+
+    核心逻辑（黑马王子《量柱擒涨停》）：
+    - 高量柱后1~3日不破高量柱最低点 → 看涨确认（主力护盘）
+    - 高量柱后1~3日跌破高量柱最低点 → 看跌确认（主力出货）
+    - 缩量不破 → 强确认（主力锁仓，置信度↑）
+    - 放量跌破 → 强出货（置信度↑，方向↓）
+    """
+
+    def __init__(self, confirm_days: int = 3, shrink_threshold: float = 0.7):
+        self.confirm_days = confirm_days
+        self.shrink_threshold = shrink_threshold  # 缩量判定阈值
+
+    def analyze(self, kl: List[Dict], hb: Dict) -> Dict:
+        """对单个高量柱进行右确认分析，返回确认结果。"""
+        idx = hb['index']
+        n = len(kl)
+        if idx + 1 >= n:
+            return {'status': '当日，无法确认', 'direction': 'unknown', 'confidence': 0.0}
+
+        hb_low = hb.get('low', kl[idx].get('low', 0))
+        hb_close = hb.get('close', kl[idx].get('close', 0))
+        hb_vol = hb.get('volume', kl[idx].get('volume', 0))
+        hb_date = hb.get('date', '')
+
+        # 检查后续 confirm_days 根K线
+        confirm_bars = kl[idx + 1:idx + 1 + self.confirm_days]
+        if not confirm_bars:
+            return {'status': '数据不足', 'direction': 'unknown', 'confidence': 0.0}
+
+        # 逐日检查：是否跌破高量柱低点
+        broke_low = False
+        break_idx = -1
+        for j, bar in enumerate(confirm_bars):
+            if bar.get('low', 0) < hb_low:
+                broke_low = True
+                break_idx = j
+                break
+
+        # 统计后续K线的涨跌和量能
+        up_count = sum(1 for b in confirm_bars if b.get('close', 0) >= b.get('open', 0))
+        down_count = len(confirm_bars) - up_count
+        avg_confirm_vol = _mean([b.get('volume', 0) for b in confirm_bars]) if confirm_bars else 0
+        shrink_flag = avg_confirm_vol < hb_vol * self.shrink_threshold if hb_vol > 0 else False
+
+        # 判断方向
+        if broke_low:
+            break_bar = confirm_bars[break_idx]
+            if break_bar.get('volume', 0) > hb_vol * 0.9:
+                direction = 'strong_down'  # 放量跌破，强出货
+                status = f'放量跌破（{break_bar.get("day","")}），主力出货'
+            else:
+                direction = 'down'
+                status = f'跌破高量柱低点（{break_bar.get("day","")}），趋势转弱'
+            confidence = 0.75 if direction == 'strong_down' else 0.6
+        else:
+            # 未跌破，检查强度
+            if shrink_flag:
+                direction = 'strong_up'  # 缩量不破，强看涨
+                status = f'缩量不破高量柱低点，主力锁仓确认'
+                confidence = 0.8
+            elif up_count >= len(confirm_bars):
+                direction = 'up'
+                status = '连续上涨，未破低点，多头占优'
+                confidence = 0.65
+            else:
+                direction = 'neutral'
+                status = '未破低点但走势杂乱，观察中'
+                confidence = 0.4
+
+        return {
+            'status': status,
+            'direction': direction,
+            'confidence': confidence,
+            'broke_low': broke_low,
+            'break_date': confirm_bars[break_idx].get('day', '') if broke_low and break_idx >= 0 else '',
+            'confirm_days': len(confirm_bars),
+            'up_count': up_count,
+            'down_count': down_count,
+            'shrink_flag': shrink_flag,
+            'avg_confirm_vol': round(avg_confirm_vol, 0),
+            'hb_low': hb_low,
+            'hb_close': hb_close,
+        }
+
+
+class HighVolIntentAnalyzer:
+    """高量柱意图分析器：量化资金 vs 主力资金
+
+    意图分类逻辑：
+    ┌─────────────────────────────────────────────────────────────┐
+    │  阳线高量柱 + 低换手(<4%) + 实体饱满(body_pct>0.5)         │
+    │       → 主力吸筹（谨慎看涨）                                │
+    ├─────────────────────────────────────────────────────────────┤
+    │  阳线高量柱 + 高换手(>6%) + 下影线长(lower_pct>0.3)        │
+    │       → 主力拉升（试探抛压，看涨）                          │
+    ├─────────────────────────────────────────────────────────────┤
+    │  阴线高量柱 + 高换手(>6%) + 长上影(upper_pct>0.3)         │
+    │       → 量化资金出货（看跌）                                │
+    ├─────────────────────────────────────────────────────────────┤
+    │  阴线高量柱 + 高换手(>6%) + 实体大(body_pct>0.4)          │
+    │       → 主力砸盘出货（强看跌）                              │
+    ├─────────────────────────────────────────────────────────────┤
+    │  阳线高量柱 + 极高换手(>8%) + 上影线长                     │
+    │       → 量化资金对倒做T（中性偏空）                         │
+    ├─────────────────────────────────────────────────────────────┤
+    │  高位高量柱(价格位置>0.7) + 年内涨幅>30%                   │
+    │       → 主力出货风险（无论阴阳）                            │
+    └─────────────────────────────────────────────────────────────┘
+    """
+
+    # 阈值参数
+    LOW_TURN = 4.0      # 低换手阈值（%）
+    MID_TURN = 6.0      # 中换手阈值（%）
+    HIGH_TURN = 8.0     # 高换手阈值（%）
+    HIGH_PRICE_POS = 0.7   # 高位判定（价格在60日区间上部）
+    YTD_HIGH_RETURN = 0.30  # 年内涨幅警戒线
+
+    def analyze(self, hb: Dict, rc: Dict, kl: List[Dict]) -> Dict:
+        """综合分析单根高量柱的意图，返回意图分析结果。"""
+        features = hb.get('_features', {})
+        if not features:
+            return {'intent': 'unknown', 'reason': '数据不足', 'confidence': 0.0}
+
+        is_yang = features.get('is_yang', True)
+        body_pct = features.get('body_pct', 0.5)
+        upper_pct = features.get('upper_pct', 0.0)
+        lower_pct = features.get('lower_pct', 0.0)
+        tr = features.get('turnover_ratio', 0.0)
+        price_pos = hb.get('price_position', 0.5)
+        period_ret = hb.get('period_return', 0.0)
+        vol_ratio = features.get('vol_ratio', 1.0)
+
+        direction = rc.get('direction', 'unknown')
+        rc_conf = rc.get('confidence', 0.0)
+
+        # ---- 第一步：高位风险过滤（出货优先判断） ----
+        is_high_position = price_pos > self.HIGH_PRICE_POS
+        is_high_return = period_ret > self.YTD_HIGH_RETURN
+        high_risk = is_high_position and is_high_return
+
+        # ---- 第二步：量化资金特征判定 ----
+        quant_signals = []
+        is_quant = False
+        if tr > self.HIGH_TURN and upper_pct > 0.25:
+            quant_signals.append('高换手+长上影（对倒出货特征）')
+            is_quant = True
+        if tr > self.MID_TURN and vol_ratio > 1.5 and abs(body_pct - 0.5) < 0.2:
+            quant_signals.append('量比放大+实体居中（算法做T特征）')
+            is_quant = True
+        if is_yang and tr > self.MID_TURN and upper_pct > lower_pct and upper_pct > 0.2:
+            quant_signals.append('阳线冲高回落（量化拉高出货）')
+            is_quant = True
+
+        # ---- 第三步：主力资金特征判定 ----
+        main_force_signals = []
+        is_main_force = False
+        if is_yang and tr < self.LOW_TURN and body_pct > 0.5:
+            main_force_signals.append('低换手大实体阳线（主力锁仓吸筹）')
+            is_main_force = True
+        if is_yang and tr > self.MID_TURN and lower_pct > 0.25:
+            main_force_signals.append('放量下影线（主力承接试探）')
+            is_main_force = True
+        if is_yang and tr < self.MID_TURN and direction == 'strong_up':
+            main_force_signals.append('缩量右确认（主力控盘）')
+            is_main_force = True
+
+        # ---- 第四步：综合意图判定 ----
+        if high_risk and not is_yang:
+            intent = '出货'
+            intent_detail = '高位阴线高量柱，主力出货风险最高'
+            confidence = min(0.85, rc_conf + 0.1)
+        elif high_risk and is_yang and is_quant:
+            intent = '出货'
+            intent_detail = '高位阳线但量化特征明显，疑似拉高出货'
+            confidence = min(0.75, rc_conf + 0.05)
+        elif is_main_force and direction in ('strong_up', 'up'):
+            intent = '吸筹'
+            intent_detail = '主力吸筹特征明确，右确认看涨'
+            confidence = min(0.85, rc_conf + 0.15)
+        elif is_main_force and direction == 'neutral':
+            intent = '洗盘'
+            intent_detail = '主力洗盘震荡，等待方向选择'
+            confidence = 0.5
+        elif is_quant:
+            intent = '量化对倒'
+            intent_detail = '量化资金特征明显，方向待确认'
+            confidence = 0.4
+        elif direction == 'strong_down':
+            intent = '砸盘'
+            intent_detail = '放量跌破高量柱低点，主力砸盘'
+            confidence = 0.8
+        elif direction == 'down':
+            intent = '出货'
+            intent_detail = '跌破高量柱低点，趋势转弱'
+            confidence = 0.65
+        elif direction == 'strong_up':
+            intent = '拉升'
+            intent_detail = '缩量不破，主力拉升确认'
+            confidence = 0.75
+        else:
+            intent = '观望'
+            intent_detail = '暂无明确意图信号'
+            confidence = 0.3
+
+        # 量化信号叠加调整
+        if is_quant and intent not in ('出货', '砸盘'):
+            intent = '量化混作'
+            intent_detail += '（叠加量化资金活动）'
+            confidence = min(confidence + 0.05, 0.7)
+
+        return {
+            'intent': intent,
+            'intent_detail': intent_detail,
+            'confidence': round(confidence, 2),
+            'is_quant': is_quant,
+            'is_main_force': is_main_force,
+            'quant_signals': quant_signals,
+            'main_force_signals': main_force_signals,
+            'high_risk': high_risk,
+            'price_position': price_pos,
+            'period_return': period_ret,
+            'direction': direction,
+            'right_confirm': rc,
+        }
+
+
+# ================================================================
 # 五、综合信号引擎：整合所有量学战法
 # ================================================================
 
@@ -866,6 +1170,8 @@ class LiangXueEngine:
         self.key_bar_detector = KeyBarDetector(lookback=lookback)
         self.line_detector = QuantityLineDetector()
         self.precision_detector = PrecisionLineDetector()
+        self.right_confirm = RightConfirmAnalyzer(confirm_days=3, shrink_threshold=0.7)
+        self.intent_analyzer = HighVolIntentAnalyzer()
 
     def full_analysis(self, symbol: str) -> Dict:
         """完整量学分析：量柱 + 关键柱 + 量线 + 精准线"""
@@ -899,10 +1205,39 @@ class LiangXueEngine:
             kl, pl.get('peak_lines', []), pl.get('valley_lines', [])
         )
 
+        # 高量柱右确认 + 意图分析
+        result['high_vol_analysis'] = self._analyze_high_vol_bars(kl, result['volume_bars'])
+
         # 生成综合信号摘要
         result['signals'] = self._generate_signals(result)
 
         return result
+
+    def _analyze_high_vol_bars(self, kl: List[Dict], vb: Dict) -> Dict:
+        """对每个高量柱做右确认 + 意图分析。"""
+        high_vol = vb.get('summary', {}).get('high_vol_bars', [])
+        if not high_vol:
+            return {'bars': [], 'latest_intent': None}
+
+        analyzed = []
+        for hb in high_vol:
+            # _prev_volume 已在 detect_all 中预填充，直接从 kl 取特征
+            idx = hb['index']
+            if idx > 0 and idx < len(kl):
+                hb['_features'] = self.volume_detector._bar_features(kl[idx])
+            rc = self.right_confirm.analyze(kl, hb)
+            intent = self.intent_analyzer.analyze(hb, rc, kl)
+            analyzed.append({
+                'date': hb['date'],
+                'index': hb['index'],
+                'right_confirm': rc,
+                'intent': intent,
+            })
+
+        return {
+            'bars': analyzed,
+            'latest_intent': analyzed[-1] if analyzed else None,
+        }
 
     def _generate_signals(self, analysis: Dict) -> List[Dict]:
         """从各项检测结果中提取交易信号。"""
@@ -938,12 +1273,49 @@ class LiangXueEngine:
             })
 
         if high_vol:
+            latest_hv = high_vol[-1]
+            hva = analysis.get('high_vol_analysis', {})
+            lv = hva.get('latest_intent')
+            if lv:
+                intent = lv.get('intent', {})
+                rc = lv.get('right_confirm', {})
+                detail_parts = [f"近{self.lookback}日最高量柱"]
+                pos = latest_hv.get('price_position', 0.5)
+                if pos > 0.7:
+                    detail_parts.append('高位')
+                elif pos < 0.3:
+                    detail_parts.append('低位')
+                intent_label = intent.get('intent', '')
+                if intent_label:
+                    detail_parts.append(f"意图:{intent_label}")
+                rc_dir = rc.get('direction', '')
+                if rc_dir and rc_dir != 'unknown':
+                    rc_labels = {'strong_up': '右确认↑', 'up': '右确认▲', 'down': '右确认↓', 'strong_down': '右确认↓↓'}
+                    detail_parts.append(rc_labels.get(rc_dir, ''))
+                detail = '，'.join(p for p in detail_parts if p)
+                conf = min(intent.get('confidence', 0.4), 0.85)
+                action_map = {
+                    '吸筹': '关注建仓机会，设高量柱低点为防守线',
+                    '拉升': '趋势延续，持有',
+                    '出货': '警惕出货，跌破高量柱低点离场',
+                    '砸盘': '果断止损，高量柱低点为止损位',
+                    '洗盘': '震荡整理，观望等待方向',
+                    '量化对倒': '量化资金活动，谨慎参与',
+                    '量化混作': '量化与主力交织，观望为主',
+                    '观望': '暂无明确信号，继续观察',
+                }
+                action = action_map.get(intent_label, '观察量能持续性')
+            else:
+                detail = f"近{self.lookback}日最高量柱，位置需结合后续走势判断"
+                conf = 0.4
+                action = '观察量能持续性'
             signals.append({
                 'type': '量柱信号',
                 'subtype': '高量柱',
-                'detail': f"近{self.lookback}日最高量柱，位置需结合后续走势判断",
-                'confidence': 0.4,
-                'action': '观察量能持续性',
+                'date': latest_hv.get('date', ''),
+                'detail': detail,
+                'confidence': conf,
+                'action': action,
             })
 
         if low_vol:
@@ -1101,6 +1473,32 @@ class LiangXueEngine:
             lines.append(f"  - 梯量下降：{len(ladder_down)} 组，最近 {ladder_down[-1]['start_date']}~{ladder_down[-1]['end_date']}")
         if not any([doubling, shrinking, high_vol, low_vol, flat, ladder_up, ladder_down]):
             lines.append("  - 无明显量柱形态特征")
+        lines.append("")
+
+        # 高量柱意图分析
+        hva = analysis.get('high_vol_analysis', {})
+        hv_bars = hva.get('bars', [])
+        if hv_bars:
+            lines.append("**高量柱意图分析**：")
+            for hv in hv_bars[-3:]:
+                intent = hv.get('intent', {})
+                rc = hv.get('right_confirm', {})
+                hb_idx = hv.get('index', 0)
+                hb = next((b for b in high_vol if b.get('index') == hb_idx), {})
+                pos = hb.get('price_position', 0.5)
+                pos_label = '低位' if pos < 0.3 else ('高位' if pos > 0.7 else '中位')
+                ret = hb.get('period_return', 0)
+                ret_str = f"（周期涨幅{ret:+.0%}）" if ret != 0 else ""
+                lines.append(f"  - {hv['date']}：意图{intent.get('intent','?')}（{intent.get('intent_detail','')}）{ret_str}，价格位置{pos_label}({pos:.0%})")
+                lines.append(f"    右确认：{rc.get('status','?')}，方向{rc.get('direction','?')}，置信度{rc.get('confidence',0):.0%}")
+                qs = intent.get('quant_signals', [])
+                ms = intent.get('main_force_signals', [])
+                if qs:
+                    lines.append(f"    量化特征：{'；'.join(qs)}")
+                if ms:
+                    lines.append(f"    主力特征：{'；'.join(ms)}")
+                if intent.get('high_risk'):
+                    lines.append(f"    ⚠ 高位出货风险：年内涨幅{ret:.0%}，价格位置{pos:.0%}")
         lines.append("")
 
         # 关键柱
