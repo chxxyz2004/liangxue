@@ -19,6 +19,7 @@
 8. [关键检查清单](#八关键检查清单)
 9. [常见问题与应对](#九常见问题与应对)
 10. [项目知识索引](#十项目知识索引)
+11. [指标信号层](#十一指标信号层)
 
 ---
 
@@ -408,6 +409,7 @@
 | 模拟交易 | `trade_logger.py` | 记录买卖 |
 | 多数据源 | `data_source_manager.py` | 腾讯主/新浪备 |
 | 补充数据 | `fetch_all_data.py` | PE/PB+涨跌统计+龙虎榜+北向+融资融券+解禁+财务 |
+| 信号引擎 | `signal_engine.py` | 统一技术指标+风险评级+战法检测（MA/MACD/均量/倍量柱/黄金交叉/价量发散/量化风险） |
 | Web工作台 | 8085/8086端口 | API |
 | 讲义网站 | 8000端口 | 导航 |
 
@@ -485,5 +487,110 @@
   - 第二阶段第②课"每日盯盘模板与心理体检"已完成
   - 第二阶段第③课"看盘八法精讲"已完成
   - 第二阶段第④课"实盘纪律训练"已完成
-  - 学习进度：14/20课（70%）
-  - 讲义访问地址：https://8000-202312279de3cd0a.monkeycode-ai.online/第14课-实盘纪律训练.html
+   - 学习进度：14/20课（70%）
+   - 讲义访问地址：https://8000-202312279de3cd0a.monkeycode-ai.online/第14课-实盘纪律训练.html
+
+## 十一、量学战法引擎（2026-08-29）
+
+### 9.1 架构设计原则
+
+**核心原则**：计算结果存本地缓存文件，报告生成时读取引用，不搞 Web 前端展示。
+
+**数据流**：
+```
+日线K线(Tencent fqkline) → signal_engine.py → signal_cache.json
+5分钟K线(Sina)          → signal_engine.py → signal_cache.json
+                              ↓
+                    signal_report.py 读取缓存
+                              ↓
+              复盘报告/讲义/文章 引用并解释逻辑
+```
+
+### 9.2 signal_engine.py 核心能力
+
+**日线指标（数据来源：腾讯 fqkline）**：
+- MA5/10/20/60：简单移动平均线
+- MACD：DIF/DEA/MACD柱（标准12,26,9算法）
+- 均量线：VOL_MA5/VOL_MA10
+- 量比：当前日成交量 / 5日均量
+- 倍量柱检测：成交量 ≥ 前一日 × 1.9 且收阳
+- 黄金交叉/死叉：MA5 与 MA10 交叉判断
+
+**量化风险评级（铁律：绝对不用未来函数）**：
+- CV（量变异系数）：基于历史20日成交量计算，不含当日（`history = kl[:-1]`）
+- 价量变化相关性：**必须用日变化量（pct_chg vs vol_chg）而非原始值**，否则趋势方向会污染相关性
+- 风险等级：正常/低风险/中风险/高风险/极高风险
+
+**5分钟分时指标（数据来源：新浪 kline_5min）**：
+- 当日涨跌幅（首笔开 → 末笔收）
+- 价量相关系数：基于全部48根K线的**变化量**计算，非仅最近10根
+- 异常放量检测（尾段量 vs 均值比）
+- 异动信号（强势波动/弱势波动）
+
+**未来函数检查清单（每次修改算法必核）**：
+1. 日线指标：计算时是否使用了当日未发生的数据？→ 否（缓存数据截止昨日收盘）
+2. 交叉信号：比较的是「昨日MA」vs 「今日MA」→ 正确
+3. 相关性计算：是否用「变化量」而非「原始值」？→ 是（v1.3已修复）
+4. 5分钟分时：文件是否为完整交易日？→ 是（09:35~15:00共48根）
+
+### 9.3 signal_report.py 报告生成器
+
+提供三个核心函数供报告引用：
+
+```python
+from signal_report import load_cache, get_risk_summary_text, get_stock_detail_text, get_all_signals_text
+
+# 风险汇总（用于报告开头）
+risk_text = get_risk_summary_text()
+
+# 单只股票详解（用于个股分析章节）
+stock_text = get_stock_detail_text('sh603516')
+
+# 全量信号汇总
+all_text = get_all_signals_text()
+```
+
+每个函数自动附带【市场机理】解释，方便阅读理解。
+
+### 9.4 缓存文件
+
+- **路径**：`/workspace/行情数据库/signal_cache.json`
+- **结构**：`updated_at` + `summary`（汇总统计）+ `stocks`（每只股票完整数据）
+- **生成时机**：`auto_update.sh` 第8步自动运行 `python3 signal_engine.py --save`
+- **手动刷新**：`python3 signal_engine.py --save`
+
+### 9.5 命令行用法
+
+```bash
+# 计算并保存缓存
+python3 signal_engine.py --save
+
+# 查看风险汇总
+python3 signal_report.py --risk
+
+# 查看单只股票详解
+python3 signal_report.py --symbol sh603516
+
+# 查看全量信号
+python3 signal_report.py --all
+```
+
+### 9.6 验证状态
+- 8只股票全部通过冒烟测试
+- MACD DIF/DEA/MACD柱数值与通达信标准一致
+- 所有指标均基于真实本地K线数据，无编造
+- v1.3 修复：价量相关性改为「日变化量相关」，排除趋势方向干扰
+
+### 9.7 博客网站（2026-08-29 修复）
+- **启动命令**：`cd /workspace/现代量学讲义 && python3 blog_server.py`
+- **访问地址**：http://localhost:8000 或预览链接 https://8000-*.monkeycode-ai.online
+- **关键路由**：
+  - `/` → 首页文章列表（JS 渲染，fetch `/api/posts?limit=50`）
+  - `/api/posts` → 文章列表 JSON（支持 category、limit 参数）
+  - `/api/posts/{slug}` → 单篇文章 JSON（slug 支持 URL 编码中文，如 `%E6%A1%88%E4%BE%8B_%E6%BB%B3%E4%B8%AD%E7%A7%91%E6%8A%80`）
+  - `/post/{slug}` → 文章 HTML 页面（服务端渲染，点击首页文章卡片跳转至此）
+  - `/api/categories` → 分类统计
+  - `/api/stats` → 统计数据
+- **子目录扫描**：使用 `os.walk()` 递归扫描 `reports/` 等子目录的 `.md` 文件
+- **前端点击**：文章卡片 onclick 使用 `encodeURIComponent(p.slug)` 编码中文 slug
+- **pycache 清理**：修改 blog_server.py 后需 `rm -rf __pycache__` 并重启才能生效
