@@ -594,3 +594,20 @@ python3 signal_report.py --all
 - **子目录扫描**：使用 `os.walk()` 递归扫描 `reports/` 等子目录的 `.md` 文件
 - **前端点击**：文章卡片 onclick 使用 `encodeURIComponent(p.slug)` 编码中文 slug
 - **pycache 清理**：修改 blog_server.py 后需 `rm -rf __pycache__` 并重启才能生效
+
+### 11.2 黑马王子量学战法引擎（2026-08-29）
+
+- **文件**：`/workspace/行情数据库/liangxue_engine.py`
+- **架构**：四个检测器 + 综合信号引擎
+  - `VolumeBarDetector`：高量柱/低量柱/倍量柱/平量柱/梯量柱/缩量柱/阴量柱（7种）
+  - `KeyBarDetector`：黄金柱/元帅柱/将军柱（回调幅度判定）
+  - `QuantityLineDetector`：峰顶线/谷底线/凹口平衡线/将军线/平行线
+  - `PrecisionLineDetector`：精准回踩验证（精度评分0~1）
+- **倍量柱定义**：量比 ≥ 1.9 且收阳（close >= open）
+- **关键柱判定**：回调幅度 ≤ 1/3=黄金柱 | 1/3~1/2=元帅柱 | >1/2=将军柱，跌破倍量柱低点则失效
+- **Bug修复**：倍量柱字典缺少 `volume` 字段导致关键柱检测跳过缩量判断，已修复
+- **报告集成**：
+  - `signal_report.py`：新增 `get_liangxue_text/get_liangxue_summary_text/append_liangxue_section`，`--symbol` 自动追加量学分析章节，`--liangxue` 输出全量汇总
+  - `generate_report.py`：持仓表格新增「量学战法」列，显示倍量柱/关键柱/精准支撑压力标签
+  - `auto_update.sh` 第9步：每日自动运行 `python3 liangxue_engine.py --save`
+  - 自动生成量学复盘日报 Markdown（`量学复盘日报_YYYYMMDD.md`），含速览表+逐股解读
